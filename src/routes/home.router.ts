@@ -1,0 +1,36 @@
+import { Router } from "express";
+import { verifyToken } from "../middlewares/auth";
+import upload from "../middlewares/multer";
+import {
+  getHomes,
+  getHomeAllDetail,
+  getHomesList,
+  getHomesForMaps,
+  getAbkHomesForMaps,
+  getOrphanHomesForMaps,
+  getHomeDetail,
+  postHome,
+} from "../controllers/home.controller";
+
+const homeRouter = Router();
+
+// Middleware auth
+homeRouter.use(verifyToken);
+
+// ============================
+// CREATE HOME + RELATIONS
+// ============================
+homeRouter.post("/", upload.any(), postHome);
+
+// ============================
+// GET ROUTES
+// ============================
+homeRouter.get("/", getHomes);
+homeRouter.get("/maps", getHomesForMaps);
+homeRouter.get("/maps/abk", getAbkHomesForMaps);
+homeRouter.get("/maps/yatim-piatu", getOrphanHomesForMaps);
+homeRouter.get("/list", getHomesList);
+homeRouter.get("/detail/:id", getHomeAllDetail);
+homeRouter.get("/:id", getHomeDetail);
+
+export default homeRouter;
