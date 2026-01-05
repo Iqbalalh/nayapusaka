@@ -30,14 +30,12 @@ export type PartnersAvgAggregateOutputType = {
   id: number | null
   employeeId: number | null
   regionId: number | null
-  subdistrictId: number | null
 }
 
 export type PartnersSumAggregateOutputType = {
   id: number | null
   employeeId: number | null
   regionId: number | null
-  subdistrictId: number | null
 }
 
 export type PartnersMinAggregateOutputType = {
@@ -48,7 +46,7 @@ export type PartnersMinAggregateOutputType = {
   partnerNik: string | null
   regionId: number | null
   address: string | null
-  subdistrictId: number | null
+  subdistrictName: string | null
   postalCode: string | null
   homeCoordinate: string | null
   phoneNumber: string | null
@@ -68,7 +66,7 @@ export type PartnersMaxAggregateOutputType = {
   partnerNik: string | null
   regionId: number | null
   address: string | null
-  subdistrictId: number | null
+  subdistrictName: string | null
   postalCode: string | null
   homeCoordinate: string | null
   phoneNumber: string | null
@@ -88,7 +86,7 @@ export type PartnersCountAggregateOutputType = {
   partnerNik: number
   regionId: number
   address: number
-  subdistrictId: number
+  subdistrictName: number
   postalCode: number
   homeCoordinate: number
   phoneNumber: number
@@ -106,14 +104,12 @@ export type PartnersAvgAggregateInputType = {
   id?: true
   employeeId?: true
   regionId?: true
-  subdistrictId?: true
 }
 
 export type PartnersSumAggregateInputType = {
   id?: true
   employeeId?: true
   regionId?: true
-  subdistrictId?: true
 }
 
 export type PartnersMinAggregateInputType = {
@@ -124,7 +120,7 @@ export type PartnersMinAggregateInputType = {
   partnerNik?: true
   regionId?: true
   address?: true
-  subdistrictId?: true
+  subdistrictName?: true
   postalCode?: true
   homeCoordinate?: true
   phoneNumber?: true
@@ -144,7 +140,7 @@ export type PartnersMaxAggregateInputType = {
   partnerNik?: true
   regionId?: true
   address?: true
-  subdistrictId?: true
+  subdistrictName?: true
   postalCode?: true
   homeCoordinate?: true
   phoneNumber?: true
@@ -164,7 +160,7 @@ export type PartnersCountAggregateInputType = {
   partnerNik?: true
   regionId?: true
   address?: true
-  subdistrictId?: true
+  subdistrictName?: true
   postalCode?: true
   homeCoordinate?: true
   phoneNumber?: true
@@ -271,7 +267,7 @@ export type PartnersGroupByOutputType = {
   partnerNik: string | null
   regionId: number | null
   address: string | null
-  subdistrictId: number | null
+  subdistrictName: string | null
   postalCode: string | null
   homeCoordinate: string | null
   phoneNumber: string | null
@@ -314,7 +310,7 @@ export type PartnersWhereInput = {
   partnerNik?: Prisma.StringNullableFilter<"Partners"> | string | null
   regionId?: Prisma.IntNullableFilter<"Partners"> | number | null
   address?: Prisma.StringNullableFilter<"Partners"> | string | null
-  subdistrictId?: Prisma.IntNullableFilter<"Partners"> | number | null
+  subdistrictName?: Prisma.StringNullableFilter<"Partners"> | string | null
   postalCode?: Prisma.StringNullableFilter<"Partners"> | string | null
   homeCoordinate?: Prisma.StringNullableFilter<"Partners"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Partners"> | string | null
@@ -339,7 +335,7 @@ export type PartnersOrderByWithRelationInput = {
   partnerNik?: Prisma.SortOrderInput | Prisma.SortOrder
   regionId?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrderInput | Prisma.SortOrder
   postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   homeCoordinate?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -367,7 +363,7 @@ export type PartnersWhereUniqueInput = Prisma.AtLeast<{
   partnerNik?: Prisma.StringNullableFilter<"Partners"> | string | null
   regionId?: Prisma.IntNullableFilter<"Partners"> | number | null
   address?: Prisma.StringNullableFilter<"Partners"> | string | null
-  subdistrictId?: Prisma.IntNullableFilter<"Partners"> | number | null
+  subdistrictName?: Prisma.StringNullableFilter<"Partners"> | string | null
   postalCode?: Prisma.StringNullableFilter<"Partners"> | string | null
   homeCoordinate?: Prisma.StringNullableFilter<"Partners"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Partners"> | string | null
@@ -392,7 +388,7 @@ export type PartnersOrderByWithAggregationInput = {
   partnerNik?: Prisma.SortOrderInput | Prisma.SortOrder
   regionId?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrderInput | Prisma.SortOrder
   postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   homeCoordinate?: Prisma.SortOrderInput | Prisma.SortOrder
   phoneNumber?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -420,7 +416,7 @@ export type PartnersScalarWhereWithAggregatesInput = {
   partnerNik?: Prisma.StringNullableWithAggregatesFilter<"Partners"> | string | null
   regionId?: Prisma.IntNullableWithAggregatesFilter<"Partners"> | number | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Partners"> | string | null
-  subdistrictId?: Prisma.IntNullableWithAggregatesFilter<"Partners"> | number | null
+  subdistrictName?: Prisma.StringNullableWithAggregatesFilter<"Partners"> | string | null
   postalCode?: Prisma.StringNullableWithAggregatesFilter<"Partners"> | string | null
   homeCoordinate?: Prisma.StringNullableWithAggregatesFilter<"Partners"> | string | null
   phoneNumber?: Prisma.StringNullableWithAggregatesFilter<"Partners"> | string | null
@@ -437,7 +433,7 @@ export type PartnersCreateInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -462,7 +458,7 @@ export type PartnersUncheckedCreateInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -482,7 +478,7 @@ export type PartnersUpdateInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -507,7 +503,7 @@ export type PartnersUncheckedUpdateInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -530,7 +526,7 @@ export type PartnersCreateManyInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -547,7 +543,7 @@ export type PartnersUpdateManyMutationInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -567,7 +563,7 @@ export type PartnersUncheckedUpdateManyInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -602,7 +598,7 @@ export type PartnersCountOrderByAggregateInput = {
   partnerNik?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrder
   postalCode?: Prisma.SortOrder
   homeCoordinate?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
@@ -618,7 +614,6 @@ export type PartnersAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
 }
 
 export type PartnersMaxOrderByAggregateInput = {
@@ -629,7 +624,7 @@ export type PartnersMaxOrderByAggregateInput = {
   partnerNik?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrder
   postalCode?: Prisma.SortOrder
   homeCoordinate?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
@@ -649,7 +644,7 @@ export type PartnersMinOrderByAggregateInput = {
   partnerNik?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
   address?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrder
   postalCode?: Prisma.SortOrder
   homeCoordinate?: Prisma.SortOrder
   phoneNumber?: Prisma.SortOrder
@@ -665,7 +660,6 @@ export type PartnersSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
 }
 
 export type PartnersCreateNestedOneWithoutChildrenInput = {
@@ -805,7 +799,7 @@ export type PartnersCreateWithoutChildrenInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -829,7 +823,7 @@ export type PartnersUncheckedCreateWithoutChildrenInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -864,7 +858,7 @@ export type PartnersUpdateWithoutChildrenInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -888,7 +882,7 @@ export type PartnersUncheckedUpdateWithoutChildrenInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -907,7 +901,7 @@ export type PartnersCreateWithoutEmployeesInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -930,7 +924,7 @@ export type PartnersUncheckedCreateWithoutEmployeesInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -982,7 +976,7 @@ export type PartnersScalarWhereInput = {
   partnerNik?: Prisma.StringNullableFilter<"Partners"> | string | null
   regionId?: Prisma.IntNullableFilter<"Partners"> | number | null
   address?: Prisma.StringNullableFilter<"Partners"> | string | null
-  subdistrictId?: Prisma.IntNullableFilter<"Partners"> | number | null
+  subdistrictName?: Prisma.StringNullableFilter<"Partners"> | string | null
   postalCode?: Prisma.StringNullableFilter<"Partners"> | string | null
   homeCoordinate?: Prisma.StringNullableFilter<"Partners"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Partners"> | string | null
@@ -999,7 +993,7 @@ export type PartnersCreateWithoutHomesInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1023,7 +1017,7 @@ export type PartnersUncheckedCreateWithoutHomesInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1058,7 +1052,7 @@ export type PartnersUpdateWithoutHomesInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1082,7 +1076,7 @@ export type PartnersUncheckedUpdateWithoutHomesInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1101,7 +1095,7 @@ export type PartnersCreateWithoutRegionsInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1124,7 +1118,7 @@ export type PartnersUncheckedCreateWithoutRegionsInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1170,7 +1164,7 @@ export type PartnersCreateWithoutUmkmInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1194,7 +1188,7 @@ export type PartnersUncheckedCreateWithoutUmkmInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1229,7 +1223,7 @@ export type PartnersUpdateWithoutUmkmInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1253,7 +1247,7 @@ export type PartnersUncheckedUpdateWithoutUmkmInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1274,7 +1268,7 @@ export type PartnersCreateManyEmployeesInput = {
   partnerNik?: string | null
   regionId?: number | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1291,7 +1285,7 @@ export type PartnersUpdateWithoutEmployeesInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1314,7 +1308,7 @@ export type PartnersUncheckedUpdateWithoutEmployeesInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1336,7 +1330,7 @@ export type PartnersUncheckedUpdateManyWithoutEmployeesInput = {
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1355,7 +1349,7 @@ export type PartnersCreateManyRegionsInput = {
   partnerJob?: string | null
   partnerNik?: string | null
   address?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   homeCoordinate?: string | null
   phoneNumber?: string | null
@@ -1372,7 +1366,7 @@ export type PartnersUpdateWithoutRegionsInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1395,7 +1389,7 @@ export type PartnersUncheckedUpdateWithoutRegionsInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1417,7 +1411,7 @@ export type PartnersUncheckedUpdateManyWithoutRegionsInput = {
   partnerJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   partnerNik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1486,7 +1480,7 @@ export type PartnersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   partnerNik?: boolean
   regionId?: boolean
   address?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   homeCoordinate?: boolean
   phoneNumber?: boolean
@@ -1512,7 +1506,7 @@ export type PartnersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   partnerNik?: boolean
   regionId?: boolean
   address?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   homeCoordinate?: boolean
   phoneNumber?: boolean
@@ -1534,7 +1528,7 @@ export type PartnersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   partnerNik?: boolean
   regionId?: boolean
   address?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   homeCoordinate?: boolean
   phoneNumber?: boolean
@@ -1556,7 +1550,7 @@ export type PartnersSelectScalar = {
   partnerNik?: boolean
   regionId?: boolean
   address?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   homeCoordinate?: boolean
   phoneNumber?: boolean
@@ -1568,7 +1562,7 @@ export type PartnersSelectScalar = {
   updatedAt?: boolean
 }
 
-export type PartnersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "partnerName" | "partnerJob" | "partnerNik" | "regionId" | "address" | "subdistrictId" | "postalCode" | "homeCoordinate" | "phoneNumber" | "phoneNumberAlt" | "isActive" | "isAlive" | "partnerPict" | "createdAt" | "updatedAt", ExtArgs["result"]["partners"]>
+export type PartnersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "partnerName" | "partnerJob" | "partnerNik" | "regionId" | "address" | "subdistrictName" | "postalCode" | "homeCoordinate" | "phoneNumber" | "phoneNumberAlt" | "isActive" | "isAlive" | "partnerPict" | "createdAt" | "updatedAt", ExtArgs["result"]["partners"]>
 export type PartnersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | Prisma.Partners$childrenArgs<ExtArgs>
   homes?: boolean | Prisma.Partners$homesArgs<ExtArgs>
@@ -1603,7 +1597,7 @@ export type $PartnersPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     partnerNik: string | null
     regionId: number | null
     address: string | null
-    subdistrictId: number | null
+    subdistrictName: string | null
     postalCode: string | null
     homeCoordinate: string | null
     phoneNumber: string | null
@@ -2048,7 +2042,7 @@ export interface PartnersFieldRefs {
   readonly partnerNik: Prisma.FieldRef<"Partners", 'String'>
   readonly regionId: Prisma.FieldRef<"Partners", 'Int'>
   readonly address: Prisma.FieldRef<"Partners", 'String'>
-  readonly subdistrictId: Prisma.FieldRef<"Partners", 'Int'>
+  readonly subdistrictName: Prisma.FieldRef<"Partners", 'String'>
   readonly postalCode: Prisma.FieldRef<"Partners", 'String'>
   readonly homeCoordinate: Prisma.FieldRef<"Partners", 'String'>
   readonly phoneNumber: Prisma.FieldRef<"Partners", 'String'>

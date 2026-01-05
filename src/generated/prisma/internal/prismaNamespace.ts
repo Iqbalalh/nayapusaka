@@ -385,15 +385,12 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Children: 'Children',
-  Cities: 'Cities',
   Employees: 'Employees',
   Homes: 'Homes',
   Partners: 'Partners',
-  Provinces: 'Provinces',
   Regions: 'Regions',
   Roles: 'Roles',
   Staffs: 'Staffs',
-  Subdistricts: 'Subdistricts',
   Umkm: 'Umkm',
   Users: 'Users',
   Wali: 'Wali'
@@ -412,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "cities" | "employees" | "homes" | "partners" | "provinces" | "regions" | "roles" | "staffs" | "subdistricts" | "umkm" | "users" | "wali"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -487,80 +484,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ChildrenCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ChildrenCountAggregateOutputType> | number
-        }
-      }
-    }
-    Cities: {
-      payload: Prisma.$CitiesPayload<ExtArgs>
-      fields: Prisma.CitiesFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.CitiesFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.CitiesFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>
-        }
-        findFirst: {
-          args: Prisma.CitiesFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.CitiesFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>
-        }
-        findMany: {
-          args: Prisma.CitiesFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>[]
-        }
-        create: {
-          args: Prisma.CitiesCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>
-        }
-        createMany: {
-          args: Prisma.CitiesCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.CitiesCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>[]
-        }
-        delete: {
-          args: Prisma.CitiesDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>
-        }
-        update: {
-          args: Prisma.CitiesUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>
-        }
-        deleteMany: {
-          args: Prisma.CitiesDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.CitiesUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.CitiesUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>[]
-        }
-        upsert: {
-          args: Prisma.CitiesUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$CitiesPayload>
-        }
-        aggregate: {
-          args: Prisma.CitiesAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateCities>
-        }
-        groupBy: {
-          args: Prisma.CitiesGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CitiesGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.CitiesCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.CitiesCountAggregateOutputType> | number
         }
       }
     }
@@ -786,80 +709,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    Provinces: {
-      payload: Prisma.$ProvincesPayload<ExtArgs>
-      fields: Prisma.ProvincesFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.ProvincesFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.ProvincesFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>
-        }
-        findFirst: {
-          args: Prisma.ProvincesFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.ProvincesFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>
-        }
-        findMany: {
-          args: Prisma.ProvincesFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>[]
-        }
-        create: {
-          args: Prisma.ProvincesCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>
-        }
-        createMany: {
-          args: Prisma.ProvincesCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.ProvincesCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>[]
-        }
-        delete: {
-          args: Prisma.ProvincesDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>
-        }
-        update: {
-          args: Prisma.ProvincesUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>
-        }
-        deleteMany: {
-          args: Prisma.ProvincesDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.ProvincesUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.ProvincesUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>[]
-        }
-        upsert: {
-          args: Prisma.ProvincesUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProvincesPayload>
-        }
-        aggregate: {
-          args: Prisma.ProvincesAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProvinces>
-        }
-        groupBy: {
-          args: Prisma.ProvincesGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProvincesGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.ProvincesCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProvincesCountAggregateOutputType> | number
-        }
-      }
-    }
     Regions: {
       payload: Prisma.$RegionsPayload<ExtArgs>
       fields: Prisma.RegionsFieldRefs
@@ -1079,80 +928,6 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.StaffsCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.StaffsCountAggregateOutputType> | number
-        }
-      }
-    }
-    Subdistricts: {
-      payload: Prisma.$SubdistrictsPayload<ExtArgs>
-      fields: Prisma.SubdistrictsFieldRefs
-      operations: {
-        findUnique: {
-          args: Prisma.SubdistrictsFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload> | null
-        }
-        findUniqueOrThrow: {
-          args: Prisma.SubdistrictsFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>
-        }
-        findFirst: {
-          args: Prisma.SubdistrictsFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload> | null
-        }
-        findFirstOrThrow: {
-          args: Prisma.SubdistrictsFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>
-        }
-        findMany: {
-          args: Prisma.SubdistrictsFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>[]
-        }
-        create: {
-          args: Prisma.SubdistrictsCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>
-        }
-        createMany: {
-          args: Prisma.SubdistrictsCreateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        createManyAndReturn: {
-          args: Prisma.SubdistrictsCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>[]
-        }
-        delete: {
-          args: Prisma.SubdistrictsDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>
-        }
-        update: {
-          args: Prisma.SubdistrictsUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>
-        }
-        deleteMany: {
-          args: Prisma.SubdistrictsDeleteManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateMany: {
-          args: Prisma.SubdistrictsUpdateManyArgs<ExtArgs>
-          result: BatchPayload
-        }
-        updateManyAndReturn: {
-          args: Prisma.SubdistrictsUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>[]
-        }
-        upsert: {
-          args: Prisma.SubdistrictsUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubdistrictsPayload>
-        }
-        aggregate: {
-          args: Prisma.SubdistrictsAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateSubdistricts>
-        }
-        groupBy: {
-          args: Prisma.SubdistrictsGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SubdistrictsGroupByOutputType>[]
-        }
-        count: {
-          args: Prisma.SubdistrictsCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.SubdistrictsCountAggregateOutputType> | number
         }
       }
     }
@@ -1443,17 +1218,6 @@ export const ChildrenScalarFieldEnum = {
 export type ChildrenScalarFieldEnum = (typeof ChildrenScalarFieldEnum)[keyof typeof ChildrenScalarFieldEnum]
 
 
-export const CitiesScalarFieldEnum = {
-  cityId: 'cityId',
-  provinceId: 'provinceId',
-  cityCode: 'cityCode',
-  cityName: 'cityName',
-  createdAt: 'createdAt'
-} as const
-
-export type CitiesScalarFieldEnum = (typeof CitiesScalarFieldEnum)[keyof typeof CitiesScalarFieldEnum]
-
-
 export const EmployeesScalarFieldEnum = {
   id: 'id',
   nipNipp: 'nipNipp',
@@ -1493,7 +1257,7 @@ export const PartnersScalarFieldEnum = {
   partnerNik: 'partnerNik',
   regionId: 'regionId',
   address: 'address',
-  subdistrictId: 'subdistrictId',
+  subdistrictName: 'subdistrictName',
   postalCode: 'postalCode',
   homeCoordinate: 'homeCoordinate',
   phoneNumber: 'phoneNumber',
@@ -1506,16 +1270,6 @@ export const PartnersScalarFieldEnum = {
 } as const
 
 export type PartnersScalarFieldEnum = (typeof PartnersScalarFieldEnum)[keyof typeof PartnersScalarFieldEnum]
-
-
-export const ProvincesScalarFieldEnum = {
-  provinceId: 'provinceId',
-  provinceCode: 'provinceCode',
-  provinceName: 'provinceName',
-  createdAt: 'createdAt'
-} as const
-
-export type ProvincesScalarFieldEnum = (typeof ProvincesScalarFieldEnum)[keyof typeof ProvincesScalarFieldEnum]
 
 
 export const RegionsScalarFieldEnum = {
@@ -1552,16 +1306,6 @@ export const StaffsScalarFieldEnum = {
 export type StaffsScalarFieldEnum = (typeof StaffsScalarFieldEnum)[keyof typeof StaffsScalarFieldEnum]
 
 
-export const SubdistrictsScalarFieldEnum = {
-  subdistrictId: 'subdistrictId',
-  cityId: 'cityId',
-  subdistrictName: 'subdistrictName',
-  createdAt: 'createdAt'
-} as const
-
-export type SubdistrictsScalarFieldEnum = (typeof SubdistrictsScalarFieldEnum)[keyof typeof SubdistrictsScalarFieldEnum]
-
-
 export const UmkmScalarFieldEnum = {
   id: 'id',
   partnerId: 'partnerId',
@@ -1569,7 +1313,7 @@ export const UmkmScalarFieldEnum = {
   businessName: 'businessName',
   businessAddress: 'businessAddress',
   regionId: 'regionId',
-  subdistrictId: 'subdistrictId',
+  subdistrictName: 'subdistrictName',
   postalCode: 'postalCode',
   umkmCoordinate: 'umkmCoordinate',
   businessType: 'businessType',
@@ -1815,15 +1559,12 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   children?: Prisma.ChildrenOmit
-  cities?: Prisma.CitiesOmit
   employees?: Prisma.EmployeesOmit
   homes?: Prisma.HomesOmit
   partners?: Prisma.PartnersOmit
-  provinces?: Prisma.ProvincesOmit
   regions?: Prisma.RegionsOmit
   roles?: Prisma.RolesOmit
   staffs?: Prisma.StaffsOmit
-  subdistricts?: Prisma.SubdistrictsOmit
   umkm?: Prisma.UmkmOmit
   users?: Prisma.UsersOmit
   wali?: Prisma.WaliOmit

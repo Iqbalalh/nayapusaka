@@ -52,15 +52,12 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Children: 'Children',
-  Cities: 'Cities',
   Employees: 'Employees',
   Homes: 'Homes',
   Partners: 'Partners',
-  Provinces: 'Provinces',
   Regions: 'Regions',
   Roles: 'Roles',
   Staffs: 'Staffs',
-  Subdistricts: 'Subdistricts',
   Umkm: 'Umkm',
   Users: 'Users',
   Wali: 'Wali'
@@ -108,17 +105,6 @@ export const ChildrenScalarFieldEnum = {
 export type ChildrenScalarFieldEnum = (typeof ChildrenScalarFieldEnum)[keyof typeof ChildrenScalarFieldEnum]
 
 
-export const CitiesScalarFieldEnum = {
-  cityId: 'cityId',
-  provinceId: 'provinceId',
-  cityCode: 'cityCode',
-  cityName: 'cityName',
-  createdAt: 'createdAt'
-} as const
-
-export type CitiesScalarFieldEnum = (typeof CitiesScalarFieldEnum)[keyof typeof CitiesScalarFieldEnum]
-
-
 export const EmployeesScalarFieldEnum = {
   id: 'id',
   nipNipp: 'nipNipp',
@@ -158,7 +144,7 @@ export const PartnersScalarFieldEnum = {
   partnerNik: 'partnerNik',
   regionId: 'regionId',
   address: 'address',
-  subdistrictId: 'subdistrictId',
+  subdistrictName: 'subdistrictName',
   postalCode: 'postalCode',
   homeCoordinate: 'homeCoordinate',
   phoneNumber: 'phoneNumber',
@@ -171,16 +157,6 @@ export const PartnersScalarFieldEnum = {
 } as const
 
 export type PartnersScalarFieldEnum = (typeof PartnersScalarFieldEnum)[keyof typeof PartnersScalarFieldEnum]
-
-
-export const ProvincesScalarFieldEnum = {
-  provinceId: 'provinceId',
-  provinceCode: 'provinceCode',
-  provinceName: 'provinceName',
-  createdAt: 'createdAt'
-} as const
-
-export type ProvincesScalarFieldEnum = (typeof ProvincesScalarFieldEnum)[keyof typeof ProvincesScalarFieldEnum]
 
 
 export const RegionsScalarFieldEnum = {
@@ -217,16 +193,6 @@ export const StaffsScalarFieldEnum = {
 export type StaffsScalarFieldEnum = (typeof StaffsScalarFieldEnum)[keyof typeof StaffsScalarFieldEnum]
 
 
-export const SubdistrictsScalarFieldEnum = {
-  subdistrictId: 'subdistrictId',
-  cityId: 'cityId',
-  subdistrictName: 'subdistrictName',
-  createdAt: 'createdAt'
-} as const
-
-export type SubdistrictsScalarFieldEnum = (typeof SubdistrictsScalarFieldEnum)[keyof typeof SubdistrictsScalarFieldEnum]
-
-
 export const UmkmScalarFieldEnum = {
   id: 'id',
   partnerId: 'partnerId',
@@ -234,7 +200,7 @@ export const UmkmScalarFieldEnum = {
   businessName: 'businessName',
   businessAddress: 'businessAddress',
   regionId: 'regionId',
-  subdistrictId: 'subdistrictId',
+  subdistrictName: 'subdistrictName',
   postalCode: 'postalCode',
   umkmCoordinate: 'umkmCoordinate',
   businessType: 'businessType',

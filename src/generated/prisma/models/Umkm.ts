@@ -30,7 +30,6 @@ export type UmkmAvgAggregateOutputType = {
   id: number | null
   partnerId: number | null
   regionId: number | null
-  subdistrictId: number | null
   employeeId: number | null
   waliId: number | null
   childrenId: number | null
@@ -40,7 +39,6 @@ export type UmkmSumAggregateOutputType = {
   id: number | null
   partnerId: number | null
   regionId: number | null
-  subdistrictId: number | null
   employeeId: number | null
   waliId: number | null
   childrenId: number | null
@@ -53,7 +51,7 @@ export type UmkmMinAggregateOutputType = {
   businessName: string | null
   businessAddress: string | null
   regionId: number | null
-  subdistrictId: number | null
+  subdistrictName: string | null
   postalCode: string | null
   umkmCoordinate: string | null
   businessType: string | null
@@ -73,7 +71,7 @@ export type UmkmMaxAggregateOutputType = {
   businessName: string | null
   businessAddress: string | null
   regionId: number | null
-  subdistrictId: number | null
+  subdistrictName: string | null
   postalCode: string | null
   umkmCoordinate: string | null
   businessType: string | null
@@ -93,7 +91,7 @@ export type UmkmCountAggregateOutputType = {
   businessName: number
   businessAddress: number
   regionId: number
-  subdistrictId: number
+  subdistrictName: number
   postalCode: number
   umkmCoordinate: number
   businessType: number
@@ -112,7 +110,6 @@ export type UmkmAvgAggregateInputType = {
   id?: true
   partnerId?: true
   regionId?: true
-  subdistrictId?: true
   employeeId?: true
   waliId?: true
   childrenId?: true
@@ -122,7 +119,6 @@ export type UmkmSumAggregateInputType = {
   id?: true
   partnerId?: true
   regionId?: true
-  subdistrictId?: true
   employeeId?: true
   waliId?: true
   childrenId?: true
@@ -135,7 +131,7 @@ export type UmkmMinAggregateInputType = {
   businessName?: true
   businessAddress?: true
   regionId?: true
-  subdistrictId?: true
+  subdistrictName?: true
   postalCode?: true
   umkmCoordinate?: true
   businessType?: true
@@ -155,7 +151,7 @@ export type UmkmMaxAggregateInputType = {
   businessName?: true
   businessAddress?: true
   regionId?: true
-  subdistrictId?: true
+  subdistrictName?: true
   postalCode?: true
   umkmCoordinate?: true
   businessType?: true
@@ -175,7 +171,7 @@ export type UmkmCountAggregateInputType = {
   businessName?: true
   businessAddress?: true
   regionId?: true
-  subdistrictId?: true
+  subdistrictName?: true
   postalCode?: true
   umkmCoordinate?: true
   businessType?: true
@@ -282,7 +278,7 @@ export type UmkmGroupByOutputType = {
   businessName: string | null
   businessAddress: string | null
   regionId: number | null
-  subdistrictId: number | null
+  subdistrictName: string | null
   postalCode: string | null
   umkmCoordinate: string | null
   businessType: string | null
@@ -325,7 +321,7 @@ export type UmkmWhereInput = {
   businessName?: Prisma.StringNullableFilter<"Umkm"> | string | null
   businessAddress?: Prisma.StringNullableFilter<"Umkm"> | string | null
   regionId?: Prisma.IntNullableFilter<"Umkm"> | number | null
-  subdistrictId?: Prisma.IntNullableFilter<"Umkm"> | number | null
+  subdistrictName?: Prisma.StringNullableFilter<"Umkm"> | string | null
   postalCode?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmCoordinate?: Prisma.StringNullableFilter<"Umkm"> | string | null
   businessType?: Prisma.StringNullableFilter<"Umkm"> | string | null
@@ -350,7 +346,7 @@ export type UmkmOrderByWithRelationInput = {
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   regionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrderInput | Prisma.SortOrder
   postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   umkmCoordinate?: Prisma.SortOrderInput | Prisma.SortOrder
   businessType?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -378,7 +374,7 @@ export type UmkmWhereUniqueInput = Prisma.AtLeast<{
   businessName?: Prisma.StringNullableFilter<"Umkm"> | string | null
   businessAddress?: Prisma.StringNullableFilter<"Umkm"> | string | null
   regionId?: Prisma.IntNullableFilter<"Umkm"> | number | null
-  subdistrictId?: Prisma.IntNullableFilter<"Umkm"> | number | null
+  subdistrictName?: Prisma.StringNullableFilter<"Umkm"> | string | null
   postalCode?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmCoordinate?: Prisma.StringNullableFilter<"Umkm"> | string | null
   businessType?: Prisma.StringNullableFilter<"Umkm"> | string | null
@@ -403,7 +399,7 @@ export type UmkmOrderByWithAggregationInput = {
   businessName?: Prisma.SortOrderInput | Prisma.SortOrder
   businessAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   regionId?: Prisma.SortOrderInput | Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrderInput | Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrderInput | Prisma.SortOrder
   postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   umkmCoordinate?: Prisma.SortOrderInput | Prisma.SortOrder
   businessType?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -431,7 +427,7 @@ export type UmkmScalarWhereWithAggregatesInput = {
   businessName?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   businessAddress?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   regionId?: Prisma.IntNullableWithAggregatesFilter<"Umkm"> | number | null
-  subdistrictId?: Prisma.IntNullableWithAggregatesFilter<"Umkm"> | number | null
+  subdistrictName?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   postalCode?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   umkmCoordinate?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   businessType?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
@@ -448,7 +444,7 @@ export type UmkmCreateInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -470,7 +466,7 @@ export type UmkmUncheckedCreateInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -487,7 +483,7 @@ export type UmkmUpdateInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -509,7 +505,7 @@ export type UmkmUncheckedUpdateInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -529,7 +525,7 @@ export type UmkmCreateManyInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -546,7 +542,7 @@ export type UmkmUpdateManyMutationInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -563,7 +559,7 @@ export type UmkmUncheckedUpdateManyInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -593,7 +589,7 @@ export type UmkmCountOrderByAggregateInput = {
   businessName?: Prisma.SortOrder
   businessAddress?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrder
   postalCode?: Prisma.SortOrder
   umkmCoordinate?: Prisma.SortOrder
   businessType?: Prisma.SortOrder
@@ -610,7 +606,6 @@ export type UmkmAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   waliId?: Prisma.SortOrder
   childrenId?: Prisma.SortOrder
@@ -623,7 +618,7 @@ export type UmkmMaxOrderByAggregateInput = {
   businessName?: Prisma.SortOrder
   businessAddress?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrder
   postalCode?: Prisma.SortOrder
   umkmCoordinate?: Prisma.SortOrder
   businessType?: Prisma.SortOrder
@@ -643,7 +638,7 @@ export type UmkmMinOrderByAggregateInput = {
   businessName?: Prisma.SortOrder
   businessAddress?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
+  subdistrictName?: Prisma.SortOrder
   postalCode?: Prisma.SortOrder
   umkmCoordinate?: Prisma.SortOrder
   businessType?: Prisma.SortOrder
@@ -660,7 +655,6 @@ export type UmkmSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   partnerId?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
-  subdistrictId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   waliId?: Prisma.SortOrder
   childrenId?: Prisma.SortOrder
@@ -880,7 +874,7 @@ export type UmkmCreateWithoutChildrenInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -901,7 +895,7 @@ export type UmkmUncheckedCreateWithoutChildrenInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -949,7 +943,7 @@ export type UmkmScalarWhereInput = {
   businessName?: Prisma.StringNullableFilter<"Umkm"> | string | null
   businessAddress?: Prisma.StringNullableFilter<"Umkm"> | string | null
   regionId?: Prisma.IntNullableFilter<"Umkm"> | number | null
-  subdistrictId?: Prisma.IntNullableFilter<"Umkm"> | number | null
+  subdistrictName?: Prisma.StringNullableFilter<"Umkm"> | string | null
   postalCode?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmCoordinate?: Prisma.StringNullableFilter<"Umkm"> | string | null
   businessType?: Prisma.StringNullableFilter<"Umkm"> | string | null
@@ -966,7 +960,7 @@ export type UmkmCreateWithoutEmployeesInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -987,7 +981,7 @@ export type UmkmUncheckedCreateWithoutEmployeesInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1029,7 +1023,7 @@ export type UmkmCreateWithoutPartnersInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1049,7 +1043,7 @@ export type UmkmUncheckedCreateWithoutPartnersInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1092,7 +1086,7 @@ export type UmkmCreateWithoutRegionsInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1112,7 +1106,7 @@ export type UmkmUncheckedCreateWithoutRegionsInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1155,7 +1149,7 @@ export type UmkmCreateWithoutWaliInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1176,7 +1170,7 @@ export type UmkmUncheckedCreateWithoutWaliInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1221,7 +1215,7 @@ export type UmkmCreateManyChildrenInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1237,7 +1231,7 @@ export type UmkmUpdateWithoutChildrenInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1258,7 +1252,7 @@ export type UmkmUncheckedUpdateWithoutChildrenInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1277,7 +1271,7 @@ export type UmkmUncheckedUpdateManyWithoutChildrenInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1296,7 +1290,7 @@ export type UmkmCreateManyEmployeesInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1312,7 +1306,7 @@ export type UmkmUpdateWithoutEmployeesInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1333,7 +1327,7 @@ export type UmkmUncheckedUpdateWithoutEmployeesInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1352,7 +1346,7 @@ export type UmkmUncheckedUpdateManyWithoutEmployeesInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1370,7 +1364,7 @@ export type UmkmCreateManyPartnersInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1387,7 +1381,7 @@ export type UmkmUpdateWithoutPartnersInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1407,7 +1401,7 @@ export type UmkmUncheckedUpdateWithoutPartnersInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1426,7 +1420,7 @@ export type UmkmUncheckedUpdateManyWithoutPartnersInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1445,7 +1439,7 @@ export type UmkmCreateManyRegionsInput = {
   ownerName?: string | null
   businessName?: string | null
   businessAddress?: string | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1462,7 +1456,7 @@ export type UmkmUpdateWithoutRegionsInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1482,7 +1476,7 @@ export type UmkmUncheckedUpdateWithoutRegionsInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1501,7 +1495,7 @@ export type UmkmUncheckedUpdateManyWithoutRegionsInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1521,7 +1515,7 @@ export type UmkmCreateManyWaliInput = {
   businessName?: string | null
   businessAddress?: string | null
   regionId?: number | null
-  subdistrictId?: number | null
+  subdistrictName?: string | null
   postalCode?: string | null
   umkmCoordinate?: string | null
   businessType?: string | null
@@ -1537,7 +1531,7 @@ export type UmkmUpdateWithoutWaliInput = {
   ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1558,7 +1552,7 @@ export type UmkmUncheckedUpdateWithoutWaliInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1577,7 +1571,7 @@ export type UmkmUncheckedUpdateManyWithoutWaliInput = {
   businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  subdistrictId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1598,7 +1592,7 @@ export type UmkmSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   businessName?: boolean
   businessAddress?: boolean
   regionId?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   umkmCoordinate?: boolean
   businessType?: boolean
@@ -1623,7 +1617,7 @@ export type UmkmSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   businessName?: boolean
   businessAddress?: boolean
   regionId?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   umkmCoordinate?: boolean
   businessType?: boolean
@@ -1648,7 +1642,7 @@ export type UmkmSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   businessName?: boolean
   businessAddress?: boolean
   regionId?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   umkmCoordinate?: boolean
   businessType?: boolean
@@ -1673,7 +1667,7 @@ export type UmkmSelectScalar = {
   businessName?: boolean
   businessAddress?: boolean
   regionId?: boolean
-  subdistrictId?: boolean
+  subdistrictName?: boolean
   postalCode?: boolean
   umkmCoordinate?: boolean
   businessType?: boolean
@@ -1686,7 +1680,7 @@ export type UmkmSelectScalar = {
   umkmPict?: boolean
 }
 
-export type UmkmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partnerId" | "ownerName" | "businessName" | "businessAddress" | "regionId" | "subdistrictId" | "postalCode" | "umkmCoordinate" | "businessType" | "products" | "employeeId" | "createdAt" | "updatedAt" | "waliId" | "childrenId" | "umkmPict", ExtArgs["result"]["umkm"]>
+export type UmkmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partnerId" | "ownerName" | "businessName" | "businessAddress" | "regionId" | "subdistrictName" | "postalCode" | "umkmCoordinate" | "businessType" | "products" | "employeeId" | "createdAt" | "updatedAt" | "waliId" | "childrenId" | "umkmPict", ExtArgs["result"]["umkm"]>
 export type UmkmInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | Prisma.Umkm$childrenArgs<ExtArgs>
   employees?: boolean | Prisma.Umkm$employeesArgs<ExtArgs>
@@ -1725,7 +1719,7 @@ export type $UmkmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     businessName: string | null
     businessAddress: string | null
     regionId: number | null
-    subdistrictId: number | null
+    subdistrictName: string | null
     postalCode: string | null
     umkmCoordinate: string | null
     businessType: string | null
@@ -2170,7 +2164,7 @@ export interface UmkmFieldRefs {
   readonly businessName: Prisma.FieldRef<"Umkm", 'String'>
   readonly businessAddress: Prisma.FieldRef<"Umkm", 'String'>
   readonly regionId: Prisma.FieldRef<"Umkm", 'Int'>
-  readonly subdistrictId: Prisma.FieldRef<"Umkm", 'Int'>
+  readonly subdistrictName: Prisma.FieldRef<"Umkm", 'String'>
   readonly postalCode: Prisma.FieldRef<"Umkm", 'String'>
   readonly umkmCoordinate: Prisma.FieldRef<"Umkm", 'String'>
   readonly businessType: Prisma.FieldRef<"Umkm", 'String'>

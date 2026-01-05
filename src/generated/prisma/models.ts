@@ -9,15 +9,12 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Children'
-export type * from './models/Cities'
 export type * from './models/Employees'
 export type * from './models/Homes'
 export type * from './models/Partners'
-export type * from './models/Provinces'
 export type * from './models/Regions'
 export type * from './models/Roles'
 export type * from './models/Staffs'
-export type * from './models/Subdistricts'
 export type * from './models/Umkm'
 export type * from './models/Users'
 export type * from './models/Wali'

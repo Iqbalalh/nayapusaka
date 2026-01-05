@@ -43,11 +43,6 @@ export { Prisma }
  */
 export type Children = Prisma.ChildrenModel
 /**
- * Model Cities
- * 
- */
-export type Cities = Prisma.CitiesModel
-/**
  * Model Employees
  * 
  */
@@ -63,11 +58,6 @@ export type Homes = Prisma.HomesModel
  */
 export type Partners = Prisma.PartnersModel
 /**
- * Model Provinces
- * 
- */
-export type Provinces = Prisma.ProvincesModel
-/**
  * Model Regions
  * 
  */
@@ -82,11 +72,6 @@ export type Roles = Prisma.RolesModel
  * 
  */
 export type Staffs = Prisma.StaffsModel
-/**
- * Model Subdistricts
- * 
- */
-export type Subdistricts = Prisma.SubdistrictsModel
 /**
  * Model Umkm
  * 

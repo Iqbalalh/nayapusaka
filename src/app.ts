@@ -11,7 +11,6 @@ import dashboardRouter from "./routes/dashboard.router";
 import authRouter from "./routes/auth.router";
 import umkmRouter from "./routes/umkm.router";
 import staffRouter from "./routes/staff.router";
-import subdistrictRouter from "./routes/subdistrict.router";
 import pictureRouter from "./routes/picture.router";
 
 const app: Application = express();
@@ -48,8 +47,7 @@ app.use("/api/regions", regionRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/umkm", umkmRouter);
 app.use("/api/staff", staffRouter);
-app.use("/api/subdistricts", subdistrictRouter);
-app.use("/api/pictures", pictureRouter);
+app.use("/api/picture", pictureRouter);
 
 // ======================
 // Export App

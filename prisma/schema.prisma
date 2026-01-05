@@ -44,20 +44,6 @@ model Children {
   @@map("childrens")
 }
 
-model Cities {
-  cityId     Int       @id @default(autoincrement()) @map("city_id")
-  provinceId Int       @map("province_id")
-  cityCode   String?   @map("city_code") @db.VarChar(50)
-  cityName   String    @map("city_name") @db.VarChar(150)
-  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  // Relations
-  provinces    Provinces      @relation(fields: [provinceId], references: [provinceId], onUpdate: NoAction)
-  subdistricts Subdistricts[]
-
-  @@index([provinceId], map: "idx_cities_province_id")
-  @@map("cities")
-}
 
 model Employees {
   id             Int      @id @default(autoincrement())
@@ -109,10 +95,10 @@ model Partners {
   partnerName    String?  @map("partner_name") @db.VarChar(150)
   partnerJob     String?  @map("partner_job") @db.VarChar(100)
   partnerNik     String?  @map("partner_nik") @db.VarChar(30)
-  regionId       Int?     @map("region_id")
-  address        String?
-  subdistrictId  Int?     @map("subdistrict_id")
-  postalCode     String?  @map("postal_code") @db.VarChar(10)
+  regionId        Int?     @map("region_id")
+  address         String?
+  subdistrictName String?  @map("subdistrict_name") @db.VarChar(150)
+  postalCode      String?  @map("postal_code") @db.VarChar(10)
   homeCoordinate String?  @map("home_coordinate") @db.VarChar(50)
   phoneNumber    String?  @map("phone_number") @db.VarChar(20)
   phoneNumberAlt String?  @map("phone_number_alt") @db.VarChar(20)
@@ -132,17 +118,6 @@ model Partners {
   @@map("partners")
 }
 
-model Provinces {
-  provinceId   Int       @id @default(autoincrement()) @map("province_id")
-  provinceCode String?   @unique @map("province_code") @db.VarChar(50)
-  provinceName String    @map("province_name") @db.VarChar(150)
-  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  // Relations
-  cities Cities[]
-
-  @@map("provinces")
-}
 
 model Regions {
   regionId   Int       @id @default(autoincrement()) @map("region_id")
@@ -188,18 +163,6 @@ model Staffs {
   @@map("staffs")
 }
 
-model Subdistricts {
-  subdistrictId   Int       @id @default(autoincrement()) @map("subdistrict_id")
-  cityId          Int       @map("city_id")
-  subdistrictName String    @map("subdistrict_name") @db.VarChar(150)
-  createdAt       DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-
-  // Relations
-  cities Cities @relation(fields: [cityId], references: [cityId], onUpdate: NoAction)
-
-  @@index([cityId], map: "idx_subdistricts_city_id")
-  @@map("subdistricts")
-}
 
 model Umkm {
   id              Int       @id @default(autoincrement())
@@ -208,7 +171,7 @@ model Umkm {
   businessName    String?   @map("business_name") @db.VarChar(255)
   businessAddress String?   @map("business_address")
   regionId        Int?      @map("region_id")
-  subdistrictId   Int?      @map("subdistrict_id")
+  subdistrictName String?   @map("subdistrict_name") @db.VarChar(150)
   postalCode      String?   @map("postal_code") @db.VarChar(10)
   umkmCoordinate  String?   @map("umkm_coordinate") @db.VarChar(100)
   businessType    String?   @map("business_type") @db.VarChar(100)

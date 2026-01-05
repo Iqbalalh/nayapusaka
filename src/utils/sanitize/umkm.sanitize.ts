@@ -4,7 +4,7 @@ import { normalize } from "../formatter/normalize";
 export interface UmkmInput {
   partnerId?: string | number;
   regionId?: string | number;
-  subdistrictId?: string | number;
+  subdistrictName?: string;
   employeeId?: string | number;
   waliId?: string | number;
   childrenId?: string | number;
@@ -21,7 +21,7 @@ export interface UmkmInput {
 export interface SanitizedUmkmData {
   partnerId?: number | null;
   regionId?: number | null;
-  subdistrictId?: number | null;
+  subdistrictName?: string | null;
   employeeId?: number | null;
   waliId?: number | null;
   childrenId?: number | null;
@@ -64,8 +64,8 @@ export const sanitizeUmkmData = (body: UmkmInput): SanitizedUmkmData => {
   if (rest.regionId !== undefined) {
     sanitized.regionId = rest.regionId ? Number(normalize(rest.regionId)) : null;
   }
-  if (rest.subdistrictId !== undefined) {
-    sanitized.subdistrictId = rest.subdistrictId ? Number(normalize(rest.subdistrictId)) : null;
+  if (rest.subdistrictName !== undefined) {
+    sanitized.subdistrictName = normalize(rest.subdistrictName);
   }
   if (rest.employeeId !== undefined) {
     sanitized.employeeId = rest.employeeId ? Number(normalize(rest.employeeId)) : null;
