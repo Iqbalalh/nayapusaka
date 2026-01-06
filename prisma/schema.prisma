@@ -190,6 +190,8 @@ model Umkm {
   partners  Partners?  @relation(fields: [partnerId], references: [id], onUpdate: NoAction)
   regions   Regions?   @relation(fields: [regionId], references: [regionId], onUpdate: NoAction)
   wali      Wali?      @relation(fields: [waliId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  umkmVisits UmkmVisit[]
+  umkmMonitoring UmkmMonitoring[]
 
   @@map("umkm")
 }
@@ -256,4 +258,79 @@ model FamilyVisitDocs {
   familyVisits    FamilyVisit @relation(fields: [familyVisitId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("family_visit_docs")
+}
+
+model UmkmVisit {
+  id                   Int       @id @default(autoincrement())
+  umkmId               Int       @map("umkm_id")
+  visitNumber          Int       @map("visit_number")
+  assistanceDate       DateTime  @map("assistance_date") @db.Date
+  assistanceType       String    @map("assistance_type") @db.VarChar(100)
+  itemType             String    @map("item_type") @db.VarChar(50)
+  assistanceAmount     Int       @map("assistance_amount")
+  assistanceSource     String    @map("assistance_source") @db.VarChar(100)
+  value                Float     @map("value")
+  notes                String?   @db.Text
+  createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  umkm                 Umkm      @relation(fields: [umkmId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  umkmVisitDocs        UmkmVisitDocs[]
+
+  @@map("umkm_visits")
+}
+
+model UmkmVisitDocs {
+  id              Int        @id @default(autoincrement())
+  umkmVisitId     Int        @map("umkm_visit_id")
+  name            String     @map("name") @db.VarChar(255)
+  urlDoc          String     @map("url_doc") @db.VarChar(255)
+  createdAt       DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  umkmVisits      UmkmVisit  @relation(fields: [umkmVisitId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("umkm_visit_docs")
+}
+
+model UmkmMonitoring {
+  id                      Int       @id @default(autoincrement())
+  umkmId                  Int       @map("umkm_id")
+  visitNumber             Int       @map("visit_number")
+  monitoringDate          DateTime  @map("monitoring_date") @db.Date
+  surveyor                String    @map("surveyor") @db.VarChar(100)
+  turnoverBefore          Float?    @map("turnover_before")
+  turnoverAfter           Float?    @map("turnover_after")
+  workersBefore           Int?      @map("workers_before")
+  workersAfter            Int?      @map("workers_after")
+  productionBefore        Float?    @map("production_before")
+  productionAfter         Float?    @map("production_after")
+  customersBefore         Int?      @map("customers_before")
+  customersAfter          Int?      @map("customers_after")
+  benefitLevel            String?   @map("benefit_level") @db.VarChar(50)
+  challenges              String?   @map("challenges") @db.Text
+  developmentNeeds        String?   @map("development_needs") @db.Text
+  otherNotes              String?   @map("other_notes") @db.Text
+  createdAt               DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  umkm                    Umkm      @relation(fields: [umkmId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  umkmMonitoringDocs      UmkmMonitoringDocs[]
+
+  @@map("umkm_monitoring")
+}
+
+model UmkmMonitoringDocs {
+  id              Int              @id @default(autoincrement())
+  umkmMonitoringId Int             @map("umkm_monitoring_id")
+  name            String           @map("name") @db.VarChar(255)
+  urlDoc          String           @map("url_doc") @db.VarChar(255)
+  createdAt       DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  umkmMonitoring  UmkmMonitoring   @relation(fields: [umkmMonitoringId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("umkm_monitoring_docs")
 }

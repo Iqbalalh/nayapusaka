@@ -77,3 +77,23 @@ export type FamilyVisit = Prisma.FamilyVisitModel
  * 
  */
 export type FamilyVisitDocs = Prisma.FamilyVisitDocsModel
+/**
+ * Model UmkmVisit
+ * 
+ */
+export type UmkmVisit = Prisma.UmkmVisitModel
+/**
+ * Model UmkmVisitDocs
+ * 
+ */
+export type UmkmVisitDocs = Prisma.UmkmVisitDocsModel
+/**
+ * Model UmkmMonitoring
+ * 
+ */
+export type UmkmMonitoring = Prisma.UmkmMonitoringModel
+/**
+ * Model UmkmMonitoringDocs
+ * 
+ */
+export type UmkmMonitoringDocs = Prisma.UmkmMonitoringDocsModel

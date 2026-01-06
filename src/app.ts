@@ -13,6 +13,8 @@ import umkmRouter from "./routes/umkm.router";
 import staffRouter from "./routes/staff.router";
 import pictureRouter from "./routes/picture.router";
 import familyVisitRouter from "./routes/famvisit.router";
+import umkmVisitRouter from "./routes/umkmvisit.router";
+import umkmMonitoringRouter from "./routes/umkmmonitoring.router";
 
 const app: Application = express();
 
@@ -50,6 +52,8 @@ app.use("/api/umkm", umkmRouter);
 app.use("/api/staff", staffRouter);
 app.use("/api/picture", pictureRouter);
 app.use("/api/family-visits", familyVisitRouter);
+app.use("/api/umkm-visits", umkmVisitRouter);
+app.use("/api/umkm-monitoring", umkmMonitoringRouter);
 
 // ======================
 // Export App

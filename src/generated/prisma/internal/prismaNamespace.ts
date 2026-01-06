@@ -395,7 +395,11 @@ export const ModelName = {
   Users: 'Users',
   Wali: 'Wali',
   FamilyVisit: 'FamilyVisit',
-  FamilyVisitDocs: 'FamilyVisitDocs'
+  FamilyVisitDocs: 'FamilyVisitDocs',
+  UmkmVisit: 'UmkmVisit',
+  UmkmVisitDocs: 'UmkmVisitDocs',
+  UmkmMonitoring: 'UmkmMonitoring',
+  UmkmMonitoringDocs: 'UmkmMonitoringDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1303,6 +1307,302 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UmkmVisit: {
+      payload: Prisma.$UmkmVisitPayload<ExtArgs>
+      fields: Prisma.UmkmVisitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UmkmVisitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UmkmVisitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>
+        }
+        findFirst: {
+          args: Prisma.UmkmVisitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UmkmVisitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>
+        }
+        findMany: {
+          args: Prisma.UmkmVisitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>[]
+        }
+        create: {
+          args: Prisma.UmkmVisitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>
+        }
+        createMany: {
+          args: Prisma.UmkmVisitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UmkmVisitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>[]
+        }
+        delete: {
+          args: Prisma.UmkmVisitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>
+        }
+        update: {
+          args: Prisma.UmkmVisitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>
+        }
+        deleteMany: {
+          args: Prisma.UmkmVisitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UmkmVisitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UmkmVisitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>[]
+        }
+        upsert: {
+          args: Prisma.UmkmVisitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitPayload>
+        }
+        aggregate: {
+          args: Prisma.UmkmVisitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUmkmVisit>
+        }
+        groupBy: {
+          args: Prisma.UmkmVisitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmVisitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UmkmVisitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmVisitCountAggregateOutputType> | number
+        }
+      }
+    }
+    UmkmVisitDocs: {
+      payload: Prisma.$UmkmVisitDocsPayload<ExtArgs>
+      fields: Prisma.UmkmVisitDocsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UmkmVisitDocsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UmkmVisitDocsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>
+        }
+        findFirst: {
+          args: Prisma.UmkmVisitDocsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UmkmVisitDocsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>
+        }
+        findMany: {
+          args: Prisma.UmkmVisitDocsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>[]
+        }
+        create: {
+          args: Prisma.UmkmVisitDocsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>
+        }
+        createMany: {
+          args: Prisma.UmkmVisitDocsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UmkmVisitDocsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>[]
+        }
+        delete: {
+          args: Prisma.UmkmVisitDocsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>
+        }
+        update: {
+          args: Prisma.UmkmVisitDocsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>
+        }
+        deleteMany: {
+          args: Prisma.UmkmVisitDocsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UmkmVisitDocsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UmkmVisitDocsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>[]
+        }
+        upsert: {
+          args: Prisma.UmkmVisitDocsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmVisitDocsPayload>
+        }
+        aggregate: {
+          args: Prisma.UmkmVisitDocsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUmkmVisitDocs>
+        }
+        groupBy: {
+          args: Prisma.UmkmVisitDocsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmVisitDocsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UmkmVisitDocsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmVisitDocsCountAggregateOutputType> | number
+        }
+      }
+    }
+    UmkmMonitoring: {
+      payload: Prisma.$UmkmMonitoringPayload<ExtArgs>
+      fields: Prisma.UmkmMonitoringFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UmkmMonitoringFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UmkmMonitoringFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>
+        }
+        findFirst: {
+          args: Prisma.UmkmMonitoringFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UmkmMonitoringFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>
+        }
+        findMany: {
+          args: Prisma.UmkmMonitoringFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>[]
+        }
+        create: {
+          args: Prisma.UmkmMonitoringCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>
+        }
+        createMany: {
+          args: Prisma.UmkmMonitoringCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UmkmMonitoringCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>[]
+        }
+        delete: {
+          args: Prisma.UmkmMonitoringDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>
+        }
+        update: {
+          args: Prisma.UmkmMonitoringUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>
+        }
+        deleteMany: {
+          args: Prisma.UmkmMonitoringDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UmkmMonitoringUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UmkmMonitoringUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>[]
+        }
+        upsert: {
+          args: Prisma.UmkmMonitoringUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringPayload>
+        }
+        aggregate: {
+          args: Prisma.UmkmMonitoringAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUmkmMonitoring>
+        }
+        groupBy: {
+          args: Prisma.UmkmMonitoringGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmMonitoringGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UmkmMonitoringCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmMonitoringCountAggregateOutputType> | number
+        }
+      }
+    }
+    UmkmMonitoringDocs: {
+      payload: Prisma.$UmkmMonitoringDocsPayload<ExtArgs>
+      fields: Prisma.UmkmMonitoringDocsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UmkmMonitoringDocsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UmkmMonitoringDocsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>
+        }
+        findFirst: {
+          args: Prisma.UmkmMonitoringDocsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UmkmMonitoringDocsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>
+        }
+        findMany: {
+          args: Prisma.UmkmMonitoringDocsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>[]
+        }
+        create: {
+          args: Prisma.UmkmMonitoringDocsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>
+        }
+        createMany: {
+          args: Prisma.UmkmMonitoringDocsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UmkmMonitoringDocsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>[]
+        }
+        delete: {
+          args: Prisma.UmkmMonitoringDocsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>
+        }
+        update: {
+          args: Prisma.UmkmMonitoringDocsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>
+        }
+        deleteMany: {
+          args: Prisma.UmkmMonitoringDocsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UmkmMonitoringDocsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UmkmMonitoringDocsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>[]
+        }
+        upsert: {
+          args: Prisma.UmkmMonitoringDocsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UmkmMonitoringDocsPayload>
+        }
+        aggregate: {
+          args: Prisma.UmkmMonitoringDocsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUmkmMonitoringDocs>
+        }
+        groupBy: {
+          args: Prisma.UmkmMonitoringDocsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmMonitoringDocsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UmkmMonitoringDocsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UmkmMonitoringDocsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1532,6 +1832,71 @@ export const FamilyVisitDocsScalarFieldEnum = {
 export type FamilyVisitDocsScalarFieldEnum = (typeof FamilyVisitDocsScalarFieldEnum)[keyof typeof FamilyVisitDocsScalarFieldEnum]
 
 
+export const UmkmVisitScalarFieldEnum = {
+  id: 'id',
+  umkmId: 'umkmId',
+  visitNumber: 'visitNumber',
+  assistanceDate: 'assistanceDate',
+  assistanceType: 'assistanceType',
+  itemType: 'itemType',
+  assistanceAmount: 'assistanceAmount',
+  assistanceSource: 'assistanceSource',
+  value: 'value',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UmkmVisitScalarFieldEnum = (typeof UmkmVisitScalarFieldEnum)[keyof typeof UmkmVisitScalarFieldEnum]
+
+
+export const UmkmVisitDocsScalarFieldEnum = {
+  id: 'id',
+  umkmVisitId: 'umkmVisitId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type UmkmVisitDocsScalarFieldEnum = (typeof UmkmVisitDocsScalarFieldEnum)[keyof typeof UmkmVisitDocsScalarFieldEnum]
+
+
+export const UmkmMonitoringScalarFieldEnum = {
+  id: 'id',
+  umkmId: 'umkmId',
+  visitNumber: 'visitNumber',
+  monitoringDate: 'monitoringDate',
+  surveyor: 'surveyor',
+  turnoverBefore: 'turnoverBefore',
+  turnoverAfter: 'turnoverAfter',
+  workersBefore: 'workersBefore',
+  workersAfter: 'workersAfter',
+  productionBefore: 'productionBefore',
+  productionAfter: 'productionAfter',
+  customersBefore: 'customersBefore',
+  customersAfter: 'customersAfter',
+  benefitLevel: 'benefitLevel',
+  challenges: 'challenges',
+  developmentNeeds: 'developmentNeeds',
+  otherNotes: 'otherNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UmkmMonitoringScalarFieldEnum = (typeof UmkmMonitoringScalarFieldEnum)[keyof typeof UmkmMonitoringScalarFieldEnum]
+
+
+export const UmkmMonitoringDocsScalarFieldEnum = {
+  id: 'id',
+  umkmMonitoringId: 'umkmMonitoringId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type UmkmMonitoringDocsScalarFieldEnum = (typeof UmkmMonitoringDocsScalarFieldEnum)[keyof typeof UmkmMonitoringDocsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1745,6 +2110,10 @@ export type GlobalOmitConfig = {
   wali?: Prisma.WaliOmit
   familyVisit?: Prisma.FamilyVisitOmit
   familyVisitDocs?: Prisma.FamilyVisitDocsOmit
+  umkmVisit?: Prisma.UmkmVisitOmit
+  umkmVisitDocs?: Prisma.UmkmVisitDocsOmit
+  umkmMonitoring?: Prisma.UmkmMonitoringOmit
+  umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsOmit
 }
 
 /* Types for Logging */

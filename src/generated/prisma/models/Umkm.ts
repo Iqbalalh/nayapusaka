@@ -337,6 +337,8 @@ export type UmkmWhereInput = {
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
   regions?: Prisma.XOR<Prisma.RegionsNullableScalarRelationFilter, Prisma.RegionsWhereInput> | null
   wali?: Prisma.XOR<Prisma.WaliNullableScalarRelationFilter, Prisma.WaliWhereInput> | null
+  umkmVisits?: Prisma.UmkmVisitListRelationFilter
+  umkmMonitoring?: Prisma.UmkmMonitoringListRelationFilter
 }
 
 export type UmkmOrderByWithRelationInput = {
@@ -362,6 +364,8 @@ export type UmkmOrderByWithRelationInput = {
   partners?: Prisma.PartnersOrderByWithRelationInput
   regions?: Prisma.RegionsOrderByWithRelationInput
   wali?: Prisma.WaliOrderByWithRelationInput
+  umkmVisits?: Prisma.UmkmVisitOrderByRelationAggregateInput
+  umkmMonitoring?: Prisma.UmkmMonitoringOrderByRelationAggregateInput
 }
 
 export type UmkmWhereUniqueInput = Prisma.AtLeast<{
@@ -390,6 +394,8 @@ export type UmkmWhereUniqueInput = Prisma.AtLeast<{
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
   regions?: Prisma.XOR<Prisma.RegionsNullableScalarRelationFilter, Prisma.RegionsWhereInput> | null
   wali?: Prisma.XOR<Prisma.WaliNullableScalarRelationFilter, Prisma.WaliWhereInput> | null
+  umkmVisits?: Prisma.UmkmVisitListRelationFilter
+  umkmMonitoring?: Prisma.UmkmMonitoringListRelationFilter
 }, "id">
 
 export type UmkmOrderByWithAggregationInput = {
@@ -457,6 +463,8 @@ export type UmkmCreateInput = {
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
   wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUncheckedCreateInput = {
@@ -477,6 +485,8 @@ export type UmkmUncheckedCreateInput = {
   waliId?: number | null
   childrenId?: number | null
   umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUpdateInput = {
@@ -496,6 +506,8 @@ export type UmkmUpdateInput = {
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
   wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateInput = {
@@ -516,6 +528,8 @@ export type UmkmUncheckedUpdateInput = {
   waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmCreateManyInput = {
@@ -658,6 +672,11 @@ export type UmkmSumOrderByAggregateInput = {
   employeeId?: Prisma.SortOrder
   waliId?: Prisma.SortOrder
   childrenId?: Prisma.SortOrder
+}
+
+export type UmkmScalarRelationFilter = {
+  is?: Prisma.UmkmWhereInput
+  isNot?: Prisma.UmkmWhereInput
 }
 
 export type UmkmCreateNestedManyWithoutChildrenInput = {
@@ -870,6 +889,34 @@ export type UmkmUncheckedUpdateManyWithoutWaliNestedInput = {
   deleteMany?: Prisma.UmkmScalarWhereInput | Prisma.UmkmScalarWhereInput[]
 }
 
+export type UmkmCreateNestedOneWithoutUmkmVisitsInput = {
+  create?: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmVisitsInput, Prisma.UmkmUncheckedCreateWithoutUmkmVisitsInput>
+  connectOrCreate?: Prisma.UmkmCreateOrConnectWithoutUmkmVisitsInput
+  connect?: Prisma.UmkmWhereUniqueInput
+}
+
+export type UmkmUpdateOneRequiredWithoutUmkmVisitsNestedInput = {
+  create?: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmVisitsInput, Prisma.UmkmUncheckedCreateWithoutUmkmVisitsInput>
+  connectOrCreate?: Prisma.UmkmCreateOrConnectWithoutUmkmVisitsInput
+  upsert?: Prisma.UmkmUpsertWithoutUmkmVisitsInput
+  connect?: Prisma.UmkmWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UmkmUpdateToOneWithWhereWithoutUmkmVisitsInput, Prisma.UmkmUpdateWithoutUmkmVisitsInput>, Prisma.UmkmUncheckedUpdateWithoutUmkmVisitsInput>
+}
+
+export type UmkmCreateNestedOneWithoutUmkmMonitoringInput = {
+  create?: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmMonitoringInput, Prisma.UmkmUncheckedCreateWithoutUmkmMonitoringInput>
+  connectOrCreate?: Prisma.UmkmCreateOrConnectWithoutUmkmMonitoringInput
+  connect?: Prisma.UmkmWhereUniqueInput
+}
+
+export type UmkmUpdateOneRequiredWithoutUmkmMonitoringNestedInput = {
+  create?: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmMonitoringInput, Prisma.UmkmUncheckedCreateWithoutUmkmMonitoringInput>
+  connectOrCreate?: Prisma.UmkmCreateOrConnectWithoutUmkmMonitoringInput
+  upsert?: Prisma.UmkmUpsertWithoutUmkmMonitoringInput
+  connect?: Prisma.UmkmWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UmkmUpdateToOneWithWhereWithoutUmkmMonitoringInput, Prisma.UmkmUpdateWithoutUmkmMonitoringInput>, Prisma.UmkmUncheckedUpdateWithoutUmkmMonitoringInput>
+}
+
 export type UmkmCreateWithoutChildrenInput = {
   ownerName?: string | null
   businessName?: string | null
@@ -886,6 +933,8 @@ export type UmkmCreateWithoutChildrenInput = {
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
   wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUncheckedCreateWithoutChildrenInput = {
@@ -905,6 +954,8 @@ export type UmkmUncheckedCreateWithoutChildrenInput = {
   updatedAt?: Date | string | null
   waliId?: number | null
   umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmCreateOrConnectWithoutChildrenInput = {
@@ -972,6 +1023,8 @@ export type UmkmCreateWithoutEmployeesInput = {
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
   wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUncheckedCreateWithoutEmployeesInput = {
@@ -991,6 +1044,8 @@ export type UmkmUncheckedCreateWithoutEmployeesInput = {
   waliId?: number | null
   childrenId?: number | null
   umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmCreateOrConnectWithoutEmployeesInput = {
@@ -1035,6 +1090,8 @@ export type UmkmCreateWithoutPartnersInput = {
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
   wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUncheckedCreateWithoutPartnersInput = {
@@ -1054,6 +1111,8 @@ export type UmkmUncheckedCreateWithoutPartnersInput = {
   waliId?: number | null
   childrenId?: number | null
   umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmCreateOrConnectWithoutPartnersInput = {
@@ -1098,6 +1157,8 @@ export type UmkmCreateWithoutRegionsInput = {
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUncheckedCreateWithoutRegionsInput = {
@@ -1117,6 +1178,8 @@ export type UmkmUncheckedCreateWithoutRegionsInput = {
   waliId?: number | null
   childrenId?: number | null
   umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmCreateOrConnectWithoutRegionsInput = {
@@ -1161,6 +1224,8 @@ export type UmkmCreateWithoutWaliInput = {
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmUncheckedCreateWithoutWaliInput = {
@@ -1180,6 +1245,8 @@ export type UmkmUncheckedCreateWithoutWaliInput = {
   updatedAt?: Date | string | null
   childrenId?: number | null
   umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
 export type UmkmCreateOrConnectWithoutWaliInput = {
@@ -1206,6 +1273,202 @@ export type UmkmUpdateWithWhereUniqueWithoutWaliInput = {
 export type UmkmUpdateManyWithWhereWithoutWaliInput = {
   where: Prisma.UmkmScalarWhereInput
   data: Prisma.XOR<Prisma.UmkmUpdateManyMutationInput, Prisma.UmkmUncheckedUpdateManyWithoutWaliInput>
+}
+
+export type UmkmCreateWithoutUmkmVisitsInput = {
+  ownerName?: string | null
+  businessName?: string | null
+  businessAddress?: string | null
+  subdistrictName?: string | null
+  postalCode?: string | null
+  umkmCoordinate?: string | null
+  businessType?: string | null
+  products?: string | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  umkmPict?: string | null
+  children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
+  employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
+  partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
+  regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
+  wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmMonitoring?: Prisma.UmkmMonitoringCreateNestedManyWithoutUmkmInput
+}
+
+export type UmkmUncheckedCreateWithoutUmkmVisitsInput = {
+  id?: number
+  partnerId?: number | null
+  ownerName?: string | null
+  businessName?: string | null
+  businessAddress?: string | null
+  regionId?: number | null
+  subdistrictName?: string | null
+  postalCode?: string | null
+  umkmCoordinate?: string | null
+  businessType?: string | null
+  products?: string | null
+  employeeId?: number | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  waliId?: number | null
+  childrenId?: number | null
+  umkmPict?: string | null
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
+}
+
+export type UmkmCreateOrConnectWithoutUmkmVisitsInput = {
+  where: Prisma.UmkmWhereUniqueInput
+  create: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmVisitsInput, Prisma.UmkmUncheckedCreateWithoutUmkmVisitsInput>
+}
+
+export type UmkmUpsertWithoutUmkmVisitsInput = {
+  update: Prisma.XOR<Prisma.UmkmUpdateWithoutUmkmVisitsInput, Prisma.UmkmUncheckedUpdateWithoutUmkmVisitsInput>
+  create: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmVisitsInput, Prisma.UmkmUncheckedCreateWithoutUmkmVisitsInput>
+  where?: Prisma.UmkmWhereInput
+}
+
+export type UmkmUpdateToOneWithWhereWithoutUmkmVisitsInput = {
+  where?: Prisma.UmkmWhereInput
+  data: Prisma.XOR<Prisma.UmkmUpdateWithoutUmkmVisitsInput, Prisma.UmkmUncheckedUpdateWithoutUmkmVisitsInput>
+}
+
+export type UmkmUpdateWithoutUmkmVisitsInput = {
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  products?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
+  employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
+  partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
+  regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
+  wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
+}
+
+export type UmkmUncheckedUpdateWithoutUmkmVisitsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  partnerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  products?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
+}
+
+export type UmkmCreateWithoutUmkmMonitoringInput = {
+  ownerName?: string | null
+  businessName?: string | null
+  businessAddress?: string | null
+  subdistrictName?: string | null
+  postalCode?: string | null
+  umkmCoordinate?: string | null
+  businessType?: string | null
+  products?: string | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  umkmPict?: string | null
+  children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
+  employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
+  partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
+  regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
+  wali?: Prisma.WaliCreateNestedOneWithoutUmkmInput
+  umkmVisits?: Prisma.UmkmVisitCreateNestedManyWithoutUmkmInput
+}
+
+export type UmkmUncheckedCreateWithoutUmkmMonitoringInput = {
+  id?: number
+  partnerId?: number | null
+  ownerName?: string | null
+  businessName?: string | null
+  businessAddress?: string | null
+  regionId?: number | null
+  subdistrictName?: string | null
+  postalCode?: string | null
+  umkmCoordinate?: string | null
+  businessType?: string | null
+  products?: string | null
+  employeeId?: number | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  waliId?: number | null
+  childrenId?: number | null
+  umkmPict?: string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
+}
+
+export type UmkmCreateOrConnectWithoutUmkmMonitoringInput = {
+  where: Prisma.UmkmWhereUniqueInput
+  create: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmMonitoringInput, Prisma.UmkmUncheckedCreateWithoutUmkmMonitoringInput>
+}
+
+export type UmkmUpsertWithoutUmkmMonitoringInput = {
+  update: Prisma.XOR<Prisma.UmkmUpdateWithoutUmkmMonitoringInput, Prisma.UmkmUncheckedUpdateWithoutUmkmMonitoringInput>
+  create: Prisma.XOR<Prisma.UmkmCreateWithoutUmkmMonitoringInput, Prisma.UmkmUncheckedCreateWithoutUmkmMonitoringInput>
+  where?: Prisma.UmkmWhereInput
+}
+
+export type UmkmUpdateToOneWithWhereWithoutUmkmMonitoringInput = {
+  where?: Prisma.UmkmWhereInput
+  data: Prisma.XOR<Prisma.UmkmUpdateWithoutUmkmMonitoringInput, Prisma.UmkmUncheckedUpdateWithoutUmkmMonitoringInput>
+}
+
+export type UmkmUpdateWithoutUmkmMonitoringInput = {
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  products?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
+  employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
+  partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
+  regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
+  wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+}
+
+export type UmkmUncheckedUpdateWithoutUmkmMonitoringInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  partnerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  ownerName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  subdistrictName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmCoordinate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  businessType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  products?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employeeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmCreateManyChildrenInput = {
@@ -1243,6 +1506,8 @@ export type UmkmUpdateWithoutChildrenInput = {
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
   wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateWithoutChildrenInput = {
@@ -1262,6 +1527,8 @@ export type UmkmUncheckedUpdateWithoutChildrenInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateManyWithoutChildrenInput = {
@@ -1318,6 +1585,8 @@ export type UmkmUpdateWithoutEmployeesInput = {
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
   wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateWithoutEmployeesInput = {
@@ -1337,6 +1606,8 @@ export type UmkmUncheckedUpdateWithoutEmployeesInput = {
   waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateManyWithoutEmployeesInput = {
@@ -1393,6 +1664,8 @@ export type UmkmUpdateWithoutPartnersInput = {
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
   wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateWithoutPartnersInput = {
@@ -1412,6 +1685,8 @@ export type UmkmUncheckedUpdateWithoutPartnersInput = {
   waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateManyWithoutPartnersInput = {
@@ -1468,6 +1743,8 @@ export type UmkmUpdateWithoutRegionsInput = {
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   wali?: Prisma.WaliUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateWithoutRegionsInput = {
@@ -1487,6 +1764,8 @@ export type UmkmUncheckedUpdateWithoutRegionsInput = {
   waliId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateManyWithoutRegionsInput = {
@@ -1543,6 +1822,8 @@ export type UmkmUpdateWithoutWaliInput = {
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
+  umkmVisits?: Prisma.UmkmVisitUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateWithoutWaliInput = {
@@ -1562,6 +1843,8 @@ export type UmkmUncheckedUpdateWithoutWaliInput = {
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   childrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
+  umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
 export type UmkmUncheckedUpdateManyWithoutWaliInput = {
@@ -1583,6 +1866,44 @@ export type UmkmUncheckedUpdateManyWithoutWaliInput = {
   umkmPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
+
+/**
+ * Count Type UmkmCountOutputType
+ */
+
+export type UmkmCountOutputType = {
+  umkmVisits: number
+  umkmMonitoring: number
+}
+
+export type UmkmCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  umkmVisits?: boolean | UmkmCountOutputTypeCountUmkmVisitsArgs
+  umkmMonitoring?: boolean | UmkmCountOutputTypeCountUmkmMonitoringArgs
+}
+
+/**
+ * UmkmCountOutputType without action
+ */
+export type UmkmCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UmkmCountOutputType
+   */
+  select?: Prisma.UmkmCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UmkmCountOutputType without action
+ */
+export type UmkmCountOutputTypeCountUmkmVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UmkmVisitWhereInput
+}
+
+/**
+ * UmkmCountOutputType without action
+ */
+export type UmkmCountOutputTypeCountUmkmMonitoringArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UmkmMonitoringWhereInput
+}
 
 
 export type UmkmSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1608,6 +1929,9 @@ export type UmkmSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   partners?: boolean | Prisma.Umkm$partnersArgs<ExtArgs>
   regions?: boolean | Prisma.Umkm$regionsArgs<ExtArgs>
   wali?: boolean | Prisma.Umkm$waliArgs<ExtArgs>
+  umkmVisits?: boolean | Prisma.Umkm$umkmVisitsArgs<ExtArgs>
+  umkmMonitoring?: boolean | Prisma.Umkm$umkmMonitoringArgs<ExtArgs>
+  _count?: boolean | Prisma.UmkmCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["umkm"]>
 
 export type UmkmSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1687,6 +2011,9 @@ export type UmkmInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   partners?: boolean | Prisma.Umkm$partnersArgs<ExtArgs>
   regions?: boolean | Prisma.Umkm$regionsArgs<ExtArgs>
   wali?: boolean | Prisma.Umkm$waliArgs<ExtArgs>
+  umkmVisits?: boolean | Prisma.Umkm$umkmVisitsArgs<ExtArgs>
+  umkmMonitoring?: boolean | Prisma.Umkm$umkmMonitoringArgs<ExtArgs>
+  _count?: boolean | Prisma.UmkmCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UmkmIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | Prisma.Umkm$childrenArgs<ExtArgs>
@@ -1711,6 +2038,8 @@ export type $UmkmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     partners: Prisma.$PartnersPayload<ExtArgs> | null
     regions: Prisma.$RegionsPayload<ExtArgs> | null
     wali: Prisma.$WaliPayload<ExtArgs> | null
+    umkmVisits: Prisma.$UmkmVisitPayload<ExtArgs>[]
+    umkmMonitoring: Prisma.$UmkmMonitoringPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2129,6 +2458,8 @@ export interface Prisma__UmkmClient<T, Null = never, ExtArgs extends runtime.Typ
   partners<T extends Prisma.Umkm$partnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Umkm$partnersArgs<ExtArgs>>): Prisma.Prisma__PartnersClient<runtime.Types.Result.GetResult<Prisma.$PartnersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   regions<T extends Prisma.Umkm$regionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Umkm$regionsArgs<ExtArgs>>): Prisma.Prisma__RegionsClient<runtime.Types.Result.GetResult<Prisma.$RegionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   wali<T extends Prisma.Umkm$waliArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Umkm$waliArgs<ExtArgs>>): Prisma.Prisma__WaliClient<runtime.Types.Result.GetResult<Prisma.$WaliPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  umkmVisits<T extends Prisma.Umkm$umkmVisitsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Umkm$umkmVisitsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmkmVisitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  umkmMonitoring<T extends Prisma.Umkm$umkmMonitoringArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Umkm$umkmMonitoringArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmkmMonitoringPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2663,6 +2994,54 @@ export type Umkm$waliArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
    */
   include?: Prisma.WaliInclude<ExtArgs> | null
   where?: Prisma.WaliWhereInput
+}
+
+/**
+ * Umkm.umkmVisits
+ */
+export type Umkm$umkmVisitsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UmkmVisit
+   */
+  select?: Prisma.UmkmVisitSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UmkmVisit
+   */
+  omit?: Prisma.UmkmVisitOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UmkmVisitInclude<ExtArgs> | null
+  where?: Prisma.UmkmVisitWhereInput
+  orderBy?: Prisma.UmkmVisitOrderByWithRelationInput | Prisma.UmkmVisitOrderByWithRelationInput[]
+  cursor?: Prisma.UmkmVisitWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UmkmVisitScalarFieldEnum | Prisma.UmkmVisitScalarFieldEnum[]
+}
+
+/**
+ * Umkm.umkmMonitoring
+ */
+export type Umkm$umkmMonitoringArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UmkmMonitoring
+   */
+  select?: Prisma.UmkmMonitoringSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UmkmMonitoring
+   */
+  omit?: Prisma.UmkmMonitoringOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UmkmMonitoringInclude<ExtArgs> | null
+  where?: Prisma.UmkmMonitoringWhereInput
+  orderBy?: Prisma.UmkmMonitoringOrderByWithRelationInput | Prisma.UmkmMonitoringOrderByWithRelationInput[]
+  cursor?: Prisma.UmkmMonitoringWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UmkmMonitoringScalarFieldEnum | Prisma.UmkmMonitoringScalarFieldEnum[]
 }
 
 /**

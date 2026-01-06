@@ -62,7 +62,11 @@ export const ModelName = {
   Users: 'Users',
   Wali: 'Wali',
   FamilyVisit: 'FamilyVisit',
-  FamilyVisitDocs: 'FamilyVisitDocs'
+  FamilyVisitDocs: 'FamilyVisitDocs',
+  UmkmVisit: 'UmkmVisit',
+  UmkmVisitDocs: 'UmkmVisitDocs',
+  UmkmMonitoring: 'UmkmMonitoring',
+  UmkmMonitoringDocs: 'UmkmMonitoringDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -269,6 +273,71 @@ export const FamilyVisitDocsScalarFieldEnum = {
 } as const
 
 export type FamilyVisitDocsScalarFieldEnum = (typeof FamilyVisitDocsScalarFieldEnum)[keyof typeof FamilyVisitDocsScalarFieldEnum]
+
+
+export const UmkmVisitScalarFieldEnum = {
+  id: 'id',
+  umkmId: 'umkmId',
+  visitNumber: 'visitNumber',
+  assistanceDate: 'assistanceDate',
+  assistanceType: 'assistanceType',
+  itemType: 'itemType',
+  assistanceAmount: 'assistanceAmount',
+  assistanceSource: 'assistanceSource',
+  value: 'value',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UmkmVisitScalarFieldEnum = (typeof UmkmVisitScalarFieldEnum)[keyof typeof UmkmVisitScalarFieldEnum]
+
+
+export const UmkmVisitDocsScalarFieldEnum = {
+  id: 'id',
+  umkmVisitId: 'umkmVisitId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type UmkmVisitDocsScalarFieldEnum = (typeof UmkmVisitDocsScalarFieldEnum)[keyof typeof UmkmVisitDocsScalarFieldEnum]
+
+
+export const UmkmMonitoringScalarFieldEnum = {
+  id: 'id',
+  umkmId: 'umkmId',
+  visitNumber: 'visitNumber',
+  monitoringDate: 'monitoringDate',
+  surveyor: 'surveyor',
+  turnoverBefore: 'turnoverBefore',
+  turnoverAfter: 'turnoverAfter',
+  workersBefore: 'workersBefore',
+  workersAfter: 'workersAfter',
+  productionBefore: 'productionBefore',
+  productionAfter: 'productionAfter',
+  customersBefore: 'customersBefore',
+  customersAfter: 'customersAfter',
+  benefitLevel: 'benefitLevel',
+  challenges: 'challenges',
+  developmentNeeds: 'developmentNeeds',
+  otherNotes: 'otherNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UmkmMonitoringScalarFieldEnum = (typeof UmkmMonitoringScalarFieldEnum)[keyof typeof UmkmMonitoringScalarFieldEnum]
+
+
+export const UmkmMonitoringDocsScalarFieldEnum = {
+  id: 'id',
+  umkmMonitoringId: 'umkmMonitoringId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type UmkmMonitoringDocsScalarFieldEnum = (typeof UmkmMonitoringDocsScalarFieldEnum)[keyof typeof UmkmMonitoringDocsScalarFieldEnum]
 
 
 export const SortOrder = {
