@@ -393,7 +393,9 @@ export const ModelName = {
   Staffs: 'Staffs',
   Umkm: 'Umkm',
   Users: 'Users',
-  Wali: 'Wali'
+  Wali: 'Wali',
+  FamilyVisit: 'FamilyVisit',
+  FamilyVisitDocs: 'FamilyVisitDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1155,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    FamilyVisit: {
+      payload: Prisma.$FamilyVisitPayload<ExtArgs>
+      fields: Prisma.FamilyVisitFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FamilyVisitFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FamilyVisitFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>
+        }
+        findFirst: {
+          args: Prisma.FamilyVisitFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FamilyVisitFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>
+        }
+        findMany: {
+          args: Prisma.FamilyVisitFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>[]
+        }
+        create: {
+          args: Prisma.FamilyVisitCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>
+        }
+        createMany: {
+          args: Prisma.FamilyVisitCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FamilyVisitCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>[]
+        }
+        delete: {
+          args: Prisma.FamilyVisitDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>
+        }
+        update: {
+          args: Prisma.FamilyVisitUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>
+        }
+        deleteMany: {
+          args: Prisma.FamilyVisitDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FamilyVisitUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FamilyVisitUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>[]
+        }
+        upsert: {
+          args: Prisma.FamilyVisitUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitPayload>
+        }
+        aggregate: {
+          args: Prisma.FamilyVisitAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFamilyVisit>
+        }
+        groupBy: {
+          args: Prisma.FamilyVisitGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FamilyVisitGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FamilyVisitCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FamilyVisitCountAggregateOutputType> | number
+        }
+      }
+    }
+    FamilyVisitDocs: {
+      payload: Prisma.$FamilyVisitDocsPayload<ExtArgs>
+      fields: Prisma.FamilyVisitDocsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FamilyVisitDocsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FamilyVisitDocsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>
+        }
+        findFirst: {
+          args: Prisma.FamilyVisitDocsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FamilyVisitDocsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>
+        }
+        findMany: {
+          args: Prisma.FamilyVisitDocsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>[]
+        }
+        create: {
+          args: Prisma.FamilyVisitDocsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>
+        }
+        createMany: {
+          args: Prisma.FamilyVisitDocsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FamilyVisitDocsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>[]
+        }
+        delete: {
+          args: Prisma.FamilyVisitDocsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>
+        }
+        update: {
+          args: Prisma.FamilyVisitDocsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>
+        }
+        deleteMany: {
+          args: Prisma.FamilyVisitDocsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FamilyVisitDocsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FamilyVisitDocsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>[]
+        }
+        upsert: {
+          args: Prisma.FamilyVisitDocsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FamilyVisitDocsPayload>
+        }
+        aggregate: {
+          args: Prisma.FamilyVisitDocsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFamilyVisitDocs>
+        }
+        groupBy: {
+          args: Prisma.FamilyVisitDocsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FamilyVisitDocsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FamilyVisitDocsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FamilyVisitDocsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1355,6 +1505,31 @@ export const WaliScalarFieldEnum = {
 } as const
 
 export type WaliScalarFieldEnum = (typeof WaliScalarFieldEnum)[keyof typeof WaliScalarFieldEnum]
+
+
+export const FamilyVisitScalarFieldEnum = {
+  id: 'id',
+  homeId: 'homeId',
+  visitDate: 'visitDate',
+  visitNumber: 'visitNumber',
+  officer: 'officer',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FamilyVisitScalarFieldEnum = (typeof FamilyVisitScalarFieldEnum)[keyof typeof FamilyVisitScalarFieldEnum]
+
+
+export const FamilyVisitDocsScalarFieldEnum = {
+  id: 'id',
+  familyVisitId: 'familyVisitId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type FamilyVisitDocsScalarFieldEnum = (typeof FamilyVisitDocsScalarFieldEnum)[keyof typeof FamilyVisitDocsScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1568,6 +1743,8 @@ export type GlobalOmitConfig = {
   umkm?: Prisma.UmkmOmit
   users?: Prisma.UsersOmit
   wali?: Prisma.WaliOmit
+  familyVisit?: Prisma.FamilyVisitOmit
+  familyVisitDocs?: Prisma.FamilyVisitDocsOmit
 }
 
 /* Types for Logging */

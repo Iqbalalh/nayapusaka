@@ -60,7 +60,9 @@ export const ModelName = {
   Staffs: 'Staffs',
   Umkm: 'Umkm',
   Users: 'Users',
-  Wali: 'Wali'
+  Wali: 'Wali',
+  FamilyVisit: 'FamilyVisit',
+  FamilyVisitDocs: 'FamilyVisitDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -242,6 +244,31 @@ export const WaliScalarFieldEnum = {
 } as const
 
 export type WaliScalarFieldEnum = (typeof WaliScalarFieldEnum)[keyof typeof WaliScalarFieldEnum]
+
+
+export const FamilyVisitScalarFieldEnum = {
+  id: 'id',
+  homeId: 'homeId',
+  visitDate: 'visitDate',
+  visitNumber: 'visitNumber',
+  officer: 'officer',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FamilyVisitScalarFieldEnum = (typeof FamilyVisitScalarFieldEnum)[keyof typeof FamilyVisitScalarFieldEnum]
+
+
+export const FamilyVisitDocsScalarFieldEnum = {
+  id: 'id',
+  familyVisitId: 'familyVisitId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type FamilyVisitDocsScalarFieldEnum = (typeof FamilyVisitDocsScalarFieldEnum)[keyof typeof FamilyVisitDocsScalarFieldEnum]
 
 
 export const SortOrder = {

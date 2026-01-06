@@ -12,6 +12,7 @@ import authRouter from "./routes/auth.router";
 import umkmRouter from "./routes/umkm.router";
 import staffRouter from "./routes/staff.router";
 import pictureRouter from "./routes/picture.router";
+import familyVisitRouter from "./routes/famvisit.router";
 
 const app: Application = express();
 
@@ -48,6 +49,7 @@ app.use("/api/dashboard", dashboardRouter);
 app.use("/api/umkm", umkmRouter);
 app.use("/api/staff", staffRouter);
 app.use("/api/picture", pictureRouter);
+app.use("/api/family-visits", familyVisitRouter);
 
 // ======================
 // Export App

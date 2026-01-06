@@ -87,3 +87,13 @@ export type Users = Prisma.UsersModel
  * 
  */
 export type Wali = Prisma.WaliModel
+/**
+ * Model FamilyVisit
+ * 
+ */
+export type FamilyVisit = Prisma.FamilyVisitModel
+/**
+ * Model FamilyVisitDocs
+ * 
+ */
+export type FamilyVisitDocs = Prisma.FamilyVisitDocsModel

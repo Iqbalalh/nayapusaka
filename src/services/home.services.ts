@@ -302,9 +302,11 @@ export const selectHomeDetailById = async (id: number) => {
 
     return {
       ...home.employees,
+      employeePict: home.employees?.employeePict,
       partnerName: home.partners?.partnerName,
       partnerJob: home.partners?.partnerJob,
       partnerNik: home.partners?.partnerNik,
+      partnerPict: home.partners?.partnerPict,
       isAlive: home.partners?.isAlive,
       address: home.wali?.waliAddress || home.partners?.address,
       postalCode: home.postalCode || home.partners?.postalCode,

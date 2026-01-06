@@ -71,6 +71,16 @@ export const getHomes = async (
           );
         }
 
+        if (
+          homeCopy.partners &&
+          homeCopy.partners.partnerPict &&
+          isValidS3Key(homeCopy.partners.partnerPict)
+        ) {
+          homeCopy.partners.partnerPict = await getPresignedUrl(
+            homeCopy.partners.partnerPict
+          );
+        }
+
         return homeCopy;
       })
     );
@@ -200,6 +210,16 @@ export const getHomesForMaps = async (
           );
         }
 
+        if (
+          homeCopy.partners &&
+          homeCopy.partners.partnerPict &&
+          isValidS3Key(homeCopy.partners.partnerPict)
+        ) {
+          homeCopy.partners.partnerPict = await getPresignedUrl(
+            homeCopy.partners.partnerPict
+          );
+        }
+
         return homeCopy;
       })
     );
@@ -236,6 +256,16 @@ export const getAbkHomesForMaps = async (
         ) {
           homeCopy.employees.employeePict = await getPresignedUrl(
             homeCopy.employees.employeePict
+          );
+        }
+
+        if (
+          homeCopy.partners &&
+          homeCopy.partners.partnerPict &&
+          isValidS3Key(homeCopy.partners.partnerPict)
+        ) {
+          homeCopy.partners.partnerPict = await getPresignedUrl(
+            homeCopy.partners.partnerPict
           );
         }
 
@@ -278,6 +308,16 @@ export const getOrphanHomesForMaps = async (
           );
         }
 
+        if (
+          homeCopy.partners &&
+          homeCopy.partners.partnerPict &&
+          isValidS3Key(homeCopy.partners.partnerPict)
+        ) {
+          homeCopy.partners.partnerPict = await getPresignedUrl(
+            homeCopy.partners.partnerPict
+          );
+        }
+
         return homeCopy;
       })
     );
@@ -311,14 +351,21 @@ export const getHomeDetail = async (
       });
     }
 
-    let pictUrl = null;
+    let employeePictUrl = null;
+    let partnerPictUrl = null;
+    
     if (home.employeePict && isValidS3Key(home.employeePict)) {
-      pictUrl = await getPresignedUrl(home.employeePict);
+      employeePictUrl = await getPresignedUrl(home.employeePict);
+    }
+    
+    if (home.partnerPict && isValidS3Key(home.partnerPict)) {
+      partnerPictUrl = await getPresignedUrl(home.partnerPict);
     }
 
     const result = {
       ...home,
-      employeePict: pictUrl,
+      employeePict: employeePictUrl,
+      partnerPict: partnerPictUrl,
     };
 
     res.json({
