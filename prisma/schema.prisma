@@ -183,6 +183,10 @@ model Umkm {
   waliId          Int?      @map("wali_id")
   childrenId      Int?      @map("children_id")
   umkmPict        String?   @map("umkm_pict") @db.VarChar(255)
+  umkmPict2       String?   @map("umkm_pict_2") @db.VarChar(255)
+  umkmPict3       String?   @map("umkm_pict_3") @db.VarChar(255)
+  umkmPict4       String?   @map("umkm_pict_4") @db.VarChar(255)
+  umkmPict5       String?   @map("umkm_pict_5") @db.VarChar(255)
 
   // Relations
   children  Children?  @relation(fields: [childrenId], references: [id], onDelete: NoAction, onUpdate: NoAction)

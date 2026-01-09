@@ -4,6 +4,7 @@ import { normalize } from "../formatter/normalize";
 export interface PartnerInput {
   employeeId?: string | number;
   regionId?: string | number;
+  subdistrictId?: string | number;
   subdistrictName?: string;
   isActive?: string | boolean;
   isAlive?: string | boolean;
@@ -21,6 +22,7 @@ export interface PartnerInput {
 export interface SanitizedPartnerData {
   employeeId?: number | null;
   regionId?: number | null;
+  subdistrictId?: number | null;
   subdistrictName?: string | null;
   isActive?: boolean;
   isAlive?: boolean;
@@ -63,6 +65,9 @@ export const sanitizePartnerData = (body: PartnerInput): SanitizedPartnerData =>
   }
   if (rest.regionId !== undefined) {
     sanitized.regionId = rest.regionId ? Number(normalize(rest.regionId)) : null;
+  }
+  if (rest.subdistrictId !== undefined) {
+    sanitized.subdistrictId = rest.subdistrictId ? Number(normalize(rest.subdistrictId)) : null;
   }
   if (rest.subdistrictName !== undefined) {
     sanitized.subdistrictName = normalize(rest.subdistrictName);

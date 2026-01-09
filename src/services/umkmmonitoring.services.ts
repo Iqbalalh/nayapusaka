@@ -14,7 +14,7 @@ export const selectAllUmkmMonitoring = async (
   try {
     return await prisma.umkmMonitoring.findMany({
       ...args,
-      orderBy: { monitoringDate: "desc" },
+      orderBy: { visitNumber: "asc" },
       include: {
         umkm: {
           include: {
@@ -63,7 +63,7 @@ export const selectUmkmMonitoringByUmkmId = async (umkmId: number) => {
   try {
     return await prisma.umkmMonitoring.findMany({
       where: { umkmId },
-      orderBy: { monitoringDate: "desc" },
+      orderBy: { visitNumber: "asc" },
       include: {
         umkmMonitoringDocs: true,
       },

@@ -1773,7 +1773,11 @@ export const UmkmScalarFieldEnum = {
   updatedAt: 'updatedAt',
   waliId: 'waliId',
   childrenId: 'childrenId',
-  umkmPict: 'umkmPict'
+  umkmPict: 'umkmPict',
+  umkmPict2: 'umkmPict2',
+  umkmPict3: 'umkmPict3',
+  umkmPict4: 'umkmPict4',
+  umkmPict5: 'umkmPict5'
 } as const
 
 export type UmkmScalarFieldEnum = (typeof UmkmScalarFieldEnum)[keyof typeof UmkmScalarFieldEnum]

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Request, Response, NextFunction } from "express";
 import {
   selectAllUmkm,
@@ -11,8 +15,8 @@ import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeUmkmData, UmkmInput } from "../utils/sanitize/umkm.sanitize";
 
-interface RequestWithFile extends Request {
-  file?: Express.Multer.File;
+interface RequestWithFiles extends Request {
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
 }
 
 // ============================================================================
@@ -28,16 +32,17 @@ export const getUmkms = async (
     
     umkms = await Promise.all(
       umkms.map(async (umkm) => {
-        let pictUrl = null;
+        const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
+        const result: any = { ...umkm };
 
-        if (isValidS3Key(umkm.umkmPict)) {
-          pictUrl = await getPresignedUrl(umkm.umkmPict);
+        for (const field of photoFields) {
+          const photo = umkm[field as keyof typeof umkm] as string | null;
+          if (photo && isValidS3Key(photo)) {
+            result[field] = await getPresignedUrl(photo);
+          }
         }
 
-        return {
-          ...umkm,
-          umkmPict: pictUrl,
-        };
+        return result;
       })
     );
 
@@ -88,15 +93,15 @@ export const getUmkm = async (
       });
     }
 
-    let pictUrl = null;
-    if (isValidS3Key(umkm.umkmPict)) {
-      pictUrl = await getPresignedUrl(umkm.umkmPict);
-    }
+    const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
+    const result: any = { ...umkm };
 
-    const result = {
-      ...umkm,
-      umkmPict: pictUrl,
-    };
+    for (const field of photoFields) {
+      const photo = umkm[field as keyof typeof umkm] as string | null;
+      if (photo && isValidS3Key(photo)) {
+        result[field] = await getPresignedUrl(photo);
+      }
+    }
 
     return res.json({
       message: "Successfully retrieved UMKM detail",
@@ -111,7 +116,7 @@ export const getUmkm = async (
 // CREATE UMKM
 // ============================================================================
 export const postUmkm = async (
-  req: RequestWithFile,
+  req: RequestWithFiles,
   res: Response,
   next: NextFunction
 ) => {
@@ -122,34 +127,40 @@ export const postUmkm = async (
     const body: Prisma.UmkmCreateInput = {
       ...sanitizedBody,
       umkmPict: null,
+      umkmPict2: null,
+      umkmPict3: null,
+      umkmPict4: null,
+      umkmPict5: null,
     } as Prisma.UmkmCreateInput;
 
     const newUmkm = await insertUmkm(body);
 
-    let umkmPict: string | null = null;
+    // Upload multiple photos
+    const files = Array.isArray(req.files) ? req.files : [];
+    const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
+    const uploadedPhotos: Record<string, string | null> = {};
 
-    if (req.file) {
-      umkmPict = await uploadToS3(
-        req.file,
+    for (let i = 0; i < Math.min(files.length, photoFields.length); i++) {
+      const file = files[i];
+      const photoKey = await uploadToS3(
+        file,
         newUmkm.id,
-        body.businessName || "",
+        `${body.businessName || ""}_${i}`,
         "umkm"
       );
 
-      if (umkmPict) {
-        await updateUmkmById(newUmkm.id, { umkmPict });
+      if (photoKey) {
+        uploadedPhotos[photoFields[i]] = photoKey;
       }
     }
 
-    let pictUrl = null;
-    if (umkmPict && isValidS3Key(umkmPict)) {
-      pictUrl = await getPresignedUrl(umkmPict);
+    // Update UMKM with uploaded photos
+    if (Object.keys(uploadedPhotos).length > 0) {
+      await updateUmkmById(newUmkm.id, uploadedPhotos);
     }
 
-    const result = {
-      ...newUmkm,
-      umkmPict: pictUrl,
-    };
+    // Get presigned URLs for all photos
+    const result = await getUmkmWithPresignedUrls(newUmkm.id);
 
     return res.status(201).json({
       message: "UMKM created successfully",
@@ -164,7 +175,7 @@ export const postUmkm = async (
 // UPDATE UMKM
 // ============================================================================
 export const patchUmkm = async (
-  req: RequestWithFile,
+  req: RequestWithFiles,
   res: Response,
   next: NextFunction
 ) => {
@@ -179,41 +190,40 @@ export const patchUmkm = async (
       });
     }
 
-    let umkmPict: string | null = existing.umkmPict || null;
-
-    if (req.file) {
-      const newPict = await uploadToS3(
-        req.file,
-        id,
-        (req.body as UmkmInput).businessName || existing.businessName || "",
-        "umkm"
-      );
-
-      if (newPict) {
-        if (existing.umkmPict) {
-          await deleteFromS3(existing.umkmPict);
-        }
-        umkmPict = newPict;
-      }
-    }
-
     // Sanitize request body before update
     const sanitizedBody = sanitizeUmkmData(req.body as UmkmInput);
 
-    const updated = await updateUmkmById(id, {
-      ...sanitizedBody,
-      umkmPict,
-    } as Prisma.UmkmUpdateInput);
+    // Upload new photos if provided
+    const files = Array.isArray(req.files) ? req.files : [];
+    const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
+    const uploadedPhotos: Record<string, string | null> = {};
 
-    let pictUrl = null;
-    if (updated.umkmPict && isValidS3Key(updated.umkmPict)) {
-      pictUrl = await getPresignedUrl(updated.umkmPict);
+    for (let i = 0; i < Math.min(files.length, photoFields.length); i++) {
+      const file = files[i];
+      const photoKey = await uploadToS3(
+        file,
+        id,
+        `${(req.body as UmkmInput).businessName || existing.businessName || ""}_${i}`,
+        "umkm"
+      );
+
+      if (photoKey) {
+        // Delete old photo if exists
+        const oldPhoto = existing[photoFields[i] as keyof typeof existing] as string | null;
+        if (oldPhoto) {
+          await deleteFromS3(oldPhoto);
+        }
+        uploadedPhotos[photoFields[i]] = photoKey;
+      }
     }
 
-    const result = {
-      ...updated,
-      umkmPict: pictUrl,
-    };
+    const updated = await updateUmkmById(id, {
+      ...sanitizedBody,
+      ...uploadedPhotos,
+    } as Prisma.UmkmUpdateInput);
+
+    // Get presigned URLs for all photos
+    const result = await getUmkmWithPresignedUrls(id);
 
     return res.json({
       message: "UMKM updated successfully",
@@ -242,8 +252,13 @@ export const deleteUmkm = async (
       });
     }
 
-    if (existing.umkmPict) {
-      await deleteFromS3(existing.umkmPict);
+    // Delete all photos from S3
+    const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
+    for (const field of photoFields) {
+      const photo = existing[field as keyof typeof existing] as string | null;
+      if (photo) {
+        await deleteFromS3(photo);
+      }
     }
 
     await deleteUmkmById(id);
@@ -254,4 +269,27 @@ export const deleteUmkm = async (
   } catch (err) {
     next(err);
   }
+};
+
+// ============================================================================
+// HELPER FUNCTION: GET UMKM WITH PRESIGNED URLs
+// ============================================================================
+
+const getUmkmWithPresignedUrls = async (id: number) => {
+  const umkm = await selectUmkmById(id);
+  if (!umkm) {
+    throw new Error("UMKM not found");
+  }
+
+  const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
+  const result: any = { ...umkm };
+
+  for (const field of photoFields) {
+    const photo = umkm[field as keyof typeof umkm] as string | null;
+    if (photo && isValidS3Key(photo)) {
+      result[field] = await getPresignedUrl(photo);
+    }
+  }
+
+  return result;
 };

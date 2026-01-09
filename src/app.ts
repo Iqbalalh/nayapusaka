@@ -21,7 +21,38 @@ const app: Application = express();
 // ======================
 // Middlewares
 // ======================
-app.use(cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      // Allow ngrok origins and localhost
+      const allowedOrigins = [
+        'http://localhost:3000',
+        'http://localhost:9000',
+        'http://127.0.0.1:3000',
+        'http://127.0.0.1:9000',
+        // Add your ngrok URL here if needed
+      ];
+      
+      // Allow all ngrok URLs
+      if (origin.includes('ngrok-free.dev') || origin.includes('ngrok.io')) {
+        return callback(null, true);
+      }
+      
+      // Allow localhost
+      if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+        return callback(null, true);
+      }
+      
+      callback(null, true); // Allow all origins for development
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
