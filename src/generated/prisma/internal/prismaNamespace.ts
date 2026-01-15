@@ -399,7 +399,9 @@ export const ModelName = {
   UmkmVisit: 'UmkmVisit',
   UmkmVisitDocs: 'UmkmVisitDocs',
   UmkmMonitoring: 'UmkmMonitoring',
-  UmkmMonitoringDocs: 'UmkmMonitoringDocs'
+  UmkmMonitoringDocs: 'UmkmMonitoringDocs',
+  ChildAssistance: 'ChildAssistance',
+  ChildAssistanceDocs: 'ChildAssistanceDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -415,7 +417,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1603,6 +1605,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ChildAssistance: {
+      payload: Prisma.$ChildAssistancePayload<ExtArgs>
+      fields: Prisma.ChildAssistanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChildAssistanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChildAssistanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>
+        }
+        findFirst: {
+          args: Prisma.ChildAssistanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChildAssistanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>
+        }
+        findMany: {
+          args: Prisma.ChildAssistanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>[]
+        }
+        create: {
+          args: Prisma.ChildAssistanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>
+        }
+        createMany: {
+          args: Prisma.ChildAssistanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChildAssistanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>[]
+        }
+        delete: {
+          args: Prisma.ChildAssistanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>
+        }
+        update: {
+          args: Prisma.ChildAssistanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>
+        }
+        deleteMany: {
+          args: Prisma.ChildAssistanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChildAssistanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChildAssistanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>[]
+        }
+        upsert: {
+          args: Prisma.ChildAssistanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistancePayload>
+        }
+        aggregate: {
+          args: Prisma.ChildAssistanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChildAssistance>
+        }
+        groupBy: {
+          args: Prisma.ChildAssistanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChildAssistanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChildAssistanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChildAssistanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    ChildAssistanceDocs: {
+      payload: Prisma.$ChildAssistanceDocsPayload<ExtArgs>
+      fields: Prisma.ChildAssistanceDocsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ChildAssistanceDocsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ChildAssistanceDocsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>
+        }
+        findFirst: {
+          args: Prisma.ChildAssistanceDocsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ChildAssistanceDocsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>
+        }
+        findMany: {
+          args: Prisma.ChildAssistanceDocsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>[]
+        }
+        create: {
+          args: Prisma.ChildAssistanceDocsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>
+        }
+        createMany: {
+          args: Prisma.ChildAssistanceDocsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ChildAssistanceDocsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>[]
+        }
+        delete: {
+          args: Prisma.ChildAssistanceDocsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>
+        }
+        update: {
+          args: Prisma.ChildAssistanceDocsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>
+        }
+        deleteMany: {
+          args: Prisma.ChildAssistanceDocsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ChildAssistanceDocsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ChildAssistanceDocsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>[]
+        }
+        upsert: {
+          args: Prisma.ChildAssistanceDocsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ChildAssistanceDocsPayload>
+        }
+        aggregate: {
+          args: Prisma.ChildAssistanceDocsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateChildAssistanceDocs>
+        }
+        groupBy: {
+          args: Prisma.ChildAssistanceDocsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChildAssistanceDocsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ChildAssistanceDocsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ChildAssistanceDocsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1901,6 +2051,33 @@ export const UmkmMonitoringDocsScalarFieldEnum = {
 export type UmkmMonitoringDocsScalarFieldEnum = (typeof UmkmMonitoringDocsScalarFieldEnum)[keyof typeof UmkmMonitoringDocsScalarFieldEnum]
 
 
+export const ChildAssistanceScalarFieldEnum = {
+  id: 'id',
+  childrenId: 'childrenId',
+  assistanceNumber: 'assistanceNumber',
+  assistanceDate: 'assistanceDate',
+  assistanceType: 'assistanceType',
+  assistanceProvider: 'assistanceProvider',
+  assistanceAmount: 'assistanceAmount',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChildAssistanceScalarFieldEnum = (typeof ChildAssistanceScalarFieldEnum)[keyof typeof ChildAssistanceScalarFieldEnum]
+
+
+export const ChildAssistanceDocsScalarFieldEnum = {
+  id: 'id',
+  childAssistanceId: 'childAssistanceId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type ChildAssistanceDocsScalarFieldEnum = (typeof ChildAssistanceDocsScalarFieldEnum)[keyof typeof ChildAssistanceDocsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -2118,6 +2295,8 @@ export type GlobalOmitConfig = {
   umkmVisitDocs?: Prisma.UmkmVisitDocsOmit
   umkmMonitoring?: Prisma.UmkmMonitoringOmit
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsOmit
+  childAssistance?: Prisma.ChildAssistanceOmit
+  childAssistanceDocs?: Prisma.ChildAssistanceDocsOmit
 }
 
 /* Types for Logging */

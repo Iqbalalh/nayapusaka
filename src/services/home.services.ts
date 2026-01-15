@@ -121,10 +121,34 @@ export const selectHomesForMaps = async () => {
           { partners: { homeCoordinate: { not: null } } },
         ],
       },
-      include: {
-        partners: true,
-        employees: true,
-        wali: true,
+      select: {
+        id: true,
+        partnerId: true,
+        employeeId: true,
+        waliId: true,
+        regionId: true,
+        partners: {
+          select: {
+            partnerName: true,
+            address: true,
+            isActive: true,
+            homeCoordinate: true,
+            regionId: true,
+          },
+        },
+        employees: {
+          select: {
+            employeeName: true,
+            nipNipp: true,
+            employeePict: true,
+          },
+        },
+        wali: {
+          select: {
+            waliName: true,
+            addressCoordinate: true,
+          },
+        },
         _count: { select: { children: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
@@ -148,10 +172,33 @@ export const selectHomesForMaps = async () => {
       );
     });
 
-    // Add UMKM status
+    // Add UMKM status and return in nested structure
     return Promise.all(
       validHomes.map(async (home) => ({
-        ...home,
+        id: home.id,
+        partnerId: home.partnerId,
+        employeeId: home.employeeId,
+        waliId: home.waliId,
+        regionId: home.regionId,
+        partners: {
+          partnerName: home.partners?.partnerName ?? null,
+          address: home.partners?.address ?? null,
+          isActive: home.partners?.isActive ?? null,
+          regionId: home.partners?.regionId ?? null,
+        },
+        employees: {
+          employeeName: home.employees?.employeeName ?? null,
+          nipNipp: home.employees?.nipNipp ?? null,
+          employeePict: home.employees?.employeePict ?? null,
+        },
+        wali: {
+          waliName: home.wali?.waliName ?? null,
+          addressCoordinate: home.wali?.addressCoordinate ?? null,
+        },
+        coordinate: home.wali?.addressCoordinate || home.partners?.homeCoordinate,
+        _count: {
+          children: home._count.children,
+        },
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -177,11 +224,34 @@ export const selectAbkHomesForMaps = async () => {
           { partners: { homeCoordinate: { not: null } } },
         ],
       },
-      include: {
-        partners: true,
-        employees: true,
-        wali: true,
-        children: { where: { isCondition: false } },
+      select: {
+        id: true,
+        partnerId: true,
+        employeeId: true,
+        waliId: true,
+        regionId: true,
+        partners: {
+          select: {
+            partnerName: true,
+            address: true,
+            isActive: true,
+            homeCoordinate: true,
+            regionId: true,
+          },
+        },
+        employees: {
+          select: {
+            employeeName: true,
+            nipNipp: true,
+            employeePict: true,
+          },
+        },
+        wali: {
+          select: {
+            waliName: true,
+            addressCoordinate: true,
+          },
+        },
         _count: { select: { children: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
@@ -206,7 +276,30 @@ export const selectAbkHomesForMaps = async () => {
 
     return Promise.all(
       validHomes.map(async (home) => ({
-        ...home,
+        id: home.id,
+        partnerId: home.partnerId,
+        employeeId: home.employeeId,
+        waliId: home.waliId,
+        regionId: home.regionId,
+        partners: {
+          partnerName: home.partners?.partnerName ?? null,
+          address: home.partners?.address ?? null,
+          isActive: home.partners?.isActive ?? null,
+          regionId: home.partners?.regionId ?? null,
+        },
+        employees: {
+          employeeName: home.employees?.employeeName ?? null,
+          nipNipp: home.employees?.nipNipp ?? null,
+          employeePict: home.employees?.employeePict ?? null,
+        },
+        wali: {
+          waliName: home.wali?.waliName ?? null,
+          addressCoordinate: home.wali?.addressCoordinate ?? null,
+        },
+        coordinate: home.wali?.addressCoordinate || home.partners?.homeCoordinate,
+        _count: {
+          children: home._count.children,
+        },
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -232,10 +325,34 @@ export const selectOrphanHomesForMaps = async () => {
           { partners: { homeCoordinate: { not: null } } },
         ],
       },
-      include: {
-        partners: true,
-        employees: true,
-        wali: true,
+      select: {
+        id: true,
+        partnerId: true,
+        employeeId: true,
+        waliId: true,
+        regionId: true,
+        partners: {
+          select: {
+            partnerName: true,
+            address: true,
+            isActive: true,
+            homeCoordinate: true,
+            regionId: true,
+          },
+        },
+        employees: {
+          select: {
+            employeeName: true,
+            nipNipp: true,
+            employeePict: true,
+          },
+        },
+        wali: {
+          select: {
+            waliName: true,
+            addressCoordinate: true,
+          },
+        },
         _count: { select: { children: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
@@ -260,7 +377,30 @@ export const selectOrphanHomesForMaps = async () => {
 
     return Promise.all(
       validHomes.map(async (home) => ({
-        ...home,
+        id: home.id,
+        partnerId: home.partnerId,
+        employeeId: home.employeeId,
+        waliId: home.waliId,
+        regionId: home.regionId,
+        partners: {
+          partnerName: home.partners?.partnerName ?? null,
+          address: home.partners?.address ?? null,
+          isActive: home.partners?.isActive ?? null,
+          regionId: home.partners?.regionId ?? null,
+        },
+        employees: {
+          employeeName: home.employees?.employeeName ?? null,
+          nipNipp: home.employees?.nipNipp ?? null,
+          employeePict: home.employees?.employeePict ?? null,
+        },
+        wali: {
+          waliName: home.wali?.waliName ?? null,
+          addressCoordinate: home.wali?.addressCoordinate ?? null,
+        },
+        coordinate: home.wali?.addressCoordinate || home.partners?.homeCoordinate,
+        _count: {
+          children: home._count.children,
+        },
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -301,23 +441,35 @@ export const selectHomeDetailById = async (id: number) => {
     });
 
     return {
-      ...home.employees,
-      employeePict: home.employees?.employeePict,
-      partnerName: home.partners?.partnerName,
-      partnerJob: home.partners?.partnerJob,
-      partnerNik: home.partners?.partnerNik,
-      partnerPict: home.partners?.partnerPict,
-      isAlive: home.partners?.isAlive,
-      address: home.wali?.waliAddress || home.partners?.address,
-      postalCode: home.postalCode || home.partners?.postalCode,
-      phoneNumber: home.partners?.phoneNumber,
-      phoneNumberAlt: home.partners?.phoneNumberAlt,
-      isActive: home.partners?.isActive,
-      regionName: home.regions?.regionName,
-      waliName: home.wali?.waliName,
-      relation: home.wali?.relation,
-      waliPhone: home.wali?.waliPhone,
-      childrenData: home.children,
+      employees: {
+        employeeName: home.employees?.employeeName,
+        nipNipp: home.employees?.nipNipp,
+        employeePict: home.employees?.employeePict,
+        employeeGender: home.employees?.employeeGender,
+        lastPosition: home.employees?.lastPosition,
+        deathCause: home.employees?.deathCause,
+        isAccident: home.employees?.isAccident,
+        notes: home.employees?.notes,
+      },
+      partners: {
+        partnerName: home.partners?.partnerName,
+        partnerJob: home.partners?.partnerJob,
+        partnerNik: home.partners?.partnerNik,
+        partnerPict: home.partners?.partnerPict,
+        isAlive: home.partners?.isAlive,
+        address: home.partners?.address,
+        postalCode: home.partners?.postalCode,
+        phoneNumber: home.partners?.phoneNumber,
+        phoneNumberAlt: home.partners?.phoneNumberAlt,
+        isActive: home.partners?.isActive,
+      },
+      wali: {
+        waliName: home.wali?.waliName,
+        relation: home.wali?.relation,
+        waliPhone: home.wali?.waliPhone,
+        waliAddress: home.wali?.waliAddress,
+      },
+      children: home.children,
       isUmkm: !!umkm,
     };
   } catch (error) {

@@ -36,10 +36,11 @@ model Children {
   childrenJob       String?   @map("children_job") @db.VarChar(50)
 
   // Relations
-  employees Employees? @relation(fields: [employeeId], references: [id], onUpdate: NoAction)
-  homes     Homes?     @relation(fields: [homeId], references: [id], onUpdate: NoAction)
-  partners  Partners?  @relation(fields: [partnerId], references: [id], onUpdate: NoAction)
-  umkm      Umkm[]
+  employees        Employees?           @relation(fields: [employeeId], references: [id], onUpdate: NoAction)
+  homes            Homes?               @relation(fields: [homeId], references: [id], onUpdate: NoAction)
+  partners         Partners?            @relation(fields: [partnerId], references: [id], onUpdate: NoAction)
+  umkm             Umkm[]
+  childAssistance  ChildAssistance[]
 
   @@map("childrens")
 }
@@ -337,4 +338,36 @@ model UmkmMonitoringDocs {
   umkmMonitoring  UmkmMonitoring   @relation(fields: [umkmMonitoringId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("umkm_monitoring_docs")
+}
+
+model ChildAssistance {
+  id                   Int       @id @default(autoincrement())
+  childrenId           Int       @map("children_id")
+  assistanceNumber     Int       @map("assistance_number")
+  assistanceDate       DateTime  @map("assistance_date") @db.Date
+  assistanceType       String    @map("assistance_type") @db.VarChar(100)
+  assistanceProvider   String    @map("assistance_provider") @db.VarChar(100)
+  assistanceAmount     Float     @map("assistance_amount")
+  notes                String?   @db.Text
+  createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  children             Children           @relation(fields: [childrenId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  childAssistanceDocs  ChildAssistanceDocs[]
+
+  @@map("child_assistance")
+}
+
+model ChildAssistanceDocs {
+  id                  Int             @id @default(autoincrement())
+  childAssistanceId   Int             @map("child_assistance_id")
+  name                String          @map("name") @db.VarChar(255)
+  urlDoc              String          @map("url_doc") @db.VarChar(255)
+  createdAt           DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  childAssistance     ChildAssistance @relation(fields: [childAssistanceId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("child_assistance_docs")
 }

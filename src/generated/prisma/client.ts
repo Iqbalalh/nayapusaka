@@ -117,3 +117,13 @@ export type UmkmMonitoring = Prisma.UmkmMonitoringModel
  * 
  */
 export type UmkmMonitoringDocs = Prisma.UmkmMonitoringDocsModel
+/**
+ * Model ChildAssistance
+ * 
+ */
+export type ChildAssistance = Prisma.ChildAssistanceModel
+/**
+ * Model ChildAssistanceDocs
+ * 
+ */
+export type ChildAssistanceDocs = Prisma.ChildAssistanceDocsModel

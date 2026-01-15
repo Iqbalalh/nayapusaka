@@ -210,16 +210,6 @@ export const getHomesForMaps = async (
           );
         }
 
-        if (
-          homeCopy.partners &&
-          homeCopy.partners.partnerPict &&
-          isValidS3Key(homeCopy.partners.partnerPict)
-        ) {
-          homeCopy.partners.partnerPict = await getPresignedUrl(
-            homeCopy.partners.partnerPict
-          );
-        }
-
         return homeCopy;
       })
     );
@@ -256,16 +246,6 @@ export const getAbkHomesForMaps = async (
         ) {
           homeCopy.employees.employeePict = await getPresignedUrl(
             homeCopy.employees.employeePict
-          );
-        }
-
-        if (
-          homeCopy.partners &&
-          homeCopy.partners.partnerPict &&
-          isValidS3Key(homeCopy.partners.partnerPict)
-        ) {
-          homeCopy.partners.partnerPict = await getPresignedUrl(
-            homeCopy.partners.partnerPict
           );
         }
 
@@ -308,16 +288,6 @@ export const getOrphanHomesForMaps = async (
           );
         }
 
-        if (
-          homeCopy.partners &&
-          homeCopy.partners.partnerPict &&
-          isValidS3Key(homeCopy.partners.partnerPict)
-        ) {
-          homeCopy.partners.partnerPict = await getPresignedUrl(
-            homeCopy.partners.partnerPict
-          );
-        }
-
         return homeCopy;
       })
     );
@@ -354,12 +324,12 @@ export const getHomeDetail = async (
     let employeePictUrl = null;
     let partnerPictUrl = null;
     
-    if (home.employeePict && isValidS3Key(home.employeePict)) {
-      employeePictUrl = await getPresignedUrl(home.employeePict);
+    if (home.employees.employeePict && isValidS3Key(home.employees.employeePict)) {
+      employeePictUrl = await getPresignedUrl(home.employees.employeePict);
     }
     
-    if (home.partnerPict && isValidS3Key(home.partnerPict)) {
-      partnerPictUrl = await getPresignedUrl(home.partnerPict);
+    if (home.partners.partnerPict && isValidS3Key(home.partners.partnerPict)) {
+      partnerPictUrl = await getPresignedUrl(home.partners.partnerPict);
     }
 
     const result = {

@@ -66,7 +66,9 @@ export const ModelName = {
   UmkmVisit: 'UmkmVisit',
   UmkmVisitDocs: 'UmkmVisitDocs',
   UmkmMonitoring: 'UmkmMonitoring',
-  UmkmMonitoringDocs: 'UmkmMonitoringDocs'
+  UmkmMonitoringDocs: 'UmkmMonitoringDocs',
+  ChildAssistance: 'ChildAssistance',
+  ChildAssistanceDocs: 'ChildAssistanceDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -342,6 +344,33 @@ export const UmkmMonitoringDocsScalarFieldEnum = {
 } as const
 
 export type UmkmMonitoringDocsScalarFieldEnum = (typeof UmkmMonitoringDocsScalarFieldEnum)[keyof typeof UmkmMonitoringDocsScalarFieldEnum]
+
+
+export const ChildAssistanceScalarFieldEnum = {
+  id: 'id',
+  childrenId: 'childrenId',
+  assistanceNumber: 'assistanceNumber',
+  assistanceDate: 'assistanceDate',
+  assistanceType: 'assistanceType',
+  assistanceProvider: 'assistanceProvider',
+  assistanceAmount: 'assistanceAmount',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ChildAssistanceScalarFieldEnum = (typeof ChildAssistanceScalarFieldEnum)[keyof typeof ChildAssistanceScalarFieldEnum]
+
+
+export const ChildAssistanceDocsScalarFieldEnum = {
+  id: 'id',
+  childAssistanceId: 'childAssistanceId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type ChildAssistanceDocsScalarFieldEnum = (typeof ChildAssistanceDocsScalarFieldEnum)[keyof typeof ChildAssistanceDocsScalarFieldEnum]
 
 
 export const SortOrder = {

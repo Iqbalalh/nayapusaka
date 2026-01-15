@@ -27,8 +27,8 @@ homeRouter.post("/", upload.any(), postHome);
 // ============================
 homeRouter.get("/", getHomes);
 homeRouter.get("/maps", getHomesForMaps);
-homeRouter.get("/maps/abk", getAbkHomesForMaps);
-homeRouter.get("/maps/yatim-piatu", getOrphanHomesForMaps);
+homeRouter.get("/maps/conditioned", getAbkHomesForMaps);
+homeRouter.get("/maps/orphan", getOrphanHomesForMaps);
 homeRouter.get("/list", getHomesList);
 homeRouter.get("/detail/:id", getHomeAllDetail);
 homeRouter.get("/:id", getHomeDetail);

@@ -15,6 +15,7 @@ import pictureRouter from "./routes/picture.router";
 import familyVisitRouter from "./routes/famvisit.router";
 import umkmVisitRouter from "./routes/umkmvisit.router";
 import umkmMonitoringRouter from "./routes/umkmmonitoring.router";
+import childAssistanceRouter from "./routes/childassistance.router";
 
 const app: Application = express();
 
@@ -26,15 +27,6 @@ app.use(
     origin: function (origin, callback) {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      
-      // Allow ngrok origins and localhost
-      const allowedOrigins = [
-        'http://localhost:3000',
-        'http://localhost:9000',
-        'http://127.0.0.1:3000',
-        'http://127.0.0.1:9000',
-        // Add your ngrok URL here if needed
-      ];
       
       // Allow all ngrok URLs
       if (origin.includes('ngrok-free.dev') || origin.includes('ngrok.io')) {
@@ -85,6 +77,7 @@ app.use("/api/picture", pictureRouter);
 app.use("/api/family-visits", familyVisitRouter);
 app.use("/api/umkm-visits", umkmVisitRouter);
 app.use("/api/umkm-monitoring", umkmMonitoringRouter);
+app.use("/api/child-assistance", childAssistanceRouter);
 
 // ======================
 // Export App

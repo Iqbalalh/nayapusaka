@@ -41,7 +41,7 @@ RUN npm ci --only=production && \
 
 # Copy built files from builder
 COPY --from=builder --chown=nodejs:nodejs /app/dist ./dist
-COPY --from=builder --chown=nodejs:nodejs /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder --chown=nodejs:nodejs /app/src/generated/prisma ./src/generated/prisma
 COPY --from=builder --chown=nodejs:nodejs /app/prisma ./prisma
 
 # Switch to non-root user

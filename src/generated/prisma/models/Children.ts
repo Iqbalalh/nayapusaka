@@ -356,6 +356,7 @@ export type ChildrenWhereInput = {
   homes?: Prisma.XOR<Prisma.HomesNullableScalarRelationFilter, Prisma.HomesWhereInput> | null
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
   umkm?: Prisma.UmkmListRelationFilter
+  childAssistance?: Prisma.ChildAssistanceListRelationFilter
 }
 
 export type ChildrenOrderByWithRelationInput = {
@@ -383,6 +384,7 @@ export type ChildrenOrderByWithRelationInput = {
   homes?: Prisma.HomesOrderByWithRelationInput
   partners?: Prisma.PartnersOrderByWithRelationInput
   umkm?: Prisma.UmkmOrderByRelationAggregateInput
+  childAssistance?: Prisma.ChildAssistanceOrderByRelationAggregateInput
 }
 
 export type ChildrenWhereUniqueInput = Prisma.AtLeast<{
@@ -413,6 +415,7 @@ export type ChildrenWhereUniqueInput = Prisma.AtLeast<{
   homes?: Prisma.XOR<Prisma.HomesNullableScalarRelationFilter, Prisma.HomesWhereInput> | null
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
   umkm?: Prisma.UmkmListRelationFilter
+  childAssistance?: Prisma.ChildAssistanceListRelationFilter
 }, "id">
 
 export type ChildrenOrderByWithAggregationInput = {
@@ -490,6 +493,7 @@ export type ChildrenCreateInput = {
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenUncheckedCreateInput = {
@@ -514,6 +518,7 @@ export type ChildrenUncheckedCreateInput = {
   nik?: string | null
   childrenJob?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenUpdateInput = {
@@ -537,6 +542,7 @@ export type ChildrenUpdateInput = {
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateInput = {
@@ -561,6 +567,7 @@ export type ChildrenUncheckedUpdateInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenCreateManyInput = {
@@ -726,6 +733,11 @@ export type ChildrenOrderByRelationAggregateInput = {
 export type ChildrenNullableScalarRelationFilter = {
   is?: Prisma.ChildrenWhereInput | null
   isNot?: Prisma.ChildrenWhereInput | null
+}
+
+export type ChildrenScalarRelationFilter = {
+  is?: Prisma.ChildrenWhereInput
+  isNot?: Prisma.ChildrenWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -906,6 +918,20 @@ export type ChildrenUpdateOneWithoutUmkmNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenUpdateToOneWithWhereWithoutUmkmInput, Prisma.ChildrenUpdateWithoutUmkmInput>, Prisma.ChildrenUncheckedUpdateWithoutUmkmInput>
 }
 
+export type ChildrenCreateNestedOneWithoutChildAssistanceInput = {
+  create?: Prisma.XOR<Prisma.ChildrenCreateWithoutChildAssistanceInput, Prisma.ChildrenUncheckedCreateWithoutChildAssistanceInput>
+  connectOrCreate?: Prisma.ChildrenCreateOrConnectWithoutChildAssistanceInput
+  connect?: Prisma.ChildrenWhereUniqueInput
+}
+
+export type ChildrenUpdateOneRequiredWithoutChildAssistanceNestedInput = {
+  create?: Prisma.XOR<Prisma.ChildrenCreateWithoutChildAssistanceInput, Prisma.ChildrenUncheckedCreateWithoutChildAssistanceInput>
+  connectOrCreate?: Prisma.ChildrenCreateOrConnectWithoutChildAssistanceInput
+  upsert?: Prisma.ChildrenUpsertWithoutChildAssistanceInput
+  connect?: Prisma.ChildrenWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ChildrenUpdateToOneWithWhereWithoutChildAssistanceInput, Prisma.ChildrenUpdateWithoutChildAssistanceInput>, Prisma.ChildrenUncheckedUpdateWithoutChildAssistanceInput>
+}
+
 export type ChildrenCreateWithoutEmployeesInput = {
   childrenName: string
   isActive?: boolean | null
@@ -926,6 +952,7 @@ export type ChildrenCreateWithoutEmployeesInput = {
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenUncheckedCreateWithoutEmployeesInput = {
@@ -949,6 +976,7 @@ export type ChildrenUncheckedCreateWithoutEmployeesInput = {
   nik?: string | null
   childrenJob?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenCreateOrConnectWithoutEmployeesInput = {
@@ -1023,6 +1051,7 @@ export type ChildrenCreateWithoutHomesInput = {
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenUncheckedCreateWithoutHomesInput = {
@@ -1046,6 +1075,7 @@ export type ChildrenUncheckedCreateWithoutHomesInput = {
   nik?: string | null
   childrenJob?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenCreateOrConnectWithoutHomesInput = {
@@ -1094,6 +1124,7 @@ export type ChildrenCreateWithoutPartnersInput = {
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenUncheckedCreateWithoutPartnersInput = {
@@ -1117,6 +1148,7 @@ export type ChildrenUncheckedCreateWithoutPartnersInput = {
   nik?: string | null
   childrenJob?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenCreateOrConnectWithoutPartnersInput = {
@@ -1165,6 +1197,7 @@ export type ChildrenCreateWithoutUmkmInput = {
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
+  childAssistance?: Prisma.ChildAssistanceCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenUncheckedCreateWithoutUmkmInput = {
@@ -1188,6 +1221,7 @@ export type ChildrenUncheckedCreateWithoutUmkmInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
 
 export type ChildrenCreateOrConnectWithoutUmkmInput = {
@@ -1226,6 +1260,7 @@ export type ChildrenUpdateWithoutUmkmInput = {
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateWithoutUmkmInput = {
@@ -1249,6 +1284,117 @@ export type ChildrenUncheckedUpdateWithoutUmkmInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
+}
+
+export type ChildrenCreateWithoutChildAssistanceInput = {
+  childrenName: string
+  isActive?: boolean | null
+  childrenBirthdate?: Date | string | null
+  childrenAddress?: string | null
+  childrenPhone?: string | null
+  notes?: string | null
+  isFatherAlive?: boolean | null
+  isMotherAlive?: boolean | null
+  childrenGender?: $Enums.Gender | null
+  isCondition?: boolean | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  childrenPict?: string | null
+  index?: number | null
+  nik?: string | null
+  childrenJob?: string | null
+  employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
+  homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
+  partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
+  umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
+}
+
+export type ChildrenUncheckedCreateWithoutChildAssistanceInput = {
+  id?: number
+  employeeId?: number | null
+  partnerId?: number | null
+  homeId?: number | null
+  childrenName: string
+  isActive?: boolean | null
+  childrenBirthdate?: Date | string | null
+  childrenAddress?: string | null
+  childrenPhone?: string | null
+  notes?: string | null
+  isFatherAlive?: boolean | null
+  isMotherAlive?: boolean | null
+  childrenGender?: $Enums.Gender | null
+  isCondition?: boolean | null
+  createdAt?: Date | string | null
+  updatedAt?: Date | string | null
+  childrenPict?: string | null
+  index?: number | null
+  nik?: string | null
+  childrenJob?: string | null
+  umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
+}
+
+export type ChildrenCreateOrConnectWithoutChildAssistanceInput = {
+  where: Prisma.ChildrenWhereUniqueInput
+  create: Prisma.XOR<Prisma.ChildrenCreateWithoutChildAssistanceInput, Prisma.ChildrenUncheckedCreateWithoutChildAssistanceInput>
+}
+
+export type ChildrenUpsertWithoutChildAssistanceInput = {
+  update: Prisma.XOR<Prisma.ChildrenUpdateWithoutChildAssistanceInput, Prisma.ChildrenUncheckedUpdateWithoutChildAssistanceInput>
+  create: Prisma.XOR<Prisma.ChildrenCreateWithoutChildAssistanceInput, Prisma.ChildrenUncheckedCreateWithoutChildAssistanceInput>
+  where?: Prisma.ChildrenWhereInput
+}
+
+export type ChildrenUpdateToOneWithWhereWithoutChildAssistanceInput = {
+  where?: Prisma.ChildrenWhereInput
+  data: Prisma.XOR<Prisma.ChildrenUpdateWithoutChildAssistanceInput, Prisma.ChildrenUncheckedUpdateWithoutChildAssistanceInput>
+}
+
+export type ChildrenUpdateWithoutChildAssistanceInput = {
+  childrenName?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  childrenBirthdate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  childrenAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childrenPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFatherAlive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isMotherAlive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  childrenGender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  isCondition?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  childrenPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
+  homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
+  partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
+  umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
+}
+
+export type ChildrenUncheckedUpdateWithoutChildAssistanceInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  employeeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  partnerId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  childrenName?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  childrenBirthdate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  childrenAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childrenPhone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isFatherAlive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  isMotherAlive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  childrenGender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
+  isCondition?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  childrenPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenCreateManyEmployeesInput = {
@@ -1293,6 +1439,7 @@ export type ChildrenUpdateWithoutEmployeesInput = {
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateWithoutEmployeesInput = {
@@ -1316,6 +1463,7 @@ export type ChildrenUncheckedUpdateWithoutEmployeesInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateManyWithoutEmployeesInput = {
@@ -1382,6 +1530,7 @@ export type ChildrenUpdateWithoutHomesInput = {
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateWithoutHomesInput = {
@@ -1405,6 +1554,7 @@ export type ChildrenUncheckedUpdateWithoutHomesInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateManyWithoutHomesInput = {
@@ -1471,6 +1621,7 @@ export type ChildrenUpdateWithoutPartnersInput = {
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateWithoutPartnersInput = {
@@ -1494,6 +1645,7 @@ export type ChildrenUncheckedUpdateWithoutPartnersInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
+  childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
 export type ChildrenUncheckedUpdateManyWithoutPartnersInput = {
@@ -1525,10 +1677,12 @@ export type ChildrenUncheckedUpdateManyWithoutPartnersInput = {
 
 export type ChildrenCountOutputType = {
   umkm: number
+  childAssistance: number
 }
 
 export type ChildrenCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umkm?: boolean | ChildrenCountOutputTypeCountUmkmArgs
+  childAssistance?: boolean | ChildrenCountOutputTypeCountChildAssistanceArgs
 }
 
 /**
@@ -1546,6 +1700,13 @@ export type ChildrenCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
  */
 export type ChildrenCountOutputTypeCountUmkmArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.UmkmWhereInput
+}
+
+/**
+ * ChildrenCountOutputType without action
+ */
+export type ChildrenCountOutputTypeCountChildAssistanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChildAssistanceWhereInput
 }
 
 
@@ -1574,6 +1735,7 @@ export type ChildrenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   homes?: boolean | Prisma.Children$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Children$partnersArgs<ExtArgs>
   umkm?: boolean | Prisma.Children$umkmArgs<ExtArgs>
+  childAssistance?: boolean | Prisma.Children$childAssistanceArgs<ExtArgs>
   _count?: boolean | Prisma.ChildrenCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["children"]>
 
@@ -1658,6 +1820,7 @@ export type ChildrenInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   homes?: boolean | Prisma.Children$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Children$partnersArgs<ExtArgs>
   umkm?: boolean | Prisma.Children$umkmArgs<ExtArgs>
+  childAssistance?: boolean | Prisma.Children$childAssistanceArgs<ExtArgs>
   _count?: boolean | Prisma.ChildrenCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ChildrenIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1678,6 +1841,7 @@ export type $ChildrenPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     homes: Prisma.$HomesPayload<ExtArgs> | null
     partners: Prisma.$PartnersPayload<ExtArgs> | null
     umkm: Prisma.$UmkmPayload<ExtArgs>[]
+    childAssistance: Prisma.$ChildAssistancePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -2098,6 +2262,7 @@ export interface Prisma__ChildrenClient<T, Null = never, ExtArgs extends runtime
   homes<T extends Prisma.Children$homesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Children$homesArgs<ExtArgs>>): Prisma.Prisma__HomesClient<runtime.Types.Result.GetResult<Prisma.$HomesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   partners<T extends Prisma.Children$partnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Children$partnersArgs<ExtArgs>>): Prisma.Prisma__PartnersClient<runtime.Types.Result.GetResult<Prisma.$PartnersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   umkm<T extends Prisma.Children$umkmArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Children$umkmArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  childAssistance<T extends Prisma.Children$childAssistanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Children$childAssistanceArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChildAssistancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2621,6 +2786,30 @@ export type Children$umkmArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.UmkmScalarFieldEnum | Prisma.UmkmScalarFieldEnum[]
+}
+
+/**
+ * Children.childAssistance
+ */
+export type Children$childAssistanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChildAssistance
+   */
+  select?: Prisma.ChildAssistanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChildAssistance
+   */
+  omit?: Prisma.ChildAssistanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChildAssistanceInclude<ExtArgs> | null
+  where?: Prisma.ChildAssistanceWhereInput
+  orderBy?: Prisma.ChildAssistanceOrderByWithRelationInput | Prisma.ChildAssistanceOrderByWithRelationInput[]
+  cursor?: Prisma.ChildAssistanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChildAssistanceScalarFieldEnum | Prisma.ChildAssistanceScalarFieldEnum[]
 }
 
 /**
