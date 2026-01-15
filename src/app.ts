@@ -28,17 +28,34 @@ app.use(
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
       
-      // Allow all ngrok URLs
-      if (origin.includes('ngrok-free.dev') || origin.includes('ngrok.io')) {
+      // Allow all subdomains of yayasanpusakakai.org
+      if (origin.endsWith('.yayasanpusakakai.org') || origin === 'https://yayasanpusakakai.org') {
         return callback(null, true);
       }
       
-      // Allow localhost
+      // Get allowed origins from environment variables
+      const allowedOrigins = [
+        process.env.FRONT_END_GEOPUSAKA,
+        process.env.FRONT_END_SIPUSAKA,
+      ].filter(Boolean); // Remove undefined values
+      
+      // Check if origin is in allowed list
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      
+      // Allow localhost for development
       if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
         return callback(null, true);
       }
       
-      callback(null, true); // Allow all origins for development
+      // In production, only allow configured origins
+      if (process.env.NODE_ENV === 'production') {
+        return callback(new Error('Not allowed by CORS'));
+      }
+      
+      // Allow all origins for development
+      callback(null, true);
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
