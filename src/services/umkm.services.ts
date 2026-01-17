@@ -119,6 +119,40 @@ export const selectUmkmCount = async () => {
   }
 };
 
+/**
+ * Select count of active UMKM
+ */
+export const selectActiveUmkmCount = async () => {
+  try {
+    const umkms = await prisma.umkm.findMany({
+      where: {
+        partners: { isActive: true },
+      },
+      select: { id: true },
+    });
+    return { count: umkms.length };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of inactive UMKM
+ */
+export const selectInactiveUmkmCount = async () => {
+  try {
+    const umkms = await prisma.umkm.findMany({
+      where: {
+        partners: { isActive: false },
+      },
+      select: { id: true },
+    });
+    return { count: umkms.length };
+  } catch (error) {
+    throw error;
+  }
+};
+
 // ============================================================================
 // INSERT QUERY
 // ============================================================================

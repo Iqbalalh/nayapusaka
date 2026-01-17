@@ -171,3 +171,14 @@ export const deleteChildAssistanceDocsByAssistanceId = async (
     throw error instanceof Error ? error : new Error(String(error));
   }
 };
+
+/**
+ * Select count of child assistance records
+ */
+export const selectChildAssistanceCount = async () => {
+  try {
+    return { count: await prisma.childAssistance.count() };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};

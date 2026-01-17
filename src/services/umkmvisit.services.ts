@@ -163,3 +163,14 @@ export const deleteUmkmVisitDocsByVisitId = async (umkmVisitId: number) => {
     throw error instanceof Error ? error : new Error(String(error));
   }
 };
+
+/**
+ * Select count of UMKM visit records
+ */
+export const selectUmkmVisitCount = async () => {
+  try {
+    return { count: await prisma.umkmVisit.count() };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};

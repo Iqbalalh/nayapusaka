@@ -88,6 +88,73 @@ export const selectAbkChildrenCount = async () => {
   }
 };
 
+/**
+ * Select count of active children
+ */
+export const selectActiveChildrenCount = async () => {
+  try {
+    return {
+      count: await prisma.children.count({ where: { isActive: true } }),
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of inactive children
+ */
+export const selectInactiveChildrenCount = async () => {
+  try {
+    return {
+      count: await prisma.children.count({ where: { isActive: false } }),
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of yatim children (father not alive)
+ */
+export const selectYatimChildrenCount = async () => {
+  try {
+    return {
+      count: await prisma.children.count({ where: { isFatherAlive: false } }),
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of piatu children (mother not alive)
+ */
+export const selectPiatuChildrenCount = async () => {
+  try {
+    return {
+      count: await prisma.children.count({ where: { isMotherAlive: false } }),
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of yatim piatu children (both parents not alive)
+ */
+export const selectYatimPiatuChildrenCount = async () => {
+  try {
+    return {
+      count: await prisma.children.count({
+        where: { isFatherAlive: false, isMotherAlive: false },
+      }),
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 // ============================================================================
 // INSERT QUERY
 // ============================================================================

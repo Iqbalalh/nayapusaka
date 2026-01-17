@@ -165,3 +165,14 @@ export const deleteUmkmMonitoringDocsByMonitoringId = async (
     throw error instanceof Error ? error : new Error(String(error));
   }
 };
+
+/**
+ * Select count of UMKM monitoring records
+ */
+export const selectUmkmMonitoringCount = async () => {
+  try {
+    return { count: await prisma.umkmMonitoring.count() };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};

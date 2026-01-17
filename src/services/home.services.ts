@@ -488,6 +488,83 @@ export const selectHomeCount = async () => {
   }
 };
 
+/**
+ * Select count of active families (homes with active partners)
+ */
+export const selectActiveFamilyCount = async () => {
+  try {
+    const homes = await prisma.homes.findMany({
+      where: {
+        partners: { isActive: true },
+      },
+      select: { id: true },
+    });
+    return { count: homes.length };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of inactive families (homes with inactive partners)
+ */
+export const selectInactiveFamilyCount = async () => {
+  try {
+    const homes = await prisma.homes.findMany({
+      where: {
+        partners: { isActive: false },
+      },
+      select: { id: true },
+    });
+    return { count: homes.length };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of families shown on map (homes with valid coordinates)
+ */
+export const selectFamilyOnMapCount = async () => {
+  try {
+    const homes = await prisma.homes.findMany({
+      where: {
+        partnerId: { not: null },
+        employeeId: { not: null },
+        OR: [
+          { wali: { addressCoordinate: { not: null } } },
+          { partners: { homeCoordinate: { not: null } } },
+        ],
+      },
+      select: {
+        wali: { select: { addressCoordinate: true } },
+        partners: { select: { homeCoordinate: true } },
+      },
+    });
+
+    const validHomes = homes.filter((home) => {
+      const coord =
+        home.wali?.addressCoordinate || home.partners?.homeCoordinate;
+      if (!coord) return false;
+
+      const trimmedCoord = coord.trim();
+      const lowerCoord = trimmedCoord.toLowerCase();
+      const coordRegex = /^-?[0-9]+(\.[0-9]+)?,\s*-?[0-9]+(\.[0-9]+)?$/;
+
+      return (
+        coordRegex.test(trimmedCoord) &&
+        !lowerCoord.includes("nan") &&
+        !lowerCoord.includes("undefined") &&
+        !["", "NaN,undefined", "NaN", "undefined", ","].includes(trimmedCoord)
+      );
+    });
+
+    return { count: validHomes.length };
+  } catch (error) {
+    throw error;
+  }
+};
+
 // ============================================================================
 // INSERT QUERY
 // ============================================================================
