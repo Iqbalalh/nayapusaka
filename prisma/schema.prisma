@@ -131,6 +131,7 @@ model Regions {
   homes     Homes[]
   partners  Partners[]
   umkm      Umkm[]
+  galleries Gallery[]
 
   @@map("regions")
 }
@@ -370,4 +371,46 @@ model ChildAssistanceDocs {
   childAssistance     ChildAssistance @relation(fields: [childAssistanceId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("child_assistance_docs")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @map("name") @db.VarChar(100)
+  slug      String    @unique @map("slug") @db.VarChar(100)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  galleryCategories GalleryCategory[]
+
+  @@map("categories")
+}
+
+model Gallery {
+  id          Int       @id @default(autoincrement())
+  s3Path      String    @map("s3_path") @db.VarChar(500)
+  caption     String?   @db.Text
+  regionId    Int?      @map("region_id")
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  galleryCategories GalleryCategory[]
+  regions           Regions?         @relation(fields: [regionId], references: [regionId], onUpdate: NoAction)
+
+  @@map("galleries")
+}
+
+model GalleryCategory {
+  id         Int      @id @default(autoincrement())
+  galleryId  Int      @map("gallery_id")
+  categoryId Int      @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  gallery    Gallery  @relation(fields: [galleryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([galleryId, categoryId])
+  @@map("gallery_categories")
 }

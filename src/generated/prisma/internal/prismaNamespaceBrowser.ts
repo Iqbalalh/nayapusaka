@@ -68,7 +68,10 @@ export const ModelName = {
   UmkmMonitoring: 'UmkmMonitoring',
   UmkmMonitoringDocs: 'UmkmMonitoringDocs',
   ChildAssistance: 'ChildAssistance',
-  ChildAssistanceDocs: 'ChildAssistanceDocs'
+  ChildAssistanceDocs: 'ChildAssistanceDocs',
+  Category: 'Category',
+  Gallery: 'Gallery',
+  GalleryCategory: 'GalleryCategory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -371,6 +374,39 @@ export const ChildAssistanceDocsScalarFieldEnum = {
 } as const
 
 export type ChildAssistanceDocsScalarFieldEnum = (typeof ChildAssistanceDocsScalarFieldEnum)[keyof typeof ChildAssistanceDocsScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const GalleryScalarFieldEnum = {
+  id: 'id',
+  s3Path: 's3Path',
+  caption: 'caption',
+  regionId: 'regionId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type GalleryScalarFieldEnum = (typeof GalleryScalarFieldEnum)[keyof typeof GalleryScalarFieldEnum]
+
+
+export const GalleryCategoryScalarFieldEnum = {
+  id: 'id',
+  galleryId: 'galleryId',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt'
+} as const
+
+export type GalleryCategoryScalarFieldEnum = (typeof GalleryCategoryScalarFieldEnum)[keyof typeof GalleryCategoryScalarFieldEnum]
 
 
 export const SortOrder = {

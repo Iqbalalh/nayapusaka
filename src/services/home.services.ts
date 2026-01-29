@@ -571,6 +571,10 @@ export const selectFamilyOnMapCount = async () => {
 
 /**
  * Insert new home
+ *
+ * Note: For creating homes with related entities (employee, partner, wali, children),
+ * use the transaction-based approach in home.controller.ts to ensure atomicity.
+ * All operations within a transaction will either complete together or roll back together.
  */
 export const insertHome = async (data: Prisma.HomesCreateInput) => {
   try {

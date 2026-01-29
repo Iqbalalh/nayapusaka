@@ -16,6 +16,7 @@ import familyVisitRouter from "./routes/famvisit.router";
 import umkmVisitRouter from "./routes/umkmvisit.router";
 import umkmMonitoringRouter from "./routes/umkmmonitoring.router";
 import childAssistanceRouter from "./routes/childassistance.router";
+import galleryRouter from "./routes/gallery.router";
 
 const app: Application = express();
 
@@ -62,8 +63,8 @@ app.use(
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Logger (dev)
 app.use(morgan("dev"));
@@ -95,6 +96,7 @@ app.use("/api/family-visits", familyVisitRouter);
 app.use("/api/umkm-visits", umkmVisitRouter);
 app.use("/api/umkm-monitoring", umkmMonitoringRouter);
 app.use("/api/child-assistance", childAssistanceRouter);
+app.use("/api/galleries", galleryRouter);
 
 // ======================
 // Export App

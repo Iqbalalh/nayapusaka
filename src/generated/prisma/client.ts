@@ -127,3 +127,18 @@ export type ChildAssistance = Prisma.ChildAssistanceModel
  * 
  */
 export type ChildAssistanceDocs = Prisma.ChildAssistanceDocsModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model Gallery
+ * 
+ */
+export type Gallery = Prisma.GalleryModel
+/**
+ * Model GalleryCategory
+ * 
+ */
+export type GalleryCategory = Prisma.GalleryCategoryModel

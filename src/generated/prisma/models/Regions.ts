@@ -204,6 +204,7 @@ export type RegionsWhereInput = {
   homes?: Prisma.HomesListRelationFilter
   partners?: Prisma.PartnersListRelationFilter
   umkm?: Prisma.UmkmListRelationFilter
+  galleries?: Prisma.GalleryListRelationFilter
 }
 
 export type RegionsOrderByWithRelationInput = {
@@ -214,6 +215,7 @@ export type RegionsOrderByWithRelationInput = {
   homes?: Prisma.HomesOrderByRelationAggregateInput
   partners?: Prisma.PartnersOrderByRelationAggregateInput
   umkm?: Prisma.UmkmOrderByRelationAggregateInput
+  galleries?: Prisma.GalleryOrderByRelationAggregateInput
 }
 
 export type RegionsWhereUniqueInput = Prisma.AtLeast<{
@@ -227,6 +229,7 @@ export type RegionsWhereUniqueInput = Prisma.AtLeast<{
   homes?: Prisma.HomesListRelationFilter
   partners?: Prisma.PartnersListRelationFilter
   umkm?: Prisma.UmkmListRelationFilter
+  galleries?: Prisma.GalleryListRelationFilter
 }, "regionId">
 
 export type RegionsOrderByWithAggregationInput = {
@@ -256,6 +259,7 @@ export type RegionsCreateInput = {
   homes?: Prisma.HomesCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsUncheckedCreateInput = {
@@ -266,6 +270,7 @@ export type RegionsUncheckedCreateInput = {
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsUpdateInput = {
@@ -275,6 +280,7 @@ export type RegionsUpdateInput = {
   homes?: Prisma.HomesUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsUncheckedUpdateInput = {
@@ -285,6 +291,7 @@ export type RegionsUncheckedUpdateInput = {
   homes?: Prisma.HomesUncheckedUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsCreateManyInput = {
@@ -399,12 +406,29 @@ export type RegionsUpdateOneWithoutUmkmNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.RegionsUpdateToOneWithWhereWithoutUmkmInput, Prisma.RegionsUpdateWithoutUmkmInput>, Prisma.RegionsUncheckedUpdateWithoutUmkmInput>
 }
 
+export type RegionsCreateNestedOneWithoutGalleriesInput = {
+  create?: Prisma.XOR<Prisma.RegionsCreateWithoutGalleriesInput, Prisma.RegionsUncheckedCreateWithoutGalleriesInput>
+  connectOrCreate?: Prisma.RegionsCreateOrConnectWithoutGalleriesInput
+  connect?: Prisma.RegionsWhereUniqueInput
+}
+
+export type RegionsUpdateOneWithoutGalleriesNestedInput = {
+  create?: Prisma.XOR<Prisma.RegionsCreateWithoutGalleriesInput, Prisma.RegionsUncheckedCreateWithoutGalleriesInput>
+  connectOrCreate?: Prisma.RegionsCreateOrConnectWithoutGalleriesInput
+  upsert?: Prisma.RegionsUpsertWithoutGalleriesInput
+  disconnect?: Prisma.RegionsWhereInput | boolean
+  delete?: Prisma.RegionsWhereInput | boolean
+  connect?: Prisma.RegionsWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.RegionsUpdateToOneWithWhereWithoutGalleriesInput, Prisma.RegionsUpdateWithoutGalleriesInput>, Prisma.RegionsUncheckedUpdateWithoutGalleriesInput>
+}
+
 export type RegionsCreateWithoutEmployeesInput = {
   regionName: string
   createdAt?: Date | string | null
   homes?: Prisma.HomesCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsUncheckedCreateWithoutEmployeesInput = {
@@ -414,6 +438,7 @@ export type RegionsUncheckedCreateWithoutEmployeesInput = {
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsCreateOrConnectWithoutEmployeesInput = {
@@ -438,6 +463,7 @@ export type RegionsUpdateWithoutEmployeesInput = {
   homes?: Prisma.HomesUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsUncheckedUpdateWithoutEmployeesInput = {
@@ -447,6 +473,7 @@ export type RegionsUncheckedUpdateWithoutEmployeesInput = {
   homes?: Prisma.HomesUncheckedUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsCreateWithoutHomesInput = {
@@ -455,6 +482,7 @@ export type RegionsCreateWithoutHomesInput = {
   employees?: Prisma.EmployeesCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsUncheckedCreateWithoutHomesInput = {
@@ -464,6 +492,7 @@ export type RegionsUncheckedCreateWithoutHomesInput = {
   employees?: Prisma.EmployeesUncheckedCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsCreateOrConnectWithoutHomesInput = {
@@ -488,6 +517,7 @@ export type RegionsUpdateWithoutHomesInput = {
   employees?: Prisma.EmployeesUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsUncheckedUpdateWithoutHomesInput = {
@@ -497,6 +527,7 @@ export type RegionsUncheckedUpdateWithoutHomesInput = {
   employees?: Prisma.EmployeesUncheckedUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsCreateWithoutPartnersInput = {
@@ -505,6 +536,7 @@ export type RegionsCreateWithoutPartnersInput = {
   employees?: Prisma.EmployeesCreateNestedManyWithoutRegionsInput
   homes?: Prisma.HomesCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsUncheckedCreateWithoutPartnersInput = {
@@ -514,6 +546,7 @@ export type RegionsUncheckedCreateWithoutPartnersInput = {
   employees?: Prisma.EmployeesUncheckedCreateNestedManyWithoutRegionsInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutRegionsInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsCreateOrConnectWithoutPartnersInput = {
@@ -538,6 +571,7 @@ export type RegionsUpdateWithoutPartnersInput = {
   employees?: Prisma.EmployeesUpdateManyWithoutRegionsNestedInput
   homes?: Prisma.HomesUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsUncheckedUpdateWithoutPartnersInput = {
@@ -547,6 +581,7 @@ export type RegionsUncheckedUpdateWithoutPartnersInput = {
   employees?: Prisma.EmployeesUncheckedUpdateManyWithoutRegionsNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutRegionsNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsCreateWithoutUmkmInput = {
@@ -555,6 +590,7 @@ export type RegionsCreateWithoutUmkmInput = {
   employees?: Prisma.EmployeesCreateNestedManyWithoutRegionsInput
   homes?: Prisma.HomesCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsUncheckedCreateWithoutUmkmInput = {
@@ -564,6 +600,7 @@ export type RegionsUncheckedCreateWithoutUmkmInput = {
   employees?: Prisma.EmployeesUncheckedCreateNestedManyWithoutRegionsInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutRegionsInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutRegionsInput
+  galleries?: Prisma.GalleryUncheckedCreateNestedManyWithoutRegionsInput
 }
 
 export type RegionsCreateOrConnectWithoutUmkmInput = {
@@ -588,6 +625,7 @@ export type RegionsUpdateWithoutUmkmInput = {
   employees?: Prisma.EmployeesUpdateManyWithoutRegionsNestedInput
   homes?: Prisma.HomesUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUpdateManyWithoutRegionsNestedInput
 }
 
 export type RegionsUncheckedUpdateWithoutUmkmInput = {
@@ -597,6 +635,61 @@ export type RegionsUncheckedUpdateWithoutUmkmInput = {
   employees?: Prisma.EmployeesUncheckedUpdateManyWithoutRegionsNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutRegionsNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutRegionsNestedInput
+  galleries?: Prisma.GalleryUncheckedUpdateManyWithoutRegionsNestedInput
+}
+
+export type RegionsCreateWithoutGalleriesInput = {
+  regionName: string
+  createdAt?: Date | string | null
+  employees?: Prisma.EmployeesCreateNestedManyWithoutRegionsInput
+  homes?: Prisma.HomesCreateNestedManyWithoutRegionsInput
+  partners?: Prisma.PartnersCreateNestedManyWithoutRegionsInput
+  umkm?: Prisma.UmkmCreateNestedManyWithoutRegionsInput
+}
+
+export type RegionsUncheckedCreateWithoutGalleriesInput = {
+  regionId?: number
+  regionName: string
+  createdAt?: Date | string | null
+  employees?: Prisma.EmployeesUncheckedCreateNestedManyWithoutRegionsInput
+  homes?: Prisma.HomesUncheckedCreateNestedManyWithoutRegionsInput
+  partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutRegionsInput
+  umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutRegionsInput
+}
+
+export type RegionsCreateOrConnectWithoutGalleriesInput = {
+  where: Prisma.RegionsWhereUniqueInput
+  create: Prisma.XOR<Prisma.RegionsCreateWithoutGalleriesInput, Prisma.RegionsUncheckedCreateWithoutGalleriesInput>
+}
+
+export type RegionsUpsertWithoutGalleriesInput = {
+  update: Prisma.XOR<Prisma.RegionsUpdateWithoutGalleriesInput, Prisma.RegionsUncheckedUpdateWithoutGalleriesInput>
+  create: Prisma.XOR<Prisma.RegionsCreateWithoutGalleriesInput, Prisma.RegionsUncheckedCreateWithoutGalleriesInput>
+  where?: Prisma.RegionsWhereInput
+}
+
+export type RegionsUpdateToOneWithWhereWithoutGalleriesInput = {
+  where?: Prisma.RegionsWhereInput
+  data: Prisma.XOR<Prisma.RegionsUpdateWithoutGalleriesInput, Prisma.RegionsUncheckedUpdateWithoutGalleriesInput>
+}
+
+export type RegionsUpdateWithoutGalleriesInput = {
+  regionName?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  employees?: Prisma.EmployeesUpdateManyWithoutRegionsNestedInput
+  homes?: Prisma.HomesUpdateManyWithoutRegionsNestedInput
+  partners?: Prisma.PartnersUpdateManyWithoutRegionsNestedInput
+  umkm?: Prisma.UmkmUpdateManyWithoutRegionsNestedInput
+}
+
+export type RegionsUncheckedUpdateWithoutGalleriesInput = {
+  regionId?: Prisma.IntFieldUpdateOperationsInput | number
+  regionName?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  employees?: Prisma.EmployeesUncheckedUpdateManyWithoutRegionsNestedInput
+  homes?: Prisma.HomesUncheckedUpdateManyWithoutRegionsNestedInput
+  partners?: Prisma.PartnersUncheckedUpdateManyWithoutRegionsNestedInput
+  umkm?: Prisma.UmkmUncheckedUpdateManyWithoutRegionsNestedInput
 }
 
 
@@ -609,6 +702,7 @@ export type RegionsCountOutputType = {
   homes: number
   partners: number
   umkm: number
+  galleries: number
 }
 
 export type RegionsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -616,6 +710,7 @@ export type RegionsCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   homes?: boolean | RegionsCountOutputTypeCountHomesArgs
   partners?: boolean | RegionsCountOutputTypeCountPartnersArgs
   umkm?: boolean | RegionsCountOutputTypeCountUmkmArgs
+  galleries?: boolean | RegionsCountOutputTypeCountGalleriesArgs
 }
 
 /**
@@ -656,6 +751,13 @@ export type RegionsCountOutputTypeCountUmkmArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.UmkmWhereInput
 }
 
+/**
+ * RegionsCountOutputType without action
+ */
+export type RegionsCountOutputTypeCountGalleriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GalleryWhereInput
+}
+
 
 export type RegionsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   regionId?: boolean
@@ -665,6 +767,7 @@ export type RegionsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   homes?: boolean | Prisma.Regions$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Regions$partnersArgs<ExtArgs>
   umkm?: boolean | Prisma.Regions$umkmArgs<ExtArgs>
+  galleries?: boolean | Prisma.Regions$galleriesArgs<ExtArgs>
   _count?: boolean | Prisma.RegionsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["regions"]>
 
@@ -692,6 +795,7 @@ export type RegionsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   homes?: boolean | Prisma.Regions$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Regions$partnersArgs<ExtArgs>
   umkm?: boolean | Prisma.Regions$umkmArgs<ExtArgs>
+  galleries?: boolean | Prisma.Regions$galleriesArgs<ExtArgs>
   _count?: boolean | Prisma.RegionsCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type RegionsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -704,6 +808,7 @@ export type $RegionsPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     homes: Prisma.$HomesPayload<ExtArgs>[]
     partners: Prisma.$PartnersPayload<ExtArgs>[]
     umkm: Prisma.$UmkmPayload<ExtArgs>[]
+    galleries: Prisma.$GalleryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     regionId: number
@@ -1107,6 +1212,7 @@ export interface Prisma__RegionsClient<T, Null = never, ExtArgs extends runtime.
   homes<T extends Prisma.Regions$homesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Regions$homesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HomesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   partners<T extends Prisma.Regions$partnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Regions$partnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartnersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   umkm<T extends Prisma.Regions$umkmArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Regions$umkmArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  galleries<T extends Prisma.Regions$galleriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Regions$galleriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GalleryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1620,6 +1726,30 @@ export type Regions$umkmArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.UmkmScalarFieldEnum | Prisma.UmkmScalarFieldEnum[]
+}
+
+/**
+ * Regions.galleries
+ */
+export type Regions$galleriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Gallery
+   */
+  select?: Prisma.GallerySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Gallery
+   */
+  omit?: Prisma.GalleryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GalleryInclude<ExtArgs> | null
+  where?: Prisma.GalleryWhereInput
+  orderBy?: Prisma.GalleryOrderByWithRelationInput | Prisma.GalleryOrderByWithRelationInput[]
+  cursor?: Prisma.GalleryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GalleryScalarFieldEnum | Prisma.GalleryScalarFieldEnum[]
 }
 
 /**

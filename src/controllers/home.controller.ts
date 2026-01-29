@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from "express";
+import { prisma } from "../utils/prisma/prisma";
 import {
   selectAllHomes,
   selectHomeDetails,
@@ -11,27 +12,8 @@ import {
   selectAbkHomesForMaps,
   selectOrphanHomesForMaps,
   selectHomeDetailById,
-  insertHome,
 } from "../services/home.services";
-import {
-  selectEmployeeById,
-  insertEmployee,
-  updateEmployeeById,
-} from "../services/employee.services";
-import {
-  selectPartnerById,
-  insertPartner,
-  updatePartnerById,
-} from "../services/partner.services";
-import {
-  selectWaliById,
-  insertWali,
-  updateWaliById,
-} from "../services/wali.services";
-import {
-  insertChildren,
-  updateChildrenById,
-} from "../services/children.services";
+
 import {
   uploadToS3,
   getPresignedUrl,
@@ -351,6 +333,21 @@ export const getHomeDetail = async (
 // ============================================================================
 // CREATE HOME WITH RELATIONS AND PHOTOS
 // ============================================================================
+/**
+ * Create a new home with related entities (employee, partner, wali, children).
+ *
+ * ATOMIC OPERATIONS:
+ * This function uses prisma.$transaction to ensure all database operations are atomic.
+ * If any operation fails, the entire transaction is rolled back, maintaining data consistency.
+ *
+ * CHILDREN HANDLING:
+ * - "Sudah Ada" (Existing): If child.id exists, the child's homeId is updated to link to the new home
+ * - "Buat Baru" (New): If child.id doesn't exist, a new child is created with the provided data
+ *
+ * @param req - Request with files and form data
+ * @param res - Response object
+ * @param next - Next function for error handling
+ */
 export const postHome = async (
   req: RequestWithFiles,
   res: Response,
@@ -368,182 +365,16 @@ export const postHome = async (
       );
     };
 
-    // 1. Handle Employee
-    let employeeId = body.employeeId ? Number(body.employeeId) : null;
-    let employeeData = null;
-    let employeePict: string | null = null;
-
-    if (employeeId) {
-      employeeData = await selectEmployeeById(employeeId);
-
-      const employeeFile = findFile("employee_pict");
-      if (employeeFile && employeeData) {
-        employeePict = await uploadToS3(
-          employeeFile,
-          employeeId,
-          employeeData.employeeName || "",
-          "employees"
-        );
-        await updateEmployeeById(employeeId, { employeePict });
-        employeeData.employeePict = employeePict;
-      }
-    } else {
-      const employeePayload: Prisma.EmployeesCreateInput = {
-        nipNipp: body.employeeNipNipp as string | null,
-        employeeName: body.employeeEmployeeName as string | null,
-        deathCause: body.employeeDeathCause as string | null,
-        regions: body.employeeRegionId
-          ? { connect: { regionId: Number(body.employeeRegionId) } }
-          : undefined,
-        lastPosition: body.employeeLastPosition as string | null,
-        employeeGender: body.employeeEmployeeGender as Gender | null,
-        isAccident: body.employeeIsAccident as boolean | null,
-        notes: body.employeeNotes as string | null,
-        employeePict: null,
-      };
-
-      const newEmployee = await insertEmployee(employeePayload);
-      employeeId = newEmployee.id;
-      employeeData = newEmployee;
-
-      const employeeFile = findFile("employee_pict");
-      if (employeeFile && employeeId !== null) {
-        employeePict = await uploadToS3(
-          employeeFile,
-          employeeId,
-          (body.employeeEmployeeName as string) || "",
-          "employees"
-        );
-        await updateEmployeeById(employeeId, { employeePict });
-        employeeData.employeePict = employeePict;
-      }
-    }
-
-    // 2. Handle Partner
-    let partnerId = body.partnerId ? Number(body.partnerId) : null;
-    let partnerData = null;
-    let partnerPict: string | null = null;
-
-    if (partnerId) {
-      partnerData = await selectPartnerById(partnerId);
-
-      const partnerFile = findFile("partner_pict");
-      if (partnerFile && partnerData) {
-        partnerPict = await uploadToS3(
-          partnerFile,
-          partnerId,
-          partnerData.partnerName || "",
-          "partners"
-        );
-        await updatePartnerById(partnerId, { partnerPict });
-        partnerData.partnerPict = partnerPict;
-      }
-    } else {
-      const partnerPayload: Prisma.PartnersCreateInput = {
-        partnerName: body.partnerPartnerName as string | null,
-        regions: body.partnerRegionId
-          ? { connect: { regionId: Number(body.partnerRegionId) } }
-          : undefined,
-        address: body.partnerAddress as string | null,
-        postalCode: body.partnerPostalCode as string | null,
-        homeCoordinate: body.partnerHomeCoordinate as string | null,
-        phoneNumber: body.partnerPhoneNumber as string | null,
-        phoneNumberAlt: body.partnerPhoneNumberAlt as string | null,
-        isActive: body.partnerIsActive as boolean | null,
-        isAlive: body.partnerIsAlive as boolean | null,
-        partnerJob: body.partnerPartnerJob as string | null,
-        partnerNik: body.partnerPartnerNik as string | null,
-        partnerPict: null,
-      };
-
-      const newPartner = await insertPartner(partnerPayload);
-      partnerId = newPartner.id;
-      partnerData = newPartner;
-
-      const partnerFile = findFile("partner_pict");
-      if (partnerFile && partnerId !== null) {
-        partnerPict = await uploadToS3(
-          partnerFile,
-          partnerId,
-          (body.partnerPartnerName as string) || "",
-          "partners"
-        );
-        await updatePartnerById(partnerId, { partnerPict });
-        partnerData.partnerPict = partnerPict;
-      }
-    }
-
-    // 3. Handle Wali
-    let waliId = body.waliId ? Number(body.waliId) : null;
-    let waliData = null;
-    let waliPict: string | null = null;
-
-    if (waliId) {
-      waliData = await selectWaliById(waliId);
-
-      const waliFile = findFile("wali_pict");
-      if (waliFile && waliData) {
-        waliPict = await uploadToS3(
-          waliFile,
-          waliId,
-          waliData.waliName || "",
-          "wali"
-        );
-        await updateWaliById(waliId, { waliPict });
-        waliData.waliPict = waliPict;
-      }
-    } else if (
-      !body.waliWaliName ||
-      (typeof body.waliWaliName === "string" && body.waliWaliName.trim() === "")
-    ) {
-      waliId = null;
-      waliData = null;
-    } else {
-      const waliPayload: Prisma.WaliCreateInput = {
-        waliName: body.waliWaliName as string,
-        relation: body.waliRelation as string | null,
-        waliAddress: body.waliWaliAddress as string | null,
-        addressCoordinate: body.waliAddressCoordinate as string | null,
-        waliPhone: body.waliWaliPhone as string | null,
-        waliPict: null,
-        nik: body.waliNik as string | null,
-        waliJob: body.waliWaliJob as string | null,
-      };
-
-      const newWali = await insertWali(waliPayload);
-      waliId = newWali.id;
-      waliData = newWali;
-
-      const waliFile = findFile("wali_pict");
-      if (waliFile && waliId !== null) {
-        waliPict = await uploadToS3(
-          waliFile,
-          waliId,
-          (body.waliWaliName as string) || "",
-          "wali"
-        );
-        await updateWaliById(waliId, { waliPict });
-        waliData.waliPict = waliPict;
-      }
-    }
-
-    // 4. Create Home
-    const homePayload: Prisma.HomesCreateInput = {
-      regions: body.regionId
-        ? { connect: { regionId: Number(body.regionId) } }
-        : undefined,
-      postalCode: Array.isArray(body.postalCode)
-        ? body.postalCode[0]
-        : body.postalCode,
-      employees: employeeId ? { connect: { id: employeeId } } : undefined,
-      partners: partnerId ? { connect: { id: partnerId } } : undefined,
-      wali: waliId ? { connect: { id: waliId } } : undefined,
+    const findChildrenFile = (index: number, field: string) => {
+      if (!Array.isArray(files)) return null;
+      const fieldname = `childrens[${index}][${field}]`;
+      return (
+        files.find((f: Express.Multer.File) => f.fieldname === fieldname) ||
+        null
+      );
     };
 
-    const newHome = await insertHome(homePayload);
-    const homeId = newHome.id;
-
-    // 5. Handle Children
+    // Parse childrens from JSON string
     let childrens = [];
     if (Array.isArray(body.childrens)) {
       childrens = body.childrens;
@@ -555,53 +386,300 @@ export const postHome = async (
       }
     }
 
-    const childrenResults = [];
+    // Use transaction to ensure all operations are atomic
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Handle Employee
+      let employeeId = body.employeeId ? Number(body.employeeId) : null;
+      let employeeData = null;
+      let employeePict: string | null = null;
 
-    for (let i = 0; i < childrens.length; i++) {
-      const child: any = childrens[i];
-
-      const newChild = await insertChildren({
-        ...child,
-        homeId: homeId,
-        childrenPict: null,
-      });
-
-      let childrenPict: string | null = null;
-
-      const field = `childrens[${i}][children_pict]`;
-      const childFile = findFile(field);
-
-      if (childFile) {
-        childrenPict = await uploadToS3(
-          childFile,
-          newChild.id,
-          child.childrenName || "",
-          "childrens"
-        );
-        await updateChildrenById(newChild.id, {
-          ...child,
-          childrenPict,
+      if (employeeId) {
+        // Use existing employee
+        employeeData = await tx.employees.findUnique({
+          where: { id: employeeId },
+          include: { regions: true },
         });
+
+        const employeeFile = findFile("employee_pict");
+        if (employeeFile && employeeData) {
+          employeePict = await uploadToS3(
+            employeeFile,
+            employeeId,
+            employeeData.employeeName || "",
+            "employees"
+          );
+          await tx.employees.update({
+            where: { id: employeeId },
+            data: { employeePict },
+          });
+          employeeData.employeePict = employeePict;
+        }
+      } else {
+        // Create new employee
+        const employeePayload: Prisma.EmployeesCreateInput = {
+          nipNipp: body.employee_nip_nipp as string | null,
+          employeeName: body.employee_employee_name as string | null,
+          deathCause: body.employee_death_cause as string | null,
+          regions: body.employee_region_id
+            ? { connect: { regionId: Number(body.employee_region_id) } }
+            : undefined,
+          lastPosition: body.employee_last_position as string | null,
+          employeeGender: body.employee_employee_gender as Gender | null,
+          isAccident: body.employee_is_accident as boolean | null,
+          notes: body.employee_notes as string | null,
+          employeePict: null,
+        };
+
+        const newEmployee = await tx.employees.create({ data: employeePayload });
+        employeeId = newEmployee.id;
+        employeeData = newEmployee;
+
+        const employeeFile = findFile("employee_pict");
+        if (employeeFile && employeeId !== null) {
+          employeePict = await uploadToS3(
+            employeeFile,
+            employeeId,
+            (body.employee_employee_name as string) || "",
+            "employees"
+          );
+          await tx.employees.update({
+            where: { id: employeeId },
+            data: { employeePict },
+          });
+          employeeData.employeePict = employeePict;
+        }
       }
 
-      childrenResults.push({
-        ...newChild,
-        childrenPict,
-      });
-    }
+      // 2. Handle Partner
+      let partnerId = body.partnerId ? Number(body.partnerId) : null;
+      let partnerData = null;
+      let partnerPict: string | null = null;
 
-    return res.status(201).json({
-      message: "Home created successfully",
-      data: {
+      if (partnerId) {
+        // Use existing partner
+        partnerData = await tx.partners.findUnique({
+          where: { id: partnerId },
+          include: { regions: true, umkm: true },
+        });
+
+        const partnerFile = findFile("partner_pict");
+        if (partnerFile && partnerData) {
+          partnerPict = await uploadToS3(
+            partnerFile,
+            partnerId,
+            partnerData.partnerName || "",
+            "partners"
+          );
+          await tx.partners.update({
+            where: { id: partnerId },
+            data: { partnerPict },
+          });
+          partnerData.partnerPict = partnerPict;
+        }
+      } else {
+        // Create new partner
+        const partnerPayload: Prisma.PartnersCreateInput = {
+          partnerName: body.partner_partner_name as string | null,
+          regions: body.partner_region_id
+            ? { connect: { regionId: Number(body.partner_region_id) } }
+            : undefined,
+          address: body.partner_address as string | null,
+          postalCode: body.partner_postal_code as string | null,
+          homeCoordinate: body.partner_home_coordinate as string | null,
+          phoneNumber: body.partner_phone_number as string | null,
+          phoneNumberAlt: body.partner_phone_number_alt as string | null,
+          isActive: body.partner_is_active as boolean | null,
+          isAlive: body.partner_is_alive as boolean | null,
+          partnerJob: body.partner_partner_job as string | null,
+          partnerNik: body.partner_partner_nik as string | null,
+          partnerPict: null,
+        };
+
+        const newPartner = await tx.partners.create({ data: partnerPayload });
+        partnerId = newPartner.id;
+        partnerData = newPartner;
+
+        const partnerFile = findFile("partner_pict");
+        if (partnerFile && partnerId !== null) {
+          partnerPict = await uploadToS3(
+            partnerFile,
+            partnerId,
+            (body.partner_partner_name as string) || "",
+            "partners"
+          );
+          await tx.partners.update({
+            where: { id: partnerId },
+            data: { partnerPict },
+          });
+          partnerData.partnerPict = partnerPict;
+        }
+      }
+
+      // 3. Handle Wali
+      let waliId = body.waliId ? Number(body.waliId) : null;
+      let waliData = null;
+      let waliPict: string | null = null;
+
+      if (waliId) {
+        // Use existing wali
+        waliData = await tx.wali.findUnique({ where: { id: waliId } });
+
+        const waliFile = findFile("wali_pict");
+        if (waliFile && waliData) {
+          waliPict = await uploadToS3(
+            waliFile,
+            waliId,
+            waliData.waliName || "",
+            "wali"
+          );
+          await tx.wali.update({
+            where: { id: waliId },
+            data: { waliPict },
+          });
+          waliData.waliPict = waliPict;
+        }
+      } else if (
+        !body.wali_wali_name ||
+        (typeof body.wali_wali_name === "string" && body.wali_wali_name.trim() === "")
+      ) {
+        waliId = null;
+        waliData = null;
+      } else {
+        // Create new wali
+        const waliPayload: Prisma.WaliCreateInput = {
+          waliName: body.wali_wali_name as string,
+          relation: body.wali_relation as string | null,
+          waliAddress: body.wali_wali_address as string | null,
+          addressCoordinate: body.wali_address_coordinate as string | null,
+          waliPhone: body.wali_wali_phone as string | null,
+          waliPict: null,
+          nik: body.wali_nik as string | null,
+          waliJob: body.wali_wali_job as string | null,
+        };
+
+        const newWali = await tx.wali.create({ data: waliPayload });
+        waliId = newWali.id;
+        waliData = newWali;
+
+        const waliFile = findFile("wali_pict");
+        if (waliFile && waliId !== null) {
+          waliPict = await uploadToS3(
+            waliFile,
+            waliId,
+            (body.wali_wali_name as string) || "",
+            "wali"
+          );
+          await tx.wali.update({
+            where: { id: waliId },
+            data: { waliPict },
+          });
+          waliData.waliPict = waliPict;
+        }
+      }
+
+      // 4. Create Home
+      const homePayload: Prisma.HomesCreateInput = {
+        regions: body.region_id
+          ? { connect: { regionId: Number(body.region_id) } }
+          : undefined,
+        postalCode: Array.isArray(body.postal_code)
+          ? body.postal_code[0]
+          : body.postal_code,
+        employees: employeeId ? { connect: { id: employeeId } } : undefined,
+        partners: partnerId ? { connect: { id: partnerId } } : undefined,
+        wali: waliId ? { connect: { id: waliId } } : undefined,
+      };
+
+      const newHome = await tx.homes.create({ data: homePayload });
+      const homeId = newHome.id;
+
+      // 5. Handle Children
+      const childrenResults = [];
+
+      for (let i = 0; i < childrens.length; i++) {
+        const child: any = childrens[i];
+
+        // Check if child has an ID (existing child - "sudah ada")
+        if (child.id) {
+          // Link existing child to this home by updating homeId
+          const existingChild = await tx.children.findUnique({
+            where: { id: Number(child.id) },
+          });
+
+          if (existingChild) {
+            // Update existing child with new homeId
+            const updatedChild = await tx.children.update({
+              where: { id: Number(child.id) },
+              data: { homeId: homeId },
+            });
+
+            childrenResults.push(updatedChild);
+          } else {
+            // eslint-disable-next-line no-console
+            console.error("error")
+          }
+        } else {
+          // Create new child ("buat baru")
+          const newChild = await tx.children.create({
+            data: {
+              childrenName: child.children_name || "",
+              childrenGender: child.children_gender || "M",
+              childrenBirthdate: child.children_birthdate ? new Date(child.children_birthdate) : null,
+              childrenAddress: child.children_address || null,
+              childrenPhone: child.children_phone || null,
+              isFatherAlive: child.is_father_alive !== undefined ? child.is_father_alive : true,
+              isMotherAlive: child.is_mother_alive !== undefined ? child.is_mother_alive : true,
+              isCondition: child.is_condition !== undefined ? child.is_condition : true,
+              isActive: child.is_active !== undefined ? child.is_active : true,
+              notes: child.notes || null,
+              index: child.index ? Number(child.index) : null,
+              nik: child.nik || null,
+              childrenJob: child.children_job || null,
+              homeId: homeId,
+              childrenPict: null,
+            },
+          });
+
+          let childrenPict: string | null = null;
+
+          const childFile = findChildrenFile(i, "children_pict");
+
+          if (childFile) {
+            childrenPict = await uploadToS3(
+              childFile,
+              newChild.id,
+              child.children_name || "",
+              "childrens"
+            );
+            await tx.children.update({
+              where: { id: newChild.id },
+              data: { childrenPict },
+            });
+          }
+
+          childrenResults.push({
+            ...newChild,
+            childrenPict,
+          });
+        }
+      }
+
+      return {
         home: newHome,
         employee: employeeData ? { ...employeeData, employeePict } : null,
         partner: partnerData ? { ...partnerData, partnerPict } : null,
         wali: waliData ? { ...waliData, waliPict } : null,
         childrens: childrenResults || [],
-      },
+      };
+    });
+
+    return res.status(201).json({
+      message: "Home created successfully",
+      data: result,
     });
   } catch (err) {
     next(err);
     return;
   }
 };
+

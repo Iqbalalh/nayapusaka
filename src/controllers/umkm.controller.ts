@@ -198,22 +198,38 @@ export const patchUmkm = async (
     const photoFields = ['umkmPict', 'umkmPict2', 'umkmPict3', 'umkmPict4', 'umkmPict5'];
     const uploadedPhotos: Record<string, string | null> = {};
 
+    // Find the first empty photo slot to start uploading new photos
+    let nextEmptySlot = 0;
+    for (let i = 0; i < photoFields.length; i++) {
+      if (!existing[photoFields[i] as keyof typeof existing]) {
+        nextEmptySlot = i;
+        break;
+      }
+      // If all slots are filled, start from the beginning (replace first photo)
+      if (i === photoFields.length - 1) {
+        nextEmptySlot = 0;
+      }
+    }
+
+    // Upload new photos starting from the first empty slot
     for (let i = 0; i < Math.min(files.length, photoFields.length); i++) {
       const file = files[i];
+      const photoIndex = (nextEmptySlot + i) % photoFields.length; // Wrap around if needed
+      const photoField = photoFields[photoIndex];
       const photoKey = await uploadToS3(
         file,
         id,
-        `${(req.body as UmkmInput).businessName || existing.businessName || ""}_${i}`,
+        `${(req.body as UmkmInput).businessName || existing.businessName || ""}_${photoIndex}`,
         "umkm"
       );
 
       if (photoKey) {
-        // Delete old photo if exists
-        const oldPhoto = existing[photoFields[i] as keyof typeof existing] as string | null;
+        // Delete old photo if exists at this position
+        const oldPhoto = existing[photoField as keyof typeof existing] as string | null;
         if (oldPhoto) {
           await deleteFromS3(oldPhoto);
         }
-        uploadedPhotos[photoFields[i]] = photoKey;
+        uploadedPhotos[photoField] = photoKey;
       }
     }
 
