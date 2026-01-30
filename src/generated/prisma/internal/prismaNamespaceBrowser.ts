@@ -387,6 +387,7 @@ export const ChildAssistanceScalarFieldEnum = {
   assistanceAmount: 'assistanceAmount',
   educationLevel: 'educationLevel',
   educationGrade: 'educationGrade',
+  schoolName: 'schoolName',
   age: 'age',
   notes: 'notes',
   createdAt: 'createdAt',

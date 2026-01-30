@@ -148,6 +148,7 @@ export const postChildAssistance = async (
       assistanceAmount,
       educationLevel,
       educationGrade,
+      schoolName,
       age,
       notes,
     } = req.body;
@@ -177,6 +178,7 @@ export const postChildAssistance = async (
       assistanceAmount: Number(assistanceAmount),
       educationLevel: educationLevel || null,
       educationGrade: educationGrade || null,
+      schoolName: schoolName || null,
       age: age ? Number(age) : null,
       notes: notes || null,
       createdBy: userId,
@@ -279,6 +281,7 @@ export const patchChildAssistance = async (
       assistanceAmount,
       educationLevel,
       educationGrade,
+      schoolName,
       age,
       notes,
     } = req.body;
@@ -296,6 +299,7 @@ export const patchChildAssistance = async (
       updateData.assistanceAmount = Number(assistanceAmount);
     if (educationLevel !== undefined) updateData.educationLevel = educationLevel;
     if (educationGrade !== undefined) updateData.educationGrade = educationGrade;
+    if (schoolName !== undefined) updateData.schoolName = schoolName;
     if (age !== undefined) updateData.age = age ? Number(age) : null;
     if (notes !== undefined) updateData.notes = notes;
     updateData.editedBy = userId;
