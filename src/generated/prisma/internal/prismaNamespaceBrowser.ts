@@ -113,7 +113,9 @@ export const ChildrenScalarFieldEnum = {
   childrenJob: 'childrenJob',
   educationLevel: 'educationLevel',
   schoolName: 'schoolName',
-  educationGrade: 'educationGrade'
+  educationGrade: 'educationGrade',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type ChildrenScalarFieldEnum = (typeof ChildrenScalarFieldEnum)[keyof typeof ChildrenScalarFieldEnum]
@@ -131,7 +133,9 @@ export const EmployeesScalarFieldEnum = {
   isAccident: 'isAccident',
   employeePict: 'employeePict',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type EmployeesScalarFieldEnum = (typeof EmployeesScalarFieldEnum)[keyof typeof EmployeesScalarFieldEnum]
@@ -144,7 +148,9 @@ export const HomesScalarFieldEnum = {
   waliId: 'waliId',
   createdAt: 'createdAt',
   regionId: 'regionId',
-  postalCode: 'postalCode'
+  postalCode: 'postalCode',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type HomesScalarFieldEnum = (typeof HomesScalarFieldEnum)[keyof typeof HomesScalarFieldEnum]
@@ -167,7 +173,9 @@ export const PartnersScalarFieldEnum = {
   isAlive: 'isAlive',
   partnerPict: 'partnerPict',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type PartnersScalarFieldEnum = (typeof PartnersScalarFieldEnum)[keyof typeof PartnersScalarFieldEnum]
@@ -176,7 +184,9 @@ export type PartnersScalarFieldEnum = (typeof PartnersScalarFieldEnum)[keyof typ
 export const RegionsScalarFieldEnum = {
   regionId: 'regionId',
   regionName: 'regionName',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type RegionsScalarFieldEnum = (typeof RegionsScalarFieldEnum)[keyof typeof RegionsScalarFieldEnum]
@@ -201,7 +211,11 @@ export const StaffsScalarFieldEnum = {
   email: 'email',
   nik: 'nik',
   roleId: 'roleId',
-  staffPict: 'staffPict'
+  staffPict: 'staffPict',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type StaffsScalarFieldEnum = (typeof StaffsScalarFieldEnum)[keyof typeof StaffsScalarFieldEnum]
@@ -229,7 +243,9 @@ export const UmkmScalarFieldEnum = {
   umkmPict3: 'umkmPict3',
   umkmPict4: 'umkmPict4',
   umkmPict5: 'umkmPict5',
-  isActive: 'isActive'
+  isActive: 'isActive',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type UmkmScalarFieldEnum = (typeof UmkmScalarFieldEnum)[keyof typeof UmkmScalarFieldEnum]
@@ -257,7 +273,9 @@ export const WaliScalarFieldEnum = {
   updatedAt: 'updatedAt',
   waliPict: 'waliPict',
   nik: 'nik',
-  waliJob: 'waliJob'
+  waliJob: 'waliJob',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type WaliScalarFieldEnum = (typeof WaliScalarFieldEnum)[keyof typeof WaliScalarFieldEnum]
@@ -271,7 +289,9 @@ export const FamilyVisitScalarFieldEnum = {
   officer: 'officer',
   notes: 'notes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type FamilyVisitScalarFieldEnum = (typeof FamilyVisitScalarFieldEnum)[keyof typeof FamilyVisitScalarFieldEnum]
@@ -300,7 +320,9 @@ export const UmkmVisitScalarFieldEnum = {
   value: 'value',
   notes: 'notes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type UmkmVisitScalarFieldEnum = (typeof UmkmVisitScalarFieldEnum)[keyof typeof UmkmVisitScalarFieldEnum]
@@ -336,7 +358,9 @@ export const UmkmMonitoringScalarFieldEnum = {
   developmentNeeds: 'developmentNeeds',
   otherNotes: 'otherNotes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type UmkmMonitoringScalarFieldEnum = (typeof UmkmMonitoringScalarFieldEnum)[keyof typeof UmkmMonitoringScalarFieldEnum]
@@ -361,9 +385,14 @@ export const ChildAssistanceScalarFieldEnum = {
   assistanceType: 'assistanceType',
   assistanceProvider: 'assistanceProvider',
   assistanceAmount: 'assistanceAmount',
+  educationLevel: 'educationLevel',
+  educationGrade: 'educationGrade',
+  age: 'age',
   notes: 'notes',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type ChildAssistanceScalarFieldEnum = (typeof ChildAssistanceScalarFieldEnum)[keyof typeof ChildAssistanceScalarFieldEnum]
@@ -385,7 +414,9 @@ export const CategoryScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -398,7 +429,9 @@ export const GalleryScalarFieldEnum = {
   regionId: 'regionId',
   galleryDate: 'galleryDate',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
 } as const
 
 export type GalleryScalarFieldEnum = (typeof GalleryScalarFieldEnum)[keyof typeof GalleryScalarFieldEnum]

@@ -16,8 +16,9 @@ import {
   getPresignedUrl,
   isValidS3Key,
 } from "../utils/storage/s3.storage";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFiles extends Request {
+interface RequestWithFiles extends AuthRequest {
   files?:
     | Express.Multer.File[]
     | { [fieldname: string]: Express.Multer.File[] };
@@ -133,6 +134,9 @@ export const postUmkmMonitoring = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const {
       umkmId,
       visitNumber,
@@ -183,6 +187,7 @@ export const postUmkmMonitoring = async (
       challenges: challenges || null,
       developmentNeeds: developmentNeeds || null,
       otherNotes: otherNotes || null,
+      createdBy: userId,
     };
 
     const newMonitoring = await insertUmkmMonitoring(body);
@@ -260,6 +265,9 @@ export const patchUmkmMonitoring = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectUmkmMonitoringById(id);
 
@@ -315,6 +323,7 @@ export const patchUmkmMonitoring = async (
     if (challenges !== undefined) updateData.challenges = challenges;
     if (developmentNeeds !== undefined) updateData.developmentNeeds = developmentNeeds;
     if (otherNotes !== undefined) updateData.otherNotes = otherNotes;
+    updateData.editedBy = userId;
 
     // Upload new documents if provided
     const uploadedDocs = [];

@@ -15,8 +15,9 @@ import {
 } from "../services/gallery.services";
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFile extends Request {
+interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
 
@@ -212,6 +213,9 @@ export const postGallery = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const { caption, categoryIds, regionId, galleryDate } = req.body;
     
     const body: Prisma.GalleryUncheckedCreateInput = {
@@ -219,6 +223,7 @@ export const postGallery = async (
       s3Path: "",
       regionId: regionId && regionId !== 'null' && regionId !== '' ? Number(regionId) : null,
       galleryDate: galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null,
+      createdBy: userId,
     };
 
     const newGallery = await insertGallery(body);
@@ -292,6 +297,9 @@ export const patchGallery = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectGalleryById(id);
 
@@ -331,6 +339,7 @@ export const patchGallery = async (
           ? (regionId ? Number(regionId) : null)
           : undefined,
         galleryDate: galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null,
+        editedBy: userId,
       } as Prisma.GalleryUncheckedUpdateInput,
       categoryIds ? (Array.isArray(categoryIds) ? categoryIds.map(Number) : [Number(categoryIds)]) : undefined
     );
@@ -453,6 +462,9 @@ export const postCategory = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token (for AuthRequest)
+    const userId = (req as any).user?.id || 2;
+
     // Handle both JSON and FormData
     let name: string | undefined;
     let slug: string | undefined;
@@ -485,6 +497,7 @@ export const postCategory = async (
     const body: Prisma.CategoryCreateInput = {
       name: String(name),
       slug: String(slug),
+      createdBy: userId,
     };
 
     const newCategory = await insertCategory(body);
@@ -505,6 +518,9 @@ export const patchCategory = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token (for AuthRequest)
+    const userId = (req as any).user?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectCategoryById(id);
 
@@ -532,6 +548,7 @@ export const patchCategory = async (
     const updated = await updateCategoryById(id, {
       name: name !== undefined ? name : undefined,
       slug: slug !== undefined ? slug : undefined,
+      editedBy: userId,
     });
 
     return res.json({

@@ -16,8 +16,9 @@ import {
   getPresignedUrl,
   isValidS3Key,
 } from "../utils/storage/s3.storage";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFiles extends Request {
+interface RequestWithFiles extends AuthRequest {
   files?:
     | Express.Multer.File[]
     | { [fieldname: string]: Express.Multer.File[] };
@@ -133,6 +134,9 @@ export const postUmkmVisit = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const {
       umkmId,
       visitNumber,
@@ -173,6 +177,7 @@ export const postUmkmVisit = async (
       assistanceSource,
       value: Number(value),
       notes: notes || null,
+      createdBy: userId,
     };
 
     const newVisit = await insertUmkmVisit(body);
@@ -250,6 +255,9 @@ export const patchUmkmVisit = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectUmkmVisitById(id);
 
@@ -285,6 +293,7 @@ export const patchUmkmVisit = async (
       updateData.assistanceSource = assistanceSource;
     if (value !== undefined) updateData.value = Number(value);
     if (notes !== undefined) updateData.notes = notes;
+    updateData.editedBy = userId;
 
     // Upload new documents if provided
     const uploadedDocs = [];

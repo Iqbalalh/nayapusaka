@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response, NextFunction } from "express";
+import { AuthRequest } from "../middlewares/auth";
 import {
   selectChildrenById,
   updateChildrenById,
@@ -29,11 +30,14 @@ import { deleteFromS3 } from "../utils/storage/s3.storage";
 // DELETE PICTURE BY KEYOBJECT
 // ============================================================================
 export const patchPictureByKeyObject = async (
-  req: Request,
+  req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const { keyObject } = req.body as { keyObject: string };
 
     if (!keyObject) {
@@ -127,6 +131,7 @@ export const patchPictureByKeyObject = async (
     // Update database to remove picture
     const updated = await entity.updateById(id, {
       [entity.pictField]: null,
+      editedBy: userId,
     });
 
     return res.json({

@@ -16,8 +16,9 @@ import {
   getPresignedUrl,
   isValidS3Key,
 } from "../utils/storage/s3.storage";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFiles extends Request {
+interface RequestWithFiles extends AuthRequest {
   files?:
     | Express.Multer.File[]
     | { [fieldname: string]: Express.Multer.File[] };
@@ -133,6 +134,9 @@ export const postFamilyVisit = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const { homeId, visitDate, visitNumber, officer, notes } = req.body;
 
     // Validate required fields
@@ -149,6 +153,7 @@ export const postFamilyVisit = async (
       visitNumber: Number(visitNumber),
       officer,
       notes: notes || null,
+      createdBy: userId,
     };
 
     const newVisit = await insertFamilyVisit(body);
@@ -226,6 +231,9 @@ export const patchFamilyVisit = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectFamilyVisitById(id);
 
@@ -244,6 +252,7 @@ export const patchFamilyVisit = async (
     if (visitNumber !== undefined) updateData.visitNumber = Number(visitNumber);
     if (officer !== undefined) updateData.officer = officer;
     if (notes !== undefined) updateData.notes = notes;
+    updateData.editedBy = userId;
 
     // Upload new documents if provided
     const uploadedDocs = [];

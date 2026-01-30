@@ -32,6 +32,8 @@ export type UmkmVisitAvgAggregateOutputType = {
   visitNumber: number | null
   assistanceAmount: number | null
   value: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmVisitSumAggregateOutputType = {
@@ -40,6 +42,8 @@ export type UmkmVisitSumAggregateOutputType = {
   visitNumber: number | null
   assistanceAmount: number | null
   value: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmVisitMinAggregateOutputType = {
@@ -55,6 +59,8 @@ export type UmkmVisitMinAggregateOutputType = {
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmVisitMaxAggregateOutputType = {
@@ -70,6 +76,8 @@ export type UmkmVisitMaxAggregateOutputType = {
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmVisitCountAggregateOutputType = {
@@ -85,6 +93,8 @@ export type UmkmVisitCountAggregateOutputType = {
   notes: number
   createdAt: number
   updatedAt: number
+  createdBy: number
+  editedBy: number
   _all: number
 }
 
@@ -95,6 +105,8 @@ export type UmkmVisitAvgAggregateInputType = {
   visitNumber?: true
   assistanceAmount?: true
   value?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmVisitSumAggregateInputType = {
@@ -103,6 +115,8 @@ export type UmkmVisitSumAggregateInputType = {
   visitNumber?: true
   assistanceAmount?: true
   value?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmVisitMinAggregateInputType = {
@@ -118,6 +132,8 @@ export type UmkmVisitMinAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmVisitMaxAggregateInputType = {
@@ -133,6 +149,8 @@ export type UmkmVisitMaxAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmVisitCountAggregateInputType = {
@@ -148,6 +166,8 @@ export type UmkmVisitCountAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
   _all?: true
 }
 
@@ -250,6 +270,8 @@ export type UmkmVisitGroupByOutputType = {
   notes: string | null
   createdAt: Date
   updatedAt: Date
+  createdBy: number | null
+  editedBy: number | null
   _count: UmkmVisitCountAggregateOutputType | null
   _avg: UmkmVisitAvgAggregateOutputType | null
   _sum: UmkmVisitSumAggregateOutputType | null
@@ -288,6 +310,8 @@ export type UmkmVisitWhereInput = {
   notes?: Prisma.StringNullableFilter<"UmkmVisit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UmkmVisit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UmkmVisit"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"UmkmVisit"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"UmkmVisit"> | number | null
   umkm?: Prisma.XOR<Prisma.UmkmScalarRelationFilter, Prisma.UmkmWhereInput>
   umkmVisitDocs?: Prisma.UmkmVisitDocsListRelationFilter
 }
@@ -305,6 +329,8 @@ export type UmkmVisitOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   umkm?: Prisma.UmkmOrderByWithRelationInput
   umkmVisitDocs?: Prisma.UmkmVisitDocsOrderByRelationAggregateInput
 }
@@ -325,6 +351,8 @@ export type UmkmVisitWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"UmkmVisit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UmkmVisit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UmkmVisit"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"UmkmVisit"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"UmkmVisit"> | number | null
   umkm?: Prisma.XOR<Prisma.UmkmScalarRelationFilter, Prisma.UmkmWhereInput>
   umkmVisitDocs?: Prisma.UmkmVisitDocsListRelationFilter
 }, "id">
@@ -342,6 +370,8 @@ export type UmkmVisitOrderByWithAggregationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UmkmVisitCountOrderByAggregateInput
   _avg?: Prisma.UmkmVisitAvgOrderByAggregateInput
   _max?: Prisma.UmkmVisitMaxOrderByAggregateInput
@@ -365,6 +395,8 @@ export type UmkmVisitScalarWhereWithAggregatesInput = {
   notes?: Prisma.StringNullableWithAggregatesFilter<"UmkmVisit"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UmkmVisit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UmkmVisit"> | Date | string
+  createdBy?: Prisma.IntNullableWithAggregatesFilter<"UmkmVisit"> | number | null
+  editedBy?: Prisma.IntNullableWithAggregatesFilter<"UmkmVisit"> | number | null
 }
 
 export type UmkmVisitCreateInput = {
@@ -378,6 +410,8 @@ export type UmkmVisitCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkm: Prisma.UmkmCreateNestedOneWithoutUmkmVisitsInput
   umkmVisitDocs?: Prisma.UmkmVisitDocsCreateNestedManyWithoutUmkmVisitsInput
 }
@@ -395,6 +429,8 @@ export type UmkmVisitUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkmVisitDocs?: Prisma.UmkmVisitDocsUncheckedCreateNestedManyWithoutUmkmVisitsInput
 }
 
@@ -409,6 +445,8 @@ export type UmkmVisitUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkm?: Prisma.UmkmUpdateOneRequiredWithoutUmkmVisitsNestedInput
   umkmVisitDocs?: Prisma.UmkmVisitDocsUpdateManyWithoutUmkmVisitsNestedInput
 }
@@ -426,6 +464,8 @@ export type UmkmVisitUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmVisitDocs?: Prisma.UmkmVisitDocsUncheckedUpdateManyWithoutUmkmVisitsNestedInput
 }
 
@@ -442,6 +482,8 @@ export type UmkmVisitCreateManyInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type UmkmVisitUpdateManyMutationInput = {
@@ -455,6 +497,8 @@ export type UmkmVisitUpdateManyMutationInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UmkmVisitUncheckedUpdateManyInput = {
@@ -470,6 +514,8 @@ export type UmkmVisitUncheckedUpdateManyInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UmkmVisitListRelationFilter = {
@@ -495,6 +541,8 @@ export type UmkmVisitCountOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmVisitAvgOrderByAggregateInput = {
@@ -503,6 +551,8 @@ export type UmkmVisitAvgOrderByAggregateInput = {
   visitNumber?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmVisitMaxOrderByAggregateInput = {
@@ -518,6 +568,8 @@ export type UmkmVisitMaxOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmVisitMinOrderByAggregateInput = {
@@ -533,6 +585,8 @@ export type UmkmVisitMinOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmVisitSumOrderByAggregateInput = {
@@ -541,6 +595,8 @@ export type UmkmVisitSumOrderByAggregateInput = {
   visitNumber?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
   value?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmVisitScalarRelationFilter = {
@@ -623,6 +679,8 @@ export type UmkmVisitCreateWithoutUmkmInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkmVisitDocs?: Prisma.UmkmVisitDocsCreateNestedManyWithoutUmkmVisitsInput
 }
 
@@ -638,6 +696,8 @@ export type UmkmVisitUncheckedCreateWithoutUmkmInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkmVisitDocs?: Prisma.UmkmVisitDocsUncheckedCreateNestedManyWithoutUmkmVisitsInput
 }
 
@@ -683,6 +743,8 @@ export type UmkmVisitScalarWhereInput = {
   notes?: Prisma.StringNullableFilter<"UmkmVisit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UmkmVisit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UmkmVisit"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"UmkmVisit"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"UmkmVisit"> | number | null
 }
 
 export type UmkmVisitCreateWithoutUmkmVisitDocsInput = {
@@ -696,6 +758,8 @@ export type UmkmVisitCreateWithoutUmkmVisitDocsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkm: Prisma.UmkmCreateNestedOneWithoutUmkmVisitsInput
 }
 
@@ -712,6 +776,8 @@ export type UmkmVisitUncheckedCreateWithoutUmkmVisitDocsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type UmkmVisitCreateOrConnectWithoutUmkmVisitDocsInput = {
@@ -741,6 +807,8 @@ export type UmkmVisitUpdateWithoutUmkmVisitDocsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkm?: Prisma.UmkmUpdateOneRequiredWithoutUmkmVisitsNestedInput
 }
 
@@ -757,6 +825,8 @@ export type UmkmVisitUncheckedUpdateWithoutUmkmVisitDocsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UmkmVisitCreateManyUmkmInput = {
@@ -771,6 +841,8 @@ export type UmkmVisitCreateManyUmkmInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type UmkmVisitUpdateWithoutUmkmInput = {
@@ -784,6 +856,8 @@ export type UmkmVisitUpdateWithoutUmkmInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmVisitDocs?: Prisma.UmkmVisitDocsUpdateManyWithoutUmkmVisitsNestedInput
 }
 
@@ -799,6 +873,8 @@ export type UmkmVisitUncheckedUpdateWithoutUmkmInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmVisitDocs?: Prisma.UmkmVisitDocsUncheckedUpdateManyWithoutUmkmVisitsNestedInput
 }
 
@@ -814,6 +890,8 @@ export type UmkmVisitUncheckedUpdateManyWithoutUmkmInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -860,6 +938,8 @@ export type UmkmVisitSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
   umkmVisitDocs?: boolean | Prisma.UmkmVisit$umkmVisitDocsArgs<ExtArgs>
   _count?: boolean | Prisma.UmkmVisitCountOutputTypeDefaultArgs<ExtArgs>
@@ -878,6 +958,8 @@ export type UmkmVisitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["umkmVisit"]>
 
@@ -894,6 +976,8 @@ export type UmkmVisitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["umkmVisit"]>
 
@@ -910,9 +994,11 @@ export type UmkmVisitSelectScalar = {
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
 }
 
-export type UmkmVisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "umkmId" | "visitNumber" | "assistanceDate" | "assistanceType" | "itemType" | "assistanceAmount" | "assistanceSource" | "value" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["umkmVisit"]>
+export type UmkmVisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "umkmId" | "visitNumber" | "assistanceDate" | "assistanceType" | "itemType" | "assistanceAmount" | "assistanceSource" | "value" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["umkmVisit"]>
 export type UmkmVisitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
   umkmVisitDocs?: boolean | Prisma.UmkmVisit$umkmVisitDocsArgs<ExtArgs>
@@ -944,6 +1030,8 @@ export type $UmkmVisitPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     notes: string | null
     createdAt: Date
     updatedAt: Date
+    createdBy: number | null
+    editedBy: number | null
   }, ExtArgs["result"]["umkmVisit"]>
   composites: {}
 }
@@ -1381,6 +1469,8 @@ export interface UmkmVisitFieldRefs {
   readonly notes: Prisma.FieldRef<"UmkmVisit", 'String'>
   readonly createdAt: Prisma.FieldRef<"UmkmVisit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UmkmVisit", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"UmkmVisit", 'Int'>
+  readonly editedBy: Prisma.FieldRef<"UmkmVisit", 'Int'>
 }
     
 

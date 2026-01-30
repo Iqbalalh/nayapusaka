@@ -10,8 +10,9 @@ import {
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizePartnerData, PartnerInput } from "../utils/sanitize/partner.sanitize";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFile extends Request {
+interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
 
@@ -116,12 +117,16 @@ export const postPartner = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     // Sanitize request body
     const sanitizedBody = sanitizePartnerData(req.body as PartnerInput);
     
     const body: Prisma.PartnersCreateInput = {
       ...sanitizedBody,
       partnerPict: null,
+      createdBy: userId,
     } as Prisma.PartnersCreateInput;
 
     const newPartner = await insertPartner(body);
@@ -169,6 +174,9 @@ export const patchPartner = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectPartnerById(id);
 
@@ -203,6 +211,7 @@ export const patchPartner = async (
     const updated = await updatePartnerById(id, {
       ...sanitizedBody,
       partnerPict,
+      editedBy: userId,
     } as Prisma.PartnersUpdateInput);
 
     let pictUrl = null;

@@ -11,8 +11,9 @@ import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeChildrenData } from "../utils/sanitize/children.sanitize";
 import { ChildrenInput } from "../utils/sanitize/children.sanitize";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFile extends Request {
+interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
 
@@ -117,12 +118,16 @@ export const postChildren = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token, fallback to 2 if not available
+    const userId = (req.user as any)?.id || 2;
+
     // Sanitize request body
     const sanitizedBody = sanitizeChildrenData(req.body as ChildrenInput);
     
     const body: Prisma.ChildrenCreateInput = {
       ...sanitizedBody,
       childrenPict: null,
+      createdBy: userId,
     } as Prisma.ChildrenCreateInput;
 
     const newChildren = await insertChildren(body);
@@ -170,6 +175,9 @@ export const patchChildren = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token, fallback to 2 if not available
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectChildrenById(id);
 
@@ -204,6 +212,7 @@ export const patchChildren = async (
     const updated = await updateChildrenById(id, {
       ...sanitizedBody,
       childrenPict,
+      editedBy: userId,
     } as Prisma.ChildrenUpdateInput);
 
     let pictUrl = null;

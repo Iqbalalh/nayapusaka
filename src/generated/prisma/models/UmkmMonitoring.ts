@@ -38,6 +38,8 @@ export type UmkmMonitoringAvgAggregateOutputType = {
   productionAfter: number | null
   customersBefore: number | null
   customersAfter: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmMonitoringSumAggregateOutputType = {
@@ -52,6 +54,8 @@ export type UmkmMonitoringSumAggregateOutputType = {
   productionAfter: number | null
   customersBefore: number | null
   customersAfter: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmMonitoringMinAggregateOutputType = {
@@ -74,6 +78,8 @@ export type UmkmMonitoringMinAggregateOutputType = {
   otherNotes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmMonitoringMaxAggregateOutputType = {
@@ -96,6 +102,8 @@ export type UmkmMonitoringMaxAggregateOutputType = {
   otherNotes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type UmkmMonitoringCountAggregateOutputType = {
@@ -118,6 +126,8 @@ export type UmkmMonitoringCountAggregateOutputType = {
   otherNotes: number
   createdAt: number
   updatedAt: number
+  createdBy: number
+  editedBy: number
   _all: number
 }
 
@@ -134,6 +144,8 @@ export type UmkmMonitoringAvgAggregateInputType = {
   productionAfter?: true
   customersBefore?: true
   customersAfter?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmMonitoringSumAggregateInputType = {
@@ -148,6 +160,8 @@ export type UmkmMonitoringSumAggregateInputType = {
   productionAfter?: true
   customersBefore?: true
   customersAfter?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmMonitoringMinAggregateInputType = {
@@ -170,6 +184,8 @@ export type UmkmMonitoringMinAggregateInputType = {
   otherNotes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmMonitoringMaxAggregateInputType = {
@@ -192,6 +208,8 @@ export type UmkmMonitoringMaxAggregateInputType = {
   otherNotes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type UmkmMonitoringCountAggregateInputType = {
@@ -214,6 +232,8 @@ export type UmkmMonitoringCountAggregateInputType = {
   otherNotes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
   _all?: true
 }
 
@@ -323,6 +343,8 @@ export type UmkmMonitoringGroupByOutputType = {
   otherNotes: string | null
   createdAt: Date
   updatedAt: Date
+  createdBy: number | null
+  editedBy: number | null
   _count: UmkmMonitoringCountAggregateOutputType | null
   _avg: UmkmMonitoringAvgAggregateOutputType | null
   _sum: UmkmMonitoringSumAggregateOutputType | null
@@ -368,6 +390,8 @@ export type UmkmMonitoringWhereInput = {
   otherNotes?: Prisma.StringNullableFilter<"UmkmMonitoring"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UmkmMonitoring"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UmkmMonitoring"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"UmkmMonitoring"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"UmkmMonitoring"> | number | null
   umkm?: Prisma.XOR<Prisma.UmkmScalarRelationFilter, Prisma.UmkmWhereInput>
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsListRelationFilter
 }
@@ -392,6 +416,8 @@ export type UmkmMonitoringOrderByWithRelationInput = {
   otherNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   umkm?: Prisma.UmkmOrderByWithRelationInput
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsOrderByRelationAggregateInput
 }
@@ -419,6 +445,8 @@ export type UmkmMonitoringWhereUniqueInput = Prisma.AtLeast<{
   otherNotes?: Prisma.StringNullableFilter<"UmkmMonitoring"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UmkmMonitoring"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UmkmMonitoring"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"UmkmMonitoring"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"UmkmMonitoring"> | number | null
   umkm?: Prisma.XOR<Prisma.UmkmScalarRelationFilter, Prisma.UmkmWhereInput>
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsListRelationFilter
 }, "id">
@@ -443,6 +471,8 @@ export type UmkmMonitoringOrderByWithAggregationInput = {
   otherNotes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UmkmMonitoringCountOrderByAggregateInput
   _avg?: Prisma.UmkmMonitoringAvgOrderByAggregateInput
   _max?: Prisma.UmkmMonitoringMaxOrderByAggregateInput
@@ -473,6 +503,8 @@ export type UmkmMonitoringScalarWhereWithAggregatesInput = {
   otherNotes?: Prisma.StringNullableWithAggregatesFilter<"UmkmMonitoring"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UmkmMonitoring"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UmkmMonitoring"> | Date | string
+  createdBy?: Prisma.IntNullableWithAggregatesFilter<"UmkmMonitoring"> | number | null
+  editedBy?: Prisma.IntNullableWithAggregatesFilter<"UmkmMonitoring"> | number | null
 }
 
 export type UmkmMonitoringCreateInput = {
@@ -493,6 +525,8 @@ export type UmkmMonitoringCreateInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkm: Prisma.UmkmCreateNestedOneWithoutUmkmMonitoringInput
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsCreateNestedManyWithoutUmkmMonitoringInput
 }
@@ -517,6 +551,8 @@ export type UmkmMonitoringUncheckedCreateInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsUncheckedCreateNestedManyWithoutUmkmMonitoringInput
 }
 
@@ -538,6 +574,8 @@ export type UmkmMonitoringUpdateInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkm?: Prisma.UmkmUpdateOneRequiredWithoutUmkmMonitoringNestedInput
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsUpdateManyWithoutUmkmMonitoringNestedInput
 }
@@ -562,6 +600,8 @@ export type UmkmMonitoringUncheckedUpdateInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsUncheckedUpdateManyWithoutUmkmMonitoringNestedInput
 }
 
@@ -585,6 +625,8 @@ export type UmkmMonitoringCreateManyInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type UmkmMonitoringUpdateManyMutationInput = {
@@ -605,6 +647,8 @@ export type UmkmMonitoringUpdateManyMutationInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UmkmMonitoringUncheckedUpdateManyInput = {
@@ -627,6 +671,8 @@ export type UmkmMonitoringUncheckedUpdateManyInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UmkmMonitoringListRelationFilter = {
@@ -659,6 +705,8 @@ export type UmkmMonitoringCountOrderByAggregateInput = {
   otherNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmMonitoringAvgOrderByAggregateInput = {
@@ -673,6 +721,8 @@ export type UmkmMonitoringAvgOrderByAggregateInput = {
   productionAfter?: Prisma.SortOrder
   customersBefore?: Prisma.SortOrder
   customersAfter?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmMonitoringMaxOrderByAggregateInput = {
@@ -695,6 +745,8 @@ export type UmkmMonitoringMaxOrderByAggregateInput = {
   otherNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmMonitoringMinOrderByAggregateInput = {
@@ -717,6 +769,8 @@ export type UmkmMonitoringMinOrderByAggregateInput = {
   otherNotes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmMonitoringSumOrderByAggregateInput = {
@@ -731,6 +785,8 @@ export type UmkmMonitoringSumOrderByAggregateInput = {
   productionAfter?: Prisma.SortOrder
   customersBefore?: Prisma.SortOrder
   customersAfter?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type UmkmMonitoringScalarRelationFilter = {
@@ -820,6 +876,8 @@ export type UmkmMonitoringCreateWithoutUmkmInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsCreateNestedManyWithoutUmkmMonitoringInput
 }
 
@@ -842,6 +900,8 @@ export type UmkmMonitoringUncheckedCreateWithoutUmkmInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsUncheckedCreateNestedManyWithoutUmkmMonitoringInput
 }
 
@@ -894,6 +954,8 @@ export type UmkmMonitoringScalarWhereInput = {
   otherNotes?: Prisma.StringNullableFilter<"UmkmMonitoring"> | string | null
   createdAt?: Prisma.DateTimeFilter<"UmkmMonitoring"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UmkmMonitoring"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"UmkmMonitoring"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"UmkmMonitoring"> | number | null
 }
 
 export type UmkmMonitoringCreateWithoutUmkmMonitoringDocsInput = {
@@ -914,6 +976,8 @@ export type UmkmMonitoringCreateWithoutUmkmMonitoringDocsInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   umkm: Prisma.UmkmCreateNestedOneWithoutUmkmMonitoringInput
 }
 
@@ -937,6 +1001,8 @@ export type UmkmMonitoringUncheckedCreateWithoutUmkmMonitoringDocsInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type UmkmMonitoringCreateOrConnectWithoutUmkmMonitoringDocsInput = {
@@ -973,6 +1039,8 @@ export type UmkmMonitoringUpdateWithoutUmkmMonitoringDocsInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkm?: Prisma.UmkmUpdateOneRequiredWithoutUmkmMonitoringNestedInput
 }
 
@@ -996,6 +1064,8 @@ export type UmkmMonitoringUncheckedUpdateWithoutUmkmMonitoringDocsInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type UmkmMonitoringCreateManyUmkmInput = {
@@ -1017,6 +1087,8 @@ export type UmkmMonitoringCreateManyUmkmInput = {
   otherNotes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type UmkmMonitoringUpdateWithoutUmkmInput = {
@@ -1037,6 +1109,8 @@ export type UmkmMonitoringUpdateWithoutUmkmInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsUpdateManyWithoutUmkmMonitoringNestedInput
 }
 
@@ -1059,6 +1133,8 @@ export type UmkmMonitoringUncheckedUpdateWithoutUmkmInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkmMonitoringDocs?: Prisma.UmkmMonitoringDocsUncheckedUpdateManyWithoutUmkmMonitoringNestedInput
 }
 
@@ -1081,6 +1157,8 @@ export type UmkmMonitoringUncheckedUpdateManyWithoutUmkmInput = {
   otherNotes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -1134,6 +1212,8 @@ export type UmkmMonitoringSelect<ExtArgs extends runtime.Types.Extensions.Intern
   otherNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
   umkmMonitoringDocs?: boolean | Prisma.UmkmMonitoring$umkmMonitoringDocsArgs<ExtArgs>
   _count?: boolean | Prisma.UmkmMonitoringCountOutputTypeDefaultArgs<ExtArgs>
@@ -1159,6 +1239,8 @@ export type UmkmMonitoringSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   otherNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["umkmMonitoring"]>
 
@@ -1182,6 +1264,8 @@ export type UmkmMonitoringSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   otherNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["umkmMonitoring"]>
 
@@ -1205,9 +1289,11 @@ export type UmkmMonitoringSelectScalar = {
   otherNotes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
 }
 
-export type UmkmMonitoringOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "umkmId" | "visitNumber" | "monitoringDate" | "surveyor" | "turnoverBefore" | "turnoverAfter" | "workersBefore" | "workersAfter" | "productionBefore" | "productionAfter" | "customersBefore" | "customersAfter" | "benefitLevel" | "challenges" | "developmentNeeds" | "otherNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["umkmMonitoring"]>
+export type UmkmMonitoringOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "umkmId" | "visitNumber" | "monitoringDate" | "surveyor" | "turnoverBefore" | "turnoverAfter" | "workersBefore" | "workersAfter" | "productionBefore" | "productionAfter" | "customersBefore" | "customersAfter" | "benefitLevel" | "challenges" | "developmentNeeds" | "otherNotes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["umkmMonitoring"]>
 export type UmkmMonitoringInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   umkm?: boolean | Prisma.UmkmDefaultArgs<ExtArgs>
   umkmMonitoringDocs?: boolean | Prisma.UmkmMonitoring$umkmMonitoringDocsArgs<ExtArgs>
@@ -1246,6 +1332,8 @@ export type $UmkmMonitoringPayload<ExtArgs extends runtime.Types.Extensions.Inte
     otherNotes: string | null
     createdAt: Date
     updatedAt: Date
+    createdBy: number | null
+    editedBy: number | null
   }, ExtArgs["result"]["umkmMonitoring"]>
   composites: {}
 }
@@ -1690,6 +1778,8 @@ export interface UmkmMonitoringFieldRefs {
   readonly otherNotes: Prisma.FieldRef<"UmkmMonitoring", 'String'>
   readonly createdAt: Prisma.FieldRef<"UmkmMonitoring", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UmkmMonitoring", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"UmkmMonitoring", 'Int'>
+  readonly editedBy: Prisma.FieldRef<"UmkmMonitoring", 'Int'>
 }
     
 

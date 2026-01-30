@@ -8,8 +8,9 @@ import {
 } from "../services/staff.services";
 import { Prisma } from "../generated/prisma/client";
 import { getPresignedUrl, isValidS3Key, uploadToS3, deleteFromS3 } from "../utils/storage/s3.storage";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFile extends Request {
+interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
 
@@ -95,6 +96,9 @@ export const postStaff = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const {
       staffName,
       gender,
@@ -125,6 +129,7 @@ export const postStaff = async (
       address: address || null,
       phoneNumber: phoneNumber || null,
       email: email || null,
+      createdBy: userId,
     };
 
     // Upload picture if provided
@@ -186,6 +191,9 @@ export const patchStaff = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectStaffByIdWithRole(id);
 
@@ -218,6 +226,7 @@ export const patchStaff = async (
     if (email !== undefined) updateData.email = email;
     if (nik !== undefined) updateData.nik = nik;
     if (roleId !== undefined) updateData.roleId = Number(roleId);
+    updateData.editedBy = userId;
 
     // Upload new picture if provided
     if (req.file) {

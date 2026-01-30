@@ -14,8 +14,9 @@ import {
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeUmkmData, UmkmInput } from "../utils/sanitize/umkm.sanitize";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFiles extends Request {
+interface RequestWithFiles extends AuthRequest {
   files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
 }
 
@@ -121,6 +122,9 @@ export const postUmkm = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     // Sanitize request body
     const sanitizedBody = sanitizeUmkmData(req.body as UmkmInput);
     
@@ -131,6 +135,7 @@ export const postUmkm = async (
       umkmPict3: null,
       umkmPict4: null,
       umkmPict5: null,
+      createdBy: userId,
     } as Prisma.UmkmCreateInput;
 
     const newUmkm = await insertUmkm(body);
@@ -180,6 +185,9 @@ export const patchUmkm = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectUmkmById(id);
 
@@ -236,6 +244,7 @@ export const patchUmkm = async (
     const updated = await updateUmkmById(id, {
       ...sanitizedBody,
       ...uploadedPhotos,
+      editedBy: userId,
     } as Prisma.UmkmUpdateInput);
 
     // Get presigned URLs for all photos

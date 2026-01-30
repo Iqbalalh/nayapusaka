@@ -10,8 +10,9 @@ import {
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeWaliData, WaliInput } from "../utils/sanitize/wali.sanitize";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFile extends Request {
+interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
 
@@ -116,12 +117,16 @@ export const postWali = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     // Sanitize request body
     const sanitizedBody = sanitizeWaliData(req.body as WaliInput);
     
     const body: Prisma.WaliCreateInput = {
       ...sanitizedBody,
       waliPict: null,
+      createdBy: userId,
     } as Prisma.WaliCreateInput;
 
     const newWali = await insertWali(body);
@@ -169,6 +174,9 @@ export const patchWali = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectWaliById(id);
 
@@ -203,6 +211,7 @@ export const patchWali = async (
     const updated = await updateWaliById(id, {
       ...sanitizedBody,
       waliPict,
+      editedBy: userId,
     } as Prisma.WaliUpdateInput);
 
     let pictUrl = null;

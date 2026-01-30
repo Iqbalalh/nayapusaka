@@ -10,8 +10,9 @@ import {
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeEmployeeData, EmployeeInput } from "../utils/sanitize/employee.sanitize";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFile extends Request {
+interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
 
@@ -116,12 +117,16 @@ export const postEmployee = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     // Sanitize request body
     const sanitizedBody = sanitizeEmployeeData(req.body as EmployeeInput);
     
     const body: Prisma.EmployeesCreateInput = {
       ...sanitizedBody,
       employeePict: null,
+      createdBy: userId,
     } as Prisma.EmployeesCreateInput;
 
     const newEmployee = await insertEmployee(body);
@@ -185,6 +190,9 @@ export const patchEmployee = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectEmployeeById(id);
 
@@ -219,6 +227,7 @@ export const patchEmployee = async (
     const updated = await updateEmployeeById(id, {
       ...sanitizedBody,
       employeePict,
+      editedBy: userId,
     } as Prisma.EmployeesUpdateInput);
 
     let pictUrl = null;

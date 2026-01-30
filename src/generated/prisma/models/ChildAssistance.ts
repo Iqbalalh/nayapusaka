@@ -31,6 +31,9 @@ export type ChildAssistanceAvgAggregateOutputType = {
   childrenId: number | null
   assistanceNumber: number | null
   assistanceAmount: number | null
+  age: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type ChildAssistanceSumAggregateOutputType = {
@@ -38,6 +41,9 @@ export type ChildAssistanceSumAggregateOutputType = {
   childrenId: number | null
   assistanceNumber: number | null
   assistanceAmount: number | null
+  age: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type ChildAssistanceMinAggregateOutputType = {
@@ -48,9 +54,14 @@ export type ChildAssistanceMinAggregateOutputType = {
   assistanceType: string | null
   assistanceProvider: string | null
   assistanceAmount: number | null
+  educationLevel: string | null
+  educationGrade: string | null
+  age: number | null
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type ChildAssistanceMaxAggregateOutputType = {
@@ -61,9 +72,14 @@ export type ChildAssistanceMaxAggregateOutputType = {
   assistanceType: string | null
   assistanceProvider: string | null
   assistanceAmount: number | null
+  educationLevel: string | null
+  educationGrade: string | null
+  age: number | null
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type ChildAssistanceCountAggregateOutputType = {
@@ -74,9 +90,14 @@ export type ChildAssistanceCountAggregateOutputType = {
   assistanceType: number
   assistanceProvider: number
   assistanceAmount: number
+  educationLevel: number
+  educationGrade: number
+  age: number
   notes: number
   createdAt: number
   updatedAt: number
+  createdBy: number
+  editedBy: number
   _all: number
 }
 
@@ -86,6 +107,9 @@ export type ChildAssistanceAvgAggregateInputType = {
   childrenId?: true
   assistanceNumber?: true
   assistanceAmount?: true
+  age?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type ChildAssistanceSumAggregateInputType = {
@@ -93,6 +117,9 @@ export type ChildAssistanceSumAggregateInputType = {
   childrenId?: true
   assistanceNumber?: true
   assistanceAmount?: true
+  age?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type ChildAssistanceMinAggregateInputType = {
@@ -103,9 +130,14 @@ export type ChildAssistanceMinAggregateInputType = {
   assistanceType?: true
   assistanceProvider?: true
   assistanceAmount?: true
+  educationLevel?: true
+  educationGrade?: true
+  age?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type ChildAssistanceMaxAggregateInputType = {
@@ -116,9 +148,14 @@ export type ChildAssistanceMaxAggregateInputType = {
   assistanceType?: true
   assistanceProvider?: true
   assistanceAmount?: true
+  educationLevel?: true
+  educationGrade?: true
+  age?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type ChildAssistanceCountAggregateInputType = {
@@ -129,9 +166,14 @@ export type ChildAssistanceCountAggregateInputType = {
   assistanceType?: true
   assistanceProvider?: true
   assistanceAmount?: true
+  educationLevel?: true
+  educationGrade?: true
+  age?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
   _all?: true
 }
 
@@ -229,9 +271,14 @@ export type ChildAssistanceGroupByOutputType = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel: string | null
+  educationGrade: string | null
+  age: number | null
   notes: string | null
   createdAt: Date
   updatedAt: Date
+  createdBy: number | null
+  editedBy: number | null
   _count: ChildAssistanceCountAggregateOutputType | null
   _avg: ChildAssistanceAvgAggregateOutputType | null
   _sum: ChildAssistanceSumAggregateOutputType | null
@@ -265,9 +312,14 @@ export type ChildAssistanceWhereInput = {
   assistanceType?: Prisma.StringFilter<"ChildAssistance"> | string
   assistanceProvider?: Prisma.StringFilter<"ChildAssistance"> | string
   assistanceAmount?: Prisma.FloatFilter<"ChildAssistance"> | number
+  educationLevel?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
+  educationGrade?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
+  age?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ChildAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChildAssistance"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
   children?: Prisma.XOR<Prisma.ChildrenScalarRelationFilter, Prisma.ChildrenWhereInput>
   childAssistanceDocs?: Prisma.ChildAssistanceDocsListRelationFilter
 }
@@ -280,9 +332,14 @@ export type ChildAssistanceOrderByWithRelationInput = {
   assistanceType?: Prisma.SortOrder
   assistanceProvider?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  educationGrade?: Prisma.SortOrderInput | Prisma.SortOrder
+  age?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   children?: Prisma.ChildrenOrderByWithRelationInput
   childAssistanceDocs?: Prisma.ChildAssistanceDocsOrderByRelationAggregateInput
 }
@@ -298,9 +355,14 @@ export type ChildAssistanceWhereUniqueInput = Prisma.AtLeast<{
   assistanceType?: Prisma.StringFilter<"ChildAssistance"> | string
   assistanceProvider?: Prisma.StringFilter<"ChildAssistance"> | string
   assistanceAmount?: Prisma.FloatFilter<"ChildAssistance"> | number
+  educationLevel?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
+  educationGrade?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
+  age?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ChildAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChildAssistance"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
   children?: Prisma.XOR<Prisma.ChildrenScalarRelationFilter, Prisma.ChildrenWhereInput>
   childAssistanceDocs?: Prisma.ChildAssistanceDocsListRelationFilter
 }, "id">
@@ -313,9 +375,14 @@ export type ChildAssistanceOrderByWithAggregationInput = {
   assistanceType?: Prisma.SortOrder
   assistanceProvider?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  educationGrade?: Prisma.SortOrderInput | Prisma.SortOrder
+  age?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChildAssistanceCountOrderByAggregateInput
   _avg?: Prisma.ChildAssistanceAvgOrderByAggregateInput
   _max?: Prisma.ChildAssistanceMaxOrderByAggregateInput
@@ -334,9 +401,14 @@ export type ChildAssistanceScalarWhereWithAggregatesInput = {
   assistanceType?: Prisma.StringWithAggregatesFilter<"ChildAssistance"> | string
   assistanceProvider?: Prisma.StringWithAggregatesFilter<"ChildAssistance"> | string
   assistanceAmount?: Prisma.FloatWithAggregatesFilter<"ChildAssistance"> | number
+  educationLevel?: Prisma.StringNullableWithAggregatesFilter<"ChildAssistance"> | string | null
+  educationGrade?: Prisma.StringNullableWithAggregatesFilter<"ChildAssistance"> | string | null
+  age?: Prisma.IntNullableWithAggregatesFilter<"ChildAssistance"> | number | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"ChildAssistance"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ChildAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ChildAssistance"> | Date | string
+  createdBy?: Prisma.IntNullableWithAggregatesFilter<"ChildAssistance"> | number | null
+  editedBy?: Prisma.IntNullableWithAggregatesFilter<"ChildAssistance"> | number | null
 }
 
 export type ChildAssistanceCreateInput = {
@@ -345,9 +417,14 @@ export type ChildAssistanceCreateInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   children: Prisma.ChildrenCreateNestedOneWithoutChildAssistanceInput
   childAssistanceDocs?: Prisma.ChildAssistanceDocsCreateNestedManyWithoutChildAssistanceInput
 }
@@ -360,9 +437,14 @@ export type ChildAssistanceUncheckedCreateInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   childAssistanceDocs?: Prisma.ChildAssistanceDocsUncheckedCreateNestedManyWithoutChildAssistanceInput
 }
 
@@ -372,9 +454,14 @@ export type ChildAssistanceUpdateInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   children?: Prisma.ChildrenUpdateOneRequiredWithoutChildAssistanceNestedInput
   childAssistanceDocs?: Prisma.ChildAssistanceDocsUpdateManyWithoutChildAssistanceNestedInput
 }
@@ -387,9 +474,14 @@ export type ChildAssistanceUncheckedUpdateInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childAssistanceDocs?: Prisma.ChildAssistanceDocsUncheckedUpdateManyWithoutChildAssistanceNestedInput
 }
 
@@ -401,9 +493,14 @@ export type ChildAssistanceCreateManyInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type ChildAssistanceUpdateManyMutationInput = {
@@ -412,9 +509,14 @@ export type ChildAssistanceUpdateManyMutationInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type ChildAssistanceUncheckedUpdateManyInput = {
@@ -425,9 +527,14 @@ export type ChildAssistanceUncheckedUpdateManyInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type ChildAssistanceListRelationFilter = {
@@ -448,9 +555,14 @@ export type ChildAssistanceCountOrderByAggregateInput = {
   assistanceType?: Prisma.SortOrder
   assistanceProvider?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrder
+  educationGrade?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type ChildAssistanceAvgOrderByAggregateInput = {
@@ -458,6 +570,9 @@ export type ChildAssistanceAvgOrderByAggregateInput = {
   childrenId?: Prisma.SortOrder
   assistanceNumber?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  age?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type ChildAssistanceMaxOrderByAggregateInput = {
@@ -468,9 +583,14 @@ export type ChildAssistanceMaxOrderByAggregateInput = {
   assistanceType?: Prisma.SortOrder
   assistanceProvider?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrder
+  educationGrade?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type ChildAssistanceMinOrderByAggregateInput = {
@@ -481,9 +601,14 @@ export type ChildAssistanceMinOrderByAggregateInput = {
   assistanceType?: Prisma.SortOrder
   assistanceProvider?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrder
+  educationGrade?: Prisma.SortOrder
+  age?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type ChildAssistanceSumOrderByAggregateInput = {
@@ -491,6 +616,9 @@ export type ChildAssistanceSumOrderByAggregateInput = {
   childrenId?: Prisma.SortOrder
   assistanceNumber?: Prisma.SortOrder
   assistanceAmount?: Prisma.SortOrder
+  age?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type ChildAssistanceScalarRelationFilter = {
@@ -560,9 +688,14 @@ export type ChildAssistanceCreateWithoutChildrenInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   childAssistanceDocs?: Prisma.ChildAssistanceDocsCreateNestedManyWithoutChildAssistanceInput
 }
 
@@ -573,9 +706,14 @@ export type ChildAssistanceUncheckedCreateWithoutChildrenInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   childAssistanceDocs?: Prisma.ChildAssistanceDocsUncheckedCreateNestedManyWithoutChildAssistanceInput
 }
 
@@ -616,9 +754,14 @@ export type ChildAssistanceScalarWhereInput = {
   assistanceType?: Prisma.StringFilter<"ChildAssistance"> | string
   assistanceProvider?: Prisma.StringFilter<"ChildAssistance"> | string
   assistanceAmount?: Prisma.FloatFilter<"ChildAssistance"> | number
+  educationLevel?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
+  educationGrade?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
+  age?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"ChildAssistance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"ChildAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ChildAssistance"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"ChildAssistance"> | number | null
 }
 
 export type ChildAssistanceCreateWithoutChildAssistanceDocsInput = {
@@ -627,9 +770,14 @@ export type ChildAssistanceCreateWithoutChildAssistanceDocsInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   children: Prisma.ChildrenCreateNestedOneWithoutChildAssistanceInput
 }
 
@@ -641,9 +789,14 @@ export type ChildAssistanceUncheckedCreateWithoutChildAssistanceDocsInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type ChildAssistanceCreateOrConnectWithoutChildAssistanceDocsInput = {
@@ -668,9 +821,14 @@ export type ChildAssistanceUpdateWithoutChildAssistanceDocsInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   children?: Prisma.ChildrenUpdateOneRequiredWithoutChildAssistanceNestedInput
 }
 
@@ -682,9 +840,14 @@ export type ChildAssistanceUncheckedUpdateWithoutChildAssistanceDocsInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type ChildAssistanceCreateManyChildrenInput = {
@@ -694,9 +857,14 @@ export type ChildAssistanceCreateManyChildrenInput = {
   assistanceType: string
   assistanceProvider: string
   assistanceAmount: number
+  educationLevel?: string | null
+  educationGrade?: string | null
+  age?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type ChildAssistanceUpdateWithoutChildrenInput = {
@@ -705,9 +873,14 @@ export type ChildAssistanceUpdateWithoutChildrenInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childAssistanceDocs?: Prisma.ChildAssistanceDocsUpdateManyWithoutChildAssistanceNestedInput
 }
 
@@ -718,9 +891,14 @@ export type ChildAssistanceUncheckedUpdateWithoutChildrenInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   childAssistanceDocs?: Prisma.ChildAssistanceDocsUncheckedUpdateManyWithoutChildAssistanceNestedInput
 }
 
@@ -731,9 +909,14 @@ export type ChildAssistanceUncheckedUpdateManyWithoutChildrenInput = {
   assistanceType?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceProvider?: Prisma.StringFieldUpdateOperationsInput | string
   assistanceAmount?: Prisma.FloatFieldUpdateOperationsInput | number
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  age?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -775,9 +958,14 @@ export type ChildAssistanceSelect<ExtArgs extends runtime.Types.Extensions.Inter
   assistanceType?: boolean
   assistanceProvider?: boolean
   assistanceAmount?: boolean
+  educationLevel?: boolean
+  educationGrade?: boolean
+  age?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   children?: boolean | Prisma.ChildrenDefaultArgs<ExtArgs>
   childAssistanceDocs?: boolean | Prisma.ChildAssistance$childAssistanceDocsArgs<ExtArgs>
   _count?: boolean | Prisma.ChildAssistanceCountOutputTypeDefaultArgs<ExtArgs>
@@ -791,9 +979,14 @@ export type ChildAssistanceSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   assistanceType?: boolean
   assistanceProvider?: boolean
   assistanceAmount?: boolean
+  educationLevel?: boolean
+  educationGrade?: boolean
+  age?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   children?: boolean | Prisma.ChildrenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["childAssistance"]>
 
@@ -805,9 +998,14 @@ export type ChildAssistanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   assistanceType?: boolean
   assistanceProvider?: boolean
   assistanceAmount?: boolean
+  educationLevel?: boolean
+  educationGrade?: boolean
+  age?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   children?: boolean | Prisma.ChildrenDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["childAssistance"]>
 
@@ -819,12 +1017,17 @@ export type ChildAssistanceSelectScalar = {
   assistanceType?: boolean
   assistanceProvider?: boolean
   assistanceAmount?: boolean
+  educationLevel?: boolean
+  educationGrade?: boolean
+  age?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
 }
 
-export type ChildAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "childrenId" | "assistanceNumber" | "assistanceDate" | "assistanceType" | "assistanceProvider" | "assistanceAmount" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["childAssistance"]>
+export type ChildAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "childrenId" | "assistanceNumber" | "assistanceDate" | "assistanceType" | "assistanceProvider" | "assistanceAmount" | "educationLevel" | "educationGrade" | "age" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["childAssistance"]>
 export type ChildAssistanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | Prisma.ChildrenDefaultArgs<ExtArgs>
   childAssistanceDocs?: boolean | Prisma.ChildAssistance$childAssistanceDocsArgs<ExtArgs>
@@ -851,9 +1054,14 @@ export type $ChildAssistancePayload<ExtArgs extends runtime.Types.Extensions.Int
     assistanceType: string
     assistanceProvider: string
     assistanceAmount: number
+    educationLevel: string | null
+    educationGrade: string | null
+    age: number | null
     notes: string | null
     createdAt: Date
     updatedAt: Date
+    createdBy: number | null
+    editedBy: number | null
   }, ExtArgs["result"]["childAssistance"]>
   composites: {}
 }
@@ -1286,9 +1494,14 @@ export interface ChildAssistanceFieldRefs {
   readonly assistanceType: Prisma.FieldRef<"ChildAssistance", 'String'>
   readonly assistanceProvider: Prisma.FieldRef<"ChildAssistance", 'String'>
   readonly assistanceAmount: Prisma.FieldRef<"ChildAssistance", 'Float'>
+  readonly educationLevel: Prisma.FieldRef<"ChildAssistance", 'String'>
+  readonly educationGrade: Prisma.FieldRef<"ChildAssistance", 'String'>
+  readonly age: Prisma.FieldRef<"ChildAssistance", 'Int'>
   readonly notes: Prisma.FieldRef<"ChildAssistance", 'String'>
   readonly createdAt: Prisma.FieldRef<"ChildAssistance", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ChildAssistance", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"ChildAssistance", 'Int'>
+  readonly editedBy: Prisma.FieldRef<"ChildAssistance", 'Int'>
 }
     
 

@@ -13,6 +13,7 @@ import {
   selectOrphanHomesForMaps,
   selectHomeDetailById,
 } from "../services/home.services";
+import { AuthRequest } from "../middlewares/auth";
 
 import {
   uploadToS3,
@@ -21,7 +22,7 @@ import {
 } from "../utils/storage/s3.storage";
 import { Gender, Prisma } from "../generated/prisma/client";
 
-interface RequestWithFiles extends Request {
+interface RequestWithFiles extends AuthRequest {
   files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
   body: {
     [key: string]: unknown;
@@ -354,6 +355,9 @@ export const postHome = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const body = req.body;
     const files = req.files;
 
@@ -428,6 +432,7 @@ export const postHome = async (
           isAccident: body.employee_is_accident as boolean | null,
           notes: body.employee_notes as string | null,
           employeePict: null,
+          createdBy: userId,
         };
 
         const newEmployee = await tx.employees.create({ data: employeePayload });
@@ -493,6 +498,7 @@ export const postHome = async (
           partnerJob: body.partner_partner_job as string | null,
           partnerNik: body.partner_partner_nik as string | null,
           partnerPict: null,
+          createdBy: userId,
         };
 
         const newPartner = await tx.partners.create({ data: partnerPayload });
@@ -555,6 +561,7 @@ export const postHome = async (
           waliPict: null,
           nik: body.wali_nik as string | null,
           waliJob: body.wali_wali_job as string | null,
+          createdBy: userId,
         };
 
         const newWali = await tx.wali.create({ data: waliPayload });
@@ -588,6 +595,7 @@ export const postHome = async (
         employees: employeeId ? { connect: { id: employeeId } } : undefined,
         partners: partnerId ? { connect: { id: partnerId } } : undefined,
         wali: waliId ? { connect: { id: waliId } } : undefined,
+        createdBy: userId,
       };
 
       const newHome = await tx.homes.create({ data: homePayload });
@@ -637,6 +645,7 @@ export const postHome = async (
               childrenJob: child.children_job || null,
               homeId: homeId,
               childrenPict: null,
+              createdBy: userId,
             },
           });
 

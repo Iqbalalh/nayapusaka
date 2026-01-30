@@ -30,12 +30,16 @@ export type FamilyVisitAvgAggregateOutputType = {
   id: number | null
   homeId: number | null
   visitNumber: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type FamilyVisitSumAggregateOutputType = {
   id: number | null
   homeId: number | null
   visitNumber: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type FamilyVisitMinAggregateOutputType = {
@@ -47,6 +51,8 @@ export type FamilyVisitMinAggregateOutputType = {
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type FamilyVisitMaxAggregateOutputType = {
@@ -58,6 +64,8 @@ export type FamilyVisitMaxAggregateOutputType = {
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type FamilyVisitCountAggregateOutputType = {
@@ -69,6 +77,8 @@ export type FamilyVisitCountAggregateOutputType = {
   notes: number
   createdAt: number
   updatedAt: number
+  createdBy: number
+  editedBy: number
   _all: number
 }
 
@@ -77,12 +87,16 @@ export type FamilyVisitAvgAggregateInputType = {
   id?: true
   homeId?: true
   visitNumber?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type FamilyVisitSumAggregateInputType = {
   id?: true
   homeId?: true
   visitNumber?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type FamilyVisitMinAggregateInputType = {
@@ -94,6 +108,8 @@ export type FamilyVisitMinAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type FamilyVisitMaxAggregateInputType = {
@@ -105,6 +121,8 @@ export type FamilyVisitMaxAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type FamilyVisitCountAggregateInputType = {
@@ -116,6 +134,8 @@ export type FamilyVisitCountAggregateInputType = {
   notes?: true
   createdAt?: true
   updatedAt?: true
+  createdBy?: true
+  editedBy?: true
   _all?: true
 }
 
@@ -214,6 +234,8 @@ export type FamilyVisitGroupByOutputType = {
   notes: string | null
   createdAt: Date
   updatedAt: Date
+  createdBy: number | null
+  editedBy: number | null
   _count: FamilyVisitCountAggregateOutputType | null
   _avg: FamilyVisitAvgAggregateOutputType | null
   _sum: FamilyVisitSumAggregateOutputType | null
@@ -248,6 +270,8 @@ export type FamilyVisitWhereInput = {
   notes?: Prisma.StringNullableFilter<"FamilyVisit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"FamilyVisit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FamilyVisit"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"FamilyVisit"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"FamilyVisit"> | number | null
   homes?: Prisma.XOR<Prisma.HomesScalarRelationFilter, Prisma.HomesWhereInput>
   familyVisitDocs?: Prisma.FamilyVisitDocsListRelationFilter
 }
@@ -261,6 +285,8 @@ export type FamilyVisitOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   homes?: Prisma.HomesOrderByWithRelationInput
   familyVisitDocs?: Prisma.FamilyVisitDocsOrderByRelationAggregateInput
 }
@@ -277,6 +303,8 @@ export type FamilyVisitWhereUniqueInput = Prisma.AtLeast<{
   notes?: Prisma.StringNullableFilter<"FamilyVisit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"FamilyVisit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FamilyVisit"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"FamilyVisit"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"FamilyVisit"> | number | null
   homes?: Prisma.XOR<Prisma.HomesScalarRelationFilter, Prisma.HomesWhereInput>
   familyVisitDocs?: Prisma.FamilyVisitDocsListRelationFilter
 }, "id">
@@ -290,6 +318,8 @@ export type FamilyVisitOrderByWithAggregationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.FamilyVisitCountOrderByAggregateInput
   _avg?: Prisma.FamilyVisitAvgOrderByAggregateInput
   _max?: Prisma.FamilyVisitMaxOrderByAggregateInput
@@ -309,6 +339,8 @@ export type FamilyVisitScalarWhereWithAggregatesInput = {
   notes?: Prisma.StringNullableWithAggregatesFilter<"FamilyVisit"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FamilyVisit"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"FamilyVisit"> | Date | string
+  createdBy?: Prisma.IntNullableWithAggregatesFilter<"FamilyVisit"> | number | null
+  editedBy?: Prisma.IntNullableWithAggregatesFilter<"FamilyVisit"> | number | null
 }
 
 export type FamilyVisitCreateInput = {
@@ -318,6 +350,8 @@ export type FamilyVisitCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   homes: Prisma.HomesCreateNestedOneWithoutFamilyVisitsInput
   familyVisitDocs?: Prisma.FamilyVisitDocsCreateNestedManyWithoutFamilyVisitsInput
 }
@@ -331,6 +365,8 @@ export type FamilyVisitUncheckedCreateInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   familyVisitDocs?: Prisma.FamilyVisitDocsUncheckedCreateNestedManyWithoutFamilyVisitsInput
 }
 
@@ -341,6 +377,8 @@ export type FamilyVisitUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUpdateOneRequiredWithoutFamilyVisitsNestedInput
   familyVisitDocs?: Prisma.FamilyVisitDocsUpdateManyWithoutFamilyVisitsNestedInput
 }
@@ -354,6 +392,8 @@ export type FamilyVisitUncheckedUpdateInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   familyVisitDocs?: Prisma.FamilyVisitDocsUncheckedUpdateManyWithoutFamilyVisitsNestedInput
 }
 
@@ -366,6 +406,8 @@ export type FamilyVisitCreateManyInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type FamilyVisitUpdateManyMutationInput = {
@@ -375,6 +417,8 @@ export type FamilyVisitUpdateManyMutationInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FamilyVisitUncheckedUpdateManyInput = {
@@ -386,6 +430,8 @@ export type FamilyVisitUncheckedUpdateManyInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FamilyVisitListRelationFilter = {
@@ -407,12 +453,16 @@ export type FamilyVisitCountOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type FamilyVisitAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   homeId?: Prisma.SortOrder
   visitNumber?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type FamilyVisitMaxOrderByAggregateInput = {
@@ -424,6 +474,8 @@ export type FamilyVisitMaxOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type FamilyVisitMinOrderByAggregateInput = {
@@ -435,12 +487,16 @@ export type FamilyVisitMinOrderByAggregateInput = {
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type FamilyVisitSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   homeId?: Prisma.SortOrder
   visitNumber?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type FamilyVisitScalarRelationFilter = {
@@ -511,6 +567,8 @@ export type FamilyVisitCreateWithoutHomesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   familyVisitDocs?: Prisma.FamilyVisitDocsCreateNestedManyWithoutFamilyVisitsInput
 }
 
@@ -522,6 +580,8 @@ export type FamilyVisitUncheckedCreateWithoutHomesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   familyVisitDocs?: Prisma.FamilyVisitDocsUncheckedCreateNestedManyWithoutFamilyVisitsInput
 }
 
@@ -563,6 +623,8 @@ export type FamilyVisitScalarWhereInput = {
   notes?: Prisma.StringNullableFilter<"FamilyVisit"> | string | null
   createdAt?: Prisma.DateTimeFilter<"FamilyVisit"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"FamilyVisit"> | Date | string
+  createdBy?: Prisma.IntNullableFilter<"FamilyVisit"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"FamilyVisit"> | number | null
 }
 
 export type FamilyVisitCreateWithoutFamilyVisitDocsInput = {
@@ -572,6 +634,8 @@ export type FamilyVisitCreateWithoutFamilyVisitDocsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
   homes: Prisma.HomesCreateNestedOneWithoutFamilyVisitsInput
 }
 
@@ -584,6 +648,8 @@ export type FamilyVisitUncheckedCreateWithoutFamilyVisitDocsInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type FamilyVisitCreateOrConnectWithoutFamilyVisitDocsInput = {
@@ -609,6 +675,8 @@ export type FamilyVisitUpdateWithoutFamilyVisitDocsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUpdateOneRequiredWithoutFamilyVisitsNestedInput
 }
 
@@ -621,6 +689,8 @@ export type FamilyVisitUncheckedUpdateWithoutFamilyVisitDocsInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type FamilyVisitCreateManyHomesInput = {
@@ -631,6 +701,8 @@ export type FamilyVisitCreateManyHomesInput = {
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type FamilyVisitUpdateWithoutHomesInput = {
@@ -640,6 +712,8 @@ export type FamilyVisitUpdateWithoutHomesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   familyVisitDocs?: Prisma.FamilyVisitDocsUpdateManyWithoutFamilyVisitsNestedInput
 }
 
@@ -651,6 +725,8 @@ export type FamilyVisitUncheckedUpdateWithoutHomesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   familyVisitDocs?: Prisma.FamilyVisitDocsUncheckedUpdateManyWithoutFamilyVisitsNestedInput
 }
 
@@ -662,6 +738,8 @@ export type FamilyVisitUncheckedUpdateManyWithoutHomesInput = {
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -704,6 +782,8 @@ export type FamilyVisitSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   homes?: boolean | Prisma.HomesDefaultArgs<ExtArgs>
   familyVisitDocs?: boolean | Prisma.FamilyVisit$familyVisitDocsArgs<ExtArgs>
   _count?: boolean | Prisma.FamilyVisitCountOutputTypeDefaultArgs<ExtArgs>
@@ -718,6 +798,8 @@ export type FamilyVisitSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   homes?: boolean | Prisma.HomesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["familyVisit"]>
 
@@ -730,6 +812,8 @@ export type FamilyVisitSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   homes?: boolean | Prisma.HomesDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["familyVisit"]>
 
@@ -742,9 +826,11 @@ export type FamilyVisitSelectScalar = {
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
 }
 
-export type FamilyVisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeId" | "visitDate" | "visitNumber" | "officer" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["familyVisit"]>
+export type FamilyVisitOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "homeId" | "visitDate" | "visitNumber" | "officer" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["familyVisit"]>
 export type FamilyVisitInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   homes?: boolean | Prisma.HomesDefaultArgs<ExtArgs>
   familyVisitDocs?: boolean | Prisma.FamilyVisit$familyVisitDocsArgs<ExtArgs>
@@ -772,6 +858,8 @@ export type $FamilyVisitPayload<ExtArgs extends runtime.Types.Extensions.Interna
     notes: string | null
     createdAt: Date
     updatedAt: Date
+    createdBy: number | null
+    editedBy: number | null
   }, ExtArgs["result"]["familyVisit"]>
   composites: {}
 }
@@ -1205,6 +1293,8 @@ export interface FamilyVisitFieldRefs {
   readonly notes: Prisma.FieldRef<"FamilyVisit", 'String'>
   readonly createdAt: Prisma.FieldRef<"FamilyVisit", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"FamilyVisit", 'DateTime'>
+  readonly createdBy: Prisma.FieldRef<"FamilyVisit", 'Int'>
+  readonly editedBy: Prisma.FieldRef<"FamilyVisit", 'Int'>
 }
     
 

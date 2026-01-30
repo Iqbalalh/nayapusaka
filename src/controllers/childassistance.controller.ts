@@ -16,8 +16,9 @@ import {
   getPresignedUrl,
   isValidS3Key,
 } from "../utils/storage/s3.storage";
+import { AuthRequest } from "../middlewares/auth";
 
-interface RequestWithFiles extends Request {
+interface RequestWithFiles extends AuthRequest {
   files?:
     | Express.Multer.File[]
     | { [fieldname: string]: Express.Multer.File[] };
@@ -135,6 +136,9 @@ export const postChildAssistance = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const {
       childrenId,
       assistanceNumber,
@@ -142,6 +146,9 @@ export const postChildAssistance = async (
       assistanceType,
       assistanceProvider,
       assistanceAmount,
+      educationLevel,
+      educationGrade,
+      age,
       notes,
     } = req.body;
 
@@ -168,7 +175,11 @@ export const postChildAssistance = async (
       assistanceType,
       assistanceProvider,
       assistanceAmount: Number(assistanceAmount),
+      educationLevel: educationLevel || null,
+      educationGrade: educationGrade || null,
+      age: age ? Number(age) : null,
       notes: notes || null,
+      createdBy: userId,
     };
 
     const newAssistance = await insertChildAssistance(body);
@@ -246,6 +257,9 @@ export const patchChildAssistance = async (
   next: NextFunction
 ) => {
   try {
+    // Get user ID from JWT token
+    const userId = (req.user as any)?.id || 2;
+
     const id = Number(req.params.id);
     const existing = await selectChildAssistanceById(id);
 
@@ -263,6 +277,9 @@ export const patchChildAssistance = async (
       assistanceType,
       assistanceProvider,
       assistanceAmount,
+      educationLevel,
+      educationGrade,
+      age,
       notes,
     } = req.body;
 
@@ -277,7 +294,11 @@ export const patchChildAssistance = async (
       updateData.assistanceProvider = assistanceProvider;
     if (assistanceAmount !== undefined)
       updateData.assistanceAmount = Number(assistanceAmount);
+    if (educationLevel !== undefined) updateData.educationLevel = educationLevel;
+    if (educationGrade !== undefined) updateData.educationGrade = educationGrade;
+    if (age !== undefined) updateData.age = age ? Number(age) : null;
     if (notes !== undefined) updateData.notes = notes;
+    updateData.editedBy = userId;
 
     // Upload new documents if provided
     const uploadedDocs = [];

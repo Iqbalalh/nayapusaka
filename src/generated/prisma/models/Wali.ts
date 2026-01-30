@@ -29,11 +29,15 @@ export type AggregateWali = {
 export type WaliAvgAggregateOutputType = {
   id: number | null
   employeeId: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type WaliSumAggregateOutputType = {
   id: number | null
   employeeId: number | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type WaliMinAggregateOutputType = {
@@ -49,6 +53,8 @@ export type WaliMinAggregateOutputType = {
   waliPict: string | null
   nik: string | null
   waliJob: string | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type WaliMaxAggregateOutputType = {
@@ -64,6 +70,8 @@ export type WaliMaxAggregateOutputType = {
   waliPict: string | null
   nik: string | null
   waliJob: string | null
+  createdBy: number | null
+  editedBy: number | null
 }
 
 export type WaliCountAggregateOutputType = {
@@ -79,6 +87,8 @@ export type WaliCountAggregateOutputType = {
   waliPict: number
   nik: number
   waliJob: number
+  createdBy: number
+  editedBy: number
   _all: number
 }
 
@@ -86,11 +96,15 @@ export type WaliCountAggregateOutputType = {
 export type WaliAvgAggregateInputType = {
   id?: true
   employeeId?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type WaliSumAggregateInputType = {
   id?: true
   employeeId?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type WaliMinAggregateInputType = {
@@ -106,6 +120,8 @@ export type WaliMinAggregateInputType = {
   waliPict?: true
   nik?: true
   waliJob?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type WaliMaxAggregateInputType = {
@@ -121,6 +137,8 @@ export type WaliMaxAggregateInputType = {
   waliPict?: true
   nik?: true
   waliJob?: true
+  createdBy?: true
+  editedBy?: true
 }
 
 export type WaliCountAggregateInputType = {
@@ -136,6 +154,8 @@ export type WaliCountAggregateInputType = {
   waliPict?: true
   nik?: true
   waliJob?: true
+  createdBy?: true
+  editedBy?: true
   _all?: true
 }
 
@@ -238,6 +258,8 @@ export type WaliGroupByOutputType = {
   waliPict: string | null
   nik: string | null
   waliJob: string | null
+  createdBy: number | null
+  editedBy: number | null
   _count: WaliCountAggregateOutputType | null
   _avg: WaliAvgAggregateOutputType | null
   _sum: WaliSumAggregateOutputType | null
@@ -276,6 +298,8 @@ export type WaliWhereInput = {
   waliPict?: Prisma.StringNullableFilter<"Wali"> | string | null
   nik?: Prisma.StringNullableFilter<"Wali"> | string | null
   waliJob?: Prisma.StringNullableFilter<"Wali"> | string | null
+  createdBy?: Prisma.IntNullableFilter<"Wali"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"Wali"> | number | null
   homes?: Prisma.HomesListRelationFilter
   umkm?: Prisma.UmkmListRelationFilter
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
@@ -294,6 +318,8 @@ export type WaliOrderByWithRelationInput = {
   waliPict?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrderInput | Prisma.SortOrder
   waliJob?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   homes?: Prisma.HomesOrderByRelationAggregateInput
   umkm?: Prisma.UmkmOrderByRelationAggregateInput
   employees?: Prisma.EmployeesOrderByWithRelationInput
@@ -315,6 +341,8 @@ export type WaliWhereUniqueInput = Prisma.AtLeast<{
   waliPict?: Prisma.StringNullableFilter<"Wali"> | string | null
   nik?: Prisma.StringNullableFilter<"Wali"> | string | null
   waliJob?: Prisma.StringNullableFilter<"Wali"> | string | null
+  createdBy?: Prisma.IntNullableFilter<"Wali"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"Wali"> | number | null
   homes?: Prisma.HomesListRelationFilter
   umkm?: Prisma.UmkmListRelationFilter
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
@@ -333,6 +361,8 @@ export type WaliOrderByWithAggregationInput = {
   waliPict?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrderInput | Prisma.SortOrder
   waliJob?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.WaliCountOrderByAggregateInput
   _avg?: Prisma.WaliAvgOrderByAggregateInput
   _max?: Prisma.WaliMaxOrderByAggregateInput
@@ -356,6 +386,8 @@ export type WaliScalarWhereWithAggregatesInput = {
   waliPict?: Prisma.StringNullableWithAggregatesFilter<"Wali"> | string | null
   nik?: Prisma.StringNullableWithAggregatesFilter<"Wali"> | string | null
   waliJob?: Prisma.StringNullableWithAggregatesFilter<"Wali"> | string | null
+  createdBy?: Prisma.IntNullableWithAggregatesFilter<"Wali"> | number | null
+  editedBy?: Prisma.IntNullableWithAggregatesFilter<"Wali"> | number | null
 }
 
 export type WaliCreateInput = {
@@ -369,6 +401,8 @@ export type WaliCreateInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   homes?: Prisma.HomesCreateNestedManyWithoutWaliInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutWaliInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutWaliInput
@@ -387,6 +421,8 @@ export type WaliUncheckedCreateInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutWaliInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutWaliInput
 }
@@ -402,6 +438,8 @@ export type WaliUpdateInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUpdateManyWithoutWaliNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutWaliNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutWaliNestedInput
@@ -420,6 +458,8 @@ export type WaliUncheckedUpdateInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUncheckedUpdateManyWithoutWaliNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutWaliNestedInput
 }
@@ -437,6 +477,8 @@ export type WaliCreateManyInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type WaliUpdateManyMutationInput = {
@@ -450,6 +492,8 @@ export type WaliUpdateManyMutationInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type WaliUncheckedUpdateManyInput = {
@@ -465,6 +509,8 @@ export type WaliUncheckedUpdateManyInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 export type WaliListRelationFilter = {
@@ -495,11 +541,15 @@ export type WaliCountOrderByAggregateInput = {
   waliPict?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   waliJob?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type WaliAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type WaliMaxOrderByAggregateInput = {
@@ -515,6 +565,8 @@ export type WaliMaxOrderByAggregateInput = {
   waliPict?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   waliJob?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type WaliMinOrderByAggregateInput = {
@@ -530,11 +582,15 @@ export type WaliMinOrderByAggregateInput = {
   waliPict?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   waliJob?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type WaliSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  createdBy?: Prisma.SortOrder
+  editedBy?: Prisma.SortOrder
 }
 
 export type WaliCreateNestedManyWithoutEmployeesInput = {
@@ -622,6 +678,8 @@ export type WaliCreateWithoutEmployeesInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   homes?: Prisma.HomesCreateNestedManyWithoutWaliInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutWaliInput
 }
@@ -638,6 +696,8 @@ export type WaliUncheckedCreateWithoutEmployeesInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutWaliInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutWaliInput
 }
@@ -684,6 +744,8 @@ export type WaliScalarWhereInput = {
   waliPict?: Prisma.StringNullableFilter<"Wali"> | string | null
   nik?: Prisma.StringNullableFilter<"Wali"> | string | null
   waliJob?: Prisma.StringNullableFilter<"Wali"> | string | null
+  createdBy?: Prisma.IntNullableFilter<"Wali"> | number | null
+  editedBy?: Prisma.IntNullableFilter<"Wali"> | number | null
 }
 
 export type WaliCreateWithoutHomesInput = {
@@ -697,6 +759,8 @@ export type WaliCreateWithoutHomesInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   umkm?: Prisma.UmkmCreateNestedManyWithoutWaliInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutWaliInput
 }
@@ -714,6 +778,8 @@ export type WaliUncheckedCreateWithoutHomesInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutWaliInput
 }
 
@@ -744,6 +810,8 @@ export type WaliUpdateWithoutHomesInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkm?: Prisma.UmkmUpdateManyWithoutWaliNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutWaliNestedInput
 }
@@ -761,6 +829,8 @@ export type WaliUncheckedUpdateWithoutHomesInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutWaliNestedInput
 }
 
@@ -775,6 +845,8 @@ export type WaliCreateWithoutUmkmInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   homes?: Prisma.HomesCreateNestedManyWithoutWaliInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutWaliInput
 }
@@ -792,6 +864,8 @@ export type WaliUncheckedCreateWithoutUmkmInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutWaliInput
 }
 
@@ -822,6 +896,8 @@ export type WaliUpdateWithoutUmkmInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUpdateManyWithoutWaliNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutWaliNestedInput
 }
@@ -839,6 +915,8 @@ export type WaliUncheckedUpdateWithoutUmkmInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUncheckedUpdateManyWithoutWaliNestedInput
 }
 
@@ -854,6 +932,8 @@ export type WaliCreateManyEmployeesInput = {
   waliPict?: string | null
   nik?: string | null
   waliJob?: string | null
+  createdBy?: number | null
+  editedBy?: number | null
 }
 
 export type WaliUpdateWithoutEmployeesInput = {
@@ -867,6 +947,8 @@ export type WaliUpdateWithoutEmployeesInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUpdateManyWithoutWaliNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutWaliNestedInput
 }
@@ -883,6 +965,8 @@ export type WaliUncheckedUpdateWithoutEmployeesInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   homes?: Prisma.HomesUncheckedUpdateManyWithoutWaliNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutWaliNestedInput
 }
@@ -899,6 +983,8 @@ export type WaliUncheckedUpdateManyWithoutEmployeesInput = {
   waliPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   waliJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
 }
 
 
@@ -954,6 +1040,8 @@ export type WaliSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   waliPict?: boolean
   nik?: boolean
   waliJob?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   homes?: boolean | Prisma.Wali$homesArgs<ExtArgs>
   umkm?: boolean | Prisma.Wali$umkmArgs<ExtArgs>
   employees?: boolean | Prisma.Wali$employeesArgs<ExtArgs>
@@ -973,6 +1061,8 @@ export type WaliSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   waliPict?: boolean
   nik?: boolean
   waliJob?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   employees?: boolean | Prisma.Wali$employeesArgs<ExtArgs>
 }, ExtArgs["result"]["wali"]>
 
@@ -989,6 +1079,8 @@ export type WaliSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   waliPict?: boolean
   nik?: boolean
   waliJob?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
   employees?: boolean | Prisma.Wali$employeesArgs<ExtArgs>
 }, ExtArgs["result"]["wali"]>
 
@@ -1005,9 +1097,11 @@ export type WaliSelectScalar = {
   waliPict?: boolean
   nik?: boolean
   waliJob?: boolean
+  createdBy?: boolean
+  editedBy?: boolean
 }
 
-export type WaliOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "waliName" | "relation" | "waliAddress" | "addressCoordinate" | "waliPhone" | "createdAt" | "updatedAt" | "waliPict" | "nik" | "waliJob", ExtArgs["result"]["wali"]>
+export type WaliOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "waliName" | "relation" | "waliAddress" | "addressCoordinate" | "waliPhone" | "createdAt" | "updatedAt" | "waliPict" | "nik" | "waliJob" | "createdBy" | "editedBy", ExtArgs["result"]["wali"]>
 export type WaliInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   homes?: boolean | Prisma.Wali$homesArgs<ExtArgs>
   umkm?: boolean | Prisma.Wali$umkmArgs<ExtArgs>
@@ -1041,6 +1135,8 @@ export type $WaliPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     waliPict: string | null
     nik: string | null
     waliJob: string | null
+    createdBy: number | null
+    editedBy: number | null
   }, ExtArgs["result"]["wali"]>
   composites: {}
 }
@@ -1479,6 +1575,8 @@ export interface WaliFieldRefs {
   readonly waliPict: Prisma.FieldRef<"Wali", 'String'>
   readonly nik: Prisma.FieldRef<"Wali", 'String'>
   readonly waliJob: Prisma.FieldRef<"Wali", 'String'>
+  readonly createdBy: Prisma.FieldRef<"Wali", 'Int'>
+  readonly editedBy: Prisma.FieldRef<"Wali", 'Int'>
 }
     
 
