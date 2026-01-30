@@ -18,6 +18,9 @@ export interface ChildrenInput {
   childrenGender?: string;
   nik?: string;
   childrenJob?: string;
+  educationLevel?: string;
+  schoolName?: string;
+  educationGrade?: string;
   [key: string]: unknown;
 }
 
@@ -38,6 +41,9 @@ export interface SanitizedChildrenData {
   childrenGender?: string | null;
   nik?: string | null;
   childrenJob?: string | null;
+  educationLevel?: string | null;
+  schoolName?: string | null;
+  educationGrade?: string | null;
 }
 
 /**
@@ -112,6 +118,9 @@ export const sanitizeChildrenData = (body: ChildrenInput): SanitizedChildrenData
   if (rest.childrenGender !== undefined) sanitized.childrenGender = normalize(rest.childrenGender);
   if (rest.nik !== undefined) sanitized.nik = normalize(rest.nik);
   if (rest.childrenJob !== undefined) sanitized.childrenJob = normalize(rest.childrenJob);
-
+  if (rest.educationLevel !== undefined) sanitized.educationLevel = normalize(rest.educationLevel);
+  if (rest.schoolName !== undefined) sanitized.schoolName = normalize(rest.schoolName);
+  if (rest.educationGrade !== undefined) sanitized.educationGrade = normalize(rest.educationGrade);
+  
   return sanitized;
 };

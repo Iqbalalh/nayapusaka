@@ -63,6 +63,9 @@ export type ChildrenMinAggregateOutputType = {
   index: number | null
   nik: string | null
   childrenJob: string | null
+  educationLevel: string | null
+  schoolName: string | null
+  educationGrade: string | null
 }
 
 export type ChildrenMaxAggregateOutputType = {
@@ -86,6 +89,9 @@ export type ChildrenMaxAggregateOutputType = {
   index: number | null
   nik: string | null
   childrenJob: string | null
+  educationLevel: string | null
+  schoolName: string | null
+  educationGrade: string | null
 }
 
 export type ChildrenCountAggregateOutputType = {
@@ -109,6 +115,9 @@ export type ChildrenCountAggregateOutputType = {
   index: number
   nik: number
   childrenJob: number
+  educationLevel: number
+  schoolName: number
+  educationGrade: number
   _all: number
 }
 
@@ -150,6 +159,9 @@ export type ChildrenMinAggregateInputType = {
   index?: true
   nik?: true
   childrenJob?: true
+  educationLevel?: true
+  schoolName?: true
+  educationGrade?: true
 }
 
 export type ChildrenMaxAggregateInputType = {
@@ -173,6 +185,9 @@ export type ChildrenMaxAggregateInputType = {
   index?: true
   nik?: true
   childrenJob?: true
+  educationLevel?: true
+  schoolName?: true
+  educationGrade?: true
 }
 
 export type ChildrenCountAggregateInputType = {
@@ -196,6 +211,9 @@ export type ChildrenCountAggregateInputType = {
   index?: true
   nik?: true
   childrenJob?: true
+  educationLevel?: true
+  schoolName?: true
+  educationGrade?: true
   _all?: true
 }
 
@@ -306,6 +324,9 @@ export type ChildrenGroupByOutputType = {
   index: number | null
   nik: string | null
   childrenJob: string | null
+  educationLevel: string | null
+  schoolName: string | null
+  educationGrade: string | null
   _count: ChildrenCountAggregateOutputType | null
   _avg: ChildrenAvgAggregateOutputType | null
   _sum: ChildrenSumAggregateOutputType | null
@@ -352,6 +373,9 @@ export type ChildrenWhereInput = {
   index?: Prisma.IntNullableFilter<"Children"> | number | null
   nik?: Prisma.StringNullableFilter<"Children"> | string | null
   childrenJob?: Prisma.StringNullableFilter<"Children"> | string | null
+  educationLevel?: Prisma.StringNullableFilter<"Children"> | string | null
+  schoolName?: Prisma.StringNullableFilter<"Children"> | string | null
+  educationGrade?: Prisma.StringNullableFilter<"Children"> | string | null
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
   homes?: Prisma.XOR<Prisma.HomesNullableScalarRelationFilter, Prisma.HomesWhereInput> | null
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
@@ -380,6 +404,9 @@ export type ChildrenOrderByWithRelationInput = {
   index?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrderInput | Prisma.SortOrder
   childrenJob?: Prisma.SortOrderInput | Prisma.SortOrder
+  educationLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  schoolName?: Prisma.SortOrderInput | Prisma.SortOrder
+  educationGrade?: Prisma.SortOrderInput | Prisma.SortOrder
   employees?: Prisma.EmployeesOrderByWithRelationInput
   homes?: Prisma.HomesOrderByWithRelationInput
   partners?: Prisma.PartnersOrderByWithRelationInput
@@ -411,6 +438,9 @@ export type ChildrenWhereUniqueInput = Prisma.AtLeast<{
   index?: Prisma.IntNullableFilter<"Children"> | number | null
   nik?: Prisma.StringNullableFilter<"Children"> | string | null
   childrenJob?: Prisma.StringNullableFilter<"Children"> | string | null
+  educationLevel?: Prisma.StringNullableFilter<"Children"> | string | null
+  schoolName?: Prisma.StringNullableFilter<"Children"> | string | null
+  educationGrade?: Prisma.StringNullableFilter<"Children"> | string | null
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
   homes?: Prisma.XOR<Prisma.HomesNullableScalarRelationFilter, Prisma.HomesWhereInput> | null
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
@@ -439,6 +469,9 @@ export type ChildrenOrderByWithAggregationInput = {
   index?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrderInput | Prisma.SortOrder
   childrenJob?: Prisma.SortOrderInput | Prisma.SortOrder
+  educationLevel?: Prisma.SortOrderInput | Prisma.SortOrder
+  schoolName?: Prisma.SortOrderInput | Prisma.SortOrder
+  educationGrade?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ChildrenCountOrderByAggregateInput
   _avg?: Prisma.ChildrenAvgOrderByAggregateInput
   _max?: Prisma.ChildrenMaxOrderByAggregateInput
@@ -470,6 +503,9 @@ export type ChildrenScalarWhereWithAggregatesInput = {
   index?: Prisma.IntNullableWithAggregatesFilter<"Children"> | number | null
   nik?: Prisma.StringNullableWithAggregatesFilter<"Children"> | string | null
   childrenJob?: Prisma.StringNullableWithAggregatesFilter<"Children"> | string | null
+  educationLevel?: Prisma.StringNullableWithAggregatesFilter<"Children"> | string | null
+  schoolName?: Prisma.StringNullableWithAggregatesFilter<"Children"> | string | null
+  educationGrade?: Prisma.StringNullableWithAggregatesFilter<"Children"> | string | null
 }
 
 export type ChildrenCreateInput = {
@@ -489,6 +525,9 @@ export type ChildrenCreateInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
@@ -517,6 +556,9 @@ export type ChildrenUncheckedCreateInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
   childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
@@ -538,6 +580,9 @@ export type ChildrenUpdateInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
@@ -566,6 +611,9 @@ export type ChildrenUncheckedUpdateInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
   childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
@@ -591,6 +639,9 @@ export type ChildrenCreateManyInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
 }
 
 export type ChildrenUpdateManyMutationInput = {
@@ -610,6 +661,9 @@ export type ChildrenUpdateManyMutationInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChildrenUncheckedUpdateManyInput = {
@@ -633,6 +687,9 @@ export type ChildrenUncheckedUpdateManyInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChildrenCountOrderByAggregateInput = {
@@ -656,6 +713,9 @@ export type ChildrenCountOrderByAggregateInput = {
   index?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   childrenJob?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrder
+  schoolName?: Prisma.SortOrder
+  educationGrade?: Prisma.SortOrder
 }
 
 export type ChildrenAvgOrderByAggregateInput = {
@@ -687,6 +747,9 @@ export type ChildrenMaxOrderByAggregateInput = {
   index?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   childrenJob?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrder
+  schoolName?: Prisma.SortOrder
+  educationGrade?: Prisma.SortOrder
 }
 
 export type ChildrenMinOrderByAggregateInput = {
@@ -710,6 +773,9 @@ export type ChildrenMinOrderByAggregateInput = {
   index?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   childrenJob?: Prisma.SortOrder
+  educationLevel?: Prisma.SortOrder
+  schoolName?: Prisma.SortOrder
+  educationGrade?: Prisma.SortOrder
 }
 
 export type ChildrenSumOrderByAggregateInput = {
@@ -949,6 +1015,9 @@ export type ChildrenCreateWithoutEmployeesInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
@@ -975,6 +1044,9 @@ export type ChildrenUncheckedCreateWithoutEmployeesInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
   childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
@@ -1029,6 +1101,9 @@ export type ChildrenScalarWhereInput = {
   index?: Prisma.IntNullableFilter<"Children"> | number | null
   nik?: Prisma.StringNullableFilter<"Children"> | string | null
   childrenJob?: Prisma.StringNullableFilter<"Children"> | string | null
+  educationLevel?: Prisma.StringNullableFilter<"Children"> | string | null
+  schoolName?: Prisma.StringNullableFilter<"Children"> | string | null
+  educationGrade?: Prisma.StringNullableFilter<"Children"> | string | null
 }
 
 export type ChildrenCreateWithoutHomesInput = {
@@ -1048,6 +1123,9 @@ export type ChildrenCreateWithoutHomesInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
@@ -1074,6 +1152,9 @@ export type ChildrenUncheckedCreateWithoutHomesInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
   childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
@@ -1121,6 +1202,9 @@ export type ChildrenCreateWithoutPartnersInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutChildrenInput
@@ -1147,6 +1231,9 @@ export type ChildrenUncheckedCreateWithoutPartnersInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
   childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
@@ -1194,6 +1281,9 @@ export type ChildrenCreateWithoutUmkmInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
@@ -1221,6 +1311,9 @@ export type ChildrenUncheckedCreateWithoutUmkmInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   childAssistance?: Prisma.ChildAssistanceUncheckedCreateNestedManyWithoutChildrenInput
 }
 
@@ -1257,6 +1350,9 @@ export type ChildrenUpdateWithoutUmkmInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
@@ -1284,6 +1380,9 @@ export type ChildrenUncheckedUpdateWithoutUmkmInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
@@ -1304,6 +1403,9 @@ export type ChildrenCreateWithoutChildAssistanceInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   employees?: Prisma.EmployeesCreateNestedOneWithoutChildrenInput
   homes?: Prisma.HomesCreateNestedOneWithoutChildrenInput
   partners?: Prisma.PartnersCreateNestedOneWithoutChildrenInput
@@ -1331,6 +1433,9 @@ export type ChildrenUncheckedCreateWithoutChildAssistanceInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutChildrenInput
 }
 
@@ -1367,6 +1472,9 @@ export type ChildrenUpdateWithoutChildAssistanceInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
@@ -1394,6 +1502,9 @@ export type ChildrenUncheckedUpdateWithoutChildAssistanceInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
 }
 
@@ -1417,6 +1528,9 @@ export type ChildrenCreateManyEmployeesInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
 }
 
 export type ChildrenUpdateWithoutEmployeesInput = {
@@ -1436,6 +1550,9 @@ export type ChildrenUpdateWithoutEmployeesInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
@@ -1462,6 +1579,9 @@ export type ChildrenUncheckedUpdateWithoutEmployeesInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
   childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
@@ -1486,6 +1606,9 @@ export type ChildrenUncheckedUpdateManyWithoutEmployeesInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChildrenCreateManyHomesInput = {
@@ -1508,6 +1631,9 @@ export type ChildrenCreateManyHomesInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
 }
 
 export type ChildrenUpdateWithoutHomesInput = {
@@ -1527,6 +1653,9 @@ export type ChildrenUpdateWithoutHomesInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
@@ -1553,6 +1682,9 @@ export type ChildrenUncheckedUpdateWithoutHomesInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
   childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
@@ -1577,6 +1709,9 @@ export type ChildrenUncheckedUpdateManyWithoutHomesInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type ChildrenCreateManyPartnersInput = {
@@ -1599,6 +1734,9 @@ export type ChildrenCreateManyPartnersInput = {
   index?: number | null
   nik?: string | null
   childrenJob?: string | null
+  educationLevel?: string | null
+  schoolName?: string | null
+  educationGrade?: string | null
 }
 
 export type ChildrenUpdateWithoutPartnersInput = {
@@ -1618,6 +1756,9 @@ export type ChildrenUpdateWithoutPartnersInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   employees?: Prisma.EmployeesUpdateOneWithoutChildrenNestedInput
   homes?: Prisma.HomesUpdateOneWithoutChildrenNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutChildrenNestedInput
@@ -1644,6 +1785,9 @@ export type ChildrenUncheckedUpdateWithoutPartnersInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutChildrenNestedInput
   childAssistance?: Prisma.ChildAssistanceUncheckedUpdateManyWithoutChildrenNestedInput
 }
@@ -1668,6 +1812,9 @@ export type ChildrenUncheckedUpdateManyWithoutPartnersInput = {
   index?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   childrenJob?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationLevel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  schoolName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  educationGrade?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -1731,6 +1878,9 @@ export type ChildrenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   index?: boolean
   nik?: boolean
   childrenJob?: boolean
+  educationLevel?: boolean
+  schoolName?: boolean
+  educationGrade?: boolean
   employees?: boolean | Prisma.Children$employeesArgs<ExtArgs>
   homes?: boolean | Prisma.Children$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Children$partnersArgs<ExtArgs>
@@ -1760,6 +1910,9 @@ export type ChildrenSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   index?: boolean
   nik?: boolean
   childrenJob?: boolean
+  educationLevel?: boolean
+  schoolName?: boolean
+  educationGrade?: boolean
   employees?: boolean | Prisma.Children$employeesArgs<ExtArgs>
   homes?: boolean | Prisma.Children$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Children$partnersArgs<ExtArgs>
@@ -1786,6 +1939,9 @@ export type ChildrenSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   index?: boolean
   nik?: boolean
   childrenJob?: boolean
+  educationLevel?: boolean
+  schoolName?: boolean
+  educationGrade?: boolean
   employees?: boolean | Prisma.Children$employeesArgs<ExtArgs>
   homes?: boolean | Prisma.Children$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Children$partnersArgs<ExtArgs>
@@ -1812,9 +1968,12 @@ export type ChildrenSelectScalar = {
   index?: boolean
   nik?: boolean
   childrenJob?: boolean
+  educationLevel?: boolean
+  schoolName?: boolean
+  educationGrade?: boolean
 }
 
-export type ChildrenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "partnerId" | "homeId" | "childrenName" | "isActive" | "childrenBirthdate" | "childrenAddress" | "childrenPhone" | "notes" | "isFatherAlive" | "isMotherAlive" | "childrenGender" | "isCondition" | "createdAt" | "updatedAt" | "childrenPict" | "index" | "nik" | "childrenJob", ExtArgs["result"]["children"]>
+export type ChildrenOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "employeeId" | "partnerId" | "homeId" | "childrenName" | "isActive" | "childrenBirthdate" | "childrenAddress" | "childrenPhone" | "notes" | "isFatherAlive" | "isMotherAlive" | "childrenGender" | "isCondition" | "createdAt" | "updatedAt" | "childrenPict" | "index" | "nik" | "childrenJob" | "educationLevel" | "schoolName" | "educationGrade", ExtArgs["result"]["children"]>
 export type ChildrenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   employees?: boolean | Prisma.Children$employeesArgs<ExtArgs>
   homes?: boolean | Prisma.Children$homesArgs<ExtArgs>
@@ -1864,6 +2023,9 @@ export type $ChildrenPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     index: number | null
     nik: string | null
     childrenJob: string | null
+    educationLevel: string | null
+    schoolName: string | null
+    educationGrade: string | null
   }, ExtArgs["result"]["children"]>
   composites: {}
 }
@@ -2312,6 +2474,9 @@ export interface ChildrenFieldRefs {
   readonly index: Prisma.FieldRef<"Children", 'Int'>
   readonly nik: Prisma.FieldRef<"Children", 'String'>
   readonly childrenJob: Prisma.FieldRef<"Children", 'String'>
+  readonly educationLevel: Prisma.FieldRef<"Children", 'String'>
+  readonly schoolName: Prisma.FieldRef<"Children", 'String'>
+  readonly educationGrade: Prisma.FieldRef<"Children", 'String'>
 }
     
 

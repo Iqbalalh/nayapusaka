@@ -55,6 +55,7 @@ export const getGalleries = async (
             id: gallery.regions.regionId,
             name: gallery.regions.regionName,
           } : null,
+          galleryDate: gallery.galleryDate,
           createdAt: gallery.createdAt,
           updatedAt: gallery.updatedAt,
         };
@@ -110,6 +111,7 @@ export const getGalleriesPaginated = async (
             id: gallery.regions.regionId,
             name: gallery.regions.regionName,
           } : null,
+          galleryDate: gallery.galleryDate,
           createdAt: gallery.createdAt,
           updatedAt: gallery.updatedAt,
         };
@@ -186,6 +188,7 @@ export const getGallery = async (
         id: gallery.regions.regionId,
         name: gallery.regions.regionName,
       } : null,
+      galleryDate: gallery.galleryDate,
       createdAt: gallery.createdAt,
       updatedAt: gallery.updatedAt,
     };
@@ -209,12 +212,13 @@ export const postGallery = async (
   next: NextFunction
 ) => {
   try {
-    const { caption, categoryIds, regionId } = req.body;
+    const { caption, categoryIds, regionId, galleryDate } = req.body;
     
     const body: Prisma.GalleryUncheckedCreateInput = {
       caption: caption || null,
       s3Path: "",
       regionId: regionId && regionId !== 'null' && regionId !== '' ? Number(regionId) : null,
+      galleryDate: galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null,
     };
 
     const newGallery = await insertGallery(body);
@@ -264,6 +268,7 @@ export const postGallery = async (
         id: updatedGallery.regions.regionId,
         name: updatedGallery.regions.regionName,
       } : null,
+      galleryDate: updatedGallery?.galleryDate,
       createdAt: updatedGallery?.createdAt,
       updatedAt: updatedGallery?.updatedAt,
     };
@@ -315,7 +320,7 @@ export const patchGallery = async (
       }
     }
 
-    const { caption, categoryIds, regionId } = req.body;
+    const { caption, categoryIds, regionId, galleryDate } = req.body;
 
     const updated = await updateGalleryById(
       id,
@@ -325,6 +330,7 @@ export const patchGallery = async (
         regionId: regionId !== undefined && regionId !== 'null' && regionId !== ''
           ? (regionId ? Number(regionId) : null)
           : undefined,
+        galleryDate: galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null,
       } as Prisma.GalleryUncheckedUpdateInput,
       categoryIds ? (Array.isArray(categoryIds) ? categoryIds.map(Number) : [Number(categoryIds)]) : undefined
     );
@@ -349,6 +355,7 @@ export const patchGallery = async (
         id: updated.regions.regionId,
         name: updated.regions.regionName,
       } : null,
+      galleryDate: updated.galleryDate,
       createdAt: updated.createdAt,
       updatedAt: updated.updatedAt,
     };

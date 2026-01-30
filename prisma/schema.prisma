@@ -34,6 +34,9 @@ model Children {
   index             Int?
   nik               String?   @db.VarChar(30)
   childrenJob       String?   @map("children_job") @db.VarChar(50)
+  educationLevel    String?   @map("education_level") @db.VarChar(100)
+  schoolName        String?   @map("school_name") @db.VarChar(200)
+  educationGrade    String?   @map("education_grade") @db.VarChar(100)
 
   // Relations
   employees        Employees?           @relation(fields: [employeeId], references: [id], onUpdate: NoAction)
@@ -189,6 +192,7 @@ model Umkm {
   umkmPict3       String?   @map("umkm_pict_3") @db.VarChar(255)
   umkmPict4       String?   @map("umkm_pict_4") @db.VarChar(255)
   umkmPict5       String?   @map("umkm_pict_5") @db.VarChar(255)
+  isActive        Boolean?  @default(true) @map("is_active")
 
   // Relations
   children  Children?  @relation(fields: [childrenId], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -391,6 +395,7 @@ model Gallery {
   s3Path      String    @map("s3_path") @db.VarChar(500)
   caption     String?   @db.Text
   regionId    Int?      @map("region_id")
+  galleryDate DateTime? @map("gallery_date") @db.Date
   createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
 

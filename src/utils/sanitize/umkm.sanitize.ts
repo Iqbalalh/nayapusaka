@@ -16,6 +16,7 @@ export interface UmkmInput {
   umkmCoordinate?: string;
   businessType?: string;
   products?: string;
+  isActive?: string | boolean;
   [key: string]: unknown;
 }
 
@@ -34,6 +35,7 @@ export interface SanitizedUmkmData {
   umkmCoordinate?: string | null;
   businessType?: string | null;
   products?: string | null;
+  isActive?: boolean;
 }
 
 /**
@@ -82,6 +84,12 @@ export const sanitizeUmkmData = (body: UmkmInput): SanitizedUmkmData => {
     sanitized.childrenId = rest.childrenId ? Number(normalize(rest.childrenId)) : null;
   }
 
+  // Convert string fields that should be booleans
+  if (rest.isActive !== undefined) {
+    const normalized = normalize(rest.isActive);
+    sanitized.isActive = normalized === '1' || normalized === true || normalized === 'true';
+  }
+
   // Keep string fields as is, but normalize them first
   if (rest.ownerName !== undefined) sanitized.ownerName = normalize(rest.ownerName);
   if (rest.businessName !== undefined) sanitized.businessName = normalize(rest.businessName);
@@ -90,6 +98,6 @@ export const sanitizeUmkmData = (body: UmkmInput): SanitizedUmkmData => {
   if (rest.umkmCoordinate !== undefined) sanitized.umkmCoordinate = normalize(rest.umkmCoordinate);
   if (rest.businessType !== undefined) sanitized.businessType = normalize(rest.businessType);
   if (rest.products !== undefined) sanitized.products = normalize(rest.products);
-
+  
   return sanitized;
 };

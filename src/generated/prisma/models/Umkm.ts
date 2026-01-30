@@ -66,6 +66,7 @@ export type UmkmMinAggregateOutputType = {
   umkmPict3: string | null
   umkmPict4: string | null
   umkmPict5: string | null
+  isActive: boolean | null
 }
 
 export type UmkmMaxAggregateOutputType = {
@@ -90,6 +91,7 @@ export type UmkmMaxAggregateOutputType = {
   umkmPict3: string | null
   umkmPict4: string | null
   umkmPict5: string | null
+  isActive: boolean | null
 }
 
 export type UmkmCountAggregateOutputType = {
@@ -114,6 +116,7 @@ export type UmkmCountAggregateOutputType = {
   umkmPict3: number
   umkmPict4: number
   umkmPict5: number
+  isActive: number
   _all: number
 }
 
@@ -158,6 +161,7 @@ export type UmkmMinAggregateInputType = {
   umkmPict3?: true
   umkmPict4?: true
   umkmPict5?: true
+  isActive?: true
 }
 
 export type UmkmMaxAggregateInputType = {
@@ -182,6 +186,7 @@ export type UmkmMaxAggregateInputType = {
   umkmPict3?: true
   umkmPict4?: true
   umkmPict5?: true
+  isActive?: true
 }
 
 export type UmkmCountAggregateInputType = {
@@ -206,6 +211,7 @@ export type UmkmCountAggregateInputType = {
   umkmPict3?: true
   umkmPict4?: true
   umkmPict5?: true
+  isActive?: true
   _all?: true
 }
 
@@ -317,6 +323,7 @@ export type UmkmGroupByOutputType = {
   umkmPict3: string | null
   umkmPict4: string | null
   umkmPict5: string | null
+  isActive: boolean | null
   _count: UmkmCountAggregateOutputType | null
   _avg: UmkmAvgAggregateOutputType | null
   _sum: UmkmSumAggregateOutputType | null
@@ -364,6 +371,7 @@ export type UmkmWhereInput = {
   umkmPict3?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmPict4?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmPict5?: Prisma.StringNullableFilter<"Umkm"> | string | null
+  isActive?: Prisma.BoolNullableFilter<"Umkm"> | boolean | null
   children?: Prisma.XOR<Prisma.ChildrenNullableScalarRelationFilter, Prisma.ChildrenWhereInput> | null
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
@@ -395,6 +403,7 @@ export type UmkmOrderByWithRelationInput = {
   umkmPict3?: Prisma.SortOrderInput | Prisma.SortOrder
   umkmPict4?: Prisma.SortOrderInput | Prisma.SortOrder
   umkmPict5?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrderInput | Prisma.SortOrder
   children?: Prisma.ChildrenOrderByWithRelationInput
   employees?: Prisma.EmployeesOrderByWithRelationInput
   partners?: Prisma.PartnersOrderByWithRelationInput
@@ -429,6 +438,7 @@ export type UmkmWhereUniqueInput = Prisma.AtLeast<{
   umkmPict3?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmPict4?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmPict5?: Prisma.StringNullableFilter<"Umkm"> | string | null
+  isActive?: Prisma.BoolNullableFilter<"Umkm"> | boolean | null
   children?: Prisma.XOR<Prisma.ChildrenNullableScalarRelationFilter, Prisma.ChildrenWhereInput> | null
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
   partners?: Prisma.XOR<Prisma.PartnersNullableScalarRelationFilter, Prisma.PartnersWhereInput> | null
@@ -460,6 +470,7 @@ export type UmkmOrderByWithAggregationInput = {
   umkmPict3?: Prisma.SortOrderInput | Prisma.SortOrder
   umkmPict4?: Prisma.SortOrderInput | Prisma.SortOrder
   umkmPict5?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UmkmCountOrderByAggregateInput
   _avg?: Prisma.UmkmAvgOrderByAggregateInput
   _max?: Prisma.UmkmMaxOrderByAggregateInput
@@ -492,6 +503,7 @@ export type UmkmScalarWhereWithAggregatesInput = {
   umkmPict3?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   umkmPict4?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
   umkmPict5?: Prisma.StringNullableWithAggregatesFilter<"Umkm"> | string | null
+  isActive?: Prisma.BoolNullableWithAggregatesFilter<"Umkm"> | boolean | null
 }
 
 export type UmkmCreateInput = {
@@ -510,6 +522,7 @@ export type UmkmCreateInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
@@ -541,6 +554,7 @@ export type UmkmUncheckedCreateInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
@@ -561,6 +575,7 @@ export type UmkmUpdateInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
@@ -592,6 +607,7 @@ export type UmkmUncheckedUpdateInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
@@ -618,6 +634,7 @@ export type UmkmCreateManyInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
 }
 
 export type UmkmUpdateManyMutationInput = {
@@ -636,6 +653,7 @@ export type UmkmUpdateManyMutationInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type UmkmUncheckedUpdateManyInput = {
@@ -660,6 +678,7 @@ export type UmkmUncheckedUpdateManyInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type UmkmListRelationFilter = {
@@ -694,6 +713,7 @@ export type UmkmCountOrderByAggregateInput = {
   umkmPict3?: Prisma.SortOrder
   umkmPict4?: Prisma.SortOrder
   umkmPict5?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type UmkmAvgOrderByAggregateInput = {
@@ -727,6 +747,7 @@ export type UmkmMaxOrderByAggregateInput = {
   umkmPict3?: Prisma.SortOrder
   umkmPict4?: Prisma.SortOrder
   umkmPict5?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type UmkmMinOrderByAggregateInput = {
@@ -751,6 +772,7 @@ export type UmkmMinOrderByAggregateInput = {
   umkmPict3?: Prisma.SortOrder
   umkmPict4?: Prisma.SortOrder
   umkmPict5?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
 }
 
 export type UmkmSumOrderByAggregateInput = {
@@ -1021,6 +1043,7 @@ export type UmkmCreateWithoutChildrenInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
@@ -1050,6 +1073,7 @@ export type UmkmUncheckedCreateWithoutChildrenInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
@@ -1105,6 +1129,7 @@ export type UmkmScalarWhereInput = {
   umkmPict3?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmPict4?: Prisma.StringNullableFilter<"Umkm"> | string | null
   umkmPict5?: Prisma.StringNullableFilter<"Umkm"> | string | null
+  isActive?: Prisma.BoolNullableFilter<"Umkm"> | boolean | null
 }
 
 export type UmkmCreateWithoutEmployeesInput = {
@@ -1123,6 +1148,7 @@ export type UmkmCreateWithoutEmployeesInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
@@ -1152,6 +1178,7 @@ export type UmkmUncheckedCreateWithoutEmployeesInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
@@ -1198,6 +1225,7 @@ export type UmkmCreateWithoutPartnersInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   regions?: Prisma.RegionsCreateNestedOneWithoutUmkmInput
@@ -1227,6 +1255,7 @@ export type UmkmUncheckedCreateWithoutPartnersInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
@@ -1273,6 +1302,7 @@ export type UmkmCreateWithoutRegionsInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
@@ -1302,6 +1332,7 @@ export type UmkmUncheckedCreateWithoutRegionsInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
@@ -1348,6 +1379,7 @@ export type UmkmCreateWithoutWaliInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
@@ -1377,6 +1409,7 @@ export type UmkmUncheckedCreateWithoutWaliInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
@@ -1423,6 +1456,7 @@ export type UmkmCreateWithoutUmkmVisitsInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
@@ -1453,6 +1487,7 @@ export type UmkmUncheckedCreateWithoutUmkmVisitsInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedCreateNestedManyWithoutUmkmInput
 }
 
@@ -1488,6 +1523,7 @@ export type UmkmUpdateWithoutUmkmVisitsInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
@@ -1518,6 +1554,7 @@ export type UmkmUncheckedUpdateWithoutUmkmVisitsInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
@@ -1537,6 +1574,7 @@ export type UmkmCreateWithoutUmkmMonitoringInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   children?: Prisma.ChildrenCreateNestedOneWithoutUmkmInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutUmkmInput
   partners?: Prisma.PartnersCreateNestedOneWithoutUmkmInput
@@ -1567,6 +1605,7 @@ export type UmkmUncheckedCreateWithoutUmkmMonitoringInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedCreateNestedManyWithoutUmkmInput
 }
 
@@ -1602,6 +1641,7 @@ export type UmkmUpdateWithoutUmkmMonitoringInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
@@ -1632,6 +1672,7 @@ export type UmkmUncheckedUpdateWithoutUmkmMonitoringInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
 }
 
@@ -1656,6 +1697,7 @@ export type UmkmCreateManyChildrenInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
 }
 
 export type UmkmUpdateWithoutChildrenInput = {
@@ -1674,6 +1716,7 @@ export type UmkmUpdateWithoutChildrenInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
@@ -1703,6 +1746,7 @@ export type UmkmUncheckedUpdateWithoutChildrenInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
@@ -1728,6 +1772,7 @@ export type UmkmUncheckedUpdateManyWithoutChildrenInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type UmkmCreateManyEmployeesInput = {
@@ -1751,6 +1796,7 @@ export type UmkmCreateManyEmployeesInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
 }
 
 export type UmkmUpdateWithoutEmployeesInput = {
@@ -1769,6 +1815,7 @@ export type UmkmUpdateWithoutEmployeesInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
@@ -1798,6 +1845,7 @@ export type UmkmUncheckedUpdateWithoutEmployeesInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
@@ -1823,6 +1871,7 @@ export type UmkmUncheckedUpdateManyWithoutEmployeesInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type UmkmCreateManyPartnersInput = {
@@ -1846,6 +1895,7 @@ export type UmkmCreateManyPartnersInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
 }
 
 export type UmkmUpdateWithoutPartnersInput = {
@@ -1864,6 +1914,7 @@ export type UmkmUpdateWithoutPartnersInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutUmkmNestedInput
@@ -1893,6 +1944,7 @@ export type UmkmUncheckedUpdateWithoutPartnersInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
@@ -1918,6 +1970,7 @@ export type UmkmUncheckedUpdateManyWithoutPartnersInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type UmkmCreateManyRegionsInput = {
@@ -1941,6 +1994,7 @@ export type UmkmCreateManyRegionsInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
 }
 
 export type UmkmUpdateWithoutRegionsInput = {
@@ -1959,6 +2013,7 @@ export type UmkmUpdateWithoutRegionsInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
@@ -1988,6 +2043,7 @@ export type UmkmUncheckedUpdateWithoutRegionsInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
@@ -2013,6 +2069,7 @@ export type UmkmUncheckedUpdateManyWithoutRegionsInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type UmkmCreateManyWaliInput = {
@@ -2036,6 +2093,7 @@ export type UmkmCreateManyWaliInput = {
   umkmPict3?: string | null
   umkmPict4?: string | null
   umkmPict5?: string | null
+  isActive?: boolean | null
 }
 
 export type UmkmUpdateWithoutWaliInput = {
@@ -2054,6 +2112,7 @@ export type UmkmUpdateWithoutWaliInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateOneWithoutUmkmNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutUmkmNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutUmkmNestedInput
@@ -2083,6 +2142,7 @@ export type UmkmUncheckedUpdateWithoutWaliInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   umkmVisits?: Prisma.UmkmVisitUncheckedUpdateManyWithoutUmkmNestedInput
   umkmMonitoring?: Prisma.UmkmMonitoringUncheckedUpdateManyWithoutUmkmNestedInput
 }
@@ -2108,6 +2168,7 @@ export type UmkmUncheckedUpdateManyWithoutWaliInput = {
   umkmPict3?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict4?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   umkmPict5?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 
@@ -2172,6 +2233,7 @@ export type UmkmSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   umkmPict3?: boolean
   umkmPict4?: boolean
   umkmPict5?: boolean
+  isActive?: boolean
   children?: boolean | Prisma.Umkm$childrenArgs<ExtArgs>
   employees?: boolean | Prisma.Umkm$employeesArgs<ExtArgs>
   partners?: boolean | Prisma.Umkm$partnersArgs<ExtArgs>
@@ -2204,6 +2266,7 @@ export type UmkmSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   umkmPict3?: boolean
   umkmPict4?: boolean
   umkmPict5?: boolean
+  isActive?: boolean
   children?: boolean | Prisma.Umkm$childrenArgs<ExtArgs>
   employees?: boolean | Prisma.Umkm$employeesArgs<ExtArgs>
   partners?: boolean | Prisma.Umkm$partnersArgs<ExtArgs>
@@ -2233,6 +2296,7 @@ export type UmkmSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   umkmPict3?: boolean
   umkmPict4?: boolean
   umkmPict5?: boolean
+  isActive?: boolean
   children?: boolean | Prisma.Umkm$childrenArgs<ExtArgs>
   employees?: boolean | Prisma.Umkm$employeesArgs<ExtArgs>
   partners?: boolean | Prisma.Umkm$partnersArgs<ExtArgs>
@@ -2262,9 +2326,10 @@ export type UmkmSelectScalar = {
   umkmPict3?: boolean
   umkmPict4?: boolean
   umkmPict5?: boolean
+  isActive?: boolean
 }
 
-export type UmkmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partnerId" | "ownerName" | "businessName" | "businessAddress" | "regionId" | "subdistrictName" | "postalCode" | "umkmCoordinate" | "businessType" | "products" | "employeeId" | "createdAt" | "updatedAt" | "waliId" | "childrenId" | "umkmPict" | "umkmPict2" | "umkmPict3" | "umkmPict4" | "umkmPict5", ExtArgs["result"]["umkm"]>
+export type UmkmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partnerId" | "ownerName" | "businessName" | "businessAddress" | "regionId" | "subdistrictName" | "postalCode" | "umkmCoordinate" | "businessType" | "products" | "employeeId" | "createdAt" | "updatedAt" | "waliId" | "childrenId" | "umkmPict" | "umkmPict2" | "umkmPict3" | "umkmPict4" | "umkmPict5" | "isActive", ExtArgs["result"]["umkm"]>
 export type UmkmInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | Prisma.Umkm$childrenArgs<ExtArgs>
   employees?: boolean | Prisma.Umkm$employeesArgs<ExtArgs>
@@ -2323,6 +2388,7 @@ export type $UmkmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     umkmPict3: string | null
     umkmPict4: string | null
     umkmPict5: string | null
+    isActive: boolean | null
   }, ExtArgs["result"]["umkm"]>
   composites: {}
 }
@@ -2774,6 +2840,7 @@ export interface UmkmFieldRefs {
   readonly umkmPict3: Prisma.FieldRef<"Umkm", 'String'>
   readonly umkmPict4: Prisma.FieldRef<"Umkm", 'String'>
   readonly umkmPict5: Prisma.FieldRef<"Umkm", 'String'>
+  readonly isActive: Prisma.FieldRef<"Umkm", 'Boolean'>
 }
     
 

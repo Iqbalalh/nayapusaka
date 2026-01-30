@@ -1,6 +1,26 @@
 import { Prisma } from "../generated/prisma/client";
 import { prisma } from "../utils/prisma/prisma";
 
+/**
+ * Calculate age from birthdate
+ */
+export const calculateAge = (birthdate: Date | string | null): number | null => {
+  if (!birthdate) return null;
+  
+  const birth = new Date(birthdate);
+  const today = new Date();
+  
+  let age = today.getFullYear() - birth.getFullYear();
+  const monthDiff = today.getMonth() - birth.getMonth();
+  
+  // Adjust age if birthday hasn't occurred yet this year
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+    age--;
+  }
+  
+  return age;
+};
+
 // ============================================================================
 // SELECT QUERIES
 // ============================================================================
@@ -10,7 +30,7 @@ import { prisma } from "../utils/prisma/prisma";
  */
 export const selectAllChildren = async (args?: Prisma.ChildrenFindManyArgs) => {
   try {
-    return await prisma.children.findMany({
+    const children = await prisma.children.findMany({
       ...args,
       include: {
         homes: {
@@ -23,6 +43,12 @@ export const selectAllChildren = async (args?: Prisma.ChildrenFindManyArgs) => {
       },
       orderBy: { id: "asc" },
     });
+
+    // Add calculated age to each child
+    return children.map(child => ({
+      ...child,
+      age: calculateAge(child.childrenBirthdate),
+    }));
   } catch (error) {
     throw error;
   }
@@ -47,7 +73,7 @@ export const selectChildrenList = async () => {
  */
 export const selectChildrenById = async (id: number) => {
   try {
-    return await prisma.children.findUnique({
+    const child = await prisma.children.findUnique({
       where: { id },
       include: {
         homes: {
@@ -59,6 +85,14 @@ export const selectChildrenById = async (id: number) => {
         },
       },
     });
+
+    if (!child) return null;
+
+    // Add calculated age
+    return {
+      ...child,
+      age: calculateAge(child.childrenBirthdate),
+    };
   } catch (error) {
     throw error;
   }

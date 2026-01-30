@@ -19,7 +19,10 @@ export const selectAllGalleries = async () => {
         },
         regions: true,
       },
-      orderBy: { id: "desc" },
+      orderBy: [
+        { galleryDate: { sort: "desc", nulls: "last" } },
+        { id: "desc" },
+      ],
     });
   } catch (error) {
     throw error;
@@ -58,7 +61,10 @@ export const selectGalleriesPaginated = async (page: number = 1, limit: number =
           },
           regions: true,
         },
-        orderBy: { id: "desc" },
+        orderBy: [
+          { galleryDate: { sort: "desc", nulls: "last" } },
+          { id: "desc" },
+        ],
         skip,
         take: limit,
       }),
@@ -87,7 +93,10 @@ export const selectGalleryList = async () => {
   try {
     return await prisma.gallery.findMany({
       select: { id: true, caption: true },
-      orderBy: { id: "desc" },
+      orderBy: [
+        { galleryDate: { sort: "desc", nulls: "last" } },
+        { id: "desc" },
+      ],
     });
   } catch (error) {
     throw error;

@@ -41,6 +41,7 @@ export type GalleryMinAggregateOutputType = {
   s3Path: string | null
   caption: string | null
   regionId: number | null
+  galleryDate: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +51,7 @@ export type GalleryMaxAggregateOutputType = {
   s3Path: string | null
   caption: string | null
   regionId: number | null
+  galleryDate: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,6 +61,7 @@ export type GalleryCountAggregateOutputType = {
   s3Path: number
   caption: number
   regionId: number
+  galleryDate: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -80,6 +83,7 @@ export type GalleryMinAggregateInputType = {
   s3Path?: true
   caption?: true
   regionId?: true
+  galleryDate?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -89,6 +93,7 @@ export type GalleryMaxAggregateInputType = {
   s3Path?: true
   caption?: true
   regionId?: true
+  galleryDate?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -98,6 +103,7 @@ export type GalleryCountAggregateInputType = {
   s3Path?: true
   caption?: true
   regionId?: true
+  galleryDate?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -194,6 +200,7 @@ export type GalleryGroupByOutputType = {
   s3Path: string
   caption: string | null
   regionId: number | null
+  galleryDate: Date | null
   createdAt: Date
   updatedAt: Date
   _count: GalleryCountAggregateOutputType | null
@@ -226,6 +233,7 @@ export type GalleryWhereInput = {
   s3Path?: Prisma.StringFilter<"Gallery"> | string
   caption?: Prisma.StringNullableFilter<"Gallery"> | string | null
   regionId?: Prisma.IntNullableFilter<"Gallery"> | number | null
+  galleryDate?: Prisma.DateTimeNullableFilter<"Gallery"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   galleryCategories?: Prisma.GalleryCategoryListRelationFilter
@@ -237,6 +245,7 @@ export type GalleryOrderByWithRelationInput = {
   s3Path?: Prisma.SortOrder
   caption?: Prisma.SortOrderInput | Prisma.SortOrder
   regionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  galleryDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   galleryCategories?: Prisma.GalleryCategoryOrderByRelationAggregateInput
@@ -251,6 +260,7 @@ export type GalleryWhereUniqueInput = Prisma.AtLeast<{
   s3Path?: Prisma.StringFilter<"Gallery"> | string
   caption?: Prisma.StringNullableFilter<"Gallery"> | string | null
   regionId?: Prisma.IntNullableFilter<"Gallery"> | number | null
+  galleryDate?: Prisma.DateTimeNullableFilter<"Gallery"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   galleryCategories?: Prisma.GalleryCategoryListRelationFilter
@@ -262,6 +272,7 @@ export type GalleryOrderByWithAggregationInput = {
   s3Path?: Prisma.SortOrder
   caption?: Prisma.SortOrderInput | Prisma.SortOrder
   regionId?: Prisma.SortOrderInput | Prisma.SortOrder
+  galleryDate?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GalleryCountOrderByAggregateInput
@@ -279,6 +290,7 @@ export type GalleryScalarWhereWithAggregatesInput = {
   s3Path?: Prisma.StringWithAggregatesFilter<"Gallery"> | string
   caption?: Prisma.StringNullableWithAggregatesFilter<"Gallery"> | string | null
   regionId?: Prisma.IntNullableWithAggregatesFilter<"Gallery"> | number | null
+  galleryDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Gallery"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Gallery"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Gallery"> | Date | string
 }
@@ -286,6 +298,7 @@ export type GalleryScalarWhereWithAggregatesInput = {
 export type GalleryCreateInput = {
   s3Path: string
   caption?: string | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   galleryCategories?: Prisma.GalleryCategoryCreateNestedManyWithoutGalleryInput
@@ -297,6 +310,7 @@ export type GalleryUncheckedCreateInput = {
   s3Path: string
   caption?: string | null
   regionId?: number | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   galleryCategories?: Prisma.GalleryCategoryUncheckedCreateNestedManyWithoutGalleryInput
@@ -305,6 +319,7 @@ export type GalleryUncheckedCreateInput = {
 export type GalleryUpdateInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   galleryCategories?: Prisma.GalleryCategoryUpdateManyWithoutGalleryNestedInput
@@ -316,6 +331,7 @@ export type GalleryUncheckedUpdateInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   galleryCategories?: Prisma.GalleryCategoryUncheckedUpdateManyWithoutGalleryNestedInput
@@ -326,6 +342,7 @@ export type GalleryCreateManyInput = {
   s3Path: string
   caption?: string | null
   regionId?: number | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -333,6 +350,7 @@ export type GalleryCreateManyInput = {
 export type GalleryUpdateManyMutationInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -342,6 +360,7 @@ export type GalleryUncheckedUpdateManyInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -361,6 +380,7 @@ export type GalleryCountOrderByAggregateInput = {
   s3Path?: Prisma.SortOrder
   caption?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
+  galleryDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -375,6 +395,7 @@ export type GalleryMaxOrderByAggregateInput = {
   s3Path?: Prisma.SortOrder
   caption?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
+  galleryDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -384,6 +405,7 @@ export type GalleryMinOrderByAggregateInput = {
   s3Path?: Prisma.SortOrder
   caption?: Prisma.SortOrder
   regionId?: Prisma.SortOrder
+  galleryDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -457,6 +479,7 @@ export type GalleryUpdateOneRequiredWithoutGalleryCategoriesNestedInput = {
 export type GalleryCreateWithoutRegionsInput = {
   s3Path: string
   caption?: string | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   galleryCategories?: Prisma.GalleryCategoryCreateNestedManyWithoutGalleryInput
@@ -466,6 +489,7 @@ export type GalleryUncheckedCreateWithoutRegionsInput = {
   id?: number
   s3Path: string
   caption?: string | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   galleryCategories?: Prisma.GalleryCategoryUncheckedCreateNestedManyWithoutGalleryInput
@@ -505,6 +529,7 @@ export type GalleryScalarWhereInput = {
   s3Path?: Prisma.StringFilter<"Gallery"> | string
   caption?: Prisma.StringNullableFilter<"Gallery"> | string | null
   regionId?: Prisma.IntNullableFilter<"Gallery"> | number | null
+  galleryDate?: Prisma.DateTimeNullableFilter<"Gallery"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Gallery"> | Date | string
 }
@@ -512,6 +537,7 @@ export type GalleryScalarWhereInput = {
 export type GalleryCreateWithoutGalleryCategoriesInput = {
   s3Path: string
   caption?: string | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   regions?: Prisma.RegionsCreateNestedOneWithoutGalleriesInput
@@ -522,6 +548,7 @@ export type GalleryUncheckedCreateWithoutGalleryCategoriesInput = {
   s3Path: string
   caption?: string | null
   regionId?: number | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -545,6 +572,7 @@ export type GalleryUpdateToOneWithWhereWithoutGalleryCategoriesInput = {
 export type GalleryUpdateWithoutGalleryCategoriesInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   regions?: Prisma.RegionsUpdateOneWithoutGalleriesNestedInput
@@ -555,6 +583,7 @@ export type GalleryUncheckedUpdateWithoutGalleryCategoriesInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -563,6 +592,7 @@ export type GalleryCreateManyRegionsInput = {
   id?: number
   s3Path: string
   caption?: string | null
+  galleryDate?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -570,6 +600,7 @@ export type GalleryCreateManyRegionsInput = {
 export type GalleryUpdateWithoutRegionsInput = {
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   galleryCategories?: Prisma.GalleryCategoryUpdateManyWithoutGalleryNestedInput
@@ -579,6 +610,7 @@ export type GalleryUncheckedUpdateWithoutRegionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   galleryCategories?: Prisma.GalleryCategoryUncheckedUpdateManyWithoutGalleryNestedInput
@@ -588,6 +620,7 @@ export type GalleryUncheckedUpdateManyWithoutRegionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   s3Path?: Prisma.StringFieldUpdateOperationsInput | string
   caption?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  galleryDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -628,6 +661,7 @@ export type GallerySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   s3Path?: boolean
   caption?: boolean
   regionId?: boolean
+  galleryDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   galleryCategories?: boolean | Prisma.Gallery$galleryCategoriesArgs<ExtArgs>
@@ -640,6 +674,7 @@ export type GallerySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   s3Path?: boolean
   caption?: boolean
   regionId?: boolean
+  galleryDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   regions?: boolean | Prisma.Gallery$regionsArgs<ExtArgs>
@@ -650,6 +685,7 @@ export type GallerySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   s3Path?: boolean
   caption?: boolean
   regionId?: boolean
+  galleryDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   regions?: boolean | Prisma.Gallery$regionsArgs<ExtArgs>
@@ -660,11 +696,12 @@ export type GallerySelectScalar = {
   s3Path?: boolean
   caption?: boolean
   regionId?: boolean
+  galleryDate?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GalleryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "s3Path" | "caption" | "regionId" | "createdAt" | "updatedAt", ExtArgs["result"]["gallery"]>
+export type GalleryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "s3Path" | "caption" | "regionId" | "galleryDate" | "createdAt" | "updatedAt", ExtArgs["result"]["gallery"]>
 export type GalleryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   galleryCategories?: boolean | Prisma.Gallery$galleryCategoriesArgs<ExtArgs>
   regions?: boolean | Prisma.Gallery$regionsArgs<ExtArgs>
@@ -688,6 +725,7 @@ export type $GalleryPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     s3Path: string
     caption: string | null
     regionId: number | null
+    galleryDate: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["gallery"]>
@@ -1119,6 +1157,7 @@ export interface GalleryFieldRefs {
   readonly s3Path: Prisma.FieldRef<"Gallery", 'String'>
   readonly caption: Prisma.FieldRef<"Gallery", 'String'>
   readonly regionId: Prisma.FieldRef<"Gallery", 'Int'>
+  readonly galleryDate: Prisma.FieldRef<"Gallery", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Gallery", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Gallery", 'DateTime'>
 }

@@ -2037,7 +2037,10 @@ export const ChildrenScalarFieldEnum = {
   childrenPict: 'childrenPict',
   index: 'index',
   nik: 'nik',
-  childrenJob: 'childrenJob'
+  childrenJob: 'childrenJob',
+  educationLevel: 'educationLevel',
+  schoolName: 'schoolName',
+  educationGrade: 'educationGrade'
 } as const
 
 export type ChildrenScalarFieldEnum = (typeof ChildrenScalarFieldEnum)[keyof typeof ChildrenScalarFieldEnum]
@@ -2152,7 +2155,8 @@ export const UmkmScalarFieldEnum = {
   umkmPict2: 'umkmPict2',
   umkmPict3: 'umkmPict3',
   umkmPict4: 'umkmPict4',
-  umkmPict5: 'umkmPict5'
+  umkmPict5: 'umkmPict5',
+  isActive: 'isActive'
 } as const
 
 export type UmkmScalarFieldEnum = (typeof UmkmScalarFieldEnum)[keyof typeof UmkmScalarFieldEnum]
@@ -2319,6 +2323,7 @@ export const GalleryScalarFieldEnum = {
   s3Path: 's3Path',
   caption: 'caption',
   regionId: 'regionId',
+  galleryDate: 'galleryDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

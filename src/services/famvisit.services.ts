@@ -14,7 +14,7 @@ export const selectAllFamilyVisits = async (
   try {
     return await prisma.familyVisit.findMany({
       ...args,
-      orderBy: { visitDate: "desc" },
+      orderBy: { visitNumber: "asc" },
       include: {
         homes: {
           include: {
@@ -61,7 +61,7 @@ export const selectFamilyVisitsByHomeId = async (homeId: number) => {
   try {
     return await prisma.familyVisit.findMany({
       where: { homeId },
-      orderBy: { visitDate: "desc" },
+      orderBy: { visitNumber: "asc" },
       include: {
         familyVisitDocs: true,
       },
