@@ -94,9 +94,29 @@ export const getWali = async (
       pictUrl = await getPresignedUrl(wali.waliPict);
     }
 
+    // Extract home data
+    const home = wali.homes && wali.homes.length > 0 ? wali.homes[0] : null;
+
     const result = {
-      ...wali,
+      id: wali.id,
+      employeeId: wali.employeeId,
+      waliName: wali.waliName,
+      relation: wali.relation,
+      waliAddress: wali.waliAddress,
+      addressCoordinate: wali.addressCoordinate,
+      waliPhone: wali.waliPhone,
+      nik: wali.nik,
+      waliJob: wali.waliJob,
       waliPict: pictUrl,
+      createdAt: wali.createdAt,
+      updatedAt: wali.updatedAt,
+      createdBy: wali.createdBy,
+      editedBy: wali.editedBy,
+      employeeName: wali.employees?.employeeName || null,
+      // Home data
+      partner: home?.partners || null,
+      employee: home?.employees || null,
+      childrens: home?.children || [],
     };
 
     return res.json({

@@ -379,6 +379,7 @@ model ChildAssistance {
   assistanceAmount     Float     @map("assistance_amount")
   educationLevel       String?   @map("education_level") @db.VarChar(100)
   educationGrade       String?   @map("education_grade") @db.VarChar(100)
+  schoolName           String?   @map("school_name") @db.VarChar(200)
   age                  Int?      @db.SmallInt
   notes                String?   @db.Text
   createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)

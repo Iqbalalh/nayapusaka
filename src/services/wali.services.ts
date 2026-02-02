@@ -31,11 +31,23 @@ export const selectWaliList = async () => {
 };
 
 /**
- * Select wali by ID
+ * Select wali by ID with home data
  */
 export const selectWaliById = async (id: number) => {
   try {
-    return await prisma.wali.findUnique({ where: { id } });
+    return await prisma.wali.findUnique({
+      where: { id },
+      include: {
+        homes: {
+          include: {
+            partners: true,
+            employees: true,
+            children: true,
+          },
+        },
+        employees: true,
+      },
+    });
   } catch (error) {
     throw error;
   }
