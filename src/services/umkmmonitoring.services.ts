@@ -176,3 +176,56 @@ export const selectUmkmMonitoringCount = async () => {
     throw error instanceof Error ? error : new Error(String(error));
   }
 };
+
+/**
+ * Select UMKM monitoring financial statistics
+ */
+export const selectUmkmMonitoringStats = async () => {
+  try {
+    const count = await prisma.umkmMonitoring.count();
+    
+    if (count === 0) {
+      return {
+        count: 0,
+        totalAmount: 0,
+        averageAmount: 0,
+        minAmount: 0,
+        maxAmount: 0,
+      };
+    }
+
+    // Get all turnoverAfter values
+    const recordsWithTurnover = await prisma.umkmMonitoring.findMany({
+      select: {
+        turnoverAfter: true,
+      },
+    });
+
+    const turnoverValues = recordsWithTurnover.map(r => r.turnoverAfter).filter(v => v !== null && v !== undefined);
+    
+    if (turnoverValues.length === 0) {
+      return {
+        count,
+        totalAmount: 0,
+        averageAmount: 0,
+        minAmount: 0,
+        maxAmount: 0,
+      };
+    }
+
+    const totalAmount = turnoverValues.reduce((sum, val) => sum + val, 0);
+    const averageAmount = totalAmount / turnoverValues.length;
+    const minAmount = Math.min(...turnoverValues);
+    const maxAmount = Math.max(...turnoverValues);
+
+    return {
+      count,
+      totalAmount,
+      averageAmount,
+      minAmount,
+      maxAmount,
+    };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};

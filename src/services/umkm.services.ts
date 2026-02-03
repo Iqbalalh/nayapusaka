@@ -67,7 +67,7 @@ export const selectUmkmForMaps = async () => {
         : umkm.childrenId
         ? "children"
         : null,
-      isActive: umkm.partners?.isActive ?? null,
+      isActive: umkm.isActive ?? null,
     }));
   } catch (error) {
     throw error;
@@ -101,7 +101,7 @@ export const selectUmkmById = async (id: number) => {
         : umkm.childrenId
         ? "children"
         : null,
-      isActive: umkm.partners?.isActive ?? null,
+      isActive: umkm.isActive ?? null,
     };
   } catch (error) {
     throw error;
@@ -126,7 +126,7 @@ export const selectActiveUmkmCount = async () => {
   try {
     const umkms = await prisma.umkm.findMany({
       where: {
-        partners: { isActive: true },
+        isActive: true,
       },
       select: { id: true },
     });
@@ -143,7 +143,7 @@ export const selectInactiveUmkmCount = async () => {
   try {
     const umkms = await prisma.umkm.findMany({
       where: {
-        partners: { isActive: false },
+        isActive: false,
       },
       select: { id: true },
     });

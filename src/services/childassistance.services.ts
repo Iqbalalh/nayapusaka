@@ -182,3 +182,56 @@ export const selectChildAssistanceCount = async () => {
     throw error instanceof Error ? error : new Error(String(error));
   }
 };
+
+/**
+ * Select child assistance financial statistics
+ */
+export const selectChildAssistanceStats = async () => {
+  try {
+    const count = await prisma.childAssistance.count();
+    
+    if (count === 0) {
+      return {
+        count: 0,
+        totalAmount: 0,
+        averageAmount: 0,
+        minAmount: 0,
+        maxAmount: 0,
+      };
+    }
+
+    // Get all assistance amounts
+    const recordsWithAmount = await prisma.childAssistance.findMany({
+      select: {
+        assistanceAmount: true,
+      },
+    });
+
+    const amountValues = recordsWithAmount.map(r => r.assistanceAmount).filter(v => v !== null && v !== undefined);
+    
+    if (amountValues.length === 0) {
+      return {
+        count,
+        totalAmount: 0,
+        averageAmount: 0,
+        minAmount: 0,
+        maxAmount: 0,
+      };
+    }
+
+    const totalAmount = amountValues.reduce((sum, val) => sum + val, 0);
+    const averageAmount = totalAmount / amountValues.length;
+    const minAmount = Math.min(...amountValues);
+    const maxAmount = Math.max(...amountValues);
+
+    return {
+      count,
+      totalAmount,
+      averageAmount,
+      minAmount,
+      maxAmount,
+    };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
