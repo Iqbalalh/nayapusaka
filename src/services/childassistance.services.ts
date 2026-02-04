@@ -232,6 +232,64 @@ export const selectChildAssistanceStats = async () => {
       maxAmount,
     };
   } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
+      throw error instanceof Error ? error : new Error(String(error));
+    }
+  };
+  
+  /**
+   * Select child assistance yearly breakdown
+   */
+  export const selectChildAssistanceYearlyBreakdown = async () => {
+    try {
+      const records = await prisma.childAssistance.findMany({
+        select: {
+          assistanceDate: true,
+          assistanceAmount: true,
+        },
+        orderBy: {
+          assistanceDate: 'asc',
+        },
+      });
+  
+      if (records.length === 0) {
+        return [];
+      }
+  
+      // Group by year
+      const yearlyData: Record<number, number[]> = {};
+      
+      records.forEach(record => {
+        if (record.assistanceDate && record.assistanceAmount !== null && record.assistanceAmount !== undefined) {
+          const year = new Date(record.assistanceDate).getFullYear();
+          if (!yearlyData[year]) {
+            yearlyData[year] = [];
+          }
+          yearlyData[year].push(record.assistanceAmount);
+        }
+      });
+  
+      // Calculate statistics for each year
+      const result = Object.keys(yearlyData)
+        .map(year => {
+          const amounts = yearlyData[parseInt(year)];
+          const totalAmount = amounts.reduce((sum, val) => sum + val, 0);
+          const averageAmount = totalAmount / amounts.length;
+          const minAmount = Math.min(...amounts);
+          const maxAmount = Math.max(...amounts);
+  
+          return {
+            year: parseInt(year),
+            count: amounts.length,
+            totalAmount,
+            averageAmount,
+            minAmount,
+            maxAmount,
+          };
+        })
+        .sort((a, b) => a.year - b.year);
+  
+      return result;
+    } catch (error) {
+      throw error instanceof Error ? error : new Error(String(error));
+    }
+  };

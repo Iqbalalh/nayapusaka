@@ -51,6 +51,7 @@ export type StaffsMinAggregateOutputType = {
   email: string | null
   nik: string | null
   roleId: number | null
+  position: string | null
   staffPict: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -69,6 +70,7 @@ export type StaffsMaxAggregateOutputType = {
   email: string | null
   nik: string | null
   roleId: number | null
+  position: string | null
   staffPict: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -87,6 +89,7 @@ export type StaffsCountAggregateOutputType = {
   email: number
   nik: number
   roleId: number
+  position: number
   staffPict: number
   createdAt: number
   updatedAt: number
@@ -121,6 +124,7 @@ export type StaffsMinAggregateInputType = {
   email?: true
   nik?: true
   roleId?: true
+  position?: true
   staffPict?: true
   createdAt?: true
   updatedAt?: true
@@ -139,6 +143,7 @@ export type StaffsMaxAggregateInputType = {
   email?: true
   nik?: true
   roleId?: true
+  position?: true
   staffPict?: true
   createdAt?: true
   updatedAt?: true
@@ -157,6 +162,7 @@ export type StaffsCountAggregateInputType = {
   email?: true
   nik?: true
   roleId?: true
+  position?: true
   staffPict?: true
   createdAt?: true
   updatedAt?: true
@@ -262,6 +268,7 @@ export type StaffsGroupByOutputType = {
   email: string | null
   nik: string
   roleId: number
+  position: string | null
   staffPict: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -303,6 +310,7 @@ export type StaffsWhereInput = {
   email?: Prisma.StringNullableFilter<"Staffs"> | string | null
   nik?: Prisma.StringFilter<"Staffs"> | string
   roleId?: Prisma.IntFilter<"Staffs"> | number
+  position?: Prisma.StringNullableFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
@@ -323,6 +331,7 @@ export type StaffsOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
+  position?: Prisma.SortOrderInput | Prisma.SortOrder
   staffPict?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -346,6 +355,7 @@ export type StaffsWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"Staffs"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Staffs"> | string | null
   roleId?: Prisma.IntFilter<"Staffs"> | number
+  position?: Prisma.StringNullableFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
@@ -366,6 +376,7 @@ export type StaffsOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
+  position?: Prisma.SortOrderInput | Prisma.SortOrder
   staffPict?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -392,6 +403,7 @@ export type StaffsScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   nik?: Prisma.StringWithAggregatesFilter<"Staffs"> | string
   roleId?: Prisma.IntWithAggregatesFilter<"Staffs"> | number
+  position?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Staffs"> | Date | string | null
@@ -408,6 +420,7 @@ export type StaffsCreateInput = {
   phoneNumber?: string | null
   email?: string | null
   nik: string
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -428,6 +441,7 @@ export type StaffsUncheckedCreateInput = {
   email?: string | null
   nik: string
   roleId: number
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -445,6 +459,7 @@ export type StaffsUpdateInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -465,6 +480,7 @@ export type StaffsUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -484,6 +500,7 @@ export type StaffsCreateManyInput = {
   email?: string | null
   nik: string
   roleId: number
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -500,6 +517,7 @@ export type StaffsUpdateManyMutationInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -518,6 +536,7 @@ export type StaffsUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -546,6 +565,7 @@ export type StaffsCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
+  position?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -571,6 +591,7 @@ export type StaffsMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
+  position?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -589,6 +610,7 @@ export type StaffsMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   roleId?: Prisma.SortOrder
+  position?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -679,6 +701,7 @@ export type StaffsCreateWithoutRolesInput = {
   phoneNumber?: string | null
   email?: string | null
   nik: string
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -697,6 +720,7 @@ export type StaffsUncheckedCreateWithoutRolesInput = {
   phoneNumber?: string | null
   email?: string | null
   nik: string
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -745,6 +769,7 @@ export type StaffsScalarWhereInput = {
   email?: Prisma.StringNullableFilter<"Staffs"> | string | null
   nik?: Prisma.StringFilter<"Staffs"> | string
   roleId?: Prisma.IntFilter<"Staffs"> | number
+  position?: Prisma.StringNullableFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
@@ -761,6 +786,7 @@ export type StaffsCreateWithoutUsersInput = {
   phoneNumber?: string | null
   email?: string | null
   nik: string
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -780,6 +806,7 @@ export type StaffsUncheckedCreateWithoutUsersInput = {
   email?: string | null
   nik: string
   roleId: number
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -812,6 +839,7 @@ export type StaffsUpdateWithoutUsersInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -831,6 +859,7 @@ export type StaffsUncheckedUpdateWithoutUsersInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   roleId?: Prisma.IntFieldUpdateOperationsInput | number
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -848,6 +877,7 @@ export type StaffsCreateManyRolesInput = {
   phoneNumber?: string | null
   email?: string | null
   nik: string
+  position?: string | null
   staffPict?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
@@ -864,6 +894,7 @@ export type StaffsUpdateWithoutRolesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -882,6 +913,7 @@ export type StaffsUncheckedUpdateWithoutRolesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -900,6 +932,7 @@ export type StaffsUncheckedUpdateManyWithoutRolesInput = {
   phoneNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -949,6 +982,7 @@ export type StaffsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   email?: boolean
   nik?: boolean
   roleId?: boolean
+  position?: boolean
   staffPict?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -970,6 +1004,7 @@ export type StaffsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   email?: boolean
   nik?: boolean
   roleId?: boolean
+  position?: boolean
   staffPict?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -989,6 +1024,7 @@ export type StaffsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   email?: boolean
   nik?: boolean
   roleId?: boolean
+  position?: boolean
   staffPict?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1008,6 +1044,7 @@ export type StaffsSelectScalar = {
   email?: boolean
   nik?: boolean
   roleId?: boolean
+  position?: boolean
   staffPict?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1015,7 +1052,7 @@ export type StaffsSelectScalar = {
   editedBy?: boolean
 }
 
-export type StaffsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffName" | "gender" | "birthplace" | "birthdate" | "address" | "phoneNumber" | "email" | "nik" | "roleId" | "staffPict" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["staffs"]>
+export type StaffsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffName" | "gender" | "birthplace" | "birthdate" | "address" | "phoneNumber" | "email" | "nik" | "roleId" | "position" | "staffPict" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["staffs"]>
 export type StaffsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   roles?: boolean | Prisma.RolesDefaultArgs<ExtArgs>
   users?: boolean | Prisma.Staffs$usersArgs<ExtArgs>
@@ -1045,6 +1082,7 @@ export type $StaffsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     email: string | null
     nik: string
     roleId: number
+    position: string | null
     staffPict: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -1485,6 +1523,7 @@ export interface StaffsFieldRefs {
   readonly email: Prisma.FieldRef<"Staffs", 'String'>
   readonly nik: Prisma.FieldRef<"Staffs", 'String'>
   readonly roleId: Prisma.FieldRef<"Staffs", 'Int'>
+  readonly position: Prisma.FieldRef<"Staffs", 'String'>
   readonly staffPict: Prisma.FieldRef<"Staffs", 'String'>
   readonly createdAt: Prisma.FieldRef<"Staffs", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Staffs", 'DateTime'>

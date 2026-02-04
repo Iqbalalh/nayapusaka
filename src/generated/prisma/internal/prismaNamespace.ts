@@ -2138,6 +2138,7 @@ export const StaffsScalarFieldEnum = {
   email: 'email',
   nik: 'nik',
   roleId: 'roleId',
+  position: 'position',
   staffPict: 'staffPict',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

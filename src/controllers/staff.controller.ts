@@ -109,6 +109,7 @@ export const postStaff = async (
       email,
       nik,
       roleId,
+      position,
     } = req.body;
 
     // Validate required fields
@@ -129,6 +130,7 @@ export const postStaff = async (
       address: address || null,
       phoneNumber: phoneNumber || null,
       email: email || null,
+      position: position || null,
       createdBy: userId,
     };
 
@@ -214,6 +216,7 @@ export const patchStaff = async (
       email,
       nik,
       roleId,
+      position,
     } = req.body;
 
     const updateData: Prisma.StaffsUncheckedUpdateInput = {};
@@ -226,6 +229,7 @@ export const patchStaff = async (
     if (email !== undefined) updateData.email = email;
     if (nik !== undefined) updateData.nik = nik;
     if (roleId !== undefined) updateData.roleId = Number(roleId);
+    if (position !== undefined) updateData.position = position;
     updateData.editedBy = userId;
 
     // Upload new picture if provided

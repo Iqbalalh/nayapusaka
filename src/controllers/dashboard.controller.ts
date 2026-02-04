@@ -19,7 +19,7 @@ import {
   selectActiveUmkmCount,
   selectInactiveUmkmCount,
 } from "../services/umkm.services";
-import { selectChildAssistanceCount, selectChildAssistanceStats } from "../services/childassistance.services";
+import { selectChildAssistanceCount, selectChildAssistanceStats, selectChildAssistanceYearlyBreakdown } from "../services/childassistance.services";
 import { selectUmkmMonitoringCount, selectUmkmMonitoringStats } from "../services/umkmmonitoring.services";
 import { selectUmkmVisitCount, selectUmkmVisitStats } from "../services/umkmvisit.services";
 
@@ -48,6 +48,7 @@ export const getDashboardStat = async (
       umkmActiveCount,
       umkmInactiveCount,
       childAssistanceStats,
+      childAssistanceYearlyBreakdownData,
       umkmMonitoringStats,
       umkmVisitStats,
     ] = await Promise.all([
@@ -66,6 +67,7 @@ export const getDashboardStat = async (
       selectActiveUmkmCount(),
       selectInactiveUmkmCount(),
       selectChildAssistanceStats(),
+      selectChildAssistanceYearlyBreakdown(),
       selectUmkmMonitoringStats(),
       selectUmkmVisitStats(),
     ]);
@@ -94,6 +96,7 @@ export const getDashboardStat = async (
           inactive: umkmInactiveCount,
         },
         childAssistance: childAssistanceStats,
+        childAssistanceYearlyBreakdown: childAssistanceYearlyBreakdownData,
         umkmMonitoring: umkmMonitoringStats,
         umkmVisit: umkmVisitStats,
       },
