@@ -174,10 +174,20 @@ export const deleteChildAssistanceDocsByAssistanceId = async (
 
 /**
  * Select count of child assistance records
+ * @param search - Search query to filter records
  */
-export const selectChildAssistanceCount = async () => {
+export const selectChildAssistanceCount = async (search?: string): Promise<number> => {
   try {
-    return { count: await prisma.childAssistance.count() };
+    const where = search ? {
+      OR: [
+        { children: { childrenName: { contains: search, mode: 'insensitive' as const } } },
+        { assistanceProvider: { contains: search, mode: 'insensitive' as const } },
+        { educationLevel: { contains: search, mode: 'insensitive' as const } },
+        { notes: { contains: search, mode: 'insensitive' as const } },
+      ],
+    } : {};
+    
+    return await prisma.childAssistance.count({ where });
   } catch (error) {
     throw error instanceof Error ? error : new Error(String(error));
   }
@@ -293,3 +303,60 @@ export const selectChildAssistanceStats = async () => {
       throw error instanceof Error ? error : new Error(String(error));
     }
   };
+
+/**
+ * Select all child assistance records (optimized - only essential fields)
+ * This is optimized for table views and exports, avoiding nested relationships
+ * @param skip - Number of records to skip (for pagination)
+ * @param take - Number of records to take (for pagination)
+ * @param search - Search query to filter records
+ */
+export const selectAllChildAssistanceOptimized = async (
+  skip?: number,
+  take?: number,
+  search?: string
+) => {
+  try {
+    const where = search ? {
+      OR: [
+        { children: { childrenName: { contains: search, mode: 'insensitive' as const } } },
+        { assistanceProvider: { contains: search, mode: 'insensitive' as const } },
+        { educationLevel: { contains: search, mode: 'insensitive' as const } },
+        { notes: { contains: search, mode: 'insensitive' as const } },
+      ],
+    } : {};
+    
+    return await prisma.childAssistance.findMany({
+      select: {
+        id: true,
+        childrenId: true,
+        assistanceNumber: true,
+        assistanceDate: true,
+        assistanceType: true,
+        assistanceProvider: true,
+        assistanceAmount: true,
+        educationLevel: true,
+        educationGrade: true,
+        schoolName: true,
+        age: true,
+        notes: true,
+        createdAt: true,
+        updatedAt: true,
+        createdBy: true,
+        editedBy: true,
+        children: {
+          select: {
+            id: true,
+            childrenName: true,
+          },
+        },
+      },
+      where,
+      orderBy: { assistanceNumber: "asc" },
+      skip: skip || 0,
+      take: take || undefined,
+    });
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};

@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Request, Response, NextFunction } from "express";
 import {
   selectAllChildAssistance,
@@ -8,7 +12,9 @@ import {
   deleteChildAssistanceById,
   insertChildAssistanceDoc,
   deleteChildAssistanceDocById,
+  selectChildAssistanceCount,
 } from "../services/childassistance.services";
+import { selectAllChildAssistanceOptimized } from "../services/childassistance.services";
 import { Prisma } from "../generated/prisma/client";
 import {
   uploadToS3,
@@ -70,6 +76,48 @@ export const getChildAssistance = async (
     return res.json({
       message: "Successfully retrieved child assistance records",
       data: processedAssistance,
+    });
+  } catch (err) {
+    if (err instanceof Error) {
+      next(err);
+    } else {
+      next(new Error("Failed to retrieve child assistance records"));
+    }
+  }
+};
+
+// ============================================================================
+// GET ALL CHILD ASSISTANCE (OPTIMIZED WITH PAGINATION AND SEARCH)
+// ============================================================================
+export const getChildAssistanceOptimized = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Get pagination parameters
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 20;
+    const skip = (page - 1) * pageSize;
+    
+    // Get search parameter
+    const search = req.query.search as string || "";
+
+    // Get total count and paginated data
+    const [assistance, total] = await Promise.all([
+      selectAllChildAssistanceOptimized(skip, pageSize, search),
+      selectChildAssistanceCount(search)
+    ]);
+
+    return res.json({
+      message: "Successfully retrieved child assistance records",
+      data: assistance,
+      pagination: {
+        page,
+        pageSize,
+        total,
+        totalPages: Math.ceil(total / pageSize),
+      },
     });
   } catch (err) {
     if (err instanceof Error) {

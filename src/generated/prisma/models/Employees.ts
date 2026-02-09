@@ -300,7 +300,6 @@ export type EmployeesWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Employees"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Employees"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Employees"> | number | null
-  children?: Prisma.ChildrenListRelationFilter
   regions?: Prisma.XOR<Prisma.RegionsNullableScalarRelationFilter, Prisma.RegionsWhereInput> | null
   homes?: Prisma.HomesListRelationFilter
   partners?: Prisma.PartnersListRelationFilter
@@ -323,7 +322,6 @@ export type EmployeesOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  children?: Prisma.ChildrenOrderByRelationAggregateInput
   regions?: Prisma.RegionsOrderByWithRelationInput
   homes?: Prisma.HomesOrderByRelationAggregateInput
   partners?: Prisma.PartnersOrderByRelationAggregateInput
@@ -349,7 +347,6 @@ export type EmployeesWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Employees"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Employees"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Employees"> | number | null
-  children?: Prisma.ChildrenListRelationFilter
   regions?: Prisma.XOR<Prisma.RegionsNullableScalarRelationFilter, Prisma.RegionsWhereInput> | null
   homes?: Prisma.HomesListRelationFilter
   partners?: Prisma.PartnersListRelationFilter
@@ -412,7 +409,6 @@ export type EmployeesCreateInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenCreateNestedManyWithoutEmployeesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutEmployeesInput
   homes?: Prisma.HomesCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersCreateNestedManyWithoutEmployeesInput
@@ -435,7 +431,6 @@ export type EmployeesUncheckedCreateInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutEmployeesInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutEmployeesInput
@@ -455,7 +450,6 @@ export type EmployeesUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUpdateManyWithoutEmployeesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutEmployeesNestedInput
   homes?: Prisma.HomesUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutEmployeesNestedInput
@@ -478,7 +472,6 @@ export type EmployeesUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUncheckedUpdateManyWithoutEmployeesNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutEmployeesNestedInput
@@ -532,11 +525,6 @@ export type EmployeesUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-}
-
-export type EmployeesNullableScalarRelationFilter = {
-  is?: Prisma.EmployeesWhereInput | null
-  isNot?: Prisma.EmployeesWhereInput | null
 }
 
 export type EmployeesCountOrderByAggregateInput = {
@@ -604,6 +592,11 @@ export type EmployeesSumOrderByAggregateInput = {
   editedBy?: Prisma.SortOrder
 }
 
+export type EmployeesNullableScalarRelationFilter = {
+  is?: Prisma.EmployeesWhereInput | null
+  isNot?: Prisma.EmployeesWhereInput | null
+}
+
 export type EmployeesListRelationFilter = {
   every?: Prisma.EmployeesWhereInput
   some?: Prisma.EmployeesWhereInput
@@ -612,22 +605,6 @@ export type EmployeesListRelationFilter = {
 
 export type EmployeesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type EmployeesCreateNestedOneWithoutChildrenInput = {
-  create?: Prisma.XOR<Prisma.EmployeesCreateWithoutChildrenInput, Prisma.EmployeesUncheckedCreateWithoutChildrenInput>
-  connectOrCreate?: Prisma.EmployeesCreateOrConnectWithoutChildrenInput
-  connect?: Prisma.EmployeesWhereUniqueInput
-}
-
-export type EmployeesUpdateOneWithoutChildrenNestedInput = {
-  create?: Prisma.XOR<Prisma.EmployeesCreateWithoutChildrenInput, Prisma.EmployeesUncheckedCreateWithoutChildrenInput>
-  connectOrCreate?: Prisma.EmployeesCreateOrConnectWithoutChildrenInput
-  upsert?: Prisma.EmployeesUpsertWithoutChildrenInput
-  disconnect?: Prisma.EmployeesWhereInput | boolean
-  delete?: Prisma.EmployeesWhereInput | boolean
-  connect?: Prisma.EmployeesWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeesUpdateToOneWithWhereWithoutChildrenInput, Prisma.EmployeesUpdateWithoutChildrenInput>, Prisma.EmployeesUncheckedUpdateWithoutChildrenInput>
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -740,104 +717,6 @@ export type EmployeesUpdateOneWithoutWaliNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmployeesUpdateToOneWithWhereWithoutWaliInput, Prisma.EmployeesUpdateWithoutWaliInput>, Prisma.EmployeesUncheckedUpdateWithoutWaliInput>
 }
 
-export type EmployeesCreateWithoutChildrenInput = {
-  nipNipp?: string | null
-  employeeName?: string | null
-  deathCause?: string | null
-  lastPosition?: string | null
-  notes?: string | null
-  employeeGender?: $Enums.Gender | null
-  isAccident?: boolean | null
-  employeePict?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdBy?: number | null
-  editedBy?: number | null
-  regions?: Prisma.RegionsCreateNestedOneWithoutEmployeesInput
-  homes?: Prisma.HomesCreateNestedManyWithoutEmployeesInput
-  partners?: Prisma.PartnersCreateNestedManyWithoutEmployeesInput
-  umkm?: Prisma.UmkmCreateNestedManyWithoutEmployeesInput
-  wali?: Prisma.WaliCreateNestedManyWithoutEmployeesInput
-}
-
-export type EmployeesUncheckedCreateWithoutChildrenInput = {
-  id?: number
-  nipNipp?: string | null
-  employeeName?: string | null
-  deathCause?: string | null
-  lastPosition?: string | null
-  regionId?: number | null
-  notes?: string | null
-  employeeGender?: $Enums.Gender | null
-  isAccident?: boolean | null
-  employeePict?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  createdBy?: number | null
-  editedBy?: number | null
-  homes?: Prisma.HomesUncheckedCreateNestedManyWithoutEmployeesInput
-  partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutEmployeesInput
-  umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutEmployeesInput
-  wali?: Prisma.WaliUncheckedCreateNestedManyWithoutEmployeesInput
-}
-
-export type EmployeesCreateOrConnectWithoutChildrenInput = {
-  where: Prisma.EmployeesWhereUniqueInput
-  create: Prisma.XOR<Prisma.EmployeesCreateWithoutChildrenInput, Prisma.EmployeesUncheckedCreateWithoutChildrenInput>
-}
-
-export type EmployeesUpsertWithoutChildrenInput = {
-  update: Prisma.XOR<Prisma.EmployeesUpdateWithoutChildrenInput, Prisma.EmployeesUncheckedUpdateWithoutChildrenInput>
-  create: Prisma.XOR<Prisma.EmployeesCreateWithoutChildrenInput, Prisma.EmployeesUncheckedCreateWithoutChildrenInput>
-  where?: Prisma.EmployeesWhereInput
-}
-
-export type EmployeesUpdateToOneWithWhereWithoutChildrenInput = {
-  where?: Prisma.EmployeesWhereInput
-  data: Prisma.XOR<Prisma.EmployeesUpdateWithoutChildrenInput, Prisma.EmployeesUncheckedUpdateWithoutChildrenInput>
-}
-
-export type EmployeesUpdateWithoutChildrenInput = {
-  nipNipp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  employeeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deathCause?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  employeeGender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  isAccident?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  employeePict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  regions?: Prisma.RegionsUpdateOneWithoutEmployeesNestedInput
-  homes?: Prisma.HomesUpdateManyWithoutEmployeesNestedInput
-  partners?: Prisma.PartnersUpdateManyWithoutEmployeesNestedInput
-  umkm?: Prisma.UmkmUpdateManyWithoutEmployeesNestedInput
-  wali?: Prisma.WaliUpdateManyWithoutEmployeesNestedInput
-}
-
-export type EmployeesUncheckedUpdateWithoutChildrenInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  nipNipp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  employeeName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  deathCause?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  lastPosition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  regionId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  employeeGender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null
-  isAccident?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
-  employeePict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  homes?: Prisma.HomesUncheckedUpdateManyWithoutEmployeesNestedInput
-  partners?: Prisma.PartnersUncheckedUpdateManyWithoutEmployeesNestedInput
-  umkm?: Prisma.UmkmUncheckedUpdateManyWithoutEmployeesNestedInput
-  wali?: Prisma.WaliUncheckedUpdateManyWithoutEmployeesNestedInput
-}
-
 export type EmployeesCreateWithoutHomesInput = {
   nipNipp?: string | null
   employeeName?: string | null
@@ -851,7 +730,6 @@ export type EmployeesCreateWithoutHomesInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenCreateNestedManyWithoutEmployeesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutEmployeesInput
   partners?: Prisma.PartnersCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutEmployeesInput
@@ -873,7 +751,6 @@ export type EmployeesUncheckedCreateWithoutHomesInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutEmployeesInput
   wali?: Prisma.WaliUncheckedCreateNestedManyWithoutEmployeesInput
@@ -908,7 +785,6 @@ export type EmployeesUpdateWithoutHomesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUpdateManyWithoutEmployeesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutEmployeesNestedInput
@@ -930,7 +806,6 @@ export type EmployeesUncheckedUpdateWithoutHomesInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUncheckedUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutEmployeesNestedInput
   wali?: Prisma.WaliUncheckedUpdateManyWithoutEmployeesNestedInput
@@ -949,7 +824,6 @@ export type EmployeesCreateWithoutPartnersInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenCreateNestedManyWithoutEmployeesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutEmployeesInput
   homes?: Prisma.HomesCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutEmployeesInput
@@ -971,7 +845,6 @@ export type EmployeesUncheckedCreateWithoutPartnersInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutEmployeesInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutEmployeesInput
   wali?: Prisma.WaliUncheckedCreateNestedManyWithoutEmployeesInput
@@ -1006,7 +879,6 @@ export type EmployeesUpdateWithoutPartnersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUpdateManyWithoutEmployeesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutEmployeesNestedInput
   homes?: Prisma.HomesUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutEmployeesNestedInput
@@ -1028,7 +900,6 @@ export type EmployeesUncheckedUpdateWithoutPartnersInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUncheckedUpdateManyWithoutEmployeesNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutEmployeesNestedInput
   wali?: Prisma.WaliUncheckedUpdateManyWithoutEmployeesNestedInput
@@ -1047,7 +918,6 @@ export type EmployeesCreateWithoutRegionsInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenCreateNestedManyWithoutEmployeesInput
   homes?: Prisma.HomesCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmCreateNestedManyWithoutEmployeesInput
@@ -1068,7 +938,6 @@ export type EmployeesUncheckedCreateWithoutRegionsInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutEmployeesInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutEmployeesInput
@@ -1134,7 +1003,6 @@ export type EmployeesCreateWithoutUmkmInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenCreateNestedManyWithoutEmployeesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutEmployeesInput
   homes?: Prisma.HomesCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersCreateNestedManyWithoutEmployeesInput
@@ -1156,7 +1024,6 @@ export type EmployeesUncheckedCreateWithoutUmkmInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutEmployeesInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutEmployeesInput
   wali?: Prisma.WaliUncheckedCreateNestedManyWithoutEmployeesInput
@@ -1191,7 +1058,6 @@ export type EmployeesUpdateWithoutUmkmInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUpdateManyWithoutEmployeesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutEmployeesNestedInput
   homes?: Prisma.HomesUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutEmployeesNestedInput
@@ -1213,7 +1079,6 @@ export type EmployeesUncheckedUpdateWithoutUmkmInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUncheckedUpdateManyWithoutEmployeesNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutEmployeesNestedInput
   wali?: Prisma.WaliUncheckedUpdateManyWithoutEmployeesNestedInput
@@ -1232,7 +1097,6 @@ export type EmployeesCreateWithoutWaliInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenCreateNestedManyWithoutEmployeesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutEmployeesInput
   homes?: Prisma.HomesCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersCreateNestedManyWithoutEmployeesInput
@@ -1254,7 +1118,6 @@ export type EmployeesUncheckedCreateWithoutWaliInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutEmployeesInput
   homes?: Prisma.HomesUncheckedCreateNestedManyWithoutEmployeesInput
   partners?: Prisma.PartnersUncheckedCreateNestedManyWithoutEmployeesInput
   umkm?: Prisma.UmkmUncheckedCreateNestedManyWithoutEmployeesInput
@@ -1289,7 +1152,6 @@ export type EmployeesUpdateWithoutWaliInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUpdateManyWithoutEmployeesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutEmployeesNestedInput
   homes?: Prisma.HomesUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutEmployeesNestedInput
@@ -1311,7 +1173,6 @@ export type EmployeesUncheckedUpdateWithoutWaliInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUncheckedUpdateManyWithoutEmployeesNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutEmployeesNestedInput
@@ -1346,7 +1207,6 @@ export type EmployeesUpdateWithoutRegionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUpdateManyWithoutEmployeesNestedInput
   homes?: Prisma.HomesUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUpdateManyWithoutEmployeesNestedInput
@@ -1367,7 +1227,6 @@ export type EmployeesUncheckedUpdateWithoutRegionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  children?: Prisma.ChildrenUncheckedUpdateManyWithoutEmployeesNestedInput
   homes?: Prisma.HomesUncheckedUpdateManyWithoutEmployeesNestedInput
   partners?: Prisma.PartnersUncheckedUpdateManyWithoutEmployeesNestedInput
   umkm?: Prisma.UmkmUncheckedUpdateManyWithoutEmployeesNestedInput
@@ -1396,7 +1255,6 @@ export type EmployeesUncheckedUpdateManyWithoutRegionsInput = {
  */
 
 export type EmployeesCountOutputType = {
-  children: number
   homes: number
   partners: number
   umkm: number
@@ -1404,7 +1262,6 @@ export type EmployeesCountOutputType = {
 }
 
 export type EmployeesCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  children?: boolean | EmployeesCountOutputTypeCountChildrenArgs
   homes?: boolean | EmployeesCountOutputTypeCountHomesArgs
   partners?: boolean | EmployeesCountOutputTypeCountPartnersArgs
   umkm?: boolean | EmployeesCountOutputTypeCountUmkmArgs
@@ -1419,13 +1276,6 @@ export type EmployeesCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ex
    * Select specific fields to fetch from the EmployeesCountOutputType
    */
   select?: Prisma.EmployeesCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * EmployeesCountOutputType without action
- */
-export type EmployeesCountOutputTypeCountChildrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ChildrenWhereInput
 }
 
 /**
@@ -1472,7 +1322,6 @@ export type EmployeesSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  children?: boolean | Prisma.Employees$childrenArgs<ExtArgs>
   regions?: boolean | Prisma.Employees$regionsArgs<ExtArgs>
   homes?: boolean | Prisma.Employees$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Employees$partnersArgs<ExtArgs>
@@ -1536,7 +1385,6 @@ export type EmployeesSelectScalar = {
 
 export type EmployeesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nipNipp" | "employeeName" | "deathCause" | "lastPosition" | "regionId" | "notes" | "employeeGender" | "isAccident" | "employeePict" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["employees"]>
 export type EmployeesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  children?: boolean | Prisma.Employees$childrenArgs<ExtArgs>
   regions?: boolean | Prisma.Employees$regionsArgs<ExtArgs>
   homes?: boolean | Prisma.Employees$homesArgs<ExtArgs>
   partners?: boolean | Prisma.Employees$partnersArgs<ExtArgs>
@@ -1554,7 +1402,6 @@ export type EmployeesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type $EmployeesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Employees"
   objects: {
-    children: Prisma.$ChildrenPayload<ExtArgs>[]
     regions: Prisma.$RegionsPayload<ExtArgs> | null
     homes: Prisma.$HomesPayload<ExtArgs>[]
     partners: Prisma.$PartnersPayload<ExtArgs>[]
@@ -1970,7 +1817,6 @@ readonly fields: EmployeesFieldRefs;
  */
 export interface Prisma__EmployeesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  children<T extends Prisma.Employees$childrenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employees$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChildrenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   regions<T extends Prisma.Employees$regionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employees$regionsArgs<ExtArgs>>): Prisma.Prisma__RegionsClient<runtime.Types.Result.GetResult<Prisma.$RegionsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   homes<T extends Prisma.Employees$homesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employees$homesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HomesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   partners<T extends Prisma.Employees$partnersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Employees$partnersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PartnersPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2412,30 +2258,6 @@ export type EmployeesDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Employees to delete.
    */
   limit?: number
-}
-
-/**
- * Employees.children
- */
-export type Employees$childrenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Children
-   */
-  select?: Prisma.ChildrenSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Children
-   */
-  omit?: Prisma.ChildrenOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ChildrenInclude<ExtArgs> | null
-  where?: Prisma.ChildrenWhereInput
-  orderBy?: Prisma.ChildrenOrderByWithRelationInput | Prisma.ChildrenOrderByWithRelationInput[]
-  cursor?: Prisma.ChildrenWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ChildrenScalarFieldEnum | Prisma.ChildrenScalarFieldEnum[]
 }
 
 /**

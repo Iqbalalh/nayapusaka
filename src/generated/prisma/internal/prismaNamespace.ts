@@ -2019,8 +2019,6 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 export const ChildrenScalarFieldEnum = {
   id: 'id',
-  employeeId: 'employeeId',
-  partnerId: 'partnerId',
   homeId: 'homeId',
   childrenName: 'childrenName',
   isActive: 'isActive',
