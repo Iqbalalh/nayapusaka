@@ -348,6 +348,19 @@ export const selectAllChildAssistanceOptimized = async (
           select: {
             id: true,
             childrenName: true,
+            homeId: true,
+            homes: {
+              select: {
+                id: true,
+                regionId: true,
+                regions: {
+                  select: {
+                    regionId: true,
+                    regionName: true,
+                  },
+                },
+              },
+            },
           },
         },
       },

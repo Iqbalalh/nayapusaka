@@ -10,6 +10,8 @@ import {
   getOrphanHomesForMaps,
   getHomeDetail,
   postHome,
+  getHomesForExport,
+  getHomesOptimized,
 } from "../controllers/home.controller";
 
 const homeRouter = Router();
@@ -30,6 +32,8 @@ homeRouter.get("/maps", getHomesForMaps);
 homeRouter.get("/maps/conditioned", getAbkHomesForMaps);
 homeRouter.get("/maps/orphan", getOrphanHomesForMaps);
 homeRouter.get("/list", getHomesList);
+homeRouter.get("/export", getHomesForExport);
+homeRouter.get("/optimized", getHomesOptimized);
 homeRouter.get("/detail/:id", getHomeAllDetail);
 homeRouter.get("/:id", getHomeDetail);
 

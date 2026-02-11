@@ -12,6 +12,8 @@ import {
   selectAbkHomesForMaps,
   selectOrphanHomesForMaps,
   selectHomeDetailById,
+  selectHomesForExport,
+  selectHomesOptimized,
 } from "../services/home.services";
 import { AuthRequest } from "../middlewares/auth";
 
@@ -685,6 +687,109 @@ export const postHome = async (
     return res.status(201).json({
       message: "Home created successfully",
       data: result,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+};
+
+// ============================================================================
+// GET HOMES FOR EXPORT
+// ============================================================================
+export const getHomesForExport = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const homes = await selectHomesForExport();
+
+    const homesWithUrls = await Promise.all(
+      homes.map(async (home) => {
+        const homeCopy = { ...home };
+
+        if (
+          homeCopy.employees &&
+          homeCopy.employees.employeePict &&
+          isValidS3Key(homeCopy.employees.employeePict)
+        ) {
+          homeCopy.employees.employeePict = await getPresignedUrl(
+            homeCopy.employees.employeePict
+          );
+        }
+
+        if (
+          homeCopy.partners &&
+          homeCopy.partners.partnerPict &&
+          isValidS3Key(homeCopy.partners.partnerPict)
+        ) {
+          homeCopy.partners.partnerPict = await getPresignedUrl(
+            homeCopy.partners.partnerPict
+          );
+        }
+
+        return homeCopy;
+      })
+    );
+
+    return res.json({
+      message: "Successfully retrieved all homes for export",
+      data: homesWithUrls,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+};
+
+// ============================================================================
+// GET HOMES OPTIMIZED (PAGINATED WITH SEARCH)
+// ============================================================================
+export const getHomesOptimized = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+
+    const result = await selectHomesOptimized(page, pageSize, search);
+
+    const homesWithUrls = await Promise.all(
+      result.data.map(async (home) => {
+        const homeCopy = { ...home };
+
+        if (
+          homeCopy.employees &&
+          homeCopy.employees.employeePict &&
+          isValidS3Key(homeCopy.employees.employeePict)
+        ) {
+          homeCopy.employees.employeePict = await getPresignedUrl(
+            homeCopy.employees.employeePict
+          );
+        }
+
+        if (
+          homeCopy.partners &&
+          homeCopy.partners.partnerPict &&
+          isValidS3Key(homeCopy.partners.partnerPict)
+        ) {
+          homeCopy.partners.partnerPict = await getPresignedUrl(
+            homeCopy.partners.partnerPict
+          );
+        }
+
+        return homeCopy;
+      })
+    );
+
+    return res.json({
+      message: "Successfully retrieved homes with pagination",
+      data: homesWithUrls,
+      pagination: result.pagination,
     });
   } catch (err) {
     next(err);

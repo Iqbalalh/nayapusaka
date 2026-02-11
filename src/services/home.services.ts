@@ -616,3 +616,117 @@ export const deleteHomeById = async (id: number) => {
     throw error;
   }
 };
+
+/**
+ * Select all homes with children for export (optimized for Excel export)
+ * Returns data with employee as the anchor, including all related information
+ */
+export const selectHomesForExport = async () => {
+  try {
+    const homes = await prisma.homes.findMany({
+      where: {
+        partnerId: { not: null },
+        employeeId: { not: null },
+      },
+      include: {
+        partners: true,
+        employees: {
+          include: {
+            regions: true,
+          },
+        },
+        wali: true,
+        regions: true,
+        children: {
+          orderBy: { index: "asc" },
+        },
+      },
+      orderBy: { createdAt: "asc" },
+    });
+
+    // Add UMKM status for each home
+    return Promise.all(
+      homes.map(async (home) => ({
+        ...home,
+        isUmkm: !!(await prisma.umkm.findFirst({
+          where: { partnerId: home.partnerId },
+        })),
+      }))
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select homes with pagination and search (optimized for table display)
+ * Returns paginated data with pagination metadata
+ */
+export const selectHomesOptimized = async (
+  page: number = 1,
+  pageSize: number = 50,
+  search: string = ""
+) => {
+  try {
+    const skip = (page - 1) * pageSize;
+    
+    // Build where clause for search
+    const where: any = {
+      partnerId: { not: null },
+      employeeId: { not: null },
+    };
+
+    // Add search conditions if search term is provided
+    if (search && search.trim()) {
+      const searchTerm = search.trim();
+      where.OR = [
+        { employees: { employeeName: { contains: searchTerm, mode: "insensitive" } } },
+        { employees: { nipNipp: { contains: searchTerm, mode: "insensitive" } } },
+        { partners: { partnerName: { contains: searchTerm, mode: "insensitive" } } },
+        { wali: { waliName: { contains: searchTerm, mode: "insensitive" } } },
+      ];
+    }
+
+    // Get total count for pagination
+    const total = await prisma.homes.count({ where });
+
+    // Get paginated data
+    const homes = await prisma.homes.findMany({
+      where,
+      include: {
+        partners: true,
+        employees: true,
+        wali: true,
+        regions: true,
+        _count: { select: { children: true } },
+      },
+      orderBy: { createdAt: "asc" },
+      skip,
+      take: pageSize,
+    });
+
+    // Add UMKM status for each home
+    const homesWithUmkm = await Promise.all(
+      homes.map(async (home) => ({
+        ...home,
+        isUmkm: !!(await prisma.umkm.findFirst({
+          where: { partnerId: home.partnerId },
+        })),
+      }))
+    );
+
+    const totalPages = Math.ceil(total / pageSize);
+
+    return {
+      data: homesWithUmkm,
+      pagination: {
+        page,
+        pageSize,
+        total,
+        totalPages,
+      },
+    };
+  } catch (error) {
+    throw error;
+  }
+};
