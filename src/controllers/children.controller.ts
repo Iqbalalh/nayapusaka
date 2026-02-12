@@ -3,6 +3,8 @@ import {
   selectAllChildren,
   selectChildrenList,
   selectChildrenById,
+  selectChildrenOptimized,
+  selectChildrenForExport,
   insertChildren,
   updateChildrenById,
   deleteChildrenById,
@@ -12,6 +14,7 @@ import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../util
 import { sanitizeChildrenData } from "../utils/sanitize/children.sanitize";
 import { ChildrenInput } from "../utils/sanitize/children.sanitize";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -42,6 +45,9 @@ export const getChildrens = async (
         };
       })
     );
+
+    // Add staff names to children records
+    childrens = await addStaffNamesToRecords(childrens);
 
     return res.json({
       message: "Berhasil mendapatkan data anak",
@@ -100,9 +106,12 @@ export const getChildren = async (
       childrenPict: pictUrl,
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.json({
       message: "Successfully retrieved children detail",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);
@@ -231,6 +240,141 @@ export const patchChildren = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+
+// ============================================================================
+// GET CHILDREN OPTIMIZED (PAGINATED WITH SEARCH AND FILTERS)
+// ============================================================================
+export const getChildrenOptimized = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+    
+    // Build filters from query parameters
+    const filters: any = {};
+    
+    if (req.query.educationLevel) {
+      filters.educationLevel = req.query.educationLevel as string;
+    }
+    
+    if (req.query.yatimStatus) {
+      filters.yatimStatus = req.query.yatimStatus as string;
+    }
+    
+    if (req.query.regionId) {
+      filters.regionId = Number(req.query.regionId);
+    }
+    
+    if (req.query.isActive !== undefined) {
+      filters.isActive = req.query.isActive === "true";
+    }
+    
+    if (req.query.isCondition !== undefined) {
+      filters.isCondition = req.query.isCondition === "true";
+    }
+    
+    if (req.query.ageSort) {
+      filters.ageSort = req.query.ageSort as "asc" | "desc";
+    }
+
+    const result = await selectChildrenOptimized(page, pageSize, search, filters);
+
+    const childrenWithUrls = await Promise.all(
+      result.data.map(async (child) => {
+        const childCopy = { ...child };
+
+        if (
+          childCopy.childrenPict &&
+          isValidS3Key(childCopy.childrenPict)
+        ) {
+          childCopy.childrenPict = await getPresignedUrl(
+            childCopy.childrenPict
+          );
+        }
+
+        return childCopy;
+      })
+    );
+
+    return res.json({
+      message: "Successfully retrieved children with pagination",
+      data: childrenWithUrls,
+      pagination: result.pagination,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+};
+
+// ============================================================================
+// GET CHILDREN FOR EXPORT (WITH FILTERS)
+// ============================================================================
+export const getChildrenForExport = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    // Build filters from query parameters
+    const filters: any = {};
+    
+    if (req.query.educationLevel) {
+      filters.educationLevel = req.query.educationLevel as string;
+    }
+    
+    if (req.query.yatimStatus) {
+      filters.yatimStatus = req.query.yatimStatus as string;
+    }
+    
+    if (req.query.regionId) {
+      filters.regionId = Number(req.query.regionId);
+    }
+    
+    if (req.query.isActive !== undefined) {
+      filters.isActive = req.query.isActive === "true";
+    }
+    
+    if (req.query.isCondition !== undefined) {
+      filters.isCondition = req.query.isCondition === "true";
+    }
+    
+    if (req.query.ageSort) {
+      filters.ageSort = req.query.ageSort as "asc" | "desc";
+    }
+
+    const children = await selectChildrenForExport(filters);
+
+    const childrenWithUrls = await Promise.all(
+      children.map(async (child) => {
+        const childCopy = { ...child };
+
+        if (
+          childCopy.childrenPict &&
+          isValidS3Key(childCopy.childrenPict)
+        ) {
+          childCopy.childrenPict = await getPresignedUrl(
+            childCopy.childrenPict
+          );
+        }
+
+        return childCopy;
+      })
+    );
+
+    return res.json({
+      message: "Successfully retrieved all children for export",
+      data: childrenWithUrls,
+    });
+  } catch (err) {
+    next(err);
+    return;
   }
 };
 

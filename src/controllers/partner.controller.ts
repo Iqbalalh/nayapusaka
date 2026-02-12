@@ -11,6 +11,7 @@ import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizePartnerData, PartnerInput } from "../utils/sanitize/partner.sanitize";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -61,6 +62,9 @@ export const getPartners = async (
       })
     );
 
+    // Add staff names to partner records
+    partners = await addStaffNamesToRecords(partners);
+
     return res.json({
       message: "Berhasil mendapatkan data partner",
       data: partners,
@@ -99,9 +103,12 @@ export const getPartner = async (
       partnerPict: pictUrl,
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.json({
       message: "Successfully retrieved partner detail",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);

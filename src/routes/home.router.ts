@@ -10,6 +10,8 @@ import {
   getOrphanHomesForMaps,
   getHomeDetail,
   postHome,
+  patchHome,
+  deleteHome,
   getHomesForExport,
   getHomesOptimized,
 } from "../controllers/home.controller";
@@ -36,5 +38,7 @@ homeRouter.get("/export", getHomesForExport);
 homeRouter.get("/optimized", getHomesOptimized);
 homeRouter.get("/detail/:id", getHomeAllDetail);
 homeRouter.get("/:id", getHomeDetail);
+homeRouter.patch("/:id", upload.any(), patchHome);
+homeRouter.delete("/:id", deleteHome);
 
 export default homeRouter;

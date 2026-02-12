@@ -15,6 +15,7 @@ import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeUmkmData, UmkmInput } from "../utils/sanitize/umkm.sanitize";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFiles extends AuthRequest {
   files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
@@ -46,6 +47,9 @@ export const getUmkms = async (
         return result;
       })
     );
+
+    // Add staff names to umkm records
+    umkms = await addStaffNamesToRecords(umkms);
 
     return res.json({
       message: "Berhasil mendapatkan data UMKM",
@@ -104,9 +108,12 @@ export const getUmkm = async (
       }
     }
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.json({
       message: "Successfully retrieved UMKM detail",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);

@@ -16,6 +16,7 @@ import {
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -24,7 +25,7 @@ interface RequestWithFile extends AuthRequest {
 // ============================================================================
 // GET ALL GALLERIES (PUBLIC - NO AUTH REQUIRED)
 // ============================================================================
-
+  
 export const getGalleries = async (
   req: Request,
   res: Response,
@@ -59,13 +60,18 @@ export const getGalleries = async (
           galleryDate: gallery.galleryDate,
           createdAt: gallery.createdAt,
           updatedAt: gallery.updatedAt,
+          createdBy: gallery.createdBy,
+          editedBy: gallery.editedBy,
         };
       })
     );
 
+    // Add staff names to gallery records
+    const galleriesWithStaffNames = await addStaffNamesToRecords(transformedGalleries);
+
     return res.json({
       message: "Berhasil mendapatkan data galeri",
-      data: transformedGalleries,
+      data: galleriesWithStaffNames,
     });
   } catch (err) {
     next(err);

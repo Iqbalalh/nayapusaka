@@ -797,3 +797,238 @@ export const getHomesOptimized = async (
   }
 };
 
+// ============================================================================
+// UPDATE HOME
+// ============================================================================
+export const patchHome = async (
+  req: RequestWithFiles,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+    const userId = (req.user as any)?.id || 2;
+    const body = req.body;
+
+    // Check if home exists
+    const existingHome = await prisma.homes.findUnique({
+      where: { id },
+    });
+
+    if (!existingHome) {
+      return res.status(404).json({
+        message: "Home not found",
+        data: null,
+      });
+    }
+
+    // Use transaction to ensure all operations are atomic
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Handle Employee
+      let employeeId = body.employeeId ? Number(body.employeeId) : existingHome.employeeId;
+      let employeeData = null;
+      let employeePict: string | null = null;
+
+      if (body.employeeId && Number(body.employeeId) !== existingHome.employeeId) {
+        // Use existing employee
+        employeeData = await tx.employees.findUnique({
+          where: { id: Number(body.employeeId) },
+          include: { regions: true },
+        });
+
+        if (!employeeData) {
+          throw new Error("Employee not found");
+        }
+      }
+
+      // 2. Handle Partner
+      let partnerId = body.partnerId ? Number(body.partnerId) : existingHome.partnerId;
+      let partnerData = null;
+
+      if (body.partnerId && Number(body.partnerId) !== existingHome.partnerId) {
+        // Use existing partner
+        partnerData = await tx.partners.findUnique({
+          where: { id: Number(body.partnerId) },
+          include: { regions: true, umkm: true },
+        });
+
+        if (!partnerData) {
+          throw new Error("Partner not found");
+        }
+      }
+
+      // 3. Handle Wali
+      let waliId = body.waliId ? Number(body.waliId) : existingHome.waliId;
+      let waliData = null;
+
+      if (body.waliId !== undefined && body.waliId !== null && body.waliId !== "") {
+        const waliIdNum = Number(body.waliId);
+        if (waliIdNum !== existingHome.waliId) {
+          // Use existing wali
+          waliData = await tx.wali.findUnique({
+            where: { id: waliIdNum },
+          });
+
+          if (!waliData) {
+            throw new Error("Wali not found");
+          }
+          waliId = waliIdNum;
+        }
+      } else {
+        waliId = null;
+        waliData = null;
+      }
+
+      // 4. Update Home
+      const homePayload: Prisma.HomesUpdateInput = {
+        regions: body.region_id
+          ? { connect: { regionId: Number(body.region_id) } }
+          : existingHome.regionId
+          ? { connect: { regionId: existingHome.regionId } }
+          : undefined,
+        postalCode: body.postal_code !== undefined ? body.postal_code : existingHome.postalCode,
+        employees: employeeId ? { connect: { id: employeeId } } : undefined,
+        partners: partnerId ? { connect: { id: partnerId } } : undefined,
+        wali: waliId ? { connect: { id: waliId } } : waliId === null ? { disconnect: true } : undefined,
+        editedBy: userId,
+      };
+
+      const updatedHome = await tx.homes.update({
+        where: { id },
+        data: homePayload,
+      });
+
+      // 5. Handle Children
+      let childrens = [];
+      if (Array.isArray(body.childrens)) {
+        childrens = body.childrens;
+      } else if (typeof body.childrens === "string") {
+        try {
+          childrens = JSON.parse(body.childrens);
+        } catch {
+          childrens = [];
+        }
+      }
+
+      // Get current children for this home
+      const currentChildren = await tx.children.findMany({
+        where: { homeId: id },
+        select: { id: true },
+      });
+
+      const currentChildrenIds = new Set(currentChildren.map(c => c.id));
+      const newChildrenIds = new Set(childrens.map((c: any) => Number(c.id)));
+
+      // Remove children that are no longer linked (set homeId to null)
+      for (const childId of currentChildrenIds) {
+        if (!newChildrenIds.has(childId)) {
+          await tx.children.update({
+            where: { id: childId },
+            data: { homeId: null },
+          });
+        }
+      }
+
+      // Link new children to this home
+      const childrenResults = [];
+      for (const child of childrens) {
+        const childId = Number(child.id);
+        const existingChild = await tx.children.findUnique({
+          where: { id: childId },
+        });
+
+        if (existingChild) {
+          // Update existing child with new homeId
+          const updatedChild = await tx.children.update({
+            where: { id: childId },
+            data: { homeId: id },
+          });
+          childrenResults.push(updatedChild);
+        }
+      }
+
+      // Fetch updated home with relations
+      const homeWithRelations = await tx.homes.findUnique({
+        where: { id },
+        include: {
+          employees: true,
+          partners: { include: { umkm: true } },
+          wali: true,
+          regions: true,
+          children: { orderBy: { index: "asc" } },
+        },
+      });
+
+      return {
+        home: homeWithRelations,
+        employee: homeWithRelations?.employees || null,
+        partner: homeWithRelations?.partners || null,
+        wali: homeWithRelations?.wali || null,
+        childrens: homeWithRelations?.children || [],
+      };
+    });
+
+    return res.json({
+      message: "Home updated successfully",
+      data: result,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+};
+
+// ============================================================================
+// DELETE HOME
+// ============================================================================
+export const deleteHome = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+
+    // Check if home exists
+    const existingHome = await prisma.homes.findUnique({
+      where: { id },
+      include: {
+        children: {
+          select: { id: true },
+        },
+      },
+    });
+
+    if (!existingHome) {
+      return res.status(404).json({
+        message: "Home not found",
+        data: null,
+      });
+    }
+
+    // Use transaction to ensure all operations are atomic
+    await prisma.$transaction(async (tx) => {
+      // Set homeId to null for all children linked to this home
+      if (existingHome.children && existingHome.children.length > 0) {
+        await tx.children.updateMany({
+          where: { homeId: id },
+          data: { homeId: null },
+        });
+      }
+
+      // Delete the home
+      await tx.homes.delete({
+        where: { id },
+      });
+    });
+
+    return res.json({
+      message: "Home deleted successfully",
+      data: null,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+};
+

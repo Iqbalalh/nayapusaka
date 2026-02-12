@@ -11,6 +11,7 @@ import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeWaliData, WaliInput } from "../utils/sanitize/wali.sanitize";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -41,6 +42,9 @@ export const getWalis = async (
         };
       })
     );
+
+    // Add staff names to wali records
+    walis = await addStaffNamesToRecords(walis);
 
     return res.json({
       message: "Berhasil mendapatkan data wali",
@@ -96,7 +100,7 @@ export const getWali = async (
 
     // Extract home data
     const home = wali.homes && wali.homes.length > 0 ? wali.homes[0] : null;
-
+    
     const result = {
       id: wali.id,
       employeeId: wali.employeeId,
@@ -119,9 +123,12 @@ export const getWali = async (
       childrens: home?.children || [],
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.json({
       message: "Successfully retrieved wali detail",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);

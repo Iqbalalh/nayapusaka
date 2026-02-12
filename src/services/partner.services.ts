@@ -10,7 +10,10 @@ import { prisma } from "../utils/prisma/prisma";
  */
 export const selectAllPartners = async () => {
   try {
-    return await prisma.partners.findMany({ orderBy: { id: "asc" } });
+    return await prisma.partners.findMany({
+      include: { regions: true },
+      orderBy: { id: "asc" }
+    });
   } catch (error) {
     throw error;
   }

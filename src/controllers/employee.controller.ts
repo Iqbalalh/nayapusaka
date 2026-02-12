@@ -11,6 +11,7 @@ import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
 import { sanitizeEmployeeData, EmployeeInput } from "../utils/sanitize/employee.sanitize";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -41,6 +42,9 @@ export const getEmployees = async (
         };
       })
     );
+
+    // Add staff names to employee records
+    employees = await addStaffNamesToRecords(employees);
 
     return res.json({
       message: "Berhasil mendapatkan data pegawai",
@@ -99,9 +103,12 @@ export const getEmployee = async (
       employeePict: pictUrl,
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.json({
       message: "Successfully retrieved employee detail",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);
