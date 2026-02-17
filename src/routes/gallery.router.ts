@@ -47,7 +47,8 @@ galleryRouter.delete("/categories/:id", deleteCategory);
 // Gallery CRUD
 galleryRouter.get("/list", getGalleryList);
 galleryRouter.get("/:id", getGallery);
-galleryRouter.post("/", upload.single("image"), postGallery);
+// Support both multiple files (images) and single file (image) for backward compatibility
+galleryRouter.post("/", upload.array("images", 20), postGallery);
 galleryRouter.patch("/:id", upload.single("image"), patchGallery);
 galleryRouter.delete("/:id", deleteGallery);
 

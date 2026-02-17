@@ -142,3 +142,8 @@ export type Gallery = Prisma.GalleryModel
  * 
  */
 export type GalleryCategory = Prisma.GalleryCategoryModel
+/**
+ * Model SocialAssistance
+ * 
+ */
+export type SocialAssistance = Prisma.SocialAssistanceModel

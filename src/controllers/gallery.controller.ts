@@ -20,6 +20,7 @@ import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
+  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
 }
 
 // ============================================================================
@@ -210,7 +211,7 @@ export const getGallery = async (
 };
 
 // ============================================================================
-// CREATE GALLERY
+// CREATE GALLERY (Supports multiple files with single caption)
 // ============================================================================
 
 export const postGallery = async (
@@ -224,11 +225,108 @@ export const postGallery = async (
 
     const { caption, categoryIds, regionId, galleryDate } = req.body;
     
+    // Check if multiple files were uploaded (via req.files)
+    const files = req.files as Express.Multer.File[] | undefined;
+    
+    // If no files array, check for single file (backward compatibility)
+    const hasMultipleFiles = files && files.length > 0;
+    const hasSingleFile = req.file && !hasMultipleFiles;
+    
+    if (!hasMultipleFiles && !hasSingleFile) {
+      return res.status(400).json({
+        message: "At least one image is required",
+        data: null,
+      });
+    }
+    
+    // Parse category IDs once
+    let categoryIdsArray: number[] | undefined;
+    if (categoryIds) {
+      categoryIdsArray = Array.isArray(categoryIds)
+        ? categoryIds.map(Number)
+        : [Number(categoryIds)];
+    }
+    
+    // Parse region ID once
+    const parsedRegionId = regionId && regionId !== 'null' && regionId !== '' ? Number(regionId) : null;
+    
+    // Parse gallery date once
+    const parsedGalleryDate = galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null;
+    
+    const createdGalleries: any[] = [];
+    
+    // Handle multiple files upload
+    if (hasMultipleFiles) {
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        const body: Prisma.GalleryUncheckedCreateInput = {
+          caption: caption || null,
+          s3Path: "",
+          regionId: parsedRegionId,
+          galleryDate: parsedGalleryDate,
+          createdBy: userId,
+        };
+
+        const newGallery = await insertGallery(body);
+
+        const s3Path = await uploadToS3(
+          file,
+          newGallery.id,
+          `gallery-${newGallery.id}`,
+          "galleries"
+        );
+
+        if (s3Path) {
+          await updateGalleryById(newGallery.id, { s3Path });
+        }
+
+        // Update categories if provided
+        if (categoryIdsArray) {
+          await updateGalleryById(newGallery.id, { regionId: parsedRegionId }, categoryIdsArray);
+        }
+
+        const updatedGallery = await selectGalleryById(newGallery.id);
+        
+        let imageUrl = null;
+        if (updatedGallery?.s3Path && isValidS3Key(updatedGallery.s3Path)) {
+          imageUrl = await getPresignedUrl(updatedGallery.s3Path);
+        }
+
+        createdGalleries.push({
+          id: updatedGallery?.id,
+          s3Path: imageUrl,
+          caption: updatedGallery?.caption,
+          regionId: updatedGallery?.regionId,
+          regionName: updatedGallery?.regions?.regionName || null,
+          categories: updatedGallery?.galleryCategories.map(gc => ({
+            id: gc.category.id,
+            name: gc.category.name,
+            slug: gc.category.slug,
+          })),
+          region: updatedGallery?.regions ? {
+            id: updatedGallery.regions.regionId,
+            name: updatedGallery.regions.regionName,
+          } : null,
+          galleryDate: updatedGallery?.galleryDate,
+          createdAt: updatedGallery?.createdAt,
+          updatedAt: updatedGallery?.updatedAt,
+        });
+      }
+      
+      return res.status(201).json({
+        message: `Berhasil membuat ${createdGalleries.length} galeri`,
+        data: createdGalleries,
+        count: createdGalleries.length,
+      });
+    }
+    
+    // Handle single file upload (backward compatibility)
     const body: Prisma.GalleryUncheckedCreateInput = {
       caption: caption || null,
       s3Path: "",
-      regionId: regionId && regionId !== 'null' && regionId !== '' ? Number(regionId) : null,
-      galleryDate: galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null,
+      regionId: parsedRegionId,
+      galleryDate: parsedGalleryDate,
       createdBy: userId,
     };
 
@@ -250,11 +348,8 @@ export const postGallery = async (
     }
 
     // Update categories if provided
-    if (categoryIds) {
-      const categoryIdsArray = Array.isArray(categoryIds)
-        ? categoryIds.map(Number)
-        : [Number(categoryIds)];
-      await updateGalleryById(newGallery.id, { regionId: body.regionId }, categoryIdsArray);
+    if (categoryIdsArray) {
+      await updateGalleryById(newGallery.id, { regionId: parsedRegionId }, categoryIdsArray);
     }
 
     const updatedGallery = await selectGalleryById(newGallery.id);

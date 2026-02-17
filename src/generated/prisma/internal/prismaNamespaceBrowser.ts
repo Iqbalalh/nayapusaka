@@ -71,7 +71,8 @@ export const ModelName = {
   ChildAssistanceDocs: 'ChildAssistanceDocs',
   Category: 'Category',
   Gallery: 'Gallery',
-  GalleryCategory: 'GalleryCategory'
+  GalleryCategory: 'GalleryCategory',
+  SocialAssistance: 'SocialAssistance'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -447,12 +448,40 @@ export const GalleryCategoryScalarFieldEnum = {
 export type GalleryCategoryScalarFieldEnum = (typeof GalleryCategoryScalarFieldEnum)[keyof typeof GalleryCategoryScalarFieldEnum]
 
 
+export const SocialAssistanceScalarFieldEnum = {
+  id: 'id',
+  nipNipp: 'nipNipp',
+  recipientName: 'recipientName',
+  ktpAddress: 'ktpAddress',
+  region: 'region',
+  condition: 'condition',
+  medicalEquipment: 'medicalEquipment',
+  cashAmount: 'cashAmount',
+  totalAmount: 'totalAmount',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
+} as const
+
+export type SocialAssistanceScalarFieldEnum = (typeof SocialAssistanceScalarFieldEnum)[keyof typeof SocialAssistanceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull'
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -469,4 +498,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: 'DbNull',
+  JsonNull: 'JsonNull',
+  AnyNull: 'AnyNull'
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

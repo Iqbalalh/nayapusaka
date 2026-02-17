@@ -17,6 +17,7 @@ import umkmVisitRouter from "./routes/umkmvisit.router";
 import umkmMonitoringRouter from "./routes/umkmmonitoring.router";
 import childAssistanceRouter from "./routes/childassistance.router";
 import galleryRouter from "./routes/gallery.router";
+import socialAssistanceRouter from "./routes/socialassistance.router";
 
 const app: Application = express();
 
@@ -97,6 +98,7 @@ app.use("/api/umkm-visits", umkmVisitRouter);
 app.use("/api/umkm-monitoring", umkmMonitoringRouter);
 app.use("/api/child-assistance", childAssistanceRouter);
 app.use("/api/galleries", galleryRouter);
+app.use("/api/social-assistance", socialAssistanceRouter);
 
 // ======================
 // Export App

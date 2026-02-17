@@ -404,7 +404,8 @@ export const ModelName = {
   ChildAssistanceDocs: 'ChildAssistanceDocs',
   Category: 'Category',
   Gallery: 'Gallery',
-  GalleryCategory: 'GalleryCategory'
+  GalleryCategory: 'GalleryCategory',
+  SocialAssistance: 'SocialAssistance'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +421,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "roles" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1978,6 +1979,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SocialAssistance: {
+      payload: Prisma.$SocialAssistancePayload<ExtArgs>
+      fields: Prisma.SocialAssistanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SocialAssistanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SocialAssistanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>
+        }
+        findFirst: {
+          args: Prisma.SocialAssistanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SocialAssistanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>
+        }
+        findMany: {
+          args: Prisma.SocialAssistanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>[]
+        }
+        create: {
+          args: Prisma.SocialAssistanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>
+        }
+        createMany: {
+          args: Prisma.SocialAssistanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SocialAssistanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>[]
+        }
+        delete: {
+          args: Prisma.SocialAssistanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>
+        }
+        update: {
+          args: Prisma.SocialAssistanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>
+        }
+        deleteMany: {
+          args: Prisma.SocialAssistanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SocialAssistanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SocialAssistanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>[]
+        }
+        upsert: {
+          args: Prisma.SocialAssistanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistancePayload>
+        }
+        aggregate: {
+          args: Prisma.SocialAssistanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSocialAssistance>
+        }
+        groupBy: {
+          args: Prisma.SocialAssistanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialAssistanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SocialAssistanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialAssistanceCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2374,12 +2449,40 @@ export const GalleryCategoryScalarFieldEnum = {
 export type GalleryCategoryScalarFieldEnum = (typeof GalleryCategoryScalarFieldEnum)[keyof typeof GalleryCategoryScalarFieldEnum]
 
 
+export const SocialAssistanceScalarFieldEnum = {
+  id: 'id',
+  nipNipp: 'nipNipp',
+  recipientName: 'recipientName',
+  ktpAddress: 'ktpAddress',
+  region: 'region',
+  condition: 'condition',
+  medicalEquipment: 'medicalEquipment',
+  cashAmount: 'cashAmount',
+  totalAmount: 'totalAmount',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
+} as const
+
+export type SocialAssistanceScalarFieldEnum = (typeof SocialAssistanceScalarFieldEnum)[keyof typeof SocialAssistanceScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2396,6 +2499,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2478,6 +2590,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -2596,6 +2722,7 @@ export type GlobalOmitConfig = {
   category?: Prisma.CategoryOmit
   gallery?: Prisma.GalleryOmit
   galleryCategory?: Prisma.GalleryCategoryOmit
+  socialAssistance?: Prisma.SocialAssistanceOmit
 }
 
 /* Types for Logging */
