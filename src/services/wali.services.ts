@@ -10,7 +10,16 @@ import { prisma } from "../utils/prisma/prisma";
  */
 export const selectAllWali = async () => {
   try {
-    return await prisma.wali.findMany({ orderBy: { id: "asc" } });
+    return await prisma.wali.findMany({
+      orderBy: { id: "asc" },
+      include: {
+        homes: {
+          include: {
+            regions: true,
+          },
+        },
+      },
+    });
   } catch (error) {
     throw error;
   }
@@ -43,6 +52,7 @@ export const selectWaliById = async (id: number) => {
             partners: true,
             employees: true,
             children: true,
+            regions: true,
           },
         },
         employees: true,

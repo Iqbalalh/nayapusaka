@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { verifyToken } from "../middlewares/auth";
+import upload from "../middlewares/multer";
 import {
   deleteSocialAssistance,
   getSocialAssistance,
@@ -8,6 +9,10 @@ import {
   patchSocialAssistance,
   postSocialAssistance,
 } from "../controllers/socialassistance.controller";
+import {
+  importSocialAssistanceFromExcel,
+  downloadSocialAssistanceTemplate,
+} from "../controllers/socialassistanceImport.controller";
 
 const socialAssistanceRouter = Router();
 
@@ -19,10 +24,18 @@ socialAssistanceRouter.use(verifyToken);
 // ===========================
 socialAssistanceRouter.get("/", getSocialAssistance);
 socialAssistanceRouter.get("/optimized", getSocialAssistanceOptimized);
+socialAssistanceRouter.get("/template", downloadSocialAssistanceTemplate);
 socialAssistanceRouter.get("/:id", getSocialAssistanceById);
 
 // CREATE
 socialAssistanceRouter.post("/", postSocialAssistance);
+
+// IMPORT FROM EXCEL
+socialAssistanceRouter.post(
+  "/import",
+  upload.single("file"),
+  importSocialAssistanceFromExcel
+);
 
 // PARTIAL UPDATE
 socialAssistanceRouter.patch("/:id", patchSocialAssistance);

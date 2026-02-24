@@ -128,6 +128,8 @@ export const postSocialAssistance = async (
       region,
       condition,
       medicalEquipment,
+      equipmentQuantity,
+      equipmentNominal,
       cashAmount,
       totalAmount,
       notes,
@@ -140,6 +142,8 @@ export const postSocialAssistance = async (
       region: region || null,
       condition: condition || null,
       medicalEquipment: medicalEquipment || null,
+      equipmentQuantity: equipmentQuantity ? Number(equipmentQuantity) : null,
+      equipmentNominal: equipmentNominal ? Number(equipmentNominal) : null,
       cashAmount: cashAmount ? Number(cashAmount) : null,
       totalAmount: totalAmount ? Number(totalAmount) : null,
       notes: notes || null,
@@ -186,6 +190,8 @@ export const patchSocialAssistance = async (
       region,
       condition,
       medicalEquipment,
+      equipmentQuantity,
+      equipmentNominal,
       cashAmount,
       totalAmount,
       notes,
@@ -198,6 +204,8 @@ export const patchSocialAssistance = async (
     if (region !== undefined) updateData.region = region || null;
     if (condition !== undefined) updateData.condition = condition || null;
     if (medicalEquipment !== undefined) updateData.medicalEquipment = medicalEquipment || null;
+    if (equipmentQuantity !== undefined) updateData.equipmentQuantity = equipmentQuantity ? Number(equipmentQuantity) : null;
+    if (equipmentNominal !== undefined) updateData.equipmentNominal = equipmentNominal ? Number(equipmentNominal) : null;
     if (cashAmount !== undefined) updateData.cashAmount = cashAmount ? Number(cashAmount) : null;
     if (totalAmount !== undefined) updateData.totalAmount = totalAmount ? Number(totalAmount) : null;
     if (notes !== undefined) updateData.notes = notes || null;

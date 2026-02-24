@@ -450,20 +450,22 @@ model GalleryCategory {
 }
 
 model SocialAssistance {
-  id              Int       @id @default(autoincrement())
-  nipNipp         String?   @map("nip_nipp") @db.VarChar(30)
-  recipientName   String?   @map("recipient_name") @db.VarChar(150)
-  ktpAddress      String?   @map("ktp_address") @db.Text
-  region          String?   @map("region") @db.VarChar(150)
-  condition       String?   @map("condition") @db.Text
-  medicalEquipment Json?    @map("medical_equipment")
-  cashAmount      Float?    @map("cash_amount")
-  totalAmount     Float?    @map("total_amount")
-  notes           String?   @db.Text
-  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt       DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
-  createdBy       Int?      @map("created_by") @default(2)
-  editedBy        Int?      @map("edited_by")
+  id                Int       @id @default(autoincrement())
+  nipNipp           String?   @map("nip_nipp") @db.VarChar(30)
+  recipientName     String?   @map("recipient_name") @db.VarChar(150)
+  ktpAddress        String?   @map("ktp_address") @db.Text
+  region            String?   @map("region") @db.VarChar(150)
+  condition         String?   @map("condition") @db.Text
+  medicalEquipment  String?   @map("medical_equipment") @db.VarChar(100)
+  equipmentQuantity Int?      @map("equipment_quantity")
+  equipmentNominal  Float?    @map("equipment_nominal")
+  cashAmount        Float?    @map("cash_amount")
+  totalAmount       Float?    @map("total_amount")
+  notes             String?   @db.Text
+  createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)
+  createdBy         Int?      @map("created_by") @default(2)
+  editedBy          Int?      @map("edited_by")
 
   @@map("social_assistance")
 }

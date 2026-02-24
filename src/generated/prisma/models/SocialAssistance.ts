@@ -28,6 +28,8 @@ export type AggregateSocialAssistance = {
 
 export type SocialAssistanceAvgAggregateOutputType = {
   id: number | null
+  equipmentQuantity: number | null
+  equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
   createdBy: number | null
@@ -36,6 +38,8 @@ export type SocialAssistanceAvgAggregateOutputType = {
 
 export type SocialAssistanceSumAggregateOutputType = {
   id: number | null
+  equipmentQuantity: number | null
+  equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
   createdBy: number | null
@@ -49,6 +53,9 @@ export type SocialAssistanceMinAggregateOutputType = {
   ktpAddress: string | null
   region: string | null
   condition: string | null
+  medicalEquipment: string | null
+  equipmentQuantity: number | null
+  equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
   notes: string | null
@@ -65,6 +72,9 @@ export type SocialAssistanceMaxAggregateOutputType = {
   ktpAddress: string | null
   region: string | null
   condition: string | null
+  medicalEquipment: string | null
+  equipmentQuantity: number | null
+  equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
   notes: string | null
@@ -82,6 +92,8 @@ export type SocialAssistanceCountAggregateOutputType = {
   region: number
   condition: number
   medicalEquipment: number
+  equipmentQuantity: number
+  equipmentNominal: number
   cashAmount: number
   totalAmount: number
   notes: number
@@ -95,6 +107,8 @@ export type SocialAssistanceCountAggregateOutputType = {
 
 export type SocialAssistanceAvgAggregateInputType = {
   id?: true
+  equipmentQuantity?: true
+  equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
   createdBy?: true
@@ -103,6 +117,8 @@ export type SocialAssistanceAvgAggregateInputType = {
 
 export type SocialAssistanceSumAggregateInputType = {
   id?: true
+  equipmentQuantity?: true
+  equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
   createdBy?: true
@@ -116,6 +132,9 @@ export type SocialAssistanceMinAggregateInputType = {
   ktpAddress?: true
   region?: true
   condition?: true
+  medicalEquipment?: true
+  equipmentQuantity?: true
+  equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
   notes?: true
@@ -132,6 +151,9 @@ export type SocialAssistanceMaxAggregateInputType = {
   ktpAddress?: true
   region?: true
   condition?: true
+  medicalEquipment?: true
+  equipmentQuantity?: true
+  equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
   notes?: true
@@ -149,6 +171,8 @@ export type SocialAssistanceCountAggregateInputType = {
   region?: true
   condition?: true
   medicalEquipment?: true
+  equipmentQuantity?: true
+  equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
   notes?: true
@@ -252,7 +276,9 @@ export type SocialAssistanceGroupByOutputType = {
   ktpAddress: string | null
   region: string | null
   condition: string | null
-  medicalEquipment: runtime.JsonValue | null
+  medicalEquipment: string | null
+  equipmentQuantity: number | null
+  equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
   notes: string | null
@@ -292,7 +318,9 @@ export type SocialAssistanceWhereInput = {
   ktpAddress?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
   region?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
   condition?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
-  medicalEquipment?: Prisma.JsonNullableFilter<"SocialAssistance">
+  medicalEquipment?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
+  equipmentQuantity?: Prisma.IntNullableFilter<"SocialAssistance"> | number | null
+  equipmentNominal?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   cashAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   totalAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
@@ -310,6 +338,8 @@ export type SocialAssistanceOrderByWithRelationInput = {
   region?: Prisma.SortOrderInput | Prisma.SortOrder
   condition?: Prisma.SortOrderInput | Prisma.SortOrder
   medicalEquipment?: Prisma.SortOrderInput | Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrderInput | Prisma.SortOrder
   cashAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   totalAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -329,7 +359,9 @@ export type SocialAssistanceWhereUniqueInput = Prisma.AtLeast<{
   ktpAddress?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
   region?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
   condition?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
-  medicalEquipment?: Prisma.JsonNullableFilter<"SocialAssistance">
+  medicalEquipment?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
+  equipmentQuantity?: Prisma.IntNullableFilter<"SocialAssistance"> | number | null
+  equipmentNominal?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   cashAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   totalAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
@@ -347,6 +379,8 @@ export type SocialAssistanceOrderByWithAggregationInput = {
   region?: Prisma.SortOrderInput | Prisma.SortOrder
   condition?: Prisma.SortOrderInput | Prisma.SortOrder
   medicalEquipment?: Prisma.SortOrderInput | Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrderInput | Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrderInput | Prisma.SortOrder
   cashAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   totalAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -371,7 +405,9 @@ export type SocialAssistanceScalarWhereWithAggregatesInput = {
   ktpAddress?: Prisma.StringNullableWithAggregatesFilter<"SocialAssistance"> | string | null
   region?: Prisma.StringNullableWithAggregatesFilter<"SocialAssistance"> | string | null
   condition?: Prisma.StringNullableWithAggregatesFilter<"SocialAssistance"> | string | null
-  medicalEquipment?: Prisma.JsonNullableWithAggregatesFilter<"SocialAssistance">
+  medicalEquipment?: Prisma.StringNullableWithAggregatesFilter<"SocialAssistance"> | string | null
+  equipmentQuantity?: Prisma.IntNullableWithAggregatesFilter<"SocialAssistance"> | number | null
+  equipmentNominal?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
   cashAmount?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
   totalAmount?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"SocialAssistance"> | string | null
@@ -387,7 +423,9 @@ export type SocialAssistanceCreateInput = {
   ktpAddress?: string | null
   region?: string | null
   condition?: string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: string | null
+  equipmentQuantity?: number | null
+  equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
   notes?: string | null
@@ -404,7 +442,9 @@ export type SocialAssistanceUncheckedCreateInput = {
   ktpAddress?: string | null
   region?: string | null
   condition?: string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: string | null
+  equipmentQuantity?: number | null
+  equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
   notes?: string | null
@@ -420,7 +460,9 @@ export type SocialAssistanceUpdateInput = {
   ktpAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  equipmentQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -437,7 +479,9 @@ export type SocialAssistanceUncheckedUpdateInput = {
   ktpAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  equipmentQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -454,7 +498,9 @@ export type SocialAssistanceCreateManyInput = {
   ktpAddress?: string | null
   region?: string | null
   condition?: string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: string | null
+  equipmentQuantity?: number | null
+  equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
   notes?: string | null
@@ -470,7 +516,9 @@ export type SocialAssistanceUpdateManyMutationInput = {
   ktpAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  equipmentQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -487,7 +535,9 @@ export type SocialAssistanceUncheckedUpdateManyInput = {
   ktpAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  medicalEquipment?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  equipmentQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -505,6 +555,8 @@ export type SocialAssistanceCountOrderByAggregateInput = {
   region?: Prisma.SortOrder
   condition?: Prisma.SortOrder
   medicalEquipment?: Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -516,6 +568,8 @@ export type SocialAssistanceCountOrderByAggregateInput = {
 
 export type SocialAssistanceAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -529,6 +583,9 @@ export type SocialAssistanceMaxOrderByAggregateInput = {
   ktpAddress?: Prisma.SortOrder
   region?: Prisma.SortOrder
   condition?: Prisma.SortOrder
+  medicalEquipment?: Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -545,6 +602,9 @@ export type SocialAssistanceMinOrderByAggregateInput = {
   ktpAddress?: Prisma.SortOrder
   region?: Prisma.SortOrder
   condition?: Prisma.SortOrder
+  medicalEquipment?: Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   notes?: Prisma.SortOrder
@@ -556,6 +616,8 @@ export type SocialAssistanceMinOrderByAggregateInput = {
 
 export type SocialAssistanceSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  equipmentQuantity?: Prisma.SortOrder
+  equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -572,6 +634,8 @@ export type SocialAssistanceSelect<ExtArgs extends runtime.Types.Extensions.Inte
   region?: boolean
   condition?: boolean
   medicalEquipment?: boolean
+  equipmentQuantity?: boolean
+  equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
   notes?: boolean
@@ -589,6 +653,8 @@ export type SocialAssistanceSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   region?: boolean
   condition?: boolean
   medicalEquipment?: boolean
+  equipmentQuantity?: boolean
+  equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
   notes?: boolean
@@ -606,6 +672,8 @@ export type SocialAssistanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   region?: boolean
   condition?: boolean
   medicalEquipment?: boolean
+  equipmentQuantity?: boolean
+  equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
   notes?: boolean
@@ -623,6 +691,8 @@ export type SocialAssistanceSelectScalar = {
   region?: boolean
   condition?: boolean
   medicalEquipment?: boolean
+  equipmentQuantity?: boolean
+  equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
   notes?: boolean
@@ -632,7 +702,7 @@ export type SocialAssistanceSelectScalar = {
   editedBy?: boolean
 }
 
-export type SocialAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nipNipp" | "recipientName" | "ktpAddress" | "region" | "condition" | "medicalEquipment" | "cashAmount" | "totalAmount" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["socialAssistance"]>
+export type SocialAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nipNipp" | "recipientName" | "ktpAddress" | "region" | "condition" | "medicalEquipment" | "equipmentQuantity" | "equipmentNominal" | "cashAmount" | "totalAmount" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["socialAssistance"]>
 
 export type $SocialAssistancePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SocialAssistance"
@@ -644,7 +714,9 @@ export type $SocialAssistancePayload<ExtArgs extends runtime.Types.Extensions.In
     ktpAddress: string | null
     region: string | null
     condition: string | null
-    medicalEquipment: runtime.JsonValue | null
+    medicalEquipment: string | null
+    equipmentQuantity: number | null
+    equipmentNominal: number | null
     cashAmount: number | null
     totalAmount: number | null
     notes: string | null
@@ -1081,7 +1153,9 @@ export interface SocialAssistanceFieldRefs {
   readonly ktpAddress: Prisma.FieldRef<"SocialAssistance", 'String'>
   readonly region: Prisma.FieldRef<"SocialAssistance", 'String'>
   readonly condition: Prisma.FieldRef<"SocialAssistance", 'String'>
-  readonly medicalEquipment: Prisma.FieldRef<"SocialAssistance", 'Json'>
+  readonly medicalEquipment: Prisma.FieldRef<"SocialAssistance", 'String'>
+  readonly equipmentQuantity: Prisma.FieldRef<"SocialAssistance", 'Int'>
+  readonly equipmentNominal: Prisma.FieldRef<"SocialAssistance", 'Float'>
   readonly cashAmount: Prisma.FieldRef<"SocialAssistance", 'Float'>
   readonly totalAmount: Prisma.FieldRef<"SocialAssistance", 'Float'>
   readonly notes: Prisma.FieldRef<"SocialAssistance", 'String'>

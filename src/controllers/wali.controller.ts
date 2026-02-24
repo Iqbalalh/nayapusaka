@@ -36,9 +36,14 @@ export const getWalis = async (
           pictUrl = await getPresignedUrl(wali.waliPict);
         }
 
+        // Extract region from first home
+        const home = (wali as any).homes && (wali as any).homes.length > 0 ? (wali as any).homes[0] : null;
+        const regionName = home?.regions?.regionName || null;
+
         return {
           ...wali,
           waliPict: pictUrl,
+          regionName,
         };
       })
     );
@@ -100,6 +105,7 @@ export const getWali = async (
 
     // Extract home data
     const home = wali.homes && wali.homes.length > 0 ? wali.homes[0] : null;
+    const regionName = home?.regions?.regionName || null;
     
     const result = {
       id: wali.id,
@@ -121,6 +127,8 @@ export const getWali = async (
       partner: home?.partners || null,
       employee: home?.employees || null,
       childrens: home?.children || [],
+      // Region from home
+      regionName,
     };
 
     // Add staff names to the result
