@@ -63,11 +63,6 @@ export type Partners = Prisma.PartnersModel
  */
 export type Regions = Prisma.RegionsModel
 /**
- * Model Roles
- * 
- */
-export type Roles = Prisma.RolesModel
-/**
  * Model Staffs
  * 
  */

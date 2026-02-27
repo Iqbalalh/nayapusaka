@@ -143,16 +143,6 @@ model Regions {
   @@map("regions")
 }
 
-model Roles {
-  id       Int    @id @default(autoincrement())
-  roleName String @unique @map("role_name") @db.VarChar(50)
-
-  // Relations
-  staffs Staffs[]
-
-  @@map("roles")
-}
-
 model Staffs {
   id          Int       @id @default(autoincrement())
   staffName   String    @map("staff_name") @db.VarChar(100)
@@ -163,7 +153,6 @@ model Staffs {
   phoneNumber String?   @map("phone_number") @db.VarChar(15)
   email       String?   @unique @db.VarChar(100)
   nik         String    @unique @db.VarChar(20)
-  roleId      Int       @map("role_id")
   position    String?   @db.VarChar(100)
   staffPict   String?   @map("staff_pict") @db.VarChar(255)
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
@@ -172,7 +161,6 @@ model Staffs {
   editedBy    Int?      @map("edited_by")
 
   // Relations
-  roles Roles   @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   users Users[]
 
   @@map("staffs")
@@ -218,10 +206,12 @@ model Umkm {
 }
 
 model Users {
-  userId   Int    @default(autoincrement()) @map("user_id")
-  username String @unique @db.VarChar(30)
-  password String @db.VarChar(255)
-  staffId  Int?   @map("staff_id")
+  userId       Int    @default(autoincrement()) @map("user_id")
+  username     String @unique @db.VarChar(30)
+  password     String @db.VarChar(255)
+  staffId      Int?   @map("staff_id")
+  role         String @default("staff") @db.VarChar(50)
+  tokenVersion Int    @default(0) @map("token_version")
 
   // Relations
   staffs Staffs? @relation(fields: [staffId], references: [id], map: "fk_users_staff")

@@ -13,6 +13,7 @@ import {
   insertChildAssistanceDoc,
   deleteChildAssistanceDocById,
   selectChildAssistanceCount,
+  selectChildAssistanceYears,
 } from "../services/childassistance.services";
 import { selectAllChildAssistanceOptimized } from "../services/childassistance.services";
 import { Prisma } from "../generated/prisma/client";
@@ -124,6 +125,30 @@ export const getChildAssistanceOptimized = async (
       next(err);
     } else {
       next(new Error("Failed to retrieve child assistance records"));
+    }
+  }
+};
+
+// ============================================================================
+// GET AVAILABLE YEARS FROM CHILD ASSISTANCE
+// ============================================================================
+export const getChildAssistanceYears = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const years = await selectChildAssistanceYears();
+
+    return res.json({
+      message: "Successfully retrieved available years",
+      data: years,
+    });
+  } catch (err) {
+    if (err instanceof Error) {
+      next(err);
+    } else {
+      next(new Error("Failed to retrieve available years"));
     }
   }
 };

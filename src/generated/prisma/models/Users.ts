@@ -41,6 +41,7 @@ export type UsersMinAggregateOutputType = {
   username: string | null
   password: string | null
   staffId: number | null
+  role: string | null
 }
 
 export type UsersMaxAggregateOutputType = {
@@ -48,6 +49,7 @@ export type UsersMaxAggregateOutputType = {
   username: string | null
   password: string | null
   staffId: number | null
+  role: string | null
 }
 
 export type UsersCountAggregateOutputType = {
@@ -55,6 +57,7 @@ export type UsersCountAggregateOutputType = {
   username: number
   password: number
   staffId: number
+  role: number
   _all: number
 }
 
@@ -74,6 +77,7 @@ export type UsersMinAggregateInputType = {
   username?: true
   password?: true
   staffId?: true
+  role?: true
 }
 
 export type UsersMaxAggregateInputType = {
@@ -81,6 +85,7 @@ export type UsersMaxAggregateInputType = {
   username?: true
   password?: true
   staffId?: true
+  role?: true
 }
 
 export type UsersCountAggregateInputType = {
@@ -88,6 +93,7 @@ export type UsersCountAggregateInputType = {
   username?: true
   password?: true
   staffId?: true
+  role?: true
   _all?: true
 }
 
@@ -182,6 +188,7 @@ export type UsersGroupByOutputType = {
   username: string
   password: string
   staffId: number | null
+  role: string
   _count: UsersCountAggregateOutputType | null
   _avg: UsersAvgAggregateOutputType | null
   _sum: UsersSumAggregateOutputType | null
@@ -212,6 +219,7 @@ export type UsersWhereInput = {
   username?: Prisma.StringFilter<"Users"> | string
   password?: Prisma.StringFilter<"Users"> | string
   staffId?: Prisma.IntNullableFilter<"Users"> | number | null
+  role?: Prisma.StringFilter<"Users"> | string
   staffs?: Prisma.XOR<Prisma.StaffsNullableScalarRelationFilter, Prisma.StaffsWhereInput> | null
 }
 
@@ -220,6 +228,7 @@ export type UsersOrderByWithRelationInput = {
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   staffId?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
   staffs?: Prisma.StaffsOrderByWithRelationInput
 }
 
@@ -231,6 +240,7 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.IntFilter<"Users"> | number
   password?: Prisma.StringFilter<"Users"> | string
   staffId?: Prisma.IntNullableFilter<"Users"> | number | null
+  role?: Prisma.StringFilter<"Users"> | string
   staffs?: Prisma.XOR<Prisma.StaffsNullableScalarRelationFilter, Prisma.StaffsWhereInput> | null
 }, "username">
 
@@ -239,6 +249,7 @@ export type UsersOrderByWithAggregationInput = {
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   staffId?: Prisma.SortOrderInput | Prisma.SortOrder
+  role?: Prisma.SortOrder
   _count?: Prisma.UsersCountOrderByAggregateInput
   _avg?: Prisma.UsersAvgOrderByAggregateInput
   _max?: Prisma.UsersMaxOrderByAggregateInput
@@ -254,12 +265,14 @@ export type UsersScalarWhereWithAggregatesInput = {
   username?: Prisma.StringWithAggregatesFilter<"Users"> | string
   password?: Prisma.StringWithAggregatesFilter<"Users"> | string
   staffId?: Prisma.IntNullableWithAggregatesFilter<"Users"> | number | null
+  role?: Prisma.StringWithAggregatesFilter<"Users"> | string
 }
 
 export type UsersCreateInput = {
   userId?: number
   username: string
   password: string
+  role?: string
   staffs?: Prisma.StaffsCreateNestedOneWithoutUsersInput
 }
 
@@ -268,12 +281,14 @@ export type UsersUncheckedCreateInput = {
   username: string
   password: string
   staffId?: number | null
+  role?: string
 }
 
 export type UsersUpdateInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   staffs?: Prisma.StaffsUpdateOneWithoutUsersNestedInput
 }
 
@@ -282,6 +297,7 @@ export type UsersUncheckedUpdateInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UsersCreateManyInput = {
@@ -289,12 +305,14 @@ export type UsersCreateManyInput = {
   username: string
   password: string
   staffId?: number | null
+  role?: string
 }
 
 export type UsersUpdateManyMutationInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UsersUncheckedUpdateManyInput = {
@@ -302,6 +320,7 @@ export type UsersUncheckedUpdateManyInput = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  role?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UsersListRelationFilter = {
@@ -319,6 +338,7 @@ export type UsersCountOrderByAggregateInput = {
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UsersAvgOrderByAggregateInput = {
@@ -331,6 +351,7 @@ export type UsersMaxOrderByAggregateInput = {
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UsersMinOrderByAggregateInput = {
@@ -338,6 +359,7 @@ export type UsersMinOrderByAggregateInput = {
   username?: Prisma.SortOrder
   password?: Prisma.SortOrder
   staffId?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UsersSumOrderByAggregateInput = {
@@ -391,12 +413,14 @@ export type UsersCreateWithoutStaffsInput = {
   userId?: number
   username: string
   password: string
+  role?: string
 }
 
 export type UsersUncheckedCreateWithoutStaffsInput = {
   userId?: number
   username: string
   password: string
+  role?: string
 }
 
 export type UsersCreateOrConnectWithoutStaffsInput = {
@@ -433,30 +457,35 @@ export type UsersScalarWhereInput = {
   username?: Prisma.StringFilter<"Users"> | string
   password?: Prisma.StringFilter<"Users"> | string
   staffId?: Prisma.IntNullableFilter<"Users"> | number | null
+  role?: Prisma.StringFilter<"Users"> | string
 }
 
 export type UsersCreateManyStaffsInput = {
   userId?: number
   username: string
   password: string
+  role?: string
 }
 
 export type UsersUpdateWithoutStaffsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UsersUncheckedUpdateWithoutStaffsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type UsersUncheckedUpdateManyWithoutStaffsInput = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -466,6 +495,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   username?: boolean
   password?: boolean
   staffId?: boolean
+  role?: boolean
   staffs?: boolean | Prisma.Users$staffsArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -474,6 +504,7 @@ export type UsersSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   username?: boolean
   password?: boolean
   staffId?: boolean
+  role?: boolean
   staffs?: boolean | Prisma.Users$staffsArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -482,6 +513,7 @@ export type UsersSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   username?: boolean
   password?: boolean
   staffId?: boolean
+  role?: boolean
   staffs?: boolean | Prisma.Users$staffsArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -490,9 +522,10 @@ export type UsersSelectScalar = {
   username?: boolean
   password?: boolean
   staffId?: boolean
+  role?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "username" | "password" | "staffId", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "username" | "password" | "staffId" | "role", ExtArgs["result"]["users"]>
 export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   staffs?: boolean | Prisma.Users$staffsArgs<ExtArgs>
 }
@@ -513,6 +546,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     username: string
     password: string
     staffId: number | null
+    role: string
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -941,6 +975,7 @@ export interface UsersFieldRefs {
   readonly username: Prisma.FieldRef<"Users", 'String'>
   readonly password: Prisma.FieldRef<"Users", 'String'>
   readonly staffId: Prisma.FieldRef<"Users", 'Int'>
+  readonly role: Prisma.FieldRef<"Users", 'String'>
 }
     
 

@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 interface JwtPayload {
   id: number;
   username: string;
-  roleId: number;
+  role: string;
   // tambahkan field lain sesuai kebutuhan payload Anda
 }
 

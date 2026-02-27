@@ -49,12 +49,13 @@ export const loginUser = async (
       staffPictUrl = await getPresignedUrl(user.staffPict);
     }
 
-    // Generate JWT token
+    // Generate JWT token with tokenVersion for session invalidation
     const token = jwt.sign(
       {
         id: user.userId,
         username: user.username,
-        role: user.roleName,
+        role: user.role,
+        tokenVersion: user.tokenVersion || 0,
       },
       process.env.JWT_SECRET || "your-secret-key",
       { expiresIn: "365d" }
@@ -67,7 +68,7 @@ export const loginUser = async (
         username: user.username,
         staffName: user.staffName,
         email: user.email,
-        roleName: user.roleName,
+        role: user.role,
         staffPict: staffPictUrl,
       },
       token,
@@ -156,12 +157,14 @@ export const changeCredentials = async (
       staffPictUrl = await getPresignedUrl(updatedUser.staffPict);
     }
 
-    // Generate new JWT token with updated username
+    // Generate new JWT token with updated username and new tokenVersion
+    const newTokenVersion = (updatedUser as any).tokenVersion ?? 0;
     const token = jwt.sign(
       {
         id: updatedUser.userId,
         username: updatedUser.username,
-        role: updatedUser.roleName,
+        role: updatedUser.role,
+        tokenVersion: newTokenVersion,
       },
       process.env.JWT_SECRET || "your-secret-key",
       { expiresIn: "365d" }
@@ -174,7 +177,7 @@ export const changeCredentials = async (
         username: updatedUser.username,
         staffName: updatedUser.staffName,
         email: updatedUser.email,
-        roleName: updatedUser.roleName,
+        role: updatedUser.role,
         staffPict: staffPictUrl,
       },
       token,

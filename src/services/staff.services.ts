@@ -1,46 +1,37 @@
 import { Staffs, Prisma } from "../generated/prisma/client";
 import { prisma } from "../utils/prisma/prisma";
 
-type StaffWithRole = Staffs & {
-  roles: { roleName: string } | null;
-};
-
 // ============================================================================
 // SELECT QUERIES
 // ============================================================================
 
 /**
- * Select all staff with role
+ * Select all staff
  */
 export const selectAllStaffWithRole = async () => {
   try {
     const staffs = await prisma.staffs.findMany({
-      include: { roles: { select: { roleName: true } } },
       orderBy: { id: "asc" },
     });
 
-    return staffs.map((staff: StaffWithRole) => ({
-      ...staff,
-      roleName: staff.roles?.roleName,
-    }));
+    return staffs;
   } catch (error) {
     throw error;
   }
 };
 
 /**
- * Select staff by ID with role
+ * Select staff by ID
  */
 export const selectStaffByIdWithRole = async (id: number) => {
   try {
     const staff = await prisma.staffs.findUnique({
       where: { id },
-      include: { roles: { select: { roleName: true } } },
     });
 
     if (!staff) return null;
 
-    return { ...staff, roleName: staff.roles?.roleName };
+    return staff;
   } catch (error) {
     throw error;
   }

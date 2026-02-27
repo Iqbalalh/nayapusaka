@@ -56,7 +56,6 @@ export const ModelName = {
   Homes: 'Homes',
   Partners: 'Partners',
   Regions: 'Regions',
-  Roles: 'Roles',
   Staffs: 'Staffs',
   Umkm: 'Umkm',
   Users: 'Users',
@@ -191,14 +190,6 @@ export const RegionsScalarFieldEnum = {
 export type RegionsScalarFieldEnum = (typeof RegionsScalarFieldEnum)[keyof typeof RegionsScalarFieldEnum]
 
 
-export const RolesScalarFieldEnum = {
-  id: 'id',
-  roleName: 'roleName'
-} as const
-
-export type RolesScalarFieldEnum = (typeof RolesScalarFieldEnum)[keyof typeof RolesScalarFieldEnum]
-
-
 export const StaffsScalarFieldEnum = {
   id: 'id',
   staffName: 'staffName',
@@ -209,7 +200,6 @@ export const StaffsScalarFieldEnum = {
   phoneNumber: 'phoneNumber',
   email: 'email',
   nik: 'nik',
-  roleId: 'roleId',
   position: 'position',
   staffPict: 'staffPict',
   createdAt: 'createdAt',
@@ -255,7 +245,8 @@ export const UsersScalarFieldEnum = {
   userId: 'userId',
   username: 'username',
   password: 'password',
-  staffId: 'staffId'
+  staffId: 'staffId',
+  role: 'role'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]

@@ -305,6 +305,33 @@ export const selectChildAssistanceStats = async () => {
   };
 
 /**
+ * Select distinct years from child assistance records
+ * Returns years in descending order (newest first)
+ */
+export const selectChildAssistanceYears = async (): Promise<number[]> => {
+  try {
+    const records = await prisma.childAssistance.findMany({
+      select: {
+        assistanceDate: true,
+      },
+    });
+
+    // Extract unique years
+    const years = new Set<number>();
+    records.forEach((record) => {
+      if (record.assistanceDate) {
+        years.add(new Date(record.assistanceDate).getFullYear());
+      }
+    });
+
+    // Return sorted in descending order (newest first)
+    return Array.from(years).sort((a, b) => b - a);
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
+/**
  * Select all child assistance records (optimized - only essential fields)
  * This is optimized for table views and exports, avoiding nested relationships
  * @param skip - Number of records to skip (for pagination)

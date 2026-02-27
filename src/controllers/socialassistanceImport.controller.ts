@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Request, Response, NextFunction } from "express";
-import * as XLSX from "xlsx";
+import * as XLSX from "xlsx-js-style";
 import {
   bulkInsertSocialAssistance,
   validateImportData,

@@ -7,6 +7,7 @@ import {
   getChildAssistance,
   getChildAssistanceById,
   getChildAssistanceOptimized,
+  getChildAssistanceYears,
   patchChildAssistance,
   postChildAssistance,
 } from "../controllers/childassistance.controller";
@@ -21,6 +22,7 @@ childAssistanceRouter.use(verifyToken);
 // ===========================
 childAssistanceRouter.get("/", getChildAssistance);
 childAssistanceRouter.get("/optimized", getChildAssistanceOptimized);
+childAssistanceRouter.get("/years", getChildAssistanceYears);
 childAssistanceRouter.get("/:id", getChildAssistanceById);
 
 // CREATE (POST + multiple documents)

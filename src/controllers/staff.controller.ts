@@ -108,15 +108,14 @@ export const postStaff = async (
       phoneNumber,
       email,
       nik,
-      roleId,
       position,
     } = req.body;
 
     // Validate required fields
-    if (!staffName || !gender || !nik || !roleId) {
+    if (!staffName || !gender || !nik) {
       return res.status(400).json({
         message: "Missing required fields",
-        error: "staffName, gender, nik, and roleId are required",
+        error: "staffName, gender, and nik are required",
       });
     }
 
@@ -124,7 +123,6 @@ export const postStaff = async (
       staffName,
       gender,
       nik,
-      roleId: Number(roleId),
       birthplace: birthplace || null,
       birthdate: birthdate ? new Date(birthdate) : null,
       address: address || null,
@@ -176,7 +174,7 @@ export const postStaff = async (
         message: "Error: Duplicate entry or invalid reference.",
         error: err.code === "P2002"
           ? "NIK or Email already exists."
-          : "The role specified does not exist.",
+          : "Invalid reference.",
       });
     }
 
@@ -215,7 +213,6 @@ export const patchStaff = async (
       phoneNumber,
       email,
       nik,
-      roleId,
       position,
     } = req.body;
 
@@ -228,7 +225,6 @@ export const patchStaff = async (
     if (phoneNumber !== undefined) updateData.phoneNumber = phoneNumber;
     if (email !== undefined) updateData.email = email;
     if (nik !== undefined) updateData.nik = nik;
-    if (roleId !== undefined) updateData.roleId = Number(roleId);
     if (position !== undefined) updateData.position = position;
     updateData.editedBy = userId;
 
