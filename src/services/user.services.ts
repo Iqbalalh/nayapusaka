@@ -23,6 +23,7 @@ export const selectAllUsers = async () => {
       role: user.role,
       staffName: user.staffs?.staffName,
       staffPict: user.staffs?.staffPict,
+      staffPosition: user.staffs?.position,
       email: user.staffs?.email,
     }));
   } catch (error) {

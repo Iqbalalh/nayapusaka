@@ -404,7 +404,10 @@ export const ModelName = {
   Category: 'Category',
   Gallery: 'Gallery',
   GalleryCategory: 'GalleryCategory',
-  SocialAssistance: 'SocialAssistance'
+  SocialAssistance: 'SocialAssistance',
+  Letter: 'Letter',
+  LetterTemplate: 'LetterTemplate',
+  LetterDocs: 'LetterDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -420,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "letter" | "letterTemplate" | "letterDocs"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1978,6 +1981,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Letter: {
+      payload: Prisma.$LetterPayload<ExtArgs>
+      fields: Prisma.LetterFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LetterFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LetterFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>
+        }
+        findFirst: {
+          args: Prisma.LetterFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LetterFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>
+        }
+        findMany: {
+          args: Prisma.LetterFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>[]
+        }
+        create: {
+          args: Prisma.LetterCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>
+        }
+        createMany: {
+          args: Prisma.LetterCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LetterCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>[]
+        }
+        delete: {
+          args: Prisma.LetterDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>
+        }
+        update: {
+          args: Prisma.LetterUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>
+        }
+        deleteMany: {
+          args: Prisma.LetterDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LetterUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LetterUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>[]
+        }
+        upsert: {
+          args: Prisma.LetterUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterPayload>
+        }
+        aggregate: {
+          args: Prisma.LetterAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLetter>
+        }
+        groupBy: {
+          args: Prisma.LetterGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LetterCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterCountAggregateOutputType> | number
+        }
+      }
+    }
+    LetterTemplate: {
+      payload: Prisma.$LetterTemplatePayload<ExtArgs>
+      fields: Prisma.LetterTemplateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LetterTemplateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LetterTemplateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>
+        }
+        findFirst: {
+          args: Prisma.LetterTemplateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LetterTemplateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>
+        }
+        findMany: {
+          args: Prisma.LetterTemplateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>[]
+        }
+        create: {
+          args: Prisma.LetterTemplateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>
+        }
+        createMany: {
+          args: Prisma.LetterTemplateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LetterTemplateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>[]
+        }
+        delete: {
+          args: Prisma.LetterTemplateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>
+        }
+        update: {
+          args: Prisma.LetterTemplateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>
+        }
+        deleteMany: {
+          args: Prisma.LetterTemplateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LetterTemplateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LetterTemplateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>[]
+        }
+        upsert: {
+          args: Prisma.LetterTemplateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTemplatePayload>
+        }
+        aggregate: {
+          args: Prisma.LetterTemplateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLetterTemplate>
+        }
+        groupBy: {
+          args: Prisma.LetterTemplateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterTemplateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LetterTemplateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterTemplateCountAggregateOutputType> | number
+        }
+      }
+    }
+    LetterDocs: {
+      payload: Prisma.$LetterDocsPayload<ExtArgs>
+      fields: Prisma.LetterDocsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LetterDocsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LetterDocsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>
+        }
+        findFirst: {
+          args: Prisma.LetterDocsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LetterDocsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>
+        }
+        findMany: {
+          args: Prisma.LetterDocsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>[]
+        }
+        create: {
+          args: Prisma.LetterDocsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>
+        }
+        createMany: {
+          args: Prisma.LetterDocsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LetterDocsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>[]
+        }
+        delete: {
+          args: Prisma.LetterDocsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>
+        }
+        update: {
+          args: Prisma.LetterDocsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>
+        }
+        deleteMany: {
+          args: Prisma.LetterDocsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LetterDocsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LetterDocsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>[]
+        }
+        upsert: {
+          args: Prisma.LetterDocsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterDocsPayload>
+        }
+        aggregate: {
+          args: Prisma.LetterDocsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLetterDocs>
+        }
+        groupBy: {
+          args: Prisma.LetterDocsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterDocsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LetterDocsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterDocsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2129,6 +2354,7 @@ export const StaffsScalarFieldEnum = {
   nik: 'nik',
   position: 'position',
   staffPict: 'staffPict',
+  signaturePath: 'signaturePath',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -2173,7 +2399,8 @@ export const UsersScalarFieldEnum = {
   username: 'username',
   password: 'password',
   staffId: 'staffId',
-  role: 'role'
+  role: 'role',
+  tokenVersion: 'tokenVersion'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -2388,12 +2615,79 @@ export const SocialAssistanceScalarFieldEnum = {
 export type SocialAssistanceScalarFieldEnum = (typeof SocialAssistanceScalarFieldEnum)[keyof typeof SocialAssistanceScalarFieldEnum]
 
 
+export const LetterScalarFieldEnum = {
+  id: 'id',
+  letterType: 'letterType',
+  letterNumber: 'letterNumber',
+  attachments: 'attachments',
+  subject: 'subject',
+  createdAt: 'createdAt',
+  destination: 'destination',
+  tembusan: 'tembusan',
+  content: 'content',
+  status: 'status',
+  templateId: 'templateId',
+  signer1Id: 'signer1Id',
+  signer2Id: 'signer2Id',
+  signer3Id: 'signer3Id',
+  approved1At: 'approved1At',
+  approved2At: 'approved2At',
+  approved3At: 'approved3At',
+  rejectedById: 'rejectedById',
+  rejectedAt: 'rejectedAt',
+  rejectionReason: 'rejectionReason',
+  generatedDocPath: 'generatedDocPath',
+  verificationHash: 'verificationHash',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LetterScalarFieldEnum = (typeof LetterScalarFieldEnum)[keyof typeof LetterScalarFieldEnum]
+
+
+export const LetterTemplateScalarFieldEnum = {
+  id: 'id',
+  letterType: 'letterType',
+  templateName: 'templateName',
+  s3Path: 's3Path',
+  version: 'version',
+  isActive: 'isActive',
+  variables: 'variables',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  editedBy: 'editedBy'
+} as const
+
+export type LetterTemplateScalarFieldEnum = (typeof LetterTemplateScalarFieldEnum)[keyof typeof LetterTemplateScalarFieldEnum]
+
+
+export const LetterDocsScalarFieldEnum = {
+  id: 'id',
+  letterId: 'letterId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type LetterDocsScalarFieldEnum = (typeof LetterDocsScalarFieldEnum)[keyof typeof LetterDocsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -2410,6 +2704,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2492,6 +2795,48 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LetterType'
+ */
+export type EnumLetterTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LetterType'>
+    
+
+
+/**
+ * Reference to a field of type 'LetterType[]'
+ */
+export type ListEnumLetterTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LetterType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'LetterStatus'
+ */
+export type EnumLetterStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LetterStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'LetterStatus[]'
+ */
+export type ListEnumLetterStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LetterStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 /**
@@ -2610,6 +2955,9 @@ export type GlobalOmitConfig = {
   gallery?: Prisma.GalleryOmit
   galleryCategory?: Prisma.GalleryCategoryOmit
   socialAssistance?: Prisma.SocialAssistanceOmit
+  letter?: Prisma.LetterOmit
+  letterTemplate?: Prisma.LetterTemplateOmit
+  letterDocs?: Prisma.LetterDocsOmit
 }
 
 /* Types for Logging */

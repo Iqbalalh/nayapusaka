@@ -4,6 +4,7 @@ import {
   DeleteObjectCommand,
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
+import { Readable } from "stream";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import path from "path";
 
@@ -122,6 +123,44 @@ export const getPresignedUrl = async (
   });
 
   return await getSignedUrl(s3(), command, { expiresIn: 3600 }); // 1 jam
+};
+
+// =============================
+// Download from S3
+// =============================
+export const downloadFromS3 = async (
+  key: string | null | undefined
+): Promise<Buffer | null> => {
+  if (!key) return null;
+
+  try {
+    const command = new GetObjectCommand({
+      Bucket: getBucketName(),
+      Key: key,
+    });
+
+    const response = await s3().send(command);
+
+    // Convert stream to buffer
+    if (response.Body instanceof Readable) {
+      const chunks: Buffer[] = [];
+      for await (const chunk of response.Body) {
+        chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+      }
+      return Buffer.concat(chunks);
+    }
+
+    // Handle case where body is already a buffer or other type
+    if (Buffer.isBuffer(response.Body)) {
+      return response.Body;
+    }
+
+    return null;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error("Error downloading file from S3:", error);
+    return null;
+  }
 };
 
 // =============================

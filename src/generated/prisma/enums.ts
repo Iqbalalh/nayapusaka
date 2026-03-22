@@ -15,3 +15,27 @@ export const Gender = {
 } as const
 
 export type Gender = (typeof Gender)[keyof typeof Gender]
+
+
+export const LetterStatus = {
+  DRAFT: 'DRAFT',
+  PENDING_1: 'PENDING_1',
+  PENDING_2: 'PENDING_2',
+  PENDING_3: 'PENDING_3',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type LetterStatus = (typeof LetterStatus)[keyof typeof LetterStatus]
+
+
+export const LetterType = {
+  BANTUAN_PENDIDIKAN: 'BANTUAN_PENDIDIKAN',
+  BANTUAN_SOSIAL: 'BANTUAN_SOSIAL',
+  SURAT_UNDANGAN: 'SURAT_UNDANGAN',
+  SURAT_PERMOHONAN: 'SURAT_PERMOHONAN',
+  SURAT_KEPUTUSAN: 'SURAT_KEPUTUSAN'
+} as const
+
+export type LetterType = (typeof LetterType)[keyof typeof LetterType]

@@ -222,3 +222,34 @@ export const deleteUserCtrl = async (
     next(err);
   }
 };
+
+// ============================================================================
+// GET SIGNERS (Users available for letter signing)
+// ============================================================================
+export const getSigners = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const users = await selectAllUsers();
+
+    // Transform users to only include necessary fields for signer selection
+    // The selectAllUsers returns flattened object with: userId, username, staffId, staffName, staffPosition
+    const signers = users.map((user) => ({
+      id: user.userId,
+      username: user.username,
+      staffId: user.staffId,
+      staffName: user.staffName,
+      staffPosition: user.staffPosition,
+      role: user.role,
+    }));
+
+    return res.json({
+      message: "Signers retrieved successfully",
+      data: signers,
+    });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -71,7 +71,10 @@ export const ModelName = {
   Category: 'Category',
   Gallery: 'Gallery',
   GalleryCategory: 'GalleryCategory',
-  SocialAssistance: 'SocialAssistance'
+  SocialAssistance: 'SocialAssistance',
+  Letter: 'Letter',
+  LetterTemplate: 'LetterTemplate',
+  LetterDocs: 'LetterDocs'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -202,6 +205,7 @@ export const StaffsScalarFieldEnum = {
   nik: 'nik',
   position: 'position',
   staffPict: 'staffPict',
+  signaturePath: 'signaturePath',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -246,7 +250,8 @@ export const UsersScalarFieldEnum = {
   username: 'username',
   password: 'password',
   staffId: 'staffId',
-  role: 'role'
+  role: 'role',
+  tokenVersion: 'tokenVersion'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
@@ -461,12 +466,79 @@ export const SocialAssistanceScalarFieldEnum = {
 export type SocialAssistanceScalarFieldEnum = (typeof SocialAssistanceScalarFieldEnum)[keyof typeof SocialAssistanceScalarFieldEnum]
 
 
+export const LetterScalarFieldEnum = {
+  id: 'id',
+  letterType: 'letterType',
+  letterNumber: 'letterNumber',
+  attachments: 'attachments',
+  subject: 'subject',
+  createdAt: 'createdAt',
+  destination: 'destination',
+  tembusan: 'tembusan',
+  content: 'content',
+  status: 'status',
+  templateId: 'templateId',
+  signer1Id: 'signer1Id',
+  signer2Id: 'signer2Id',
+  signer3Id: 'signer3Id',
+  approved1At: 'approved1At',
+  approved2At: 'approved2At',
+  approved3At: 'approved3At',
+  rejectedById: 'rejectedById',
+  rejectedAt: 'rejectedAt',
+  rejectionReason: 'rejectionReason',
+  generatedDocPath: 'generatedDocPath',
+  verificationHash: 'verificationHash',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LetterScalarFieldEnum = (typeof LetterScalarFieldEnum)[keyof typeof LetterScalarFieldEnum]
+
+
+export const LetterTemplateScalarFieldEnum = {
+  id: 'id',
+  letterType: 'letterType',
+  templateName: 'templateName',
+  s3Path: 's3Path',
+  version: 'version',
+  isActive: 'isActive',
+  variables: 'variables',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  editedBy: 'editedBy'
+} as const
+
+export type LetterTemplateScalarFieldEnum = (typeof LetterTemplateScalarFieldEnum)[keyof typeof LetterTemplateScalarFieldEnum]
+
+
+export const LetterDocsScalarFieldEnum = {
+  id: 'id',
+  letterId: 'letterId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type LetterDocsScalarFieldEnum = (typeof LetterDocsScalarFieldEnum)[keyof typeof LetterDocsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -483,4 +555,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

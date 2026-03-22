@@ -50,6 +50,7 @@ export type StaffsMinAggregateOutputType = {
   nik: string | null
   position: string | null
   staffPict: string | null
+  signaturePath: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: number | null
@@ -68,6 +69,7 @@ export type StaffsMaxAggregateOutputType = {
   nik: string | null
   position: string | null
   staffPict: string | null
+  signaturePath: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: number | null
@@ -86,6 +88,7 @@ export type StaffsCountAggregateOutputType = {
   nik: number
   position: number
   staffPict: number
+  signaturePath: number
   createdAt: number
   updatedAt: number
   createdBy: number
@@ -118,6 +121,7 @@ export type StaffsMinAggregateInputType = {
   nik?: true
   position?: true
   staffPict?: true
+  signaturePath?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -136,6 +140,7 @@ export type StaffsMaxAggregateInputType = {
   nik?: true
   position?: true
   staffPict?: true
+  signaturePath?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -154,6 +159,7 @@ export type StaffsCountAggregateInputType = {
   nik?: true
   position?: true
   staffPict?: true
+  signaturePath?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -259,6 +265,7 @@ export type StaffsGroupByOutputType = {
   nik: string
   position: string | null
   staffPict: string | null
+  signaturePath: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: number | null
@@ -300,6 +307,7 @@ export type StaffsWhereInput = {
   nik?: Prisma.StringFilter<"Staffs"> | string
   position?: Prisma.StringNullableFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
+  signaturePath?: Prisma.StringNullableFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   createdBy?: Prisma.IntNullableFilter<"Staffs"> | number | null
@@ -319,6 +327,7 @@ export type StaffsOrderByWithRelationInput = {
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   staffPict?: Prisma.SortOrderInput | Prisma.SortOrder
+  signaturePath?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -341,6 +350,7 @@ export type StaffsWhereUniqueInput = Prisma.AtLeast<{
   phoneNumber?: Prisma.StringNullableFilter<"Staffs"> | string | null
   position?: Prisma.StringNullableFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
+  signaturePath?: Prisma.StringNullableFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Staffs"> | Date | string | null
   createdBy?: Prisma.IntNullableFilter<"Staffs"> | number | null
@@ -360,6 +370,7 @@ export type StaffsOrderByWithAggregationInput = {
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
   staffPict?: Prisma.SortOrderInput | Prisma.SortOrder
+  signaturePath?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -386,6 +397,7 @@ export type StaffsScalarWhereWithAggregatesInput = {
   nik?: Prisma.StringWithAggregatesFilter<"Staffs"> | string
   position?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   staffPict?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
+  signaturePath?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   createdAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Staffs"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Staffs"> | Date | string | null
   createdBy?: Prisma.IntNullableWithAggregatesFilter<"Staffs"> | number | null
@@ -403,6 +415,7 @@ export type StaffsCreateInput = {
   nik: string
   position?: string | null
   staffPict?: string | null
+  signaturePath?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -422,6 +435,7 @@ export type StaffsUncheckedCreateInput = {
   nik: string
   position?: string | null
   staffPict?: string | null
+  signaturePath?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -440,6 +454,7 @@ export type StaffsUpdateInput = {
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -459,6 +474,7 @@ export type StaffsUncheckedUpdateInput = {
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -478,6 +494,7 @@ export type StaffsCreateManyInput = {
   nik: string
   position?: string | null
   staffPict?: string | null
+  signaturePath?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -495,6 +512,7 @@ export type StaffsUpdateManyMutationInput = {
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -513,6 +531,7 @@ export type StaffsUncheckedUpdateManyInput = {
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -531,6 +550,7 @@ export type StaffsCountOrderByAggregateInput = {
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
+  signaturePath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -555,6 +575,7 @@ export type StaffsMaxOrderByAggregateInput = {
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
+  signaturePath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -573,6 +594,7 @@ export type StaffsMinOrderByAggregateInput = {
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
+  signaturePath?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -621,6 +643,7 @@ export type StaffsCreateWithoutUsersInput = {
   nik: string
   position?: string | null
   staffPict?: string | null
+  signaturePath?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -639,6 +662,7 @@ export type StaffsUncheckedCreateWithoutUsersInput = {
   nik: string
   position?: string | null
   staffPict?: string | null
+  signaturePath?: string | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -672,6 +696,7 @@ export type StaffsUpdateWithoutUsersInput = {
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -690,6 +715,7 @@ export type StaffsUncheckedUpdateWithoutUsersInput = {
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -739,6 +765,7 @@ export type StaffsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   nik?: boolean
   position?: boolean
   staffPict?: boolean
+  signaturePath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -759,6 +786,7 @@ export type StaffsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   nik?: boolean
   position?: boolean
   staffPict?: boolean
+  signaturePath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -777,6 +805,7 @@ export type StaffsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   nik?: boolean
   position?: boolean
   staffPict?: boolean
+  signaturePath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -795,13 +824,14 @@ export type StaffsSelectScalar = {
   nik?: boolean
   position?: boolean
   staffPict?: boolean
+  signaturePath?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
 }
 
-export type StaffsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffName" | "gender" | "birthplace" | "birthdate" | "address" | "phoneNumber" | "email" | "nik" | "position" | "staffPict" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["staffs"]>
+export type StaffsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffName" | "gender" | "birthplace" | "birthdate" | "address" | "phoneNumber" | "email" | "nik" | "position" | "staffPict" | "signaturePath" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["staffs"]>
 export type StaffsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Staffs$usersArgs<ExtArgs>
   _count?: boolean | Prisma.StaffsCountOutputTypeDefaultArgs<ExtArgs>
@@ -826,6 +856,7 @@ export type $StaffsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     nik: string
     position: string | null
     staffPict: string | null
+    signaturePath: string | null
     createdAt: Date | null
     updatedAt: Date | null
     createdBy: number | null
@@ -1265,6 +1296,7 @@ export interface StaffsFieldRefs {
   readonly nik: Prisma.FieldRef<"Staffs", 'String'>
   readonly position: Prisma.FieldRef<"Staffs", 'String'>
   readonly staffPict: Prisma.FieldRef<"Staffs", 'String'>
+  readonly signaturePath: Prisma.FieldRef<"Staffs", 'String'>
   readonly createdAt: Prisma.FieldRef<"Staffs", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Staffs", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Staffs", 'Int'>

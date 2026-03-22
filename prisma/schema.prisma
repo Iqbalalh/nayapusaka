@@ -13,6 +13,24 @@ enum Gender {
   F
 }
 
+enum LetterStatus {
+  DRAFT
+  PENDING_1
+  PENDING_2
+  PENDING_3
+  APPROVED
+  REJECTED
+  ARCHIVED
+}
+
+enum LetterType {
+  BANTUAN_PENDIDIKAN
+  BANTUAN_SOSIAL
+  SURAT_UNDANGAN
+  SURAT_PERMOHONAN
+  SURAT_KEPUTUSAN
+}
+
 model Children {
   id                Int       @id @default(autoincrement())
   homeId            Int?      @map("home_id")
@@ -144,21 +162,22 @@ model Regions {
 }
 
 model Staffs {
-  id          Int       @id @default(autoincrement())
-  staffName   String    @map("staff_name") @db.VarChar(100)
-  gender      Gender    @map("gender")
-  birthplace  String?   @db.VarChar(50)
-  birthdate   DateTime? @db.Date
-  address     String?   @db.VarChar(255)
-  phoneNumber String?   @map("phone_number") @db.VarChar(15)
-  email       String?   @unique @db.VarChar(100)
-  nik         String    @unique @db.VarChar(20)
-  position    String?   @db.VarChar(100)
-  staffPict   String?   @map("staff_pict") @db.VarChar(255)
-  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt   DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
-  createdBy   Int?      @map("created_by") @default(2)
-  editedBy    Int?      @map("edited_by")
+  id            Int       @id @default(autoincrement())
+  staffName     String    @map("staff_name") @db.VarChar(100)
+  gender        Gender    @map("gender")
+  birthplace    String?   @db.VarChar(50)
+  birthdate     DateTime? @db.Date
+  address       String?   @db.VarChar(255)
+  phoneNumber   String?   @map("phone_number") @db.VarChar(15)
+  email         String?   @unique @db.VarChar(100)
+  nik           String    @unique @db.VarChar(20)
+  position      String?   @db.VarChar(100)
+  staffPict     String?   @map("staff_pict") @db.VarChar(255)
+  signaturePath String?   @map("signature_path") @db.VarChar(255)
+  createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
+  createdBy     Int?      @map("created_by") @default(2)
+  editedBy      Int?      @map("edited_by")
 
   // Relations
   users Users[]
@@ -206,7 +225,7 @@ model Umkm {
 }
 
 model Users {
-  userId       Int    @default(autoincrement()) @map("user_id")
+  userId       Int    @default(autoincrement()) @unique @map("user_id")
   username     String @unique @db.VarChar(30)
   password     String @db.VarChar(255)
   staffId      Int?   @map("staff_id")
@@ -214,7 +233,13 @@ model Users {
   tokenVersion Int    @default(0) @map("token_version")
 
   // Relations
-  staffs Staffs? @relation(fields: [staffId], references: [id], map: "fk_users_staff")
+  staffs                    Staffs?         @relation(fields: [staffId], references: [id], map: "fk_users_staff")
+  letterSigner1             Letter[]        @relation("LetterSigner1")
+  letterSigner2             Letter[]        @relation("LetterSigner2")
+  letterSigner3             Letter[]        @relation("LetterSigner3")
+  letterRejectedBy          Letter[]        @relation("LetterRejectedBy")
+  letterTemplatesCreated    LetterTemplate[] @relation("LetterTemplateCreator")
+  letterTemplatesEdited     LetterTemplate[] @relation("LetterTemplateEditor")
 
   @@map("users")
 }
@@ -458,4 +483,93 @@ model SocialAssistance {
   editedBy          Int?      @map("edited_by")
 
   @@map("social_assistance")
+}
+
+model Letter {
+  id               Int          @id @default(autoincrement())
+  letterType       LetterType   @map("letter_type")
+  letterNumber     String?      @map("letter_number") @db.VarChar(50)
+  attachments      String?      @map("attachments") @db.Text
+  subject          String       @map("subject") @db.VarChar(255)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  destination      String       @map("destination") @db.Text
+  tembusan         String?      @map("tembusan") @db.Text
+  content          String?      @db.Text
+  status           LetterStatus @default(DRAFT) @map("status")
+
+  // Template reference
+  templateId       Int?         @map("template_id")
+
+  // Signer configuration
+  signer1Id        Int?         @map("signer1_id")
+  signer2Id        Int?         @map("signer2_id")
+  signer3Id        Int?         @map("signer3_id")
+
+  // Approval timestamps
+  approved1At      DateTime?    @map("approved1_at") @db.Timestamptz(6)
+  approved2At      DateTime?    @map("approved2_at") @db.Timestamptz(6)
+  approved3At      DateTime?    @map("approved3_at") @db.Timestamptz(6)
+
+  // QR Signature paths
+  signer1QrPath    String?      @map("signer1_qr_path") @db.VarChar(500)
+  signer2QrPath    String?      @map("signer2_qr_path") @db.VarChar(500)
+  signer3QrPath    String?      @map("signer3_qr_path") @db.VarChar(500)
+
+  // Rejection info
+  rejectedById     Int?         @map("rejected_by_id")
+  rejectedAt       DateTime?    @map("rejected_at") @db.Timestamptz(6)
+  rejectionReason  String?      @map("rejection_reason") @db.Text
+
+  // Generated document
+  generatedDocPath String?      @map("generated_doc_path") @db.VarChar(500)
+  verificationHash String?      @map("verification_hash") @db.VarChar(64)
+
+  // Metadata
+  createdBy        Int?         @map("created_by") @default(2)
+  editedBy         Int?         @map("edited_by")
+  updatedAt        DateTime     @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  // Relations
+  template         LetterTemplate? @relation(fields: [templateId], references: [id], onDelete: SetNull, onUpdate: NoAction)
+  signer1          Users?       @relation("LetterSigner1", fields: [signer1Id], references: [userId])
+  signer2          Users?       @relation("LetterSigner2", fields: [signer2Id], references: [userId])
+  signer3          Users?       @relation("LetterSigner3", fields: [signer3Id], references: [userId])
+  rejectedBy       Users?       @relation("LetterRejectedBy", fields: [rejectedById], references: [userId])
+  letterDocs       LetterDocs[]
+
+  @@map("letters")
+}
+
+model LetterTemplate {
+  id           Int         @id @default(autoincrement())
+  letterType   LetterType  @unique @map("letter_type")
+  templateName String      @map("template_name") @db.VarChar(255)
+  s3Path       String      @map("s3_path") @db.VarChar(500)
+  version      Int         @default(1) @map("version")
+  isActive     Boolean     @default(true) @map("is_active")
+  variables    Json?       @map("variables")
+  createdBy    Int         @map("created_by")
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime    @default(now()) @map("updated_at") @db.Timestamptz(6)
+  editedBy     Int?        @map("edited_by")
+
+  // Relations
+  creator      Users        @relation("LetterTemplateCreator", fields: [createdBy], references: [userId], onDelete: Cascade)
+  editor       Users?       @relation("LetterTemplateEditor", fields: [editedBy], references: [userId])
+  letters      Letter[]
+
+  @@map("letter_templates")
+}
+
+model LetterDocs {
+  id        Int      @id @default(autoincrement())
+  letterId  Int      @map("letter_id")
+  name      String   @map("name") @db.VarChar(255)
+  urlDoc    String   @map("url_doc") @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  // Relations
+  letter    Letter   @relation(fields: [letterId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("letter_docs")
 }

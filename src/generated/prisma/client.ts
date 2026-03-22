@@ -142,3 +142,18 @@ export type GalleryCategory = Prisma.GalleryCategoryModel
  * 
  */
 export type SocialAssistance = Prisma.SocialAssistanceModel
+/**
+ * Model Letter
+ * 
+ */
+export type Letter = Prisma.LetterModel
+/**
+ * Model LetterTemplate
+ * 
+ */
+export type LetterTemplate = Prisma.LetterTemplateModel
+/**
+ * Model LetterDocs
+ * 
+ */
+export type LetterDocs = Prisma.LetterDocsModel
