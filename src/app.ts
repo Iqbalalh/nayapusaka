@@ -20,7 +20,6 @@ import galleryRouter from "./routes/gallery.router";
 import socialAssistanceRouter from "./routes/socialassistance.router";
 import userRouter from "./routes/user.router";
 import letterRouter from "./routes/letter.router";
-import letterTemplateRouter from "./routes/letter-template.router";
 
 const app: Application = express();
 
@@ -104,7 +103,6 @@ app.use("/api/galleries", galleryRouter);
 app.use("/api/social-assistance", socialAssistanceRouter);
 app.use("/api/users", userRouter);
 app.use("/api/letters", letterRouter);
-app.use("/api/letter-templates", letterTemplateRouter);
 
 // ======================
 // Export App

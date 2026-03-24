@@ -28,130 +28,101 @@ export type AggregateLetter = {
 
 export type LetterAvgAggregateOutputType = {
   id: number | null
-  templateId: number | null
   signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
-  rejectedById: number | null
   createdBy: number | null
   editedBy: number | null
 }
 
 export type LetterSumAggregateOutputType = {
   id: number | null
-  templateId: number | null
   signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
-  rejectedById: number | null
   createdBy: number | null
   editedBy: number | null
 }
 
 export type LetterMinAggregateOutputType = {
   id: number | null
-  letterType: $Enums.LetterType | null
+  letterType: string | null
   letterNumber: string | null
-  attachments: string | null
+  attachment: string | null
   subject: string | null
-  createdAt: Date | null
+  letterDate: Date | null
   destination: string | null
-  tembusan: string | null
-  content: string | null
+  carbonCopy: string | null
+  documentPath: string | null
   status: $Enums.LetterStatus | null
-  templateId: number | null
   signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
-  approved1At: Date | null
-  approved2At: Date | null
-  approved3At: Date | null
-  rejectedById: number | null
-  rejectedAt: Date | null
-  rejectionReason: string | null
-  generatedDocPath: string | null
-  verificationHash: string | null
+  revisionNote: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   createdBy: number | null
   editedBy: number | null
-  updatedAt: Date | null
 }
 
 export type LetterMaxAggregateOutputType = {
   id: number | null
-  letterType: $Enums.LetterType | null
+  letterType: string | null
   letterNumber: string | null
-  attachments: string | null
+  attachment: string | null
   subject: string | null
-  createdAt: Date | null
+  letterDate: Date | null
   destination: string | null
-  tembusan: string | null
-  content: string | null
+  carbonCopy: string | null
+  documentPath: string | null
   status: $Enums.LetterStatus | null
-  templateId: number | null
   signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
-  approved1At: Date | null
-  approved2At: Date | null
-  approved3At: Date | null
-  rejectedById: number | null
-  rejectedAt: Date | null
-  rejectionReason: string | null
-  generatedDocPath: string | null
-  verificationHash: string | null
+  revisionNote: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
   createdBy: number | null
   editedBy: number | null
-  updatedAt: Date | null
 }
 
 export type LetterCountAggregateOutputType = {
   id: number
   letterType: number
   letterNumber: number
-  attachments: number
+  attachment: number
   subject: number
-  createdAt: number
+  letterDate: number
   destination: number
-  tembusan: number
-  content: number
+  carbonCopy: number
+  documentPath: number
   status: number
-  templateId: number
   signer1Id: number
   signer2Id: number
   signer3Id: number
-  approved1At: number
-  approved2At: number
-  approved3At: number
-  rejectedById: number
-  rejectedAt: number
-  rejectionReason: number
-  generatedDocPath: number
-  verificationHash: number
+  revisionNote: number
+  createdAt: number
+  updatedAt: number
   createdBy: number
   editedBy: number
-  updatedAt: number
   _all: number
 }
 
 
 export type LetterAvgAggregateInputType = {
   id?: true
-  templateId?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
-  rejectedById?: true
   createdBy?: true
   editedBy?: true
 }
 
 export type LetterSumAggregateInputType = {
   id?: true
-  templateId?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
-  rejectedById?: true
   createdBy?: true
   editedBy?: true
 }
@@ -160,84 +131,63 @@ export type LetterMinAggregateInputType = {
   id?: true
   letterType?: true
   letterNumber?: true
-  attachments?: true
+  attachment?: true
   subject?: true
-  createdAt?: true
+  letterDate?: true
   destination?: true
-  tembusan?: true
-  content?: true
+  carbonCopy?: true
+  documentPath?: true
   status?: true
-  templateId?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
-  approved1At?: true
-  approved2At?: true
-  approved3At?: true
-  rejectedById?: true
-  rejectedAt?: true
-  rejectionReason?: true
-  generatedDocPath?: true
-  verificationHash?: true
+  revisionNote?: true
+  createdAt?: true
+  updatedAt?: true
   createdBy?: true
   editedBy?: true
-  updatedAt?: true
 }
 
 export type LetterMaxAggregateInputType = {
   id?: true
   letterType?: true
   letterNumber?: true
-  attachments?: true
+  attachment?: true
   subject?: true
-  createdAt?: true
+  letterDate?: true
   destination?: true
-  tembusan?: true
-  content?: true
+  carbonCopy?: true
+  documentPath?: true
   status?: true
-  templateId?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
-  approved1At?: true
-  approved2At?: true
-  approved3At?: true
-  rejectedById?: true
-  rejectedAt?: true
-  rejectionReason?: true
-  generatedDocPath?: true
-  verificationHash?: true
+  revisionNote?: true
+  createdAt?: true
+  updatedAt?: true
   createdBy?: true
   editedBy?: true
-  updatedAt?: true
 }
 
 export type LetterCountAggregateInputType = {
   id?: true
   letterType?: true
   letterNumber?: true
-  attachments?: true
+  attachment?: true
   subject?: true
-  createdAt?: true
+  letterDate?: true
   destination?: true
-  tembusan?: true
-  content?: true
+  carbonCopy?: true
+  documentPath?: true
   status?: true
-  templateId?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
-  approved1At?: true
-  approved2At?: true
-  approved3At?: true
-  rejectedById?: true
-  rejectedAt?: true
-  rejectionReason?: true
-  generatedDocPath?: true
-  verificationHash?: true
+  revisionNote?: true
+  createdAt?: true
+  updatedAt?: true
   createdBy?: true
   editedBy?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -329,30 +279,23 @@ export type LetterGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type LetterGroupByOutputType = {
   id: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber: string | null
-  attachments: string | null
+  attachment: string | null
   subject: string
-  createdAt: Date
+  letterDate: Date
   destination: string
-  tembusan: string | null
-  content: string | null
+  carbonCopy: string | null
+  documentPath: string | null
   status: $Enums.LetterStatus
-  templateId: number | null
-  signer1Id: number | null
+  signer1Id: number
   signer2Id: number | null
   signer3Id: number | null
-  approved1At: Date | null
-  approved2At: Date | null
-  approved3At: Date | null
-  rejectedById: number | null
-  rejectedAt: Date | null
-  rejectionReason: string | null
-  generatedDocPath: string | null
-  verificationHash: string | null
+  revisionNote: string | null
+  createdAt: Date
+  updatedAt: Date
   createdBy: number | null
   editedBy: number | null
-  updatedAt: Date
   _count: LetterCountAggregateOutputType | null
   _avg: LetterAvgAggregateOutputType | null
   _sum: LetterSumAggregateOutputType | null
@@ -380,70 +323,52 @@ export type LetterWhereInput = {
   OR?: Prisma.LetterWhereInput[]
   NOT?: Prisma.LetterWhereInput | Prisma.LetterWhereInput[]
   id?: Prisma.IntFilter<"Letter"> | number
-  letterType?: Prisma.EnumLetterTypeFilter<"Letter"> | $Enums.LetterType
+  letterType?: Prisma.StringFilter<"Letter"> | string
   letterNumber?: Prisma.StringNullableFilter<"Letter"> | string | null
-  attachments?: Prisma.StringNullableFilter<"Letter"> | string | null
+  attachment?: Prisma.StringNullableFilter<"Letter"> | string | null
   subject?: Prisma.StringFilter<"Letter"> | string
-  createdAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
+  letterDate?: Prisma.DateTimeFilter<"Letter"> | Date | string
   destination?: Prisma.StringFilter<"Letter"> | string
-  tembusan?: Prisma.StringNullableFilter<"Letter"> | string | null
-  content?: Prisma.StringNullableFilter<"Letter"> | string | null
+  carbonCopy?: Prisma.StringNullableFilter<"Letter"> | string | null
+  documentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusFilter<"Letter"> | $Enums.LetterStatus
-  templateId?: Prisma.IntNullableFilter<"Letter"> | number | null
-  signer1Id?: Prisma.IntNullableFilter<"Letter"> | number | null
+  signer1Id?: Prisma.IntFilter<"Letter"> | number
   signer2Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableFilter<"Letter"> | number | null
-  approved1At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  approved2At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  approved3At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  rejectedById?: Prisma.IntNullableFilter<"Letter"> | number | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  rejectionReason?: Prisma.StringNullableFilter<"Letter"> | string | null
-  generatedDocPath?: Prisma.StringNullableFilter<"Letter"> | string | null
-  verificationHash?: Prisma.StringNullableFilter<"Letter"> | string | null
+  revisionNote?: Prisma.StringNullableFilter<"Letter"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Letter"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Letter"> | number | null
-  updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
-  template?: Prisma.XOR<Prisma.LetterTemplateNullableScalarRelationFilter, Prisma.LetterTemplateWhereInput> | null
-  signer1?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
+  signer1?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   signer2?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   signer3?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
-  rejectedBy?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
-  letterDocs?: Prisma.LetterDocsListRelationFilter
+  letterApprovals?: Prisma.LetterApprovalListRelationFilter
 }
 
 export type LetterOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   letterType?: Prisma.SortOrder
   letterNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  attachments?: Prisma.SortOrderInput | Prisma.SortOrder
+  attachment?: Prisma.SortOrderInput | Prisma.SortOrder
   subject?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  letterDate?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  tembusan?: Prisma.SortOrderInput | Prisma.SortOrder
-  content?: Prisma.SortOrderInput | Prisma.SortOrder
+  carbonCopy?: Prisma.SortOrderInput | Prisma.SortOrder
+  documentPath?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  templateId?: Prisma.SortOrderInput | Prisma.SortOrder
-  signer1Id?: Prisma.SortOrderInput | Prisma.SortOrder
+  signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   signer3Id?: Prisma.SortOrderInput | Prisma.SortOrder
-  approved1At?: Prisma.SortOrderInput | Prisma.SortOrder
-  approved2At?: Prisma.SortOrderInput | Prisma.SortOrder
-  approved3At?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  generatedDocPath?: Prisma.SortOrderInput | Prisma.SortOrder
-  verificationHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  revisionNote?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
-  template?: Prisma.LetterTemplateOrderByWithRelationInput
   signer1?: Prisma.UsersOrderByWithRelationInput
   signer2?: Prisma.UsersOrderByWithRelationInput
   signer3?: Prisma.UsersOrderByWithRelationInput
-  rejectedBy?: Prisma.UsersOrderByWithRelationInput
-  letterDocs?: Prisma.LetterDocsOrderByRelationAggregateInput
+  letterApprovals?: Prisma.LetterApprovalOrderByRelationAggregateInput
 }
 
 export type LetterWhereUniqueInput = Prisma.AtLeast<{
@@ -451,64 +376,48 @@ export type LetterWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.LetterWhereInput | Prisma.LetterWhereInput[]
   OR?: Prisma.LetterWhereInput[]
   NOT?: Prisma.LetterWhereInput | Prisma.LetterWhereInput[]
-  letterType?: Prisma.EnumLetterTypeFilter<"Letter"> | $Enums.LetterType
+  letterType?: Prisma.StringFilter<"Letter"> | string
   letterNumber?: Prisma.StringNullableFilter<"Letter"> | string | null
-  attachments?: Prisma.StringNullableFilter<"Letter"> | string | null
+  attachment?: Prisma.StringNullableFilter<"Letter"> | string | null
   subject?: Prisma.StringFilter<"Letter"> | string
-  createdAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
+  letterDate?: Prisma.DateTimeFilter<"Letter"> | Date | string
   destination?: Prisma.StringFilter<"Letter"> | string
-  tembusan?: Prisma.StringNullableFilter<"Letter"> | string | null
-  content?: Prisma.StringNullableFilter<"Letter"> | string | null
+  carbonCopy?: Prisma.StringNullableFilter<"Letter"> | string | null
+  documentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusFilter<"Letter"> | $Enums.LetterStatus
-  templateId?: Prisma.IntNullableFilter<"Letter"> | number | null
-  signer1Id?: Prisma.IntNullableFilter<"Letter"> | number | null
+  signer1Id?: Prisma.IntFilter<"Letter"> | number
   signer2Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableFilter<"Letter"> | number | null
-  approved1At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  approved2At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  approved3At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  rejectedById?: Prisma.IntNullableFilter<"Letter"> | number | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  rejectionReason?: Prisma.StringNullableFilter<"Letter"> | string | null
-  generatedDocPath?: Prisma.StringNullableFilter<"Letter"> | string | null
-  verificationHash?: Prisma.StringNullableFilter<"Letter"> | string | null
+  revisionNote?: Prisma.StringNullableFilter<"Letter"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Letter"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Letter"> | number | null
-  updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
-  template?: Prisma.XOR<Prisma.LetterTemplateNullableScalarRelationFilter, Prisma.LetterTemplateWhereInput> | null
-  signer1?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
+  signer1?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
   signer2?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   signer3?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
-  rejectedBy?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
-  letterDocs?: Prisma.LetterDocsListRelationFilter
+  letterApprovals?: Prisma.LetterApprovalListRelationFilter
 }, "id">
 
 export type LetterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   letterType?: Prisma.SortOrder
   letterNumber?: Prisma.SortOrderInput | Prisma.SortOrder
-  attachments?: Prisma.SortOrderInput | Prisma.SortOrder
+  attachment?: Prisma.SortOrderInput | Prisma.SortOrder
   subject?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  letterDate?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  tembusan?: Prisma.SortOrderInput | Prisma.SortOrder
-  content?: Prisma.SortOrderInput | Prisma.SortOrder
+  carbonCopy?: Prisma.SortOrderInput | Prisma.SortOrder
+  documentPath?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  templateId?: Prisma.SortOrderInput | Prisma.SortOrder
-  signer1Id?: Prisma.SortOrderInput | Prisma.SortOrder
+  signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   signer3Id?: Prisma.SortOrderInput | Prisma.SortOrder
-  approved1At?: Prisma.SortOrderInput | Prisma.SortOrder
-  approved2At?: Prisma.SortOrderInput | Prisma.SortOrder
-  approved3At?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedById?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrderInput | Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrderInput | Prisma.SortOrder
-  generatedDocPath?: Prisma.SortOrderInput | Prisma.SortOrder
-  verificationHash?: Prisma.SortOrderInput | Prisma.SortOrder
+  revisionNote?: Prisma.SortOrderInput | Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.LetterCountOrderByAggregateInput
   _avg?: Prisma.LetterAvgOrderByAggregateInput
   _max?: Prisma.LetterMaxOrderByAggregateInput
@@ -521,222 +430,168 @@ export type LetterScalarWhereWithAggregatesInput = {
   OR?: Prisma.LetterScalarWhereWithAggregatesInput[]
   NOT?: Prisma.LetterScalarWhereWithAggregatesInput | Prisma.LetterScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Letter"> | number
-  letterType?: Prisma.EnumLetterTypeWithAggregatesFilter<"Letter"> | $Enums.LetterType
+  letterType?: Prisma.StringWithAggregatesFilter<"Letter"> | string
   letterNumber?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
-  attachments?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
+  attachment?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
   subject?: Prisma.StringWithAggregatesFilter<"Letter"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Letter"> | Date | string
+  letterDate?: Prisma.DateTimeWithAggregatesFilter<"Letter"> | Date | string
   destination?: Prisma.StringWithAggregatesFilter<"Letter"> | string
-  tembusan?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
-  content?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
+  carbonCopy?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
+  documentPath?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusWithAggregatesFilter<"Letter"> | $Enums.LetterStatus
-  templateId?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
-  signer1Id?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
+  signer1Id?: Prisma.IntWithAggregatesFilter<"Letter"> | number
   signer2Id?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
-  approved1At?: Prisma.DateTimeNullableWithAggregatesFilter<"Letter"> | Date | string | null
-  approved2At?: Prisma.DateTimeNullableWithAggregatesFilter<"Letter"> | Date | string | null
-  approved3At?: Prisma.DateTimeNullableWithAggregatesFilter<"Letter"> | Date | string | null
-  rejectedById?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
-  rejectedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Letter"> | Date | string | null
-  rejectionReason?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
-  generatedDocPath?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
-  verificationHash?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
+  revisionNote?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Letter"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Letter"> | Date | string
   createdBy?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
   editedBy?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Letter"> | Date | string
 }
 
 export type LetterCreateInput = {
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  template?: Prisma.LetterTemplateCreateNestedOneWithoutLettersInput
-  signer1?: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
+  signer1: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
   signer2?: Prisma.UsersCreateNestedOneWithoutLetterSigner2Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLetterSigner3Input
-  rejectedBy?: Prisma.UsersCreateNestedOneWithoutLetterRejectedByInput
-  letterDocs?: Prisma.LetterDocsCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
 }
 
 export type LetterUncheckedCreateInput = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
+  signer1Id: number
   signer2Id?: number | null
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedCreateNestedManyWithoutLetterInput
 }
 
 export type LetterUpdateInput = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.LetterTemplateUpdateOneWithoutLettersNestedInput
-  signer1?: Prisma.UsersUpdateOneWithoutLetterSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneRequiredWithoutLetterSigner1NestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLetterSigner2NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLetterSigner3NestedInput
-  rejectedBy?: Prisma.UsersUpdateOneWithoutLetterRejectedByNestedInput
-  letterDocs?: Prisma.LetterDocsUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterCreateManyInput = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
+  signer1Id: number
   signer2Id?: number | null
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
 }
 
 export type LetterUpdateManyMutationInput = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LetterUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LetterListRelationFilter = {
@@ -753,37 +608,28 @@ export type LetterCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   letterType?: Prisma.SortOrder
   letterNumber?: Prisma.SortOrder
-  attachments?: Prisma.SortOrder
+  attachment?: Prisma.SortOrder
   subject?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  letterDate?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  tembusan?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  carbonCopy?: Prisma.SortOrder
+  documentPath?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  templateId?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
-  approved1At?: Prisma.SortOrder
-  approved2At?: Prisma.SortOrder
-  approved3At?: Prisma.SortOrder
-  rejectedById?: Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrder
-  generatedDocPath?: Prisma.SortOrder
-  verificationHash?: Prisma.SortOrder
+  revisionNote?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type LetterAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  templateId?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
-  rejectedById?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
 }
@@ -792,65 +638,49 @@ export type LetterMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   letterType?: Prisma.SortOrder
   letterNumber?: Prisma.SortOrder
-  attachments?: Prisma.SortOrder
+  attachment?: Prisma.SortOrder
   subject?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  letterDate?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  tembusan?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  carbonCopy?: Prisma.SortOrder
+  documentPath?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  templateId?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
-  approved1At?: Prisma.SortOrder
-  approved2At?: Prisma.SortOrder
-  approved3At?: Prisma.SortOrder
-  rejectedById?: Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrder
-  generatedDocPath?: Prisma.SortOrder
-  verificationHash?: Prisma.SortOrder
+  revisionNote?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type LetterMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   letterType?: Prisma.SortOrder
   letterNumber?: Prisma.SortOrder
-  attachments?: Prisma.SortOrder
+  attachment?: Prisma.SortOrder
   subject?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  letterDate?: Prisma.SortOrder
   destination?: Prisma.SortOrder
-  tembusan?: Prisma.SortOrder
-  content?: Prisma.SortOrder
+  carbonCopy?: Prisma.SortOrder
+  documentPath?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  templateId?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
-  approved1At?: Prisma.SortOrder
-  approved2At?: Prisma.SortOrder
-  approved3At?: Prisma.SortOrder
-  rejectedById?: Prisma.SortOrder
-  rejectedAt?: Prisma.SortOrder
-  rejectionReason?: Prisma.SortOrder
-  generatedDocPath?: Prisma.SortOrder
-  verificationHash?: Prisma.SortOrder
+  revisionNote?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type LetterSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  templateId?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
-  rejectedById?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
 }
@@ -881,13 +711,6 @@ export type LetterCreateNestedManyWithoutSigner3Input = {
   connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
 }
 
-export type LetterCreateNestedManyWithoutRejectedByInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutRejectedByInput, Prisma.LetterUncheckedCreateWithoutRejectedByInput> | Prisma.LetterCreateWithoutRejectedByInput[] | Prisma.LetterUncheckedCreateWithoutRejectedByInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutRejectedByInput | Prisma.LetterCreateOrConnectWithoutRejectedByInput[]
-  createMany?: Prisma.LetterCreateManyRejectedByInputEnvelope
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-}
-
 export type LetterUncheckedCreateNestedManyWithoutSigner1Input = {
   create?: Prisma.XOR<Prisma.LetterCreateWithoutSigner1Input, Prisma.LetterUncheckedCreateWithoutSigner1Input> | Prisma.LetterCreateWithoutSigner1Input[] | Prisma.LetterUncheckedCreateWithoutSigner1Input[]
   connectOrCreate?: Prisma.LetterCreateOrConnectWithoutSigner1Input | Prisma.LetterCreateOrConnectWithoutSigner1Input[]
@@ -906,13 +729,6 @@ export type LetterUncheckedCreateNestedManyWithoutSigner3Input = {
   create?: Prisma.XOR<Prisma.LetterCreateWithoutSigner3Input, Prisma.LetterUncheckedCreateWithoutSigner3Input> | Prisma.LetterCreateWithoutSigner3Input[] | Prisma.LetterUncheckedCreateWithoutSigner3Input[]
   connectOrCreate?: Prisma.LetterCreateOrConnectWithoutSigner3Input | Prisma.LetterCreateOrConnectWithoutSigner3Input[]
   createMany?: Prisma.LetterCreateManySigner3InputEnvelope
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-}
-
-export type LetterUncheckedCreateNestedManyWithoutRejectedByInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutRejectedByInput, Prisma.LetterUncheckedCreateWithoutRejectedByInput> | Prisma.LetterCreateWithoutRejectedByInput[] | Prisma.LetterUncheckedCreateWithoutRejectedByInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutRejectedByInput | Prisma.LetterCreateOrConnectWithoutRejectedByInput[]
-  createMany?: Prisma.LetterCreateManyRejectedByInputEnvelope
   connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
 }
 
@@ -958,20 +774,6 @@ export type LetterUpdateManyWithoutSigner3NestedInput = {
   deleteMany?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
 }
 
-export type LetterUpdateManyWithoutRejectedByNestedInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutRejectedByInput, Prisma.LetterUncheckedCreateWithoutRejectedByInput> | Prisma.LetterCreateWithoutRejectedByInput[] | Prisma.LetterUncheckedCreateWithoutRejectedByInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutRejectedByInput | Prisma.LetterCreateOrConnectWithoutRejectedByInput[]
-  upsert?: Prisma.LetterUpsertWithWhereUniqueWithoutRejectedByInput | Prisma.LetterUpsertWithWhereUniqueWithoutRejectedByInput[]
-  createMany?: Prisma.LetterCreateManyRejectedByInputEnvelope
-  set?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  disconnect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  delete?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  update?: Prisma.LetterUpdateWithWhereUniqueWithoutRejectedByInput | Prisma.LetterUpdateWithWhereUniqueWithoutRejectedByInput[]
-  updateMany?: Prisma.LetterUpdateManyWithWhereWithoutRejectedByInput | Prisma.LetterUpdateManyWithWhereWithoutRejectedByInput[]
-  deleteMany?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
-}
-
 export type LetterUncheckedUpdateManyWithoutSigner1NestedInput = {
   create?: Prisma.XOR<Prisma.LetterCreateWithoutSigner1Input, Prisma.LetterUncheckedCreateWithoutSigner1Input> | Prisma.LetterCreateWithoutSigner1Input[] | Prisma.LetterUncheckedCreateWithoutSigner1Input[]
   connectOrCreate?: Prisma.LetterCreateOrConnectWithoutSigner1Input | Prisma.LetterCreateOrConnectWithoutSigner1Input[]
@@ -1014,137 +816,63 @@ export type LetterUncheckedUpdateManyWithoutSigner3NestedInput = {
   deleteMany?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
 }
 
-export type LetterUncheckedUpdateManyWithoutRejectedByNestedInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutRejectedByInput, Prisma.LetterUncheckedCreateWithoutRejectedByInput> | Prisma.LetterCreateWithoutRejectedByInput[] | Prisma.LetterUncheckedCreateWithoutRejectedByInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutRejectedByInput | Prisma.LetterCreateOrConnectWithoutRejectedByInput[]
-  upsert?: Prisma.LetterUpsertWithWhereUniqueWithoutRejectedByInput | Prisma.LetterUpsertWithWhereUniqueWithoutRejectedByInput[]
-  createMany?: Prisma.LetterCreateManyRejectedByInputEnvelope
-  set?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  disconnect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  delete?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  update?: Prisma.LetterUpdateWithWhereUniqueWithoutRejectedByInput | Prisma.LetterUpdateWithWhereUniqueWithoutRejectedByInput[]
-  updateMany?: Prisma.LetterUpdateManyWithWhereWithoutRejectedByInput | Prisma.LetterUpdateManyWithWhereWithoutRejectedByInput[]
-  deleteMany?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
-}
-
-export type EnumLetterTypeFieldUpdateOperationsInput = {
-  set?: $Enums.LetterType
-}
-
 export type EnumLetterStatusFieldUpdateOperationsInput = {
   set?: $Enums.LetterStatus
 }
 
-export type LetterCreateNestedManyWithoutTemplateInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutTemplateInput, Prisma.LetterUncheckedCreateWithoutTemplateInput> | Prisma.LetterCreateWithoutTemplateInput[] | Prisma.LetterUncheckedCreateWithoutTemplateInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutTemplateInput | Prisma.LetterCreateOrConnectWithoutTemplateInput[]
-  createMany?: Prisma.LetterCreateManyTemplateInputEnvelope
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-}
-
-export type LetterUncheckedCreateNestedManyWithoutTemplateInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutTemplateInput, Prisma.LetterUncheckedCreateWithoutTemplateInput> | Prisma.LetterCreateWithoutTemplateInput[] | Prisma.LetterUncheckedCreateWithoutTemplateInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutTemplateInput | Prisma.LetterCreateOrConnectWithoutTemplateInput[]
-  createMany?: Prisma.LetterCreateManyTemplateInputEnvelope
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-}
-
-export type LetterUpdateManyWithoutTemplateNestedInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutTemplateInput, Prisma.LetterUncheckedCreateWithoutTemplateInput> | Prisma.LetterCreateWithoutTemplateInput[] | Prisma.LetterUncheckedCreateWithoutTemplateInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutTemplateInput | Prisma.LetterCreateOrConnectWithoutTemplateInput[]
-  upsert?: Prisma.LetterUpsertWithWhereUniqueWithoutTemplateInput | Prisma.LetterUpsertWithWhereUniqueWithoutTemplateInput[]
-  createMany?: Prisma.LetterCreateManyTemplateInputEnvelope
-  set?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  disconnect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  delete?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  update?: Prisma.LetterUpdateWithWhereUniqueWithoutTemplateInput | Prisma.LetterUpdateWithWhereUniqueWithoutTemplateInput[]
-  updateMany?: Prisma.LetterUpdateManyWithWhereWithoutTemplateInput | Prisma.LetterUpdateManyWithWhereWithoutTemplateInput[]
-  deleteMany?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
-}
-
-export type LetterUncheckedUpdateManyWithoutTemplateNestedInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutTemplateInput, Prisma.LetterUncheckedCreateWithoutTemplateInput> | Prisma.LetterCreateWithoutTemplateInput[] | Prisma.LetterUncheckedCreateWithoutTemplateInput[]
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutTemplateInput | Prisma.LetterCreateOrConnectWithoutTemplateInput[]
-  upsert?: Prisma.LetterUpsertWithWhereUniqueWithoutTemplateInput | Prisma.LetterUpsertWithWhereUniqueWithoutTemplateInput[]
-  createMany?: Prisma.LetterCreateManyTemplateInputEnvelope
-  set?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  disconnect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  delete?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  connect?: Prisma.LetterWhereUniqueInput | Prisma.LetterWhereUniqueInput[]
-  update?: Prisma.LetterUpdateWithWhereUniqueWithoutTemplateInput | Prisma.LetterUpdateWithWhereUniqueWithoutTemplateInput[]
-  updateMany?: Prisma.LetterUpdateManyWithWhereWithoutTemplateInput | Prisma.LetterUpdateManyWithWhereWithoutTemplateInput[]
-  deleteMany?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
-}
-
-export type LetterCreateNestedOneWithoutLetterDocsInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutLetterDocsInput, Prisma.LetterUncheckedCreateWithoutLetterDocsInput>
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutLetterDocsInput
+export type LetterCreateNestedOneWithoutLetterApprovalsInput = {
+  create?: Prisma.XOR<Prisma.LetterCreateWithoutLetterApprovalsInput, Prisma.LetterUncheckedCreateWithoutLetterApprovalsInput>
+  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutLetterApprovalsInput
   connect?: Prisma.LetterWhereUniqueInput
 }
 
-export type LetterUpdateOneRequiredWithoutLetterDocsNestedInput = {
-  create?: Prisma.XOR<Prisma.LetterCreateWithoutLetterDocsInput, Prisma.LetterUncheckedCreateWithoutLetterDocsInput>
-  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutLetterDocsInput
-  upsert?: Prisma.LetterUpsertWithoutLetterDocsInput
+export type LetterUpdateOneRequiredWithoutLetterApprovalsNestedInput = {
+  create?: Prisma.XOR<Prisma.LetterCreateWithoutLetterApprovalsInput, Prisma.LetterUncheckedCreateWithoutLetterApprovalsInput>
+  connectOrCreate?: Prisma.LetterCreateOrConnectWithoutLetterApprovalsInput
+  upsert?: Prisma.LetterUpsertWithoutLetterApprovalsInput
   connect?: Prisma.LetterWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LetterUpdateToOneWithWhereWithoutLetterDocsInput, Prisma.LetterUpdateWithoutLetterDocsInput>, Prisma.LetterUncheckedUpdateWithoutLetterDocsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.LetterUpdateToOneWithWhereWithoutLetterApprovalsInput, Prisma.LetterUpdateWithoutLetterApprovalsInput>, Prisma.LetterUncheckedUpdateWithoutLetterApprovalsInput>
 }
 
 export type LetterCreateWithoutSigner1Input = {
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  template?: Prisma.LetterTemplateCreateNestedOneWithoutLettersInput
   signer2?: Prisma.UsersCreateNestedOneWithoutLetterSigner2Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLetterSigner3Input
-  rejectedBy?: Prisma.UsersCreateNestedOneWithoutLetterRejectedByInput
-  letterDocs?: Prisma.LetterDocsCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
 }
 
 export type LetterUncheckedCreateWithoutSigner1Input = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
   signer2Id?: number | null
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedCreateNestedManyWithoutLetterInput
 }
 
 export type LetterCreateOrConnectWithoutSigner1Input = {
@@ -1158,58 +886,44 @@ export type LetterCreateManySigner1InputEnvelope = {
 }
 
 export type LetterCreateWithoutSigner2Input = {
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  template?: Prisma.LetterTemplateCreateNestedOneWithoutLettersInput
-  signer1?: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
+  signer1: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLetterSigner3Input
-  rejectedBy?: Prisma.UsersCreateNestedOneWithoutLetterRejectedByInput
-  letterDocs?: Prisma.LetterDocsCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
 }
 
 export type LetterUncheckedCreateWithoutSigner2Input = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
+  signer1Id: number
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedCreateNestedManyWithoutLetterInput
 }
 
 export type LetterCreateOrConnectWithoutSigner2Input = {
@@ -1223,58 +937,44 @@ export type LetterCreateManySigner2InputEnvelope = {
 }
 
 export type LetterCreateWithoutSigner3Input = {
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  template?: Prisma.LetterTemplateCreateNestedOneWithoutLettersInput
-  signer1?: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
+  signer1: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
   signer2?: Prisma.UsersCreateNestedOneWithoutLetterSigner2Input
-  rejectedBy?: Prisma.UsersCreateNestedOneWithoutLetterRejectedByInput
-  letterDocs?: Prisma.LetterDocsCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
 }
 
 export type LetterUncheckedCreateWithoutSigner3Input = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
+  signer1Id: number
   signer2Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedCreateNestedManyWithoutLetterInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedCreateNestedManyWithoutLetterInput
 }
 
 export type LetterCreateOrConnectWithoutSigner3Input = {
@@ -1284,71 +984,6 @@ export type LetterCreateOrConnectWithoutSigner3Input = {
 
 export type LetterCreateManySigner3InputEnvelope = {
   data: Prisma.LetterCreateManySigner3Input | Prisma.LetterCreateManySigner3Input[]
-  skipDuplicates?: boolean
-}
-
-export type LetterCreateWithoutRejectedByInput = {
-  letterType: $Enums.LetterType
-  letterNumber?: string | null
-  attachments?: string | null
-  subject: string
-  createdAt?: Date | string
-  destination: string
-  tembusan?: string | null
-  content?: string | null
-  status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
-  createdBy?: number | null
-  editedBy?: number | null
-  updatedAt?: Date | string
-  template?: Prisma.LetterTemplateCreateNestedOneWithoutLettersInput
-  signer1?: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
-  signer2?: Prisma.UsersCreateNestedOneWithoutLetterSigner2Input
-  signer3?: Prisma.UsersCreateNestedOneWithoutLetterSigner3Input
-  letterDocs?: Prisma.LetterDocsCreateNestedManyWithoutLetterInput
-}
-
-export type LetterUncheckedCreateWithoutRejectedByInput = {
-  id?: number
-  letterType: $Enums.LetterType
-  letterNumber?: string | null
-  attachments?: string | null
-  subject: string
-  createdAt?: Date | string
-  destination: string
-  tembusan?: string | null
-  content?: string | null
-  status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
-  signer2Id?: number | null
-  signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
-  createdBy?: number | null
-  editedBy?: number | null
-  updatedAt?: Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedCreateNestedManyWithoutLetterInput
-}
-
-export type LetterCreateOrConnectWithoutRejectedByInput = {
-  where: Prisma.LetterWhereUniqueInput
-  create: Prisma.XOR<Prisma.LetterCreateWithoutRejectedByInput, Prisma.LetterUncheckedCreateWithoutRejectedByInput>
-}
-
-export type LetterCreateManyRejectedByInputEnvelope = {
-  data: Prisma.LetterCreateManyRejectedByInput | Prisma.LetterCreateManyRejectedByInput[]
   skipDuplicates?: boolean
 }
 
@@ -1373,30 +1008,23 @@ export type LetterScalarWhereInput = {
   OR?: Prisma.LetterScalarWhereInput[]
   NOT?: Prisma.LetterScalarWhereInput | Prisma.LetterScalarWhereInput[]
   id?: Prisma.IntFilter<"Letter"> | number
-  letterType?: Prisma.EnumLetterTypeFilter<"Letter"> | $Enums.LetterType
+  letterType?: Prisma.StringFilter<"Letter"> | string
   letterNumber?: Prisma.StringNullableFilter<"Letter"> | string | null
-  attachments?: Prisma.StringNullableFilter<"Letter"> | string | null
+  attachment?: Prisma.StringNullableFilter<"Letter"> | string | null
   subject?: Prisma.StringFilter<"Letter"> | string
-  createdAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
+  letterDate?: Prisma.DateTimeFilter<"Letter"> | Date | string
   destination?: Prisma.StringFilter<"Letter"> | string
-  tembusan?: Prisma.StringNullableFilter<"Letter"> | string | null
-  content?: Prisma.StringNullableFilter<"Letter"> | string | null
+  carbonCopy?: Prisma.StringNullableFilter<"Letter"> | string | null
+  documentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusFilter<"Letter"> | $Enums.LetterStatus
-  templateId?: Prisma.IntNullableFilter<"Letter"> | number | null
-  signer1Id?: Prisma.IntNullableFilter<"Letter"> | number | null
+  signer1Id?: Prisma.IntFilter<"Letter"> | number
   signer2Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableFilter<"Letter"> | number | null
-  approved1At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  approved2At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  approved3At?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  rejectedById?: Prisma.IntNullableFilter<"Letter"> | number | null
-  rejectedAt?: Prisma.DateTimeNullableFilter<"Letter"> | Date | string | null
-  rejectionReason?: Prisma.StringNullableFilter<"Letter"> | string | null
-  generatedDocPath?: Prisma.StringNullableFilter<"Letter"> | string | null
-  verificationHash?: Prisma.StringNullableFilter<"Letter"> | string | null
+  revisionNote?: Prisma.StringNullableFilter<"Letter"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Letter"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Letter"> | number | null
-  updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
 }
 
 export type LetterUpsertWithWhereUniqueWithoutSigner2Input = {
@@ -1431,772 +1059,345 @@ export type LetterUpdateManyWithWhereWithoutSigner3Input = {
   data: Prisma.XOR<Prisma.LetterUpdateManyMutationInput, Prisma.LetterUncheckedUpdateManyWithoutSigner3Input>
 }
 
-export type LetterUpsertWithWhereUniqueWithoutRejectedByInput = {
-  where: Prisma.LetterWhereUniqueInput
-  update: Prisma.XOR<Prisma.LetterUpdateWithoutRejectedByInput, Prisma.LetterUncheckedUpdateWithoutRejectedByInput>
-  create: Prisma.XOR<Prisma.LetterCreateWithoutRejectedByInput, Prisma.LetterUncheckedCreateWithoutRejectedByInput>
-}
-
-export type LetterUpdateWithWhereUniqueWithoutRejectedByInput = {
-  where: Prisma.LetterWhereUniqueInput
-  data: Prisma.XOR<Prisma.LetterUpdateWithoutRejectedByInput, Prisma.LetterUncheckedUpdateWithoutRejectedByInput>
-}
-
-export type LetterUpdateManyWithWhereWithoutRejectedByInput = {
-  where: Prisma.LetterScalarWhereInput
-  data: Prisma.XOR<Prisma.LetterUpdateManyMutationInput, Prisma.LetterUncheckedUpdateManyWithoutRejectedByInput>
-}
-
-export type LetterCreateWithoutTemplateInput = {
-  letterType: $Enums.LetterType
+export type LetterCreateWithoutLetterApprovalsInput = {
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  signer1?: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
+  signer1: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
   signer2?: Prisma.UsersCreateNestedOneWithoutLetterSigner2Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLetterSigner3Input
-  rejectedBy?: Prisma.UsersCreateNestedOneWithoutLetterRejectedByInput
-  letterDocs?: Prisma.LetterDocsCreateNestedManyWithoutLetterInput
 }
 
-export type LetterUncheckedCreateWithoutTemplateInput = {
+export type LetterUncheckedCreateWithoutLetterApprovalsInput = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id?: number | null
+  signer1Id: number
   signer2Id?: number | null
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
-  createdBy?: number | null
-  editedBy?: number | null
-  updatedAt?: Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedCreateNestedManyWithoutLetterInput
-}
-
-export type LetterCreateOrConnectWithoutTemplateInput = {
-  where: Prisma.LetterWhereUniqueInput
-  create: Prisma.XOR<Prisma.LetterCreateWithoutTemplateInput, Prisma.LetterUncheckedCreateWithoutTemplateInput>
-}
-
-export type LetterCreateManyTemplateInputEnvelope = {
-  data: Prisma.LetterCreateManyTemplateInput | Prisma.LetterCreateManyTemplateInput[]
-  skipDuplicates?: boolean
-}
-
-export type LetterUpsertWithWhereUniqueWithoutTemplateInput = {
-  where: Prisma.LetterWhereUniqueInput
-  update: Prisma.XOR<Prisma.LetterUpdateWithoutTemplateInput, Prisma.LetterUncheckedUpdateWithoutTemplateInput>
-  create: Prisma.XOR<Prisma.LetterCreateWithoutTemplateInput, Prisma.LetterUncheckedCreateWithoutTemplateInput>
-}
-
-export type LetterUpdateWithWhereUniqueWithoutTemplateInput = {
-  where: Prisma.LetterWhereUniqueInput
-  data: Prisma.XOR<Prisma.LetterUpdateWithoutTemplateInput, Prisma.LetterUncheckedUpdateWithoutTemplateInput>
-}
-
-export type LetterUpdateManyWithWhereWithoutTemplateInput = {
-  where: Prisma.LetterScalarWhereInput
-  data: Prisma.XOR<Prisma.LetterUpdateManyMutationInput, Prisma.LetterUncheckedUpdateManyWithoutTemplateInput>
-}
-
-export type LetterCreateWithoutLetterDocsInput = {
-  letterType: $Enums.LetterType
-  letterNumber?: string | null
-  attachments?: string | null
-  subject: string
+  revisionNote?: string | null
   createdAt?: Date | string
-  destination: string
-  tembusan?: string | null
-  content?: string | null
-  status?: $Enums.LetterStatus
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-  template?: Prisma.LetterTemplateCreateNestedOneWithoutLettersInput
-  signer1?: Prisma.UsersCreateNestedOneWithoutLetterSigner1Input
-  signer2?: Prisma.UsersCreateNestedOneWithoutLetterSigner2Input
-  signer3?: Prisma.UsersCreateNestedOneWithoutLetterSigner3Input
-  rejectedBy?: Prisma.UsersCreateNestedOneWithoutLetterRejectedByInput
 }
 
-export type LetterUncheckedCreateWithoutLetterDocsInput = {
-  id?: number
-  letterType: $Enums.LetterType
-  letterNumber?: string | null
-  attachments?: string | null
-  subject: string
-  createdAt?: Date | string
-  destination: string
-  tembusan?: string | null
-  content?: string | null
-  status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
-  signer2Id?: number | null
-  signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
-  createdBy?: number | null
-  editedBy?: number | null
-  updatedAt?: Date | string
-}
-
-export type LetterCreateOrConnectWithoutLetterDocsInput = {
+export type LetterCreateOrConnectWithoutLetterApprovalsInput = {
   where: Prisma.LetterWhereUniqueInput
-  create: Prisma.XOR<Prisma.LetterCreateWithoutLetterDocsInput, Prisma.LetterUncheckedCreateWithoutLetterDocsInput>
+  create: Prisma.XOR<Prisma.LetterCreateWithoutLetterApprovalsInput, Prisma.LetterUncheckedCreateWithoutLetterApprovalsInput>
 }
 
-export type LetterUpsertWithoutLetterDocsInput = {
-  update: Prisma.XOR<Prisma.LetterUpdateWithoutLetterDocsInput, Prisma.LetterUncheckedUpdateWithoutLetterDocsInput>
-  create: Prisma.XOR<Prisma.LetterCreateWithoutLetterDocsInput, Prisma.LetterUncheckedCreateWithoutLetterDocsInput>
+export type LetterUpsertWithoutLetterApprovalsInput = {
+  update: Prisma.XOR<Prisma.LetterUpdateWithoutLetterApprovalsInput, Prisma.LetterUncheckedUpdateWithoutLetterApprovalsInput>
+  create: Prisma.XOR<Prisma.LetterCreateWithoutLetterApprovalsInput, Prisma.LetterUncheckedCreateWithoutLetterApprovalsInput>
   where?: Prisma.LetterWhereInput
 }
 
-export type LetterUpdateToOneWithWhereWithoutLetterDocsInput = {
+export type LetterUpdateToOneWithWhereWithoutLetterApprovalsInput = {
   where?: Prisma.LetterWhereInput
-  data: Prisma.XOR<Prisma.LetterUpdateWithoutLetterDocsInput, Prisma.LetterUncheckedUpdateWithoutLetterDocsInput>
+  data: Prisma.XOR<Prisma.LetterUpdateWithoutLetterApprovalsInput, Prisma.LetterUncheckedUpdateWithoutLetterApprovalsInput>
 }
 
-export type LetterUpdateWithoutLetterDocsInput = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+export type LetterUpdateWithoutLetterApprovalsInput = {
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.LetterTemplateUpdateOneWithoutLettersNestedInput
-  signer1?: Prisma.UsersUpdateOneWithoutLetterSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneRequiredWithoutLetterSigner1NestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLetterSigner2NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLetterSigner3NestedInput
-  rejectedBy?: Prisma.UsersUpdateOneWithoutLetterRejectedByNestedInput
 }
 
-export type LetterUncheckedUpdateWithoutLetterDocsInput = {
+export type LetterUncheckedUpdateWithoutLetterApprovalsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LetterCreateManySigner1Input = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
   signer2Id?: number | null
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
 }
 
 export type LetterCreateManySigner2Input = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
+  signer1Id: number
   signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
 }
 
 export type LetterCreateManySigner3Input = {
   id?: number
-  letterType: $Enums.LetterType
+  letterType: string
   letterNumber?: string | null
-  attachments?: string | null
+  attachment?: string | null
   subject: string
-  createdAt?: Date | string
+  letterDate: Date | string
   destination: string
-  tembusan?: string | null
-  content?: string | null
+  carbonCopy?: string | null
+  documentPath?: string | null
   status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
+  signer1Id: number
   signer2Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
+  revisionNote?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  updatedAt?: Date | string
-}
-
-export type LetterCreateManyRejectedByInput = {
-  id?: number
-  letterType: $Enums.LetterType
-  letterNumber?: string | null
-  attachments?: string | null
-  subject: string
-  createdAt?: Date | string
-  destination: string
-  tembusan?: string | null
-  content?: string | null
-  status?: $Enums.LetterStatus
-  templateId?: number | null
-  signer1Id?: number | null
-  signer2Id?: number | null
-  signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
-  createdBy?: number | null
-  editedBy?: number | null
-  updatedAt?: Date | string
 }
 
 export type LetterUpdateWithoutSigner1Input = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.LetterTemplateUpdateOneWithoutLettersNestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLetterSigner2NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLetterSigner3NestedInput
-  rejectedBy?: Prisma.UsersUpdateOneWithoutLetterRejectedByNestedInput
-  letterDocs?: Prisma.LetterDocsUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateWithoutSigner1Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateManyWithoutSigner1Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LetterUpdateWithoutSigner2Input = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.LetterTemplateUpdateOneWithoutLettersNestedInput
-  signer1?: Prisma.UsersUpdateOneWithoutLetterSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneRequiredWithoutLetterSigner1NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLetterSigner3NestedInput
-  rejectedBy?: Prisma.UsersUpdateOneWithoutLetterRejectedByNestedInput
-  letterDocs?: Prisma.LetterDocsUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateWithoutSigner2Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateManyWithoutSigner2Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type LetterUpdateWithoutSigner3Input = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.LetterTemplateUpdateOneWithoutLettersNestedInput
-  signer1?: Prisma.UsersUpdateOneWithoutLetterSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneRequiredWithoutLetterSigner1NestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLetterSigner2NestedInput
-  rejectedBy?: Prisma.UsersUpdateOneWithoutLetterRejectedByNestedInput
-  letterDocs?: Prisma.LetterDocsUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateWithoutSigner3Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedUpdateManyWithoutLetterNestedInput
+  letterApprovals?: Prisma.LetterApprovalUncheckedUpdateManyWithoutLetterNestedInput
 }
 
 export type LetterUncheckedUpdateManyWithoutSigner3Input = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
+  letterType?: Prisma.StringFieldUpdateOperationsInput | string
   letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  attachment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  letterDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  carbonCopy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  documentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type LetterUpdateWithoutRejectedByInput = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
-  letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subject?: Prisma.StringFieldUpdateOperationsInput | string
+  revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  template?: Prisma.LetterTemplateUpdateOneWithoutLettersNestedInput
-  signer1?: Prisma.UsersUpdateOneWithoutLetterSigner1NestedInput
-  signer2?: Prisma.UsersUpdateOneWithoutLetterSigner2NestedInput
-  signer3?: Prisma.UsersUpdateOneWithoutLetterSigner3NestedInput
-  letterDocs?: Prisma.LetterDocsUpdateManyWithoutLetterNestedInput
-}
-
-export type LetterUncheckedUpdateWithoutRejectedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
-  letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedUpdateManyWithoutLetterNestedInput
-}
-
-export type LetterUncheckedUpdateManyWithoutRejectedByInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
-  letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  templateId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type LetterCreateManyTemplateInput = {
-  id?: number
-  letterType: $Enums.LetterType
-  letterNumber?: string | null
-  attachments?: string | null
-  subject: string
-  createdAt?: Date | string
-  destination: string
-  tembusan?: string | null
-  content?: string | null
-  status?: $Enums.LetterStatus
-  signer1Id?: number | null
-  signer2Id?: number | null
-  signer3Id?: number | null
-  approved1At?: Date | string | null
-  approved2At?: Date | string | null
-  approved3At?: Date | string | null
-  rejectedById?: number | null
-  rejectedAt?: Date | string | null
-  rejectionReason?: string | null
-  generatedDocPath?: string | null
-  verificationHash?: string | null
-  createdBy?: number | null
-  editedBy?: number | null
-  updatedAt?: Date | string
-}
-
-export type LetterUpdateWithoutTemplateInput = {
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
-  letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  signer1?: Prisma.UsersUpdateOneWithoutLetterSigner1NestedInput
-  signer2?: Prisma.UsersUpdateOneWithoutLetterSigner2NestedInput
-  signer3?: Prisma.UsersUpdateOneWithoutLetterSigner3NestedInput
-  rejectedBy?: Prisma.UsersUpdateOneWithoutLetterRejectedByNestedInput
-  letterDocs?: Prisma.LetterDocsUpdateManyWithoutLetterNestedInput
-}
-
-export type LetterUncheckedUpdateWithoutTemplateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
-  letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  letterDocs?: Prisma.LetterDocsUncheckedUpdateManyWithoutLetterNestedInput
-}
-
-export type LetterUncheckedUpdateManyWithoutTemplateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  letterType?: Prisma.EnumLetterTypeFieldUpdateOperationsInput | $Enums.LetterType
-  letterNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  attachments?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  subject?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  destination?: Prisma.StringFieldUpdateOperationsInput | string
-  tembusan?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  approved1At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved2At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  approved3At?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectedById?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  rejectedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  rejectionReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  generatedDocPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  verificationHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -2205,11 +1406,11 @@ export type LetterUncheckedUpdateManyWithoutTemplateInput = {
  */
 
 export type LetterCountOutputType = {
-  letterDocs: number
+  letterApprovals: number
 }
 
 export type LetterCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  letterDocs?: boolean | LetterCountOutputTypeCountLetterDocsArgs
+  letterApprovals?: boolean | LetterCountOutputTypeCountLetterApprovalsArgs
 }
 
 /**
@@ -2225,8 +1426,8 @@ export type LetterCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
 /**
  * LetterCountOutputType without action
  */
-export type LetterCountOutputTypeCountLetterDocsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LetterDocsWhereInput
+export type LetterCountOutputTypeCountLetterApprovalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LetterApprovalWhereInput
 }
 
 
@@ -2234,34 +1435,25 @@ export type LetterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   letterType?: boolean
   letterNumber?: boolean
-  attachments?: boolean
+  attachment?: boolean
   subject?: boolean
-  createdAt?: boolean
+  letterDate?: boolean
   destination?: boolean
-  tembusan?: boolean
-  content?: boolean
+  carbonCopy?: boolean
+  documentPath?: boolean
   status?: boolean
-  templateId?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
-  approved1At?: boolean
-  approved2At?: boolean
-  approved3At?: boolean
-  rejectedById?: boolean
-  rejectedAt?: boolean
-  rejectionReason?: boolean
-  generatedDocPath?: boolean
-  verificationHash?: boolean
+  revisionNote?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  updatedAt?: boolean
-  template?: boolean | Prisma.Letter$templateArgs<ExtArgs>
-  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
+  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
-  rejectedBy?: boolean | Prisma.Letter$rejectedByArgs<ExtArgs>
-  letterDocs?: boolean | Prisma.Letter$letterDocsArgs<ExtArgs>
+  letterApprovals?: boolean | Prisma.Letter$letterApprovalsArgs<ExtArgs>
   _count?: boolean | Prisma.LetterCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["letter"]>
 
@@ -2269,157 +1461,117 @@ export type LetterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   letterType?: boolean
   letterNumber?: boolean
-  attachments?: boolean
+  attachment?: boolean
   subject?: boolean
-  createdAt?: boolean
+  letterDate?: boolean
   destination?: boolean
-  tembusan?: boolean
-  content?: boolean
+  carbonCopy?: boolean
+  documentPath?: boolean
   status?: boolean
-  templateId?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
-  approved1At?: boolean
-  approved2At?: boolean
-  approved3At?: boolean
-  rejectedById?: boolean
-  rejectedAt?: boolean
-  rejectionReason?: boolean
-  generatedDocPath?: boolean
-  verificationHash?: boolean
+  revisionNote?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  updatedAt?: boolean
-  template?: boolean | Prisma.Letter$templateArgs<ExtArgs>
-  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
+  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
-  rejectedBy?: boolean | Prisma.Letter$rejectedByArgs<ExtArgs>
 }, ExtArgs["result"]["letter"]>
 
 export type LetterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   letterType?: boolean
   letterNumber?: boolean
-  attachments?: boolean
+  attachment?: boolean
   subject?: boolean
-  createdAt?: boolean
+  letterDate?: boolean
   destination?: boolean
-  tembusan?: boolean
-  content?: boolean
+  carbonCopy?: boolean
+  documentPath?: boolean
   status?: boolean
-  templateId?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
-  approved1At?: boolean
-  approved2At?: boolean
-  approved3At?: boolean
-  rejectedById?: boolean
-  rejectedAt?: boolean
-  rejectionReason?: boolean
-  generatedDocPath?: boolean
-  verificationHash?: boolean
+  revisionNote?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  updatedAt?: boolean
-  template?: boolean | Prisma.Letter$templateArgs<ExtArgs>
-  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
+  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
-  rejectedBy?: boolean | Prisma.Letter$rejectedByArgs<ExtArgs>
 }, ExtArgs["result"]["letter"]>
 
 export type LetterSelectScalar = {
   id?: boolean
   letterType?: boolean
   letterNumber?: boolean
-  attachments?: boolean
+  attachment?: boolean
   subject?: boolean
-  createdAt?: boolean
+  letterDate?: boolean
   destination?: boolean
-  tembusan?: boolean
-  content?: boolean
+  carbonCopy?: boolean
+  documentPath?: boolean
   status?: boolean
-  templateId?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
-  approved1At?: boolean
-  approved2At?: boolean
-  approved3At?: boolean
-  rejectedById?: boolean
-  rejectedAt?: boolean
-  rejectionReason?: boolean
-  generatedDocPath?: boolean
-  verificationHash?: boolean
+  revisionNote?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  updatedAt?: boolean
 }
 
-export type LetterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "letterType" | "letterNumber" | "attachments" | "subject" | "createdAt" | "destination" | "tembusan" | "content" | "status" | "templateId" | "signer1Id" | "signer2Id" | "signer3Id" | "approved1At" | "approved2At" | "approved3At" | "rejectedById" | "rejectedAt" | "rejectionReason" | "generatedDocPath" | "verificationHash" | "createdBy" | "editedBy" | "updatedAt", ExtArgs["result"]["letter"]>
+export type LetterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "letterType" | "letterNumber" | "attachment" | "subject" | "letterDate" | "destination" | "carbonCopy" | "documentPath" | "status" | "signer1Id" | "signer2Id" | "signer3Id" | "revisionNote" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["letter"]>
 export type LetterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  template?: boolean | Prisma.Letter$templateArgs<ExtArgs>
-  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
+  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
-  rejectedBy?: boolean | Prisma.Letter$rejectedByArgs<ExtArgs>
-  letterDocs?: boolean | Prisma.Letter$letterDocsArgs<ExtArgs>
+  letterApprovals?: boolean | Prisma.Letter$letterApprovalsArgs<ExtArgs>
   _count?: boolean | Prisma.LetterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LetterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  template?: boolean | Prisma.Letter$templateArgs<ExtArgs>
-  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
+  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
-  rejectedBy?: boolean | Prisma.Letter$rejectedByArgs<ExtArgs>
 }
 export type LetterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  template?: boolean | Prisma.Letter$templateArgs<ExtArgs>
-  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
+  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
-  rejectedBy?: boolean | Prisma.Letter$rejectedByArgs<ExtArgs>
 }
 
 export type $LetterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Letter"
   objects: {
-    template: Prisma.$LetterTemplatePayload<ExtArgs> | null
-    signer1: Prisma.$UsersPayload<ExtArgs> | null
+    signer1: Prisma.$UsersPayload<ExtArgs>
     signer2: Prisma.$UsersPayload<ExtArgs> | null
     signer3: Prisma.$UsersPayload<ExtArgs> | null
-    rejectedBy: Prisma.$UsersPayload<ExtArgs> | null
-    letterDocs: Prisma.$LetterDocsPayload<ExtArgs>[]
+    letterApprovals: Prisma.$LetterApprovalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    letterType: $Enums.LetterType
+    letterType: string
     letterNumber: string | null
-    attachments: string | null
+    attachment: string | null
     subject: string
-    createdAt: Date
+    letterDate: Date
     destination: string
-    tembusan: string | null
-    content: string | null
+    carbonCopy: string | null
+    documentPath: string | null
     status: $Enums.LetterStatus
-    templateId: number | null
-    signer1Id: number | null
+    signer1Id: number
     signer2Id: number | null
     signer3Id: number | null
-    approved1At: Date | null
-    approved2At: Date | null
-    approved3At: Date | null
-    rejectedById: number | null
-    rejectedAt: Date | null
-    rejectionReason: string | null
-    generatedDocPath: string | null
-    verificationHash: string | null
+    revisionNote: string | null
+    createdAt: Date
+    updatedAt: Date
     createdBy: number | null
     editedBy: number | null
-    updatedAt: Date
   }, ExtArgs["result"]["letter"]>
   composites: {}
 }
@@ -2814,12 +1966,10 @@ readonly fields: LetterFieldRefs;
  */
 export interface Prisma__LetterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  template<T extends Prisma.Letter$templateArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$templateArgs<ExtArgs>>): Prisma.Prisma__LetterTemplateClient<runtime.Types.Result.GetResult<Prisma.$LetterTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  signer1<T extends Prisma.Letter$signer1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$signer1Args<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  signer1<T extends Prisma.UsersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsersDefaultArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   signer2<T extends Prisma.Letter$signer2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$signer2Args<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   signer3<T extends Prisma.Letter$signer3Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$signer3Args<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  rejectedBy<T extends Prisma.Letter$rejectedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$rejectedByArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  letterDocs<T extends Prisma.Letter$letterDocsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$letterDocsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterDocsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  letterApprovals<T extends Prisma.Letter$letterApprovalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$letterApprovalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2850,30 +2000,23 @@ export interface Prisma__LetterClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface LetterFieldRefs {
   readonly id: Prisma.FieldRef<"Letter", 'Int'>
-  readonly letterType: Prisma.FieldRef<"Letter", 'LetterType'>
+  readonly letterType: Prisma.FieldRef<"Letter", 'String'>
   readonly letterNumber: Prisma.FieldRef<"Letter", 'String'>
-  readonly attachments: Prisma.FieldRef<"Letter", 'String'>
+  readonly attachment: Prisma.FieldRef<"Letter", 'String'>
   readonly subject: Prisma.FieldRef<"Letter", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Letter", 'DateTime'>
+  readonly letterDate: Prisma.FieldRef<"Letter", 'DateTime'>
   readonly destination: Prisma.FieldRef<"Letter", 'String'>
-  readonly tembusan: Prisma.FieldRef<"Letter", 'String'>
-  readonly content: Prisma.FieldRef<"Letter", 'String'>
+  readonly carbonCopy: Prisma.FieldRef<"Letter", 'String'>
+  readonly documentPath: Prisma.FieldRef<"Letter", 'String'>
   readonly status: Prisma.FieldRef<"Letter", 'LetterStatus'>
-  readonly templateId: Prisma.FieldRef<"Letter", 'Int'>
   readonly signer1Id: Prisma.FieldRef<"Letter", 'Int'>
   readonly signer2Id: Prisma.FieldRef<"Letter", 'Int'>
   readonly signer3Id: Prisma.FieldRef<"Letter", 'Int'>
-  readonly approved1At: Prisma.FieldRef<"Letter", 'DateTime'>
-  readonly approved2At: Prisma.FieldRef<"Letter", 'DateTime'>
-  readonly approved3At: Prisma.FieldRef<"Letter", 'DateTime'>
-  readonly rejectedById: Prisma.FieldRef<"Letter", 'Int'>
-  readonly rejectedAt: Prisma.FieldRef<"Letter", 'DateTime'>
-  readonly rejectionReason: Prisma.FieldRef<"Letter", 'String'>
-  readonly generatedDocPath: Prisma.FieldRef<"Letter", 'String'>
-  readonly verificationHash: Prisma.FieldRef<"Letter", 'String'>
+  readonly revisionNote: Prisma.FieldRef<"Letter", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Letter", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Letter", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Letter", 'Int'>
   readonly editedBy: Prisma.FieldRef<"Letter", 'Int'>
-  readonly updatedAt: Prisma.FieldRef<"Letter", 'DateTime'>
 }
     
 
@@ -3270,44 +2413,6 @@ export type LetterDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Letter.template
- */
-export type Letter$templateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LetterTemplate
-   */
-  select?: Prisma.LetterTemplateSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LetterTemplate
-   */
-  omit?: Prisma.LetterTemplateOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LetterTemplateInclude<ExtArgs> | null
-  where?: Prisma.LetterTemplateWhereInput
-}
-
-/**
- * Letter.signer1
- */
-export type Letter$signer1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Users
-   */
-  select?: Prisma.UsersSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Users
-   */
-  omit?: Prisma.UsersOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UsersInclude<ExtArgs> | null
-  where?: Prisma.UsersWhereInput
-}
-
-/**
  * Letter.signer2
  */
 export type Letter$signer2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -3346,46 +2451,27 @@ export type Letter$signer3Args<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Letter.rejectedBy
+ * Letter.letterApprovals
  */
-export type Letter$rejectedByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Letter$letterApprovalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Users
+   * Select specific fields to fetch from the LetterApproval
    */
-  select?: Prisma.UsersSelect<ExtArgs> | null
+  select?: Prisma.LetterApprovalSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Users
+   * Omit specific fields from the LetterApproval
    */
-  omit?: Prisma.UsersOmit<ExtArgs> | null
+  omit?: Prisma.LetterApprovalOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.UsersInclude<ExtArgs> | null
-  where?: Prisma.UsersWhereInput
-}
-
-/**
- * Letter.letterDocs
- */
-export type Letter$letterDocsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LetterDocs
-   */
-  select?: Prisma.LetterDocsSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LetterDocs
-   */
-  omit?: Prisma.LetterDocsOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LetterDocsInclude<ExtArgs> | null
-  where?: Prisma.LetterDocsWhereInput
-  orderBy?: Prisma.LetterDocsOrderByWithRelationInput | Prisma.LetterDocsOrderByWithRelationInput[]
-  cursor?: Prisma.LetterDocsWhereUniqueInput
+  include?: Prisma.LetterApprovalInclude<ExtArgs> | null
+  where?: Prisma.LetterApprovalWhereInput
+  orderBy?: Prisma.LetterApprovalOrderByWithRelationInput | Prisma.LetterApprovalOrderByWithRelationInput[]
+  cursor?: Prisma.LetterApprovalWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LetterDocsScalarFieldEnum | Prisma.LetterDocsScalarFieldEnum[]
+  distinct?: Prisma.LetterApprovalScalarFieldEnum | Prisma.LetterApprovalScalarFieldEnum[]
 }
 
 /**

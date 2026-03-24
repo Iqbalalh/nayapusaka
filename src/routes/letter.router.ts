@@ -1,60 +1,42 @@
 import { Router } from "express";
-import { verifyToken } from "../middlewares/auth";
 import upload from "../middlewares/multer";
+import { verifyToken } from "../middlewares/auth";
 import {
   getLetters,
-  getLettersOptimized,
-  getLetterById,
+  getLettersByStatus,
   getDraftLetters,
-  getPendingLetters,
+  getPendingApprovals,
+  getLetter,
   postLetter,
   patchLetter,
-  deleteLetter,
-  submitLetter,
-  approveLetter,
-  rejectLetter,
-  archiveLetter,
+  deleteLetterController,
+  submitLetterController,
+  approveLetterController,
+  rejectLetterController,
+  cancelLetterController,
+  publishLetterController,
 } from "../controllers/letter.controller";
 
 const letterRouter = Router();
 
-// Middleware auth
+// All routes require authentication
 letterRouter.use(verifyToken);
 
-// ===========================
-// CRUD LETTERS
-// ===========================
-
-// GET routes
+// Letter CRUD
 letterRouter.get("/", getLetters);
-letterRouter.get("/optimized", getLettersOptimized);
+letterRouter.get("/status", getLettersByStatus);
 letterRouter.get("/drafts", getDraftLetters);
-letterRouter.get("/pending", getPendingLetters);
-letterRouter.get("/:id", getLetterById);
+letterRouter.get("/pending", getPendingApprovals);
+letterRouter.get("/:id", getLetter);
+letterRouter.post("/", upload.single("document"), postLetter);
+letterRouter.patch("/:id", upload.single("document"), patchLetter);
+letterRouter.delete("/:id", deleteLetterController);
 
-// CREATE
-letterRouter.post("/", postLetter);
-
-// UPDATE
-letterRouter.patch("/:id", patchLetter);
-
-// DELETE
-letterRouter.delete("/:id", deleteLetter);
-
-// ===========================
-// WORKFLOW ACTIONS
-// ===========================
-
-// Submit for approval
-letterRouter.post("/:id/submit", submitLetter);
-
-// Approve letter
-letterRouter.post("/:id/approve", approveLetter);
-
-// Reject letter
-letterRouter.post("/:id/reject", rejectLetter);
-
-// Archive letter
-letterRouter.post("/:id/archive", archiveLetter);
+// Approval workflow
+letterRouter.post("/:id/submit", submitLetterController);
+letterRouter.post("/:id/approve", approveLetterController);
+letterRouter.post("/:id/reject", rejectLetterController);
+letterRouter.post("/:id/cancel", cancelLetterController);
+letterRouter.post("/:id/publish", publishLetterController);
 
 export default letterRouter;

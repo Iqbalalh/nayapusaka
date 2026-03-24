@@ -5,14 +5,10 @@ import {
   createUser,
   updateUserCtrl,
   deleteUserCtrl,
-  getSigners,
 } from "../controllers/user.controller";
 import { verifyToken, verifySuperadmin } from "../middlewares/auth";
 
 const userRouter = Router();
-
-// Public routes (require authentication only, not superadmin)
-userRouter.get("/signers", verifyToken, getSigners);
 
 // Admin routes (require authentication and superadmin role)
 userRouter.get("/", verifyToken, verifySuperadmin, getAllUsers);

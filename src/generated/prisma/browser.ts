@@ -128,12 +128,7 @@ export type SocialAssistance = Prisma.SocialAssistanceModel
  */
 export type Letter = Prisma.LetterModel
 /**
- * Model LetterTemplate
+ * Model LetterApproval
  * 
  */
-export type LetterTemplate = Prisma.LetterTemplateModel
-/**
- * Model LetterDocs
- * 
- */
-export type LetterDocs = Prisma.LetterDocsModel
+export type LetterApproval = Prisma.LetterApprovalModel

@@ -1,697 +1,207 @@
 import { Prisma } from "../generated/prisma/client";
 import { prisma } from "../utils/prisma/prisma";
-import { LetterStatus } from "../generated/prisma/client";
+import { LetterStatus } from "../generated/prisma/enums";
+
+// ============================================================================
+// SHARED SELECTORS
+// ============================================================================
+const SIGNER_SELECT = {
+  select: {
+    userId: true,
+    username: true,
+    staffs: {
+      select: {
+        staffName: true,
+      },
+    },
+  },
+};
+
+const DEFAULT_LETTER_INCLUDE = {
+  signer1: SIGNER_SELECT,
+  signer2: SIGNER_SELECT,
+  signer3: SIGNER_SELECT,
+};
 
 // ============================================================================
 // TYPES
 // ============================================================================
-
-export interface LetterWithRelations {
-  id: number;
+export interface CreateLetterData {
   letterType: string;
-  letterNumber: string | null;
-  attachments: string | null;
+  letterNumber?: string;
+  attachment?: string;
   subject: string;
-  createdAt: Date;
+  letterDate: Date;
   destination: string;
-  tembusan: string | null;
-  content: string | null;
-  status: LetterStatus;
-  signer1Id: number | null;
-  signer2Id: number | null;
-  signer3Id: number | null;
-  approved1At: Date | null;
-  approved2At: Date | null;
-  approved3At: Date | null;
-  rejectedById: number | null;
-  rejectedAt: Date | null;
-  rejectionReason: string | null;
-  generatedDocPath: string | null;
-  verificationHash: string | null;
-  createdBy: number | null;
-  editedBy: number | null;
-  updatedAt: Date;
-  signer1: {
-    userId: number;
-    username: string;
-    staffs: {
-      staffName: string;
-      position: string | null;
-      signaturePath: string | null;
-    } | null;
-  } | null;
-  signer2: {
-    userId: number;
-    username: string;
-    staffs: {
-      staffName: string;
-      position: string | null;
-      signaturePath: string | null;
-    } | null;
-  } | null;
-  signer3: {
-    userId: number;
-    username: string;
-    staffs: {
-      staffName: string;
-      position: string | null;
-      signaturePath: string | null;
-    } | null;
-  } | null;
-  rejectedBy: {
-    userId: number;
-    username: string;
-    staffs: {
-      staffName: string;
-    } | null;
-  } | null;
-  letterDocs: {
-    id: number;
-    name: string;
-    urlDoc: string;
-    createdAt: Date;
-  }[];
+  carbonCopy?: string;
+  documentPath?: string;
+  signer1Id: number;
+  signer2Id?: number;
+  signer3Id?: number;
+  createdBy: number;
+}
+
+export interface UpdateLetterData extends Partial<CreateLetterData> {
+  editedBy: number;
 }
 
 // ============================================================================
-// SELECT QUERIES
+// READ SERVICES
 // ============================================================================
 
-/**
- * Select all letters
- */
-export const selectAllLetters = async (
-  args?: Prisma.LetterFindManyArgs
-) => {
-  try {
-    return await prisma.letter.findMany({
-      ...args,
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-                signaturePath: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-                signaturePath: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-                signaturePath: true,
-              },
-            },
-          },
-        },
-        rejectedBy: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
+export const selectAllLetters = async () => {
+  return prisma.letter.findMany({
+    include: DEFAULT_LETTER_INCLUDE,
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const selectLettersByStatus = async (status: LetterStatus) => {
+  return prisma.letter.findMany({
+    where: { status },
+    include: DEFAULT_LETTER_INCLUDE,
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const selectDraftLettersByCreator = async (createdBy: number) => {
+  return prisma.letter.findMany({
+    where: { createdBy, status: LetterStatus.draft },
+    include: DEFAULT_LETTER_INCLUDE,
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const selectLettersPendingApproval = async (userId: number) => {
+  return prisma.letter.findMany({
+    where: {
+      OR: [
+        { signer1Id: userId, status: LetterStatus.pending1 },
+        { signer2Id: userId, status: LetterStatus.pending2 },
+        { signer3Id: userId, status: LetterStatus.pending3 },
+      ],
+    },
+    include: DEFAULT_LETTER_INCLUDE,
+    orderBy: { createdAt: "desc" },
+  });
+};
+
+export const selectLetterById = async (id: number) => {
+  return prisma.letter.findUnique({
+    where: { id },
+    include: {
+      ...DEFAULT_LETTER_INCLUDE,
+      letterApprovals: {
+        include: { letter: { select: { id: true } } },
+        orderBy: { actionAt: "asc" },
       },
-      orderBy: { createdAt: "desc" },
+    },
+  });
+};
+
+// ============================================================================
+// WRITE SERVICES
+// ============================================================================
+
+export const insertLetter = async (data: CreateLetterData) => {
+  return prisma.letter.create({
+    data: { ...data, status: LetterStatus.draft },
+    include: DEFAULT_LETTER_INCLUDE, // Pastikan include lengkap agar controller tidak error
+  });
+};
+
+export const updateLetter = async (id: number, data: UpdateLetterData) => {
+  const { editedBy, ...updateData } = data;
+  return prisma.letter.update({
+    where: { id },
+    data: { ...updateData, editedBy },
+    include: DEFAULT_LETTER_INCLUDE,
+  });
+};
+
+export const deleteLetter = async (id: number) => {
+  return prisma.letter.delete({
+    where: { id },
+  });
+};
+
+// ============================================================================
+// WORKFLOW SERVICES
+// ============================================================================
+
+export const submitLetterForApproval = async (id: number, editedBy: number) => {
+  return prisma.letter.update({
+    where: { id },
+    data: { status: LetterStatus.pending1, editedBy },
+    include: DEFAULT_LETTER_INCLUDE,
+  });
+};
+
+export const publishLetter = async (id: number) => {
+  return prisma.letter.update({
+    where: { id },
+    data: { status: LetterStatus.published },
+    include: DEFAULT_LETTER_INCLUDE,
+  });
+};
+
+export const getSignerLevel = async (letterId: number, userId: number): Promise<number | null> => {
+  const letter = await prisma.letter.findUnique({
+    where: { id: letterId },
+    select: { signer1Id: true, signer2Id: true, signer3Id: true },
+  });
+  if (!letter) return null;
+  if (letter.signer1Id === userId) return 1;
+  if (letter.signer2Id === userId) return 2;
+  if (letter.signer3Id === userId) return 3;
+  return null;
+};
+
+export const approveLetter = async (letterId: number, userId: number, signerLevel: number, note?: string) => {
+  const letter = await prisma.letter.findUnique({
+    where: { id: letterId },
+    select: { signer2Id: true, signer3Id: true },
+  });
+
+  let nextStatus: LetterStatus;
+  if (signerLevel === 1) {
+    nextStatus = letter?.signer2Id ? LetterStatus.pending2 : LetterStatus.approved;
+  } else if (signerLevel === 2) {
+    nextStatus = letter?.signer3Id ? LetterStatus.pending3 : LetterStatus.approved;
+  } else {
+    nextStatus = LetterStatus.approved;
+  }
+
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    await tx.letterApproval.create({
+      data: { letterId, signerId: userId, signerLevel, action: "approved", actionNote: note },
     });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-/**
- * Select letter by ID
- */
-export const selectLetterById = async (id: number): Promise<LetterWithRelations | null> => {
-  try {
-    return await prisma.letter.findUnique({
-      where: { id },
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-                signaturePath: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-                signaturePath: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-                signaturePath: true,
-              },
-            },
-          },
-        },
-        rejectedBy: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
-      },
-    }) as LetterWithRelations | null;
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-/**
- * Select letters by status
- */
-export const selectLettersByStatus = async (
-  status: LetterStatus,
-  skip?: number,
-  take?: number
-) => {
-  try {
-    return await prisma.letter.findMany({
-      where: { status },
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
-      },
-      orderBy: { createdAt: "desc" },
-      skip: skip || 0,
-      take: take || undefined,
+    return tx.letter.update({
+      where: { id: letterId },
+      data: { status: nextStatus },
+      include: DEFAULT_LETTER_INCLUDE,
     });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
+  });
 };
 
-/**
- * Select letters pending approval by user ID
- */
-export const selectPendingLettersForUser = async (
-  userId: number,
-  skip?: number,
-  take?: number
-) => {
-  try {
-    return await prisma.letter.findMany({
-      where: {
-        OR: [
-          { signer1Id: userId, status: LetterStatus.PENDING_1 },
-          { signer2Id: userId, status: LetterStatus.PENDING_2 },
-          { signer3Id: userId, status: LetterStatus.PENDING_3 },
-        ],
-      },
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
-      },
-      orderBy: { createdAt: "desc" },
-      skip: skip || 0,
-      take: take || undefined,
+export const rejectLetter = async (letterId: number, userId: number, signerLevel: number, note?: string) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    await tx.letterApproval.create({
+      data: { letterId, signerId: userId, signerLevel, action: "rejected", actionNote: note },
     });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-/**
- * Select draft letters created by user
- */
-export const selectDraftLettersByCreator = async (
-  createdBy: number,
-  skip?: number,
-  take?: number
-) => {
-  try {
-    return await prisma.letter.findMany({
-      where: {
-        createdBy,
-        status: LetterStatus.DRAFT,
-      },
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
-      },
-      orderBy: { createdAt: "desc" },
-      skip: skip || 0,
-      take: take || undefined,
+    return tx.letter.update({
+      where: { id: letterId },
+      data: { status: LetterStatus.draft, revisionNote: note },
+      include: DEFAULT_LETTER_INCLUDE,
     });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
+  });
 };
 
-// ============================================================================
-// INSERT QUERY
-// ============================================================================
-
-/**
- * Insert new letter
- */
-export const insertLetter = async (
-  data: Prisma.LetterUncheckedCreateInput
-) => {
-  try {
-    return await prisma.letter.create({ 
-      data,
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
-      },
+export const cancelLetter = async (letterId: number, userId: number, signerLevel: number, note?: string) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
+    await tx.letterApproval.create({
+      data: { letterId, signerId: userId, signerLevel, action: "cancelled", actionNote: note },
     });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-// ============================================================================
-// UPDATE QUERY
-// ============================================================================
-
-/**
- * Update letter by ID
- */
-export const updateLetterById = async (
-  id: number,
-  data: Prisma.LetterUncheckedUpdateInput
-) => {
-  try {
-    return await prisma.letter.update({ 
-      where: { id }, 
-      data,
-      include: {
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        letterDocs: true,
-      },
-    });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-// ============================================================================
-// DELETE QUERY
-// ============================================================================
-
-/**
- * Delete letter by ID
- */
-export const deleteLetterById = async (id: number) => {
-  try {
-    return await prisma.letter.delete({ where: { id } });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-// ============================================================================
-// COUNT QUERY
-// ============================================================================
-
-/**
- * Select count of letters
- */
-export const selectLetterCount = async (
-  search?: string,
-  status?: LetterStatus
-): Promise<number> => {
-  try {
-    const where: Prisma.LetterWhereInput = {};
-    
-    if (search) {
-      where.OR = [
-        { letterNumber: { contains: search, mode: 'insensitive' as const } },
-        { subject: { contains: search, mode: 'insensitive' as const } },
-        { destination: { contains: search, mode: 'insensitive' as const } },
-      ];
-    }
-    
-    if (status) {
-      where.status = status;
-    }
-    
-    return await prisma.letter.count({ where });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-/**
- * Select count of pending letters for user
- */
-export const selectPendingLetterCountForUser = async (
-  userId: number
-): Promise<number> => {
-  try {
-    return await prisma.letter.count({
-      where: {
-        OR: [
-          { signer1Id: userId, status: LetterStatus.PENDING_1 },
-          { signer2Id: userId, status: LetterStatus.PENDING_2 },
-          { signer3Id: userId, status: LetterStatus.PENDING_3 },
-        ],
-      },
-    });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-// ============================================================================
-// OPTIMIZED QUERY
-// ============================================================================
-
-/**
- * Select all letters (optimized - only essential fields)
- */
-export const selectAllLettersOptimized = async (
-  skip?: number,
-  take?: number,
-  search?: string,
-  status?: LetterStatus
-) => {
-  try {
-    const where: Prisma.LetterWhereInput = {};
-    
-    if (search) {
-      where.OR = [
-        { letterNumber: { contains: search, mode: 'insensitive' as const } },
-        { subject: { contains: search, mode: 'insensitive' as const } },
-        { destination: { contains: search, mode: 'insensitive' as const } },
-      ];
-    }
-    
-    if (status) {
-      where.status = status;
-    }
-    
-    return await prisma.letter.findMany({
-      select: {
-        id: true,
-        letterType: true,
-        letterNumber: true,
-        subject: true,
-        destination: true,
-        status: true,
-        createdAt: true,
-        signer1: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer2: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-        signer3: {
-          select: {
-            userId: true,
-            username: true,
-            staffs: {
-              select: {
-                staffName: true,
-                position: true,
-              },
-            },
-          },
-        },
-      },
-      where,
-      orderBy: { createdAt: "desc" },
-      skip: skip || 0,
-      take: take || undefined,
-    });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-// ============================================================================
-// LETTER DOCS OPERATIONS
-// ============================================================================
-
-/**
- * Insert letter document
- */
-export const insertLetterDoc = async (
-  data: Prisma.LetterDocsUncheckedCreateInput
-) => {
-  try {
-    return await prisma.letterDocs.create({ data });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
-};
-
-/**
- * Delete letter document
- */
-export const deleteLetterDoc = async (id: number) => {
-  try {
-    return await prisma.letterDocs.delete({ where: { id } });
-  } catch (error) {
-    throw error instanceof Error ? error : new Error(String(error));
-  }
+    return tx.letter.delete({ where: { id: letterId } });
+  });
 };

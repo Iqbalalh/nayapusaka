@@ -73,8 +73,7 @@ export const ModelName = {
   GalleryCategory: 'GalleryCategory',
   SocialAssistance: 'SocialAssistance',
   Letter: 'Letter',
-  LetterTemplate: 'LetterTemplate',
-  LetterDocs: 'LetterDocs'
+  LetterApproval: 'LetterApproval'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -470,59 +469,37 @@ export const LetterScalarFieldEnum = {
   id: 'id',
   letterType: 'letterType',
   letterNumber: 'letterNumber',
-  attachments: 'attachments',
+  attachment: 'attachment',
   subject: 'subject',
-  createdAt: 'createdAt',
+  letterDate: 'letterDate',
   destination: 'destination',
-  tembusan: 'tembusan',
-  content: 'content',
+  carbonCopy: 'carbonCopy',
+  documentPath: 'documentPath',
   status: 'status',
-  templateId: 'templateId',
   signer1Id: 'signer1Id',
   signer2Id: 'signer2Id',
   signer3Id: 'signer3Id',
-  approved1At: 'approved1At',
-  approved2At: 'approved2At',
-  approved3At: 'approved3At',
-  rejectedById: 'rejectedById',
-  rejectedAt: 'rejectedAt',
-  rejectionReason: 'rejectionReason',
-  generatedDocPath: 'generatedDocPath',
-  verificationHash: 'verificationHash',
+  revisionNote: 'revisionNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   createdBy: 'createdBy',
-  editedBy: 'editedBy',
-  updatedAt: 'updatedAt'
+  editedBy: 'editedBy'
 } as const
 
 export type LetterScalarFieldEnum = (typeof LetterScalarFieldEnum)[keyof typeof LetterScalarFieldEnum]
 
 
-export const LetterTemplateScalarFieldEnum = {
-  id: 'id',
-  letterType: 'letterType',
-  templateName: 'templateName',
-  s3Path: 's3Path',
-  version: 'version',
-  isActive: 'isActive',
-  variables: 'variables',
-  createdBy: 'createdBy',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  editedBy: 'editedBy'
-} as const
-
-export type LetterTemplateScalarFieldEnum = (typeof LetterTemplateScalarFieldEnum)[keyof typeof LetterTemplateScalarFieldEnum]
-
-
-export const LetterDocsScalarFieldEnum = {
+export const LetterApprovalScalarFieldEnum = {
   id: 'id',
   letterId: 'letterId',
-  name: 'name',
-  urlDoc: 'urlDoc',
-  createdAt: 'createdAt'
+  signerId: 'signerId',
+  signerLevel: 'signerLevel',
+  action: 'action',
+  actionNote: 'actionNote',
+  actionAt: 'actionAt'
 } as const
 
-export type LetterDocsScalarFieldEnum = (typeof LetterDocsScalarFieldEnum)[keyof typeof LetterDocsScalarFieldEnum]
+export type LetterApprovalScalarFieldEnum = (typeof LetterApprovalScalarFieldEnum)[keyof typeof LetterApprovalScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -531,14 +508,6 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
-
-
-export const NullableJsonNullValueInput = {
-  DbNull: DbNull,
-  JsonNull: JsonNull
-} as const
-
-export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -555,13 +524,4 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
-export const JsonNullValueFilter = {
-  DbNull: DbNull,
-  JsonNull: JsonNull,
-  AnyNull: AnyNull
-} as const
-
-export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
