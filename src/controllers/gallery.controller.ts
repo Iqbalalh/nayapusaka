@@ -523,9 +523,13 @@ export const getCategories = async (
 ) => {
   try {
     const categories = await selectAllCategories();
+
+    // Add staff names to category records
+    const categoriesWithStaffNames = await addStaffNamesToRecords(categories);
+
     return res.json({
       message: "Berhasil mendapatkan data kategori",
-      data: categories,
+      data: categoriesWithStaffNames,
     });
   } catch (err) {
     next(err);
@@ -548,9 +552,12 @@ export const getCategory = async (
       });
     }
 
+    // Add staff names to category record
+    const categoriesWithStaffNames = await addStaffNamesToRecords([category]);
+
     return res.json({
       message: "Successfully retrieved category detail",
-      data: category,
+      data: categoriesWithStaffNames[0],
     });
   } catch (err) {
     next(err);
@@ -586,7 +593,7 @@ export const postCategory = async (
       name = req.body.name;
       slug = req.body.slug;
     }
-    
+
     if (!name || !slug) {
       console.error('Missing required fields:', { name, slug, body: req.body });
       return res.status(400).json({
@@ -594,7 +601,7 @@ export const postCategory = async (
         data: null,
       });
     }
-    
+
     const body: Prisma.CategoryCreateInput = {
       name: String(name),
       slug: String(slug),
@@ -603,9 +610,12 @@ export const postCategory = async (
 
     const newCategory = await insertCategory(body);
 
+    // Add staff names to category record
+    const categoriesWithStaffNames = await addStaffNamesToRecords([newCategory]);
+
     return res.status(201).json({
       message: "Category created successfully",
-      data: newCategory,
+      data: categoriesWithStaffNames[0],
     });
   } catch (err) {
     console.error('Error creating category:', err);
@@ -652,9 +662,12 @@ export const patchCategory = async (
       editedBy: userId,
     });
 
+    // Add staff names to category record
+    const categoriesWithStaffNames = await addStaffNamesToRecords([updated]);
+
     return res.json({
       message: "Category updated successfully",
-      data: updated,
+      data: categoriesWithStaffNames[0],
     });
   } catch (err) {
     next(err);

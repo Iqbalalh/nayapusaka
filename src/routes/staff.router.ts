@@ -20,11 +20,17 @@ staffRouter.use(verifyToken);
 staffRouter.get("/", getStaffs);
 staffRouter.get("/:id", getStaff);
 
-// CREATE (POST + single picture)
-staffRouter.post("/", upload.single("picture"), postStaff);
+// Upload fields: picture + signature
+const staffFields = upload.fields([
+  { name: "picture", maxCount: 1 },
+  { name: "signature", maxCount: 1 },
+]);
 
-// UPDATE (+ optional picture)
-staffRouter.patch("/:id", upload.single("picture"), patchStaff);
+// CREATE (POST + picture/signature)
+staffRouter.post("/", staffFields, postStaff as any);
+
+// UPDATE (+ optional picture/signature)
+staffRouter.patch("/:id", staffFields, patchStaff as any);
 
 // DELETE (picture + record)
 staffRouter.delete("/:id", deleteStaff);

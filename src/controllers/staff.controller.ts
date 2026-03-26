@@ -9,10 +9,9 @@ import {
 import { Prisma } from "../generated/prisma/client";
 import { getPresignedUrl, isValidS3Key, uploadToS3, deleteFromS3 } from "../utils/storage/s3.storage";
 import { AuthRequest } from "../middlewares/auth";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
-interface RequestWithFile extends AuthRequest {
-  file?: Express.Multer.File;
-}
+type RequestWithFiles = AuthRequest;
 
 // ============================================================================
 // GET ALL STAFF
@@ -28,17 +27,25 @@ export const getStaffs = async (
     staffs = await Promise.all(
       staffs.map(async (staff) => {
         let pictUrl = null;
+        let signatureUrl = null;
 
         if (isValidS3Key(staff.staffPict)) {
           pictUrl = await getPresignedUrl(staff.staffPict);
+        }
+        if (isValidS3Key(staff.signaturePath)) {
+          signatureUrl = await getPresignedUrl(staff.signaturePath);
         }
 
         return {
           ...staff,
           staffPict: pictUrl,
+          signaturePath: signatureUrl,
         };
       })
     );
+
+    // Add staff names to staff records
+    staffs = await addStaffNamesToRecords(staffs);
 
     return res.json({
       message: "Berhasil mendapatkan data staf",
@@ -69,18 +76,27 @@ export const getStaff = async (
     }
 
     let pictUrl = null;
+    let sigUrl = null;
     if (isValidS3Key(staff.staffPict)) {
       pictUrl = await getPresignedUrl(staff.staffPict);
+    }
+    if (isValidS3Key(staff.signaturePath)) {
+      sigUrl = await getPresignedUrl(staff.signaturePath);
     }
 
     const result = {
       ...staff,
       staffPict: pictUrl,
+      signaturePath: sigUrl,
     };
+
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+    const finalResult = resultWithStaffNames[0];
 
     return res.json({
       message: "Successfully retrieved staff detail",
-      data: result,
+      data: finalResult,
     });
   } catch (err) {
     next(err);
@@ -91,13 +107,14 @@ export const getStaff = async (
 // CREATE STAFF
 // ============================================================================
 export const postStaff = async (
-  req: RequestWithFile,
+  req: RequestWithFiles,
   res: Response,
   next: NextFunction
 ) => {
   try {
     // Get user ID from JWT token
     const userId = (req.user as any)?.id || 2;
+    const files = req.files as { picture?: Express.Multer.File[]; signature?: Express.Multer.File[] } | undefined;
 
     const {
       staffName,
@@ -133,29 +150,35 @@ export const postStaff = async (
     };
 
     // Upload picture if provided
-    if (req.file) {
-      const pictKey = await uploadToS3(
-        req.file,
-        nik,
-        `staff-${nik}`,
-        "staff-pictures"
-      );
-      if (pictKey) {
-        body.staffPict = pictKey;
-      }
+    const pictureFile = files?.picture?.[0];
+    if (pictureFile) {
+      const pictKey = await uploadToS3(pictureFile, nik, `staff-${nik}`, "staff-pictures");
+      if (pictKey) body.staffPict = pictKey;
+    }
+
+    // Upload signature if provided
+    const signatureFile = files?.signature?.[0];
+    if (signatureFile) {
+      const sigKey = await uploadToS3(signatureFile, nik, `sig-${nik}`, "staff-signatures");
+      if (sigKey) body.signaturePath = sigKey;
     }
 
     const newStaff = await insertStaff(body);
 
-    // Get presigned URL for picture
+    // Get presigned URLs
     let pictUrl = null;
     if (isValidS3Key(newStaff.staffPict)) {
       pictUrl = await getPresignedUrl(newStaff.staffPict);
+    }
+    let sigUrl = null;
+    if (isValidS3Key(newStaff.signaturePath)) {
+      sigUrl = await getPresignedUrl(newStaff.signaturePath);
     }
 
     const result = {
       ...newStaff,
       staffPict: pictUrl,
+      signaturePath: sigUrl,
     };
 
     return res.status(201).json({
@@ -186,13 +209,14 @@ export const postStaff = async (
 // UPDATE STAFF
 // ============================================================================
 export const patchStaff = async (
-  req: RequestWithFile,
+  req: RequestWithFiles,
   res: Response,
   next: NextFunction
 ) => {
   try {
     // Get user ID from JWT token
     const userId = (req.user as any)?.id || 2;
+    const files = req.files as { picture?: Express.Multer.File[]; signature?: Express.Multer.File[] } | undefined;
 
     const id = Number(req.params.id);
     const existing = await selectStaffByIdWithRole(id);
@@ -228,35 +252,44 @@ export const patchStaff = async (
     if (position !== undefined) updateData.position = position;
     updateData.editedBy = userId;
 
+    const currentNik = nik || existing.nik;
+
     // Upload new picture if provided
-    if (req.file) {
-      // Delete old picture from S3
+    const pictureFile = files?.picture?.[0];
+    if (pictureFile) {
       if (isValidS3Key(existing.staffPict)) {
         await deleteFromS3(existing.staffPict);
       }
+      const pictKey = await uploadToS3(pictureFile, currentNik, `staff-${currentNik}`, "staff-pictures");
+      if (pictKey) updateData.staffPict = pictKey;
+    }
 
-      const pictKey = await uploadToS3(
-        req.file,
-        nik || existing.nik,
-        `staff-${nik || existing.nik}`,
-        "staff-pictures"
-      );
-      if (pictKey) {
-        updateData.staffPict = pictKey;
+    // Upload new signature if provided
+    const signatureFile = files?.signature?.[0];
+    if (signatureFile) {
+      if (isValidS3Key(existing.signaturePath)) {
+        await deleteFromS3(existing.signaturePath);
       }
+      const sigKey = await uploadToS3(signatureFile, currentNik, `sig-${currentNik}`, "staff-signatures");
+      if (sigKey) updateData.signaturePath = sigKey;
     }
 
     const updated = await updateStaffById(id, updateData);
 
-    // Get presigned URL for picture
+    // Get presigned URLs
     let pictUrl = null;
     if (isValidS3Key(updated.staffPict)) {
       pictUrl = await getPresignedUrl(updated.staffPict);
+    }
+    let sigUrl = null;
+    if (isValidS3Key(updated.signaturePath)) {
+      sigUrl = await getPresignedUrl(updated.signaturePath);
     }
 
     const result = {
       ...updated,
       staffPict: pictUrl,
+      signaturePath: sigUrl,
     };
 
     return res.json({
@@ -286,9 +319,12 @@ export const deleteStaff = async (
       });
     }
 
-    // Delete picture from S3
+    // Delete picture and signature from S3
     if (isValidS3Key(existing.staffPict)) {
       await deleteFromS3(existing.staffPict);
+    }
+    if (isValidS3Key(existing.signaturePath)) {
+      await deleteFromS3(existing.signaturePath);
     }
 
     // Delete the staff

@@ -65,6 +65,8 @@ export const selectHomeDetails = async (id: number) => {
       createdAt: home.createdAt,
       regionId: home.regionId,
       postalCode: home.postalCode,
+      createdBy: home.createdBy,
+      editedBy: home.editedBy,
       selectedRegionName: home.regions?.regionName,
       employee: home.employees,
       partner: {
@@ -89,6 +91,8 @@ export const selectHomeList = async () => {
         id: true,
         partnerId: true,
         employeeId: true,
+        createdBy: true,
+        editedBy: true,
         partners: { select: { partnerName: true } },
         employees: { select: { employeeName: true } },
       },
@@ -99,6 +103,8 @@ export const selectHomeList = async () => {
       id: home.id,
       partnerId: home.partnerId,
       employeeId: home.employeeId,
+      createdBy: home.createdBy,
+      editedBy: home.editedBy,
       partnerName: home.partners?.partnerName ?? null,
       employeeName: home.employees?.employeeName ?? null,
     }));
@@ -127,6 +133,8 @@ export const selectHomesForMaps = async () => {
         employeeId: true,
         waliId: true,
         regionId: true,
+        createdBy: true,
+        editedBy: true,
         partners: {
           select: {
             partnerName: true,
@@ -180,6 +188,8 @@ export const selectHomesForMaps = async () => {
         employeeId: home.employeeId,
         waliId: home.waliId,
         regionId: home.regionId,
+        createdBy: home.createdBy,
+        editedBy: home.editedBy,
         partners: {
           partnerName: home.partners?.partnerName ?? null,
           address: home.partners?.address ?? null,
@@ -230,6 +240,8 @@ export const selectAbkHomesForMaps = async () => {
         employeeId: true,
         waliId: true,
         regionId: true,
+        createdBy: true,
+        editedBy: true,
         partners: {
           select: {
             partnerName: true,
@@ -281,6 +293,8 @@ export const selectAbkHomesForMaps = async () => {
         employeeId: home.employeeId,
         waliId: home.waliId,
         regionId: home.regionId,
+        createdBy: home.createdBy,
+        editedBy: home.editedBy,
         partners: {
           partnerName: home.partners?.partnerName ?? null,
           address: home.partners?.address ?? null,
@@ -331,6 +345,8 @@ export const selectOrphanHomesForMaps = async () => {
         employeeId: true,
         waliId: true,
         regionId: true,
+        createdBy: true,
+        editedBy: true,
         partners: {
           select: {
             partnerName: true,
@@ -382,6 +398,8 @@ export const selectOrphanHomesForMaps = async () => {
         employeeId: home.employeeId,
         waliId: home.waliId,
         regionId: home.regionId,
+        createdBy: home.createdBy,
+        editedBy: home.editedBy,
         partners: {
           partnerName: home.partners?.partnerName ?? null,
           address: home.partners?.address ?? null,
@@ -441,6 +459,8 @@ export const selectHomeDetailById = async (id: number) => {
     });
 
     return {
+      createdBy: home.createdBy,
+      editedBy: home.editedBy,
       employees: {
         employeeName: home.employees?.employeeName,
         nipNipp: home.employees?.nipNipp,

@@ -1,48 +1,49 @@
 import { Request, Response, NextFunction } from "express";
+import crypto from "crypto";
 import {
   selectAllLetters,
   selectLettersByStatus,
-  selectDraftLettersByCreator,
-  selectLettersPendingApproval,
+  selectDraftsByUser,
+  selectPendingByUser,
   selectLetterById,
+  selectLetterByVerificationToken,
   insertLetter,
-  updateLetter,
-  deleteLetter,
-  submitLetterForApproval,
-  approveLetter,
-  rejectLetter,
-  cancelLetter,
-  publishLetter,
-  getSignerLevel,
-  CreateLetterData,
-  UpdateLetterData,
+  insertLetterApproval,
+  updateLetterById,
+  deleteLetterById,
 } from "../services/letter.services";
-import { LetterStatus } from "../generated/prisma/enums";
-import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
+import { Prisma, LetterStatus } from "../generated/prisma/client";
+import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key, downloadFromS3, uploadBufferToS3 } from "../utils/storage/s3.storage";
 import { AuthRequest } from "../middlewares/auth";
 import { addStaffNamesToRecords } from "../utils/staff/staff.util";
+import { embedSignatureOnDocument } from "../utils/document/signDocument";
+import { embedQrCodeOnDocument } from "../utils/document/embedQrCode";
+import { shouldConvertToPdf, convertBufferToPdf } from "../utils/document/convertToPdf";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
-  files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
 }
 
-// Allowed document mime types
-const ALLOWED_DOC_TYPES = [
-  "application/pdf",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/msword",
-];
+// ============================================================================
+// HELPERS
+// ============================================================================
 
-// Type for letter with relations
-type LetterWithRelations = Awaited<ReturnType<typeof selectAllLetters>>[number];
-type LetterDetailWithRelations = Awaited<ReturnType<typeof selectLetterById>>;
+const getSignerLevel = (userId: number, letter: any): number | null => {
+  if (letter.signer1Id === userId) return 1;
+  if (letter.signer2Id === userId) return 2;
+  if (letter.signer3Id === userId) return 3;
+  return null;
+};
 
-// Transform letter for response
-const transformLetter = async (letter: LetterWithRelations) => {
+const transformLetter = async (letter: any) => {
   let documentUrl = null;
-  if (isValidS3Key(letter.documentPath)) {
+  if (letter.documentPath && isValidS3Key(letter.documentPath)) {
     documentUrl = await getPresignedUrl(letter.documentPath);
+  }
+
+  let signedDocumentUrl = null;
+  if (letter.signedDocumentPath && isValidS3Key(letter.signedDocumentPath)) {
+    signedDocumentUrl = await getPresignedUrl(letter.signedDocumentPath);
   }
 
   return {
@@ -54,30 +55,54 @@ const transformLetter = async (letter: LetterWithRelations) => {
     letterDate: letter.letterDate,
     destination: letter.destination,
     carbonCopy: letter.carbonCopy,
-    documentPath: documentUrl,
+    documentPath: letter.documentPath,
+    documentUrl,
+    signedDocumentPath: letter.signedDocumentPath,
+    signedDocumentUrl,
     status: letter.status,
-    signer1: letter.signer1
-      ? {
-          userId: letter.signer1.userId,
-          username: letter.signer1.username,
-          name: letter.signer1.staffs?.staffName || null,
-        }
-      : null,
-    signer2: letter.signer2
-      ? {
-          userId: letter.signer2.userId,
-          username: letter.signer2.username,
-          name: letter.signer2.staffs?.staffName || null,
-        }
-      : null,
-    signer3: letter.signer3
-      ? {
-          userId: letter.signer3.userId,
-          username: letter.signer3.username,
-          name: letter.signer3.staffs?.staffName || null,
-        }
-      : null,
+    signer1Id: letter.signer1Id,
+    signer2Id: letter.signer2Id,
+    signer3Id: letter.signer3Id,
+    signer1: letter.signer1 ? {
+      userId: letter.signer1.userId,
+      username: letter.signer1.username,
+      staffName: letter.signer1.staffs?.staffName || null,
+      position: letter.signer1.staffs?.position || null,
+      signatureUrl: letter.signer1.staffs?.signaturePath
+        ? await getPresignedUrl(letter.signer1.staffs.signaturePath)
+        : null,
+    } : null,
+    signer2: letter.signer2 ? {
+      userId: letter.signer2.userId,
+      username: letter.signer2.username,
+      staffName: letter.signer2.staffs?.staffName || null,
+      position: letter.signer2.staffs?.position || null,
+      signatureUrl: letter.signer2.staffs?.signaturePath
+        ? await getPresignedUrl(letter.signer2.staffs.signaturePath)
+        : null,
+    } : null,
+    signer3: letter.signer3 ? {
+      userId: letter.signer3.userId,
+      username: letter.signer3.username,
+      staffName: letter.signer3.staffs?.staffName || null,
+      position: letter.signer3.staffs?.position || null,
+      signatureUrl: letter.signer3.staffs?.signaturePath
+        ? await getPresignedUrl(letter.signer3.staffs.signaturePath)
+        : null,
+    } : null,
     revisionNote: letter.revisionNote,
+    letterApprovals: await Promise.all(
+      (letter.letterApprovals || []).map(async (approval: any) => {
+        let signatureUrl = null;
+        const signerKey = `signer${approval.signerLevel}`;
+        const signer = letter[signerKey];
+        if (approval.action === "approve" && signer?.staffs?.signaturePath) {
+          signatureUrl = await getPresignedUrl(signer.staffs.signaturePath);
+        }
+        return { ...approval, signatureUrl };
+      })
+    ),
+    verificationToken: letter.verificationToken,
     createdAt: letter.createdAt,
     updatedAt: letter.updatedAt,
     createdBy: letter.createdBy,
@@ -85,29 +110,20 @@ const transformLetter = async (letter: LetterWithRelations) => {
   };
 };
 
+const transformLetters = async (letters: any[]) => {
+  const transformed = await Promise.all(letters.map(transformLetter));
+  return await addStaffNamesToRecords(transformed);
+};
+
 // ============================================================================
-// GET ALL LETTERS (Archive)
+// GET ALL LETTERS (ARCHIVE)
 // ============================================================================
-export const getLetters = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const getLetters = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const letters = await selectAllLetters();
-
-    // Transform letters to include document URL
-    const transformedLetters = await Promise.all(
-      letters.map((letter: LetterWithRelations) => transformLetter(letter))
-    );
-
-    // Add staff names to records
-    const lettersWithStaffNames = await addStaffNamesToRecords(transformedLetters);
-
-    return res.json({
-      message: "Berhasil mendapatkan data surat",
-      data: lettersWithStaffNames,
-    });
+    const data = await transformLetters(letters);
+    return res.json({ message: "Berhasil mendapatkan data surat", data });
   } catch (err) {
     next(err);
   }
@@ -116,147 +132,46 @@ export const getLetters = async (
 // ============================================================================
 // GET LETTERS BY STATUS
 // ============================================================================
-export const getLettersByStatus = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const getLettersByStatus = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const { status } = req.query;
-
-    if (!status || !Object.values(LetterStatus).includes(status as LetterStatus)) {
-      return res.status(400).json({
-        message: "Status tidak valid",
-        data: null,
-      });
+    const status = req.query.status as LetterStatus;
+    if (!status) {
+      return res.status(400).json({ message: "Parameter status diperlukan" });
     }
-
-    const letters = await selectLettersByStatus(status as LetterStatus);
-
-    const transformedLetters = await Promise.all(
-      letters.map((letter: LetterWithRelations) => transformLetter(letter))
-    );
-
-    return res.json({
-      message: "Berhasil mendapatkan data surat",
-      data: transformedLetters,
-    });
+    const letters = await selectLettersByStatus(status);
+    const data = await transformLetters(letters);
+    return res.json({ message: "Berhasil mendapatkan data surat", data });
   } catch (err) {
     next(err);
   }
 };
 
 // ============================================================================
-// GET DRAFT LETTERS BY CREATOR
+// GET DRAFTS (USER'S OWN)
 // ============================================================================
-export const getDraftLetters = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const getDrafts = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-        data: null,
-      });
-    }
-
-    const letters = await selectDraftLettersByCreator(userId);
-
-    const transformedLetters = await Promise.all(
-      letters.map((letter: LetterWithRelations) => transformLetter(letter))
-    );
-
-    return res.json({
-      message: "Berhasil mendapatkan data draft surat",
-      data: transformedLetters,
-    });
+    const letters = await selectDraftsByUser(userId);
+    const data = await transformLetters(letters);
+    return res.json({ message: "Berhasil mendapatkan draft surat", data });
   } catch (err) {
     next(err);
   }
 };
 
 // ============================================================================
-// GET LETTERS PENDING APPROVAL
+// GET PENDING LETTERS (FOR APPROVAL)
 // ============================================================================
-export const getPendingApprovals = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const getPendingLetters = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-        data: null,
-      });
-    }
-
-    const letters = await selectLettersPendingApproval(userId);
-
-    const transformedLetters = await Promise.all(
-      letters.map(async (letter: LetterWithRelations) => {
-        let documentUrl = null;
-        if (isValidS3Key(letter.documentPath)) {
-          documentUrl = await getPresignedUrl(letter.documentPath);
-        }
-
-        // Determine current signer level for this user
-        let currentLevel = 1;
-        if (letter.signer2Id === userId && letter.status === LetterStatus.pending2) {
-          currentLevel = 2;
-        } else if (letter.signer3Id === userId && letter.status === LetterStatus.pending3) {
-          currentLevel = 3;
-        }
-
-        return {
-          id: letter.id,
-          letterType: letter.letterType,
-          letterNumber: letter.letterNumber,
-          attachment: letter.attachment,
-          subject: letter.subject,
-          letterDate: letter.letterDate,
-          destination: letter.destination,
-          carbonCopy: letter.carbonCopy,
-          documentPath: documentUrl,
-          status: letter.status,
-          currentLevel,
-    signer1: letter.signer1
-      ? {
-          userId: letter.signer1.userId,
-          username: letter.signer1.username,
-          name: letter.signer1.staffs?.staffName || null,
-        }
-      : null,
-    signer2: letter.signer2
-      ? {
-          userId: letter.signer2.userId,
-          username: letter.signer2.username,
-          name: letter.signer2.staffs?.staffName || null,
-        }
-      : null,
-    signer3: letter.signer3
-      ? {
-          userId: letter.signer3.userId,
-          username: letter.signer3.username,
-          name: letter.signer3.staffs?.staffName || null,
-        }
-      : null,
-          createdAt: letter.createdAt,
-          updatedAt: letter.updatedAt,
-        };
-      })
-    );
-
-    return res.json({
-      message: "Berhasil mendapatkan data persetujuan surat",
-      data: transformedLetters,
-    });
+    const letters = await selectPendingByUser(userId);
+    const data = await transformLetters(letters);
+    return res.json({ message: "Berhasil mendapatkan surat menunggu persetujuan", data });
   } catch (err) {
     next(err);
   }
@@ -265,78 +180,18 @@ export const getPendingApprovals = async (
 // ============================================================================
 // GET LETTER BY ID
 // ============================================================================
-export const getLetter = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const getLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const id = Number(req.params.id);
     const letter = await selectLetterById(id);
 
     if (!letter) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-        data: null,
-      });
+      return res.status(404).json({ message: "Surat tidak ditemukan", data: null });
     }
 
-    let documentUrl = null;
-    if (isValidS3Key(letter.documentPath)) {
-      documentUrl = await getPresignedUrl(letter.documentPath);
-    }
-
-    const result = {
-      id: letter.id,
-      letterType: letter.letterType,
-      letterNumber: letter.letterNumber,
-      attachment: letter.attachment,
-      subject: letter.subject,
-      letterDate: letter.letterDate,
-      destination: letter.destination,
-      carbonCopy: letter.carbonCopy,
-      documentPath: documentUrl,
-      status: letter.status,
-    signer1: letter.signer1
-      ? {
-          userId: letter.signer1.userId,
-          username: letter.signer1.username,
-          name: letter.signer1.staffs?.staffName || null,
-        }
-      : null,
-    signer2: letter.signer2
-      ? {
-          userId: letter.signer2.userId,
-          username: letter.signer2.username,
-          name: letter.signer2.staffs?.staffName || null,
-        }
-      : null,
-    signer3: letter.signer3
-      ? {
-          userId: letter.signer3.userId,
-          username: letter.signer3.username,
-          name: letter.signer3.staffs?.staffName || null,
-        }
-      : null,
-      revisionNote: letter.revisionNote,
-      approvals: letter.letterApprovals.map((approval: { id: number; signerId: number; signerLevel: number; action: string; actionNote: string | null; actionAt: Date }) => ({
-        id: approval.id,
-        signerId: approval.signerId,
-        signerLevel: approval.signerLevel,
-        action: approval.action,
-        actionNote: approval.actionNote,
-        actionAt: approval.actionAt,
-      })),
-      createdAt: letter.createdAt,
-      updatedAt: letter.updatedAt,
-      createdBy: letter.createdBy,
-      editedBy: letter.editedBy,
-    };
-
-    return res.json({
-      message: "Berhasil mendapatkan detail surat",
-      data: result,
-    });
+    const data = await transformLetter(letter);
+    return res.json({ message: "Berhasil mendapatkan detail surat", data });
   } catch (err) {
     next(err);
   }
@@ -345,134 +200,49 @@ export const getLetter = async (
 // ============================================================================
 // CREATE LETTER
 // ============================================================================
-export const postLetter = async (
-  req: RequestWithFile,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const postLetter = async (req: RequestWithFile, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-        data: null,
-      });
-    }
-
     const {
-      letterType,
-      letterNumber,
-      attachment,
-      subject,
-      letterDate,
-      destination,
-      carbonCopy,
-      signer1Id,
-      signer2Id,
-      signer3Id,
+      letterType, letterNumber, attachment, subject,
+      letterDate, destination, carbonCopy,
+      signer1Id, signer2Id, signer3Id,
     } = req.body;
 
-    // Validate required fields
     if (!letterType || !subject || !letterDate || !destination || !signer1Id) {
-      return res.status(400).json({
-        message: "Field wajib: Jenis Surat, Perihal, Tanggal Pembuatan, Tujuan Surat, dan Penandatangan 1",
-        data: null,
-      });
+      return res.status(400).json({ message: "Field wajib belum diisi" });
     }
 
-    // Validate file type if uploaded
-    if (req.file && !ALLOWED_DOC_TYPES.includes(req.file.mimetype)) {
-      return res.status(400).json({
-        message: "Hanya file .docx atau .pdf yang diizinkan",
-        data: null,
-      });
-    }
-
-    // Create letter first
-    const letterData: CreateLetterData = {
+    const body: Prisma.LetterUncheckedCreateInput = {
       letterType,
-      letterNumber: letterNumber || undefined,
-      attachment: attachment || undefined,
+      letterNumber: letterNumber || null,
+      attachment: attachment || null,
       subject,
       letterDate: new Date(letterDate),
       destination,
-      carbonCopy: carbonCopy || undefined,
+      carbonCopy: carbonCopy || null,
+      status: "draft",
       signer1Id: Number(signer1Id),
-      signer2Id: signer2Id ? Number(signer2Id) : undefined,
-      signer3Id: signer3Id ? Number(signer3Id) : undefined,
+      signer2Id: signer2Id ? Number(signer2Id) : null,
+      signer3Id: signer3Id ? Number(signer3Id) : null,
       createdBy: userId,
     };
 
-    const newLetter = await insertLetter(letterData);
+    const newLetter = await insertLetter(body);
 
     // Upload document if provided
-    let documentPath: string | undefined = undefined;
     if (req.file) {
-      const uploadedPath = await uploadToS3(
-        req.file,
-        newLetter.id,
-        `letter-${newLetter.id}`,
-        "letters"
-      );
-
-      if (uploadedPath) {
-        documentPath = uploadedPath;
-        await updateLetter(newLetter.id, {
-          documentPath,
-          editedBy: userId,
-        });
+      const docPath = await uploadToS3(req.file, newLetter.id, "letter-doc", "letters");
+      if (docPath) {
+        await updateLetterById(newLetter.id, { documentPath: docPath });
       }
     }
 
-    // Fetch updated letter
-    const updatedLetter = await selectLetterById(newLetter.id);
+    const result = await selectLetterById(newLetter.id);
+    const data = await transformLetter(result);
 
-    let documentUrl = null;
-    if (updatedLetter?.documentPath && isValidS3Key(updatedLetter.documentPath)) {
-      documentUrl = await getPresignedUrl(updatedLetter.documentPath);
-    }
-
-    const result = {
-      id: updatedLetter?.id,
-      letterType: updatedLetter?.letterType,
-      letterNumber: updatedLetter?.letterNumber,
-      attachment: updatedLetter?.attachment,
-      subject: updatedLetter?.subject,
-      letterDate: updatedLetter?.letterDate,
-      destination: updatedLetter?.destination,
-      carbonCopy: updatedLetter?.carbonCopy,
-      documentPath: documentUrl,
-      status: updatedLetter?.status,
-      signer1: updatedLetter?.signer1
-        ? {
-            userId: updatedLetter.signer1.userId,
-            username: updatedLetter.signer1.username,
-            name: updatedLetter.signer1.staffs?.staffName || null,
-          }
-        : null,
-      signer2: updatedLetter?.signer2
-        ? {
-            userId: updatedLetter.signer2.userId,
-            username: updatedLetter.signer2.username,
-            name: updatedLetter.signer2.staffs?.staffName || null,
-          }
-        : null,
-      signer3: updatedLetter?.signer3
-        ? {
-            userId: updatedLetter.signer3.userId,
-            username: updatedLetter.signer3.username,
-            name: updatedLetter.signer3.staffs?.staffName || null,
-          }
-        : null,
-      createdAt: updatedLetter?.createdAt,
-      updatedAt: updatedLetter?.updatedAt,
-    };
-
-    return res.status(201).json({
-      message: "Surat berhasil dibuat",
-      data: result,
-    });
+    return res.status(201).json({ message: "Surat berhasil dibuat", data });
   } catch (err) {
     next(err);
   }
@@ -481,148 +251,60 @@ export const postLetter = async (
 // ============================================================================
 // UPDATE LETTER
 // ============================================================================
-export const patchLetter = async (
-  req: RequestWithFile,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const patchLetter = async (req: RequestWithFile, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-        data: null,
-      });
-    }
-
     const id = Number(req.params.id);
     const existing = await selectLetterById(id);
 
     if (!existing) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-        data: null,
-      });
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    // Only allow editing draft letters
-    if (existing.status !== LetterStatus.draft) {
-      return res.status(400).json({
-        message: "Hanya surat dengan status draft yang dapat diubah",
-        data: null,
-      });
-    }
-
-    // Validate file type if uploaded
-    if (req.file && !ALLOWED_DOC_TYPES.includes(req.file.mimetype)) {
-      return res.status(400).json({
-        message: "Hanya file .docx atau .pdf yang diizinkan",
-        data: null,
-      });
+    if (existing.status !== "draft") {
+      return res.status(400).json({ message: "Hanya surat draft yang dapat diubah" });
     }
 
     const {
-      letterType,
-      letterNumber,
-      attachment,
-      subject,
-      letterDate,
-      destination,
-      carbonCopy,
-      signer1Id,
-      signer2Id,
-      signer3Id,
+      letterType, letterNumber, attachment, subject,
+      letterDate, destination, carbonCopy,
+      signer1Id, signer2Id, signer3Id,
     } = req.body;
 
-    // Handle document upload
-    let documentPath: string | undefined = existing.documentPath || undefined;
+    const updateData: Prisma.LetterUncheckedUpdateInput = {
+      letterType: letterType !== undefined ? letterType : undefined,
+      letterNumber: letterNumber !== undefined ? (letterNumber || null) : undefined,
+      attachment: attachment !== undefined ? (attachment || null) : undefined,
+      subject: subject !== undefined ? subject : undefined,
+      letterDate: letterDate !== undefined ? new Date(letterDate) : undefined,
+      destination: destination !== undefined ? destination : undefined,
+      carbonCopy: carbonCopy !== undefined ? (carbonCopy || null) : undefined,
+      signer1Id: signer1Id !== undefined ? Number(signer1Id) : undefined,
+      signer2Id: signer2Id !== undefined ? (signer2Id ? Number(signer2Id) : null) : undefined,
+      signer3Id: signer3Id !== undefined ? (signer3Id ? Number(signer3Id) : null) : undefined,
+      revisionNote: null,
+      editedBy: userId,
+      updatedAt: new Date(),
+    };
 
+    // Handle document file replacement
     if (req.file) {
-      const newPath = await uploadToS3(
-        req.file,
-        id,
-        `letter-${id}`,
-        "letters"
-      );
-
+      const newPath = await uploadToS3(req.file, id, "letter-doc", "letters");
       if (newPath) {
-        // Delete old document if exists
-        if (existing.documentPath) {
+        if (existing.documentPath && isValidS3Key(existing.documentPath)) {
           await deleteFromS3(existing.documentPath);
         }
-        documentPath = newPath;
+        updateData.documentPath = newPath;
       }
     }
 
-    // Build update data
-    const updateData: UpdateLetterData = {
-      editedBy: userId,
-    };
+    await updateLetterById(id, updateData);
 
-    if (letterType !== undefined) updateData.letterType = letterType;
-    if (letterNumber !== undefined) updateData.letterNumber = letterNumber;
-    if (attachment !== undefined) updateData.attachment = attachment;
-    if (subject !== undefined) updateData.subject = subject;
-    if (letterDate !== undefined) updateData.letterDate = new Date(letterDate);
-    if (destination !== undefined) updateData.destination = destination;
-    if (carbonCopy !== undefined) updateData.carbonCopy = carbonCopy;
-    if (documentPath !== undefined) updateData.documentPath = documentPath;
-    if (signer1Id !== undefined) updateData.signer1Id = Number(signer1Id);
-    if (signer2Id !== undefined) updateData.signer2Id = signer2Id ? Number(signer2Id) : undefined;
-    if (signer3Id !== undefined) updateData.signer3Id = signer3Id ? Number(signer3Id) : undefined;
+    const result = await selectLetterById(id);
+    const data = await transformLetter(result);
 
-    await updateLetter(id, updateData);
-
-    // Fetch updated letter
-    const updatedLetter = await selectLetterById(id);
-
-    let documentUrl = null;
-    if (updatedLetter?.documentPath && isValidS3Key(updatedLetter.documentPath)) {
-      documentUrl = await getPresignedUrl(updatedLetter.documentPath);
-    }
-
-    const result = {
-      id: updatedLetter?.id,
-      letterType: updatedLetter?.letterType,
-      letterNumber: updatedLetter?.letterNumber,
-      attachment: updatedLetter?.attachment,
-      subject: updatedLetter?.subject,
-      letterDate: updatedLetter?.letterDate,
-      destination: updatedLetter?.destination,
-      carbonCopy: updatedLetter?.carbonCopy,
-      documentPath: documentUrl,
-      status: updatedLetter?.status,
-      signer1: updatedLetter?.signer1
-        ? {
-            userId: updatedLetter.signer1.userId,
-            username: updatedLetter.signer1.username,
-            name: updatedLetter.signer1.staffs?.staffName || null,
-          }
-        : null,
-      signer2: updatedLetter?.signer2
-        ? {
-            userId: updatedLetter.signer2.userId,
-            username: updatedLetter.signer2.username,
-            name: updatedLetter.signer2.staffs?.staffName || null,
-          }
-        : null,
-      signer3: updatedLetter?.signer3
-        ? {
-            userId: updatedLetter.signer3.userId,
-            username: updatedLetter.signer3.username,
-            name: updatedLetter.signer3.staffs?.staffName || null,
-          }
-        : null,
-      revisionNote: updatedLetter?.revisionNote,
-      createdAt: updatedLetter?.createdAt,
-      updatedAt: updatedLetter?.updatedAt,
-    };
-
-    return res.json({
-      message: "Surat berhasil diperbarui",
-      data: result,
-    });
+    return res.json({ message: "Surat berhasil diperbarui", data });
   } catch (err) {
     next(err);
   }
@@ -631,89 +313,79 @@ export const patchLetter = async (
 // ============================================================================
 // DELETE LETTER
 // ============================================================================
-export const deleteLetterController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const deleteLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const id = Number(req.params.id);
     const existing = await selectLetterById(id);
 
     if (!existing) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-      });
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    // Only allow deleting draft letters
-    if (existing.status !== LetterStatus.draft) {
-      return res.status(400).json({
-        message: "Hanya surat dengan status draft yang dapat dihapus",
-      });
+    if (existing.status !== "draft") {
+      return res.status(400).json({ message: "Hanya surat draft yang dapat dihapus" });
     }
 
-    // Delete document from S3
-    if (existing.documentPath) {
+    if (existing.documentPath && isValidS3Key(existing.documentPath)) {
       await deleteFromS3(existing.documentPath);
     }
 
-    await deleteLetter(id);
+    await deleteLetterById(id);
 
-    return res.json({
-      message: "Surat berhasil dihapus",
-    });
+    return res.json({ message: "Surat berhasil dihapus" });
   } catch (err) {
     next(err);
   }
 };
 
 // ============================================================================
-// SUBMIT LETTER FOR APPROVAL
+// SUBMIT LETTER (draft → pending1)
 // ============================================================================
-export const submitLetterController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const submitLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
-    const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
-    }
-
     const id = Number(req.params.id);
     const existing = await selectLetterById(id);
 
     if (!existing) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-        data: null,
-      });
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    // Only allow submitting draft letters
-    if (existing.status !== LetterStatus.draft) {
-      return res.status(400).json({
-        message: "Hanya surat dengan status draft yang dapat diajukan",
-        data: null,
-      });
+    if (existing.status !== "draft") {
+      return res.status(400).json({ message: "Hanya surat draft yang dapat diajukan" });
     }
 
-    await submitLetterForApproval(id, userId);
+    // Convert document to PDF if needed (DOCX, DOC, etc.)
+    let finalDocPath = existing.documentPath;
+    if (existing.documentPath && shouldConvertToPdf(existing.documentPath)) {
+      const docBuffer = await downloadFromS3(existing.documentPath);
+      if (docBuffer) {
+        const pdfBuffer = await convertBufferToPdf(docBuffer, existing.documentPath);
+        if (pdfBuffer) {
+          const rand = Math.random().toString(36).substring(2, 10);
+          const pdfKey = `database/letters/letter-${id}-converted-${rand}.pdf`;
+          await uploadBufferToS3(pdfBuffer, pdfKey, "application/pdf");
+          finalDocPath = pdfKey;
+          // Delete the original non-PDF file from S3
+          if (isValidS3Key(existing.documentPath)) {
+            await deleteFromS3(existing.documentPath);
+          }
+        }
+      }
+    }
 
-    const updatedLetter = await selectLetterById(id);
-
-    return res.json({
-      message: "Surat berhasil diajukan untuk persetujuan",
-      data: {
-        id: updatedLetter?.id,
-        status: updatedLetter?.status,
-      },
+    await updateLetterById(id, {
+      status: "pending1",
+      documentPath: finalDocPath,
+      originalDocumentPath: finalDocPath,
+      updatedAt: new Date(),
     });
+
+    const result = await selectLetterById(id);
+    const data = await transformLetter(result);
+
+    return res.json({ message: "Surat berhasil diajukan untuk persetujuan", data });
   } catch (err) {
     next(err);
   }
@@ -722,242 +394,275 @@ export const submitLetterController = async (
 // ============================================================================
 // APPROVE LETTER
 // ============================================================================
-export const approveLetterController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const approveLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
-    }
-
     const id = Number(req.params.id);
-    const { note } = req.body;
+    const letter = await selectLetterById(id);
 
-    const existing = await selectLetterById(id);
-
-    if (!existing) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-        data: null,
-      });
+    if (!letter) {
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    // Check if user is a valid signer
-    const signerLevel = await getSignerLevel(id, userId);
-
+    const signerLevel = getSignerLevel(userId, letter);
     if (!signerLevel) {
-      return res.status(403).json({
-        message: "Anda bukan penandatangan yang berwenang untuk surat ini",
-        data: null,
-      });
+      return res.status(403).json({ message: "Anda bukan penandatangan surat ini" });
     }
 
-    // Check if the letter is in the correct pending state for this signer
+    // Validate current status matches signer level
     const expectedStatus = `pending${signerLevel}` as LetterStatus;
-    if (existing.status !== expectedStatus) {
-      return res.status(400).json({
-        message: "Surat tidak dalam status yang dapat Anda setujui",
-        data: null,
-      });
+    if (letter.status !== expectedStatus) {
+      return res.status(400).json({ message: "Surat belum pada tahap persetujuan Anda" });
     }
 
-    await approveLetter(id, userId, signerLevel, note);
+    // Read signature placement coordinates (handle both camelCase and snake_case)
+    const sigPage = req.body.signature_page ?? req.body.signaturePage;
+    const sigX = req.body.signature_x ?? req.body.signatureX;
+    const sigY = req.body.signature_y ?? req.body.signatureY;
+    const hasPlacement = sigPage !== undefined && sigX !== undefined && sigY !== undefined;
 
-    const updatedLetter = await selectLetterById(id);
+    // Embed signature into PDF if coordinates provided
+    if (hasPlacement && letter.documentPath) {
+      try {
+        const newDocPath = await embedSignatureOnDocument(
+          id, userId,
+          Number(sigPage), Number(sigX), Number(sigY)
+        );
 
-    return res.json({
-      message: "Surat berhasil disetujui",
-      data: {
-        id: updatedLetter?.id,
-        status: updatedLetter?.status,
-      },
+        // Update document path with new signed PDF
+        const oldDocPath = letter.documentPath;
+        await updateLetterById(id, { documentPath: newDocPath });
+        if (oldDocPath && oldDocPath !== newDocPath && isValidS3Key(oldDocPath)) {
+          await deleteFromS3(oldDocPath);
+        }
+      } catch (embedErr: any) {
+        return res.status(400).json({
+          message: "Gagal membubuhkan tanda tangan",
+          error: embedErr.message,
+        });
+      }
+    }
+
+    // Create approval record with coordinates
+    await insertLetterApproval({
+      letterId: id,
+      signerId: userId,
+      signerLevel,
+      action: "approve",
+      signaturePage: hasPlacement ? Number(sigPage) : null,
+      signatureX: hasPlacement ? Number(sigX) : null,
+      signatureY: hasPlacement ? Number(sigY) : null,
     });
+
+    // Determine next status
+    let nextStatus: LetterStatus;
+    if (signerLevel === 1) {
+      nextStatus = letter.signer2Id ? "pending2" : "approved";
+    } else if (signerLevel === 2) {
+      nextStatus = letter.signer3Id ? "pending3" : "approved";
+    } else {
+      nextStatus = "approved";
+    }
+
+    await updateLetterById(id, { status: nextStatus, updatedAt: new Date() });
+
+    const result = await selectLetterById(id);
+    const data = await transformLetter(result);
+
+    return res.json({ message: "Surat berhasil disetujui", data });
   } catch (err) {
     next(err);
   }
 };
 
 // ============================================================================
-// REJECT LETTER (Revision)
+// REJECT LETTER (back to draft)
 // ============================================================================
-export const rejectLetterController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const rejectLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
-    }
-
     const id = Number(req.params.id);
-    const { note } = req.body;
+    const letter = await selectLetterById(id);
 
-    if (!note) {
-      return res.status(400).json({
-        message: "Catatan revisi wajib diisi",
-        data: null,
-      });
+    if (!letter) {
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    const existing = await selectLetterById(id);
-
-    if (!existing) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-        data: null,
-      });
-    }
-
-    // Check if user is a valid signer
-    const signerLevel = await getSignerLevel(id, userId);
-
+    const signerLevel = getSignerLevel(userId, letter);
     if (!signerLevel) {
-      return res.status(403).json({
-        message: "Anda bukan penandatangan yang berwenang untuk surat ini",
-        data: null,
-      });
+      return res.status(403).json({ message: "Anda bukan penandatangan surat ini" });
     }
 
-    // Check if the letter is in the correct pending state for this signer
     const expectedStatus = `pending${signerLevel}` as LetterStatus;
-    if (existing.status !== expectedStatus) {
-      return res.status(400).json({
-        message: "Surat tidak dalam status yang dapat Anda tolak",
-        data: null,
-      });
+    if (letter.status !== expectedStatus) {
+      return res.status(400).json({ message: "Surat belum pada tahap persetujuan Anda" });
     }
 
-    await rejectLetter(id, userId, signerLevel, note);
+    const actionNote = req.body.action_note || req.body.actionNote || null;
 
-    const updatedLetter = await selectLetterById(id);
-
-    return res.json({
-      message: "Surat dikembalikan untuk revisi",
-      data: {
-        id: updatedLetter?.id,
-        status: updatedLetter?.status,
-        revisionNote: updatedLetter?.revisionNote,
-      },
+    // Create rejection record
+    await insertLetterApproval({
+      letterId: id,
+      signerId: userId,
+      signerLevel,
+      action: "reject",
+      actionNote,
     });
+
+    // Restore original document if TTD was embedded
+    const updateData: any = {
+      status: "draft",
+      revisionNote: actionNote,
+      updatedAt: new Date(),
+    };
+
+    if (letter.originalDocumentPath && letter.documentPath !== letter.originalDocumentPath) {
+      // Delete the signed version
+      if (letter.documentPath && isValidS3Key(letter.documentPath)) {
+        await deleteFromS3(letter.documentPath);
+      }
+      updateData.documentPath = letter.originalDocumentPath;
+    }
+
+    await updateLetterById(id, updateData);
+
+    const result = await selectLetterById(id);
+    const data = await transformLetter(result);
+
+    return res.json({ message: "Surat dikembalikan untuk revisi", data });
   } catch (err) {
     next(err);
   }
 };
 
 // ============================================================================
-// CANCEL LETTER
+// CANCEL LETTER (delete record)
 // ============================================================================
-export const cancelLetterController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const cancelLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-
-    if (!userId) {
-      return res.status(401).json({
-        message: "Unauthorized",
-      });
-    }
-
     const id = Number(req.params.id);
-    const { note } = req.body;
+    const letter = await selectLetterById(id);
 
-    const existing = await selectLetterById(id);
-
-    if (!existing) {
-      return res.status(404).json({
-        message: "Surat tidak ditemukan",
-        data: null,
-      });
+    if (!letter) {
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    // Check if user is a valid signer
-    const signerLevel = await getSignerLevel(id, userId);
-
+    const signerLevel = getSignerLevel(userId, letter);
     if (!signerLevel) {
-      return res.status(403).json({
-        message: "Anda bukan penandatangan yang berwenang untuk surat ini",
-        data: null,
-      });
+      return res.status(403).json({ message: "Anda bukan penandatangan surat ini" });
     }
 
-    // Check if the letter is in a pending state
-    if (
-      existing.status !== LetterStatus.pending1 &&
-      existing.status !== LetterStatus.pending2 &&
-      existing.status !== LetterStatus.pending3
-    ) {
-      return res.status(400).json({
-        message: "Surat tidak dalam status yang dapat dibatalkan",
-        data: null,
-      });
+    // Delete S3 document if exists
+    if (letter.documentPath && isValidS3Key(letter.documentPath)) {
+      await deleteFromS3(letter.documentPath);
     }
 
-    // Delete document from S3 before canceling
-    if (existing.documentPath) {
-      await deleteFromS3(existing.documentPath);
-    }
+    // Delete the letter (cascades to approvals)
+    await deleteLetterById(id);
 
-    await cancelLetter(id, userId, signerLevel, note);
-
-    return res.json({
-      message: "Surat berhasil dibatalkan",
-    });
+    return res.json({ message: "Surat berhasil dibatalkan dan dihapus" });
   } catch (err) {
     next(err);
   }
 };
 
 // ============================================================================
-// PUBLISH LETTER
+// PUBLISH LETTER (approved → published)
 // ============================================================================
-export const publishLetterController = async (
-  req: AuthRequest,
-  res: Response,
-  next: NextFunction
-) => {
+
+export const publishLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const id = Number(req.params.id);
-    const existing = await selectLetterById(id);
+    const letter = await selectLetterById(id);
 
-    if (!existing) {
+    if (!letter) {
+      return res.status(404).json({ message: "Surat tidak ditemukan" });
+    }
+
+    if (letter.status !== "approved") {
+      return res.status(400).json({ message: "Hanya surat yang sudah disetujui yang dapat diterbitkan" });
+    }
+
+    // Generate unique verification token
+    const verificationToken = crypto.randomUUID().replace(/-/g, "");
+
+    // Read QR placement coordinates (handle both camelCase and snake_case)
+    const qrPage = req.body.qr_page ?? req.body.qrPage;
+    const qrX = req.body.qr_x ?? req.body.qrX;
+    const qrY = req.body.qr_y ?? req.body.qrY;
+    const hasPlacement = qrPage !== undefined && qrX !== undefined && qrY !== undefined;
+
+    let signedDocPath = letter.documentPath;
+
+    // Embed QR code into PDF if coordinates provided
+    if (hasPlacement && letter.documentPath) {
+      try {
+        const newDocPath = await embedQrCodeOnDocument(
+          id, verificationToken,
+          Number(qrPage), Number(qrX), Number(qrY)
+        );
+        signedDocPath = newDocPath;
+
+        // Delete the old document (without QR) if different
+        if (letter.documentPath && letter.documentPath !== newDocPath && isValidS3Key(letter.documentPath)) {
+          await deleteFromS3(letter.documentPath);
+        }
+      } catch (embedErr: any) {
+        return res.status(400).json({
+          message: "Gagal membubuhkan QR code",
+          error: embedErr.message,
+        });
+      }
+    }
+
+    await updateLetterById(id, {
+      status: "published",
+      verificationToken,
+      documentPath: signedDocPath,
+      signedDocumentPath: signedDocPath,
+      updatedAt: new Date(),
+    });
+
+    const result = await selectLetterById(id);
+    const data = await transformLetter(result);
+
+    return res.json({ message: "Surat berhasil diterbitkan", data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// VERIFY LETTER (public, no auth)
+// ============================================================================
+
+export const verifyLetter = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { token } = req.params;
+
+    if (!token) {
+      return res.status(400).json({ message: "Token verifikasi diperlukan" });
+    }
+
+    const letter = await selectLetterByVerificationToken(token);
+
+    if (!letter) {
       return res.status(404).json({
         message: "Surat tidak ditemukan",
-        data: null,
+        verified: false,
       });
     }
 
-    // Only allow publishing approved letters
-    if (existing.status !== LetterStatus.approved) {
-      return res.status(400).json({
-        message: "Hanya surat yang sudah disetujui yang dapat dipublikasikan",
-        data: null,
-      });
-    }
-
-    await publishLetter(id);
-
-    const updatedLetter = await selectLetterById(id);
+    const data = await transformLetter(letter);
 
     return res.json({
-      message: "Surat berhasil dipublikasikan",
-      data: {
-        id: updatedLetter?.id,
-        status: updatedLetter?.status,
-      },
+      message: "Surat terverifikasi",
+      verified: true,
+      data,
     });
   } catch (err) {
     next(err);

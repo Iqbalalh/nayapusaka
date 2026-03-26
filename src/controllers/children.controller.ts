@@ -166,9 +166,12 @@ export const postChildren = async (
       childrenPict: pictUrl,
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.status(201).json({
       message: "Children created successfully",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);
@@ -234,9 +237,12 @@ export const patchChildren = async (
       childrenPict: pictUrl,
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+
     return res.json({
       message: "Children updated successfully",
-      data: result,
+      data: resultWithStaffNames[0],
     });
   } catch (err) {
     next(err);
@@ -302,9 +308,12 @@ export const getChildrenOptimized = async (
       })
     );
 
+    // Add staff names to children records
+    const childrenWithStaffNames = await addStaffNamesToRecords(childrenWithUrls);
+
     return res.json({
       message: "Successfully retrieved children with pagination",
-      data: childrenWithUrls,
+      data: childrenWithStaffNames,
       pagination: result.pagination,
     });
   } catch (err) {
@@ -368,9 +377,12 @@ export const getChildrenForExport = async (
       })
     );
 
+    // Add staff names to children records
+    const childrenWithStaffNames = await addStaffNamesToRecords(childrenWithUrls);
+
     return res.json({
       message: "Successfully retrieved all children for export",
-      data: childrenWithUrls,
+      data: childrenWithStaffNames,
     });
   } catch (err) {
     next(err);

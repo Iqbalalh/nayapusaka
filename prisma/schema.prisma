@@ -216,9 +216,9 @@ model Users {
 
   // Relations
   staffs                    Staffs?         @relation(fields: [staffId], references: [id], map: "fk_users_staff")
-  letterSigner1             Letter[]        @relation("LetterSigner1")
-  letterSigner2             Letter[]        @relation("LetterSigner2")
-  letterSigner3             Letter[]        @relation("LetterSigner3")
+  lettersSigner1            Letter[]        @relation("LetterSigner1")
+  lettersSigner2            Letter[]        @relation("LetterSigner2")
+  lettersSigner3            Letter[]        @relation("LetterSigner3")
 
   @@map("users")
 }
@@ -474,45 +474,51 @@ enum LetterStatus {
 }
 
 model Letter {
-  id                Int          @id @default(autoincrement())
-  letterType        String       @map("letter_type") @db.VarChar(100)
-  letterNumber      String?      @map("letter_number") @db.VarChar(100)
-  attachment        String?      @db.VarChar(255)
-  subject           String       @map("subject") @db.Text
-  letterDate        DateTime     @map("letter_date") @db.Date
-  destination       String       @map("destination") @db.Text
-  carbonCopy        String?      @map("carbon_copy") @db.Text
-  documentPath      String?      @map("document_path") @db.VarChar(500)
-  status            LetterStatus @default(draft)
-  signer1Id         Int          @map("signer1_id")
-  signer2Id         Int?         @map("signer2_id")
-  signer3Id         Int?         @map("signer3_id")
-  revisionNote      String?      @map("revision_note") @db.Text
-  createdAt         DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt         DateTime     @default(now()) @map("updated_at") @db.Timestamptz(6)
-  createdBy         Int?         @map("created_by")
-  editedBy          Int?         @map("edited_by")
+  id             Int          @id @default(autoincrement())
+  letterType     String       @map("letter_type") @db.VarChar(100)
+  letterNumber   String?      @map("letter_number") @db.VarChar(100)
+  attachment     String?      @db.VarChar(255)
+  subject        String       @db.Text
+  letterDate     DateTime     @map("letter_date") @db.Date
+  destination    String       @db.Text
+  carbonCopy     String?      @map("carbon_copy") @db.Text
+  documentPath         String?      @map("document_path") @db.VarChar(500)
+  originalDocumentPath String?      @map("original_document_path") @db.VarChar(500)
+  signedDocumentPath   String?      @map("signed_document_path") @db.VarChar(500)
+  status             LetterStatus @default(draft)
+  signer1Id      Int          @map("signer1_id")
+  signer2Id      Int?         @map("signer2_id")
+  signer3Id      Int?         @map("signer3_id")
+  revisionNote       String?      @map("revision_note") @db.Text
+  verificationToken  String?      @unique @map("verification_token") @db.VarChar(64)
+  createdAt      DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime     @default(now()) @map("updated_at") @db.Timestamptz(6)
+  createdBy      Int?         @map("created_by")
+  editedBy       Int?         @map("edited_by")
 
   // Relations
-  signer1           Users        @relation("LetterSigner1", fields: [signer1Id], references: [userId], onUpdate: NoAction)
-  signer2           Users?       @relation("LetterSigner2", fields: [signer2Id], references: [userId], onUpdate: NoAction)
-  signer3           Users?       @relation("LetterSigner3", fields: [signer3Id], references: [userId], onUpdate: NoAction)
-  letterApprovals   LetterApproval[]
+  signer1         Users            @relation("LetterSigner1", fields: [signer1Id], references: [userId], onUpdate: NoAction)
+  signer2         Users?           @relation("LetterSigner2", fields: [signer2Id], references: [userId], onUpdate: NoAction)
+  signer3         Users?           @relation("LetterSigner3", fields: [signer3Id], references: [userId], onUpdate: NoAction)
+  letterApprovals LetterApproval[]
 
   @@map("letters")
 }
 
 model LetterApproval {
-  id          Int       @id @default(autoincrement())
-  letterId    Int       @map("letter_id")
-  signerId    Int       @map("signer_id")
-  signerLevel Int       @map("signer_level")
-  action      String    @db.VarChar(20)
-  actionNote  String?   @map("action_note") @db.Text
-  actionAt    DateTime  @default(now()) @map("action_at") @db.Timestamptz(6)
+  id          Int      @id @default(autoincrement())
+  letterId    Int      @map("letter_id")
+  signerId    Int      @map("signer_id")
+  signerLevel Int      @map("signer_level")
+  action      String   @db.VarChar(20)
+  actionNote    String?  @map("action_note") @db.Text
+  actionAt      DateTime @default(now()) @map("action_at") @db.Timestamptz(6)
+  signaturePage Int?     @map("signature_page")
+  signatureX    Float?   @map("signature_x")
+  signatureY    Float?   @map("signature_y")
 
   // Relations
-  letter      Letter    @relation(fields: [letterId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  letter Letter @relation(fields: [letterId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@map("letter_approvals")
 }

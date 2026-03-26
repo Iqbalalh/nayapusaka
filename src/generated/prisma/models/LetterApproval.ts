@@ -31,6 +31,9 @@ export type LetterApprovalAvgAggregateOutputType = {
   letterId: number | null
   signerId: number | null
   signerLevel: number | null
+  signaturePage: number | null
+  signatureX: number | null
+  signatureY: number | null
 }
 
 export type LetterApprovalSumAggregateOutputType = {
@@ -38,6 +41,9 @@ export type LetterApprovalSumAggregateOutputType = {
   letterId: number | null
   signerId: number | null
   signerLevel: number | null
+  signaturePage: number | null
+  signatureX: number | null
+  signatureY: number | null
 }
 
 export type LetterApprovalMinAggregateOutputType = {
@@ -48,6 +54,9 @@ export type LetterApprovalMinAggregateOutputType = {
   action: string | null
   actionNote: string | null
   actionAt: Date | null
+  signaturePage: number | null
+  signatureX: number | null
+  signatureY: number | null
 }
 
 export type LetterApprovalMaxAggregateOutputType = {
@@ -58,6 +67,9 @@ export type LetterApprovalMaxAggregateOutputType = {
   action: string | null
   actionNote: string | null
   actionAt: Date | null
+  signaturePage: number | null
+  signatureX: number | null
+  signatureY: number | null
 }
 
 export type LetterApprovalCountAggregateOutputType = {
@@ -68,6 +80,9 @@ export type LetterApprovalCountAggregateOutputType = {
   action: number
   actionNote: number
   actionAt: number
+  signaturePage: number
+  signatureX: number
+  signatureY: number
   _all: number
 }
 
@@ -77,6 +92,9 @@ export type LetterApprovalAvgAggregateInputType = {
   letterId?: true
   signerId?: true
   signerLevel?: true
+  signaturePage?: true
+  signatureX?: true
+  signatureY?: true
 }
 
 export type LetterApprovalSumAggregateInputType = {
@@ -84,6 +102,9 @@ export type LetterApprovalSumAggregateInputType = {
   letterId?: true
   signerId?: true
   signerLevel?: true
+  signaturePage?: true
+  signatureX?: true
+  signatureY?: true
 }
 
 export type LetterApprovalMinAggregateInputType = {
@@ -94,6 +115,9 @@ export type LetterApprovalMinAggregateInputType = {
   action?: true
   actionNote?: true
   actionAt?: true
+  signaturePage?: true
+  signatureX?: true
+  signatureY?: true
 }
 
 export type LetterApprovalMaxAggregateInputType = {
@@ -104,6 +128,9 @@ export type LetterApprovalMaxAggregateInputType = {
   action?: true
   actionNote?: true
   actionAt?: true
+  signaturePage?: true
+  signatureX?: true
+  signatureY?: true
 }
 
 export type LetterApprovalCountAggregateInputType = {
@@ -114,6 +141,9 @@ export type LetterApprovalCountAggregateInputType = {
   action?: true
   actionNote?: true
   actionAt?: true
+  signaturePage?: true
+  signatureX?: true
+  signatureY?: true
   _all?: true
 }
 
@@ -211,6 +241,9 @@ export type LetterApprovalGroupByOutputType = {
   action: string
   actionNote: string | null
   actionAt: Date
+  signaturePage: number | null
+  signatureX: number | null
+  signatureY: number | null
   _count: LetterApprovalCountAggregateOutputType | null
   _avg: LetterApprovalAvgAggregateOutputType | null
   _sum: LetterApprovalSumAggregateOutputType | null
@@ -244,6 +277,9 @@ export type LetterApprovalWhereInput = {
   action?: Prisma.StringFilter<"LetterApproval"> | string
   actionNote?: Prisma.StringNullableFilter<"LetterApproval"> | string | null
   actionAt?: Prisma.DateTimeFilter<"LetterApproval"> | Date | string
+  signaturePage?: Prisma.IntNullableFilter<"LetterApproval"> | number | null
+  signatureX?: Prisma.FloatNullableFilter<"LetterApproval"> | number | null
+  signatureY?: Prisma.FloatNullableFilter<"LetterApproval"> | number | null
   letter?: Prisma.XOR<Prisma.LetterScalarRelationFilter, Prisma.LetterWhereInput>
 }
 
@@ -255,6 +291,9 @@ export type LetterApprovalOrderByWithRelationInput = {
   action?: Prisma.SortOrder
   actionNote?: Prisma.SortOrderInput | Prisma.SortOrder
   actionAt?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrderInput | Prisma.SortOrder
+  signatureX?: Prisma.SortOrderInput | Prisma.SortOrder
+  signatureY?: Prisma.SortOrderInput | Prisma.SortOrder
   letter?: Prisma.LetterOrderByWithRelationInput
 }
 
@@ -269,6 +308,9 @@ export type LetterApprovalWhereUniqueInput = Prisma.AtLeast<{
   action?: Prisma.StringFilter<"LetterApproval"> | string
   actionNote?: Prisma.StringNullableFilter<"LetterApproval"> | string | null
   actionAt?: Prisma.DateTimeFilter<"LetterApproval"> | Date | string
+  signaturePage?: Prisma.IntNullableFilter<"LetterApproval"> | number | null
+  signatureX?: Prisma.FloatNullableFilter<"LetterApproval"> | number | null
+  signatureY?: Prisma.FloatNullableFilter<"LetterApproval"> | number | null
   letter?: Prisma.XOR<Prisma.LetterScalarRelationFilter, Prisma.LetterWhereInput>
 }, "id">
 
@@ -280,6 +322,9 @@ export type LetterApprovalOrderByWithAggregationInput = {
   action?: Prisma.SortOrder
   actionNote?: Prisma.SortOrderInput | Prisma.SortOrder
   actionAt?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrderInput | Prisma.SortOrder
+  signatureX?: Prisma.SortOrderInput | Prisma.SortOrder
+  signatureY?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LetterApprovalCountOrderByAggregateInput
   _avg?: Prisma.LetterApprovalAvgOrderByAggregateInput
   _max?: Prisma.LetterApprovalMaxOrderByAggregateInput
@@ -298,6 +343,9 @@ export type LetterApprovalScalarWhereWithAggregatesInput = {
   action?: Prisma.StringWithAggregatesFilter<"LetterApproval"> | string
   actionNote?: Prisma.StringNullableWithAggregatesFilter<"LetterApproval"> | string | null
   actionAt?: Prisma.DateTimeWithAggregatesFilter<"LetterApproval"> | Date | string
+  signaturePage?: Prisma.IntNullableWithAggregatesFilter<"LetterApproval"> | number | null
+  signatureX?: Prisma.FloatNullableWithAggregatesFilter<"LetterApproval"> | number | null
+  signatureY?: Prisma.FloatNullableWithAggregatesFilter<"LetterApproval"> | number | null
 }
 
 export type LetterApprovalCreateInput = {
@@ -306,6 +354,9 @@ export type LetterApprovalCreateInput = {
   action: string
   actionNote?: string | null
   actionAt?: Date | string
+  signaturePage?: number | null
+  signatureX?: number | null
+  signatureY?: number | null
   letter: Prisma.LetterCreateNestedOneWithoutLetterApprovalsInput
 }
 
@@ -317,6 +368,9 @@ export type LetterApprovalUncheckedCreateInput = {
   action: string
   actionNote?: string | null
   actionAt?: Date | string
+  signaturePage?: number | null
+  signatureX?: number | null
+  signatureY?: number | null
 }
 
 export type LetterApprovalUpdateInput = {
@@ -325,6 +379,9 @@ export type LetterApprovalUpdateInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   letter?: Prisma.LetterUpdateOneRequiredWithoutLetterApprovalsNestedInput
 }
 
@@ -336,6 +393,9 @@ export type LetterApprovalUncheckedUpdateInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type LetterApprovalCreateManyInput = {
@@ -346,6 +406,9 @@ export type LetterApprovalCreateManyInput = {
   action: string
   actionNote?: string | null
   actionAt?: Date | string
+  signaturePage?: number | null
+  signatureX?: number | null
+  signatureY?: number | null
 }
 
 export type LetterApprovalUpdateManyMutationInput = {
@@ -354,6 +417,9 @@ export type LetterApprovalUpdateManyMutationInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type LetterApprovalUncheckedUpdateManyInput = {
@@ -364,6 +430,9 @@ export type LetterApprovalUncheckedUpdateManyInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type LetterApprovalListRelationFilter = {
@@ -384,6 +453,9 @@ export type LetterApprovalCountOrderByAggregateInput = {
   action?: Prisma.SortOrder
   actionNote?: Prisma.SortOrder
   actionAt?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrder
+  signatureX?: Prisma.SortOrder
+  signatureY?: Prisma.SortOrder
 }
 
 export type LetterApprovalAvgOrderByAggregateInput = {
@@ -391,6 +463,9 @@ export type LetterApprovalAvgOrderByAggregateInput = {
   letterId?: Prisma.SortOrder
   signerId?: Prisma.SortOrder
   signerLevel?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrder
+  signatureX?: Prisma.SortOrder
+  signatureY?: Prisma.SortOrder
 }
 
 export type LetterApprovalMaxOrderByAggregateInput = {
@@ -401,6 +476,9 @@ export type LetterApprovalMaxOrderByAggregateInput = {
   action?: Prisma.SortOrder
   actionNote?: Prisma.SortOrder
   actionAt?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrder
+  signatureX?: Prisma.SortOrder
+  signatureY?: Prisma.SortOrder
 }
 
 export type LetterApprovalMinOrderByAggregateInput = {
@@ -411,6 +489,9 @@ export type LetterApprovalMinOrderByAggregateInput = {
   action?: Prisma.SortOrder
   actionNote?: Prisma.SortOrder
   actionAt?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrder
+  signatureX?: Prisma.SortOrder
+  signatureY?: Prisma.SortOrder
 }
 
 export type LetterApprovalSumOrderByAggregateInput = {
@@ -418,6 +499,9 @@ export type LetterApprovalSumOrderByAggregateInput = {
   letterId?: Prisma.SortOrder
   signerId?: Prisma.SortOrder
   signerLevel?: Prisma.SortOrder
+  signaturePage?: Prisma.SortOrder
+  signatureX?: Prisma.SortOrder
+  signatureY?: Prisma.SortOrder
 }
 
 export type LetterApprovalCreateNestedManyWithoutLetterInput = {
@@ -468,6 +552,9 @@ export type LetterApprovalCreateWithoutLetterInput = {
   action: string
   actionNote?: string | null
   actionAt?: Date | string
+  signaturePage?: number | null
+  signatureX?: number | null
+  signatureY?: number | null
 }
 
 export type LetterApprovalUncheckedCreateWithoutLetterInput = {
@@ -477,6 +564,9 @@ export type LetterApprovalUncheckedCreateWithoutLetterInput = {
   action: string
   actionNote?: string | null
   actionAt?: Date | string
+  signaturePage?: number | null
+  signatureX?: number | null
+  signatureY?: number | null
 }
 
 export type LetterApprovalCreateOrConnectWithoutLetterInput = {
@@ -516,6 +606,9 @@ export type LetterApprovalScalarWhereInput = {
   action?: Prisma.StringFilter<"LetterApproval"> | string
   actionNote?: Prisma.StringNullableFilter<"LetterApproval"> | string | null
   actionAt?: Prisma.DateTimeFilter<"LetterApproval"> | Date | string
+  signaturePage?: Prisma.IntNullableFilter<"LetterApproval"> | number | null
+  signatureX?: Prisma.FloatNullableFilter<"LetterApproval"> | number | null
+  signatureY?: Prisma.FloatNullableFilter<"LetterApproval"> | number | null
 }
 
 export type LetterApprovalCreateManyLetterInput = {
@@ -525,6 +618,9 @@ export type LetterApprovalCreateManyLetterInput = {
   action: string
   actionNote?: string | null
   actionAt?: Date | string
+  signaturePage?: number | null
+  signatureX?: number | null
+  signatureY?: number | null
 }
 
 export type LetterApprovalUpdateWithoutLetterInput = {
@@ -533,6 +629,9 @@ export type LetterApprovalUpdateWithoutLetterInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type LetterApprovalUncheckedUpdateWithoutLetterInput = {
@@ -542,6 +641,9 @@ export type LetterApprovalUncheckedUpdateWithoutLetterInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 export type LetterApprovalUncheckedUpdateManyWithoutLetterInput = {
@@ -551,6 +653,9 @@ export type LetterApprovalUncheckedUpdateManyWithoutLetterInput = {
   action?: Prisma.StringFieldUpdateOperationsInput | string
   actionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   actionAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  signaturePage?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  signatureX?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  signatureY?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
 }
 
 
@@ -563,6 +668,9 @@ export type LetterApprovalSelect<ExtArgs extends runtime.Types.Extensions.Intern
   action?: boolean
   actionNote?: boolean
   actionAt?: boolean
+  signaturePage?: boolean
+  signatureX?: boolean
+  signatureY?: boolean
   letter?: boolean | Prisma.LetterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["letterApproval"]>
 
@@ -574,6 +682,9 @@ export type LetterApprovalSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   action?: boolean
   actionNote?: boolean
   actionAt?: boolean
+  signaturePage?: boolean
+  signatureX?: boolean
+  signatureY?: boolean
   letter?: boolean | Prisma.LetterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["letterApproval"]>
 
@@ -585,6 +696,9 @@ export type LetterApprovalSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   action?: boolean
   actionNote?: boolean
   actionAt?: boolean
+  signaturePage?: boolean
+  signatureX?: boolean
+  signatureY?: boolean
   letter?: boolean | Prisma.LetterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["letterApproval"]>
 
@@ -596,9 +710,12 @@ export type LetterApprovalSelectScalar = {
   action?: boolean
   actionNote?: boolean
   actionAt?: boolean
+  signaturePage?: boolean
+  signatureX?: boolean
+  signatureY?: boolean
 }
 
-export type LetterApprovalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "letterId" | "signerId" | "signerLevel" | "action" | "actionNote" | "actionAt", ExtArgs["result"]["letterApproval"]>
+export type LetterApprovalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "letterId" | "signerId" | "signerLevel" | "action" | "actionNote" | "actionAt" | "signaturePage" | "signatureX" | "signatureY", ExtArgs["result"]["letterApproval"]>
 export type LetterApprovalInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   letter?: boolean | Prisma.LetterDefaultArgs<ExtArgs>
 }
@@ -622,6 +739,9 @@ export type $LetterApprovalPayload<ExtArgs extends runtime.Types.Extensions.Inte
     action: string
     actionNote: string | null
     actionAt: Date
+    signaturePage: number | null
+    signatureX: number | null
+    signatureY: number | null
   }, ExtArgs["result"]["letterApproval"]>
   composites: {}
 }
@@ -1053,6 +1173,9 @@ export interface LetterApprovalFieldRefs {
   readonly action: Prisma.FieldRef<"LetterApproval", 'String'>
   readonly actionNote: Prisma.FieldRef<"LetterApproval", 'String'>
   readonly actionAt: Prisma.FieldRef<"LetterApproval", 'DateTime'>
+  readonly signaturePage: Prisma.FieldRef<"LetterApproval", 'Int'>
+  readonly signatureX: Prisma.FieldRef<"LetterApproval", 'Float'>
+  readonly signatureY: Prisma.FieldRef<"LetterApproval", 'Float'>
 }
     
 

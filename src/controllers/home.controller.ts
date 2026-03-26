@@ -23,6 +23,7 @@ import {
   isValidS3Key,
 } from "../utils/storage/s3.storage";
 import { Gender, Prisma } from "../generated/prisma/client";
+import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 
 interface RequestWithFiles extends AuthRequest {
   files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
@@ -40,7 +41,10 @@ export const getHomes = async (
   next: NextFunction
 ) => {
   try {
-    const homes = await selectAllHomes();
+    let homes = await selectAllHomes();
+
+    // Add staff names to home records
+    homes = await addStaffNamesToRecords(homes);
 
     const homesWithUrls = await Promise.all(
       homes.map(async (home) => {
@@ -140,9 +144,13 @@ export const getHomeAllDetail = async (
       )) as any;
     }
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([home]);
+    const finalResult = resultWithStaffNames[0];
+
     return res.json({
       message: "Successfully retrieved home detail",
-      data: home,
+      data: finalResult,
     });
   } catch (err) {
     next(err);
@@ -159,7 +167,11 @@ export const getHomesList = async (
   next: NextFunction
 ) => {
   try {
-    const homes = await selectHomeList();
+    let homes = await selectHomeList();
+
+    // Add staff names to home records
+    homes = await addStaffNamesToRecords(homes);
+
     return res.json({
       message: "Berhasil mendapatkan data keluarga",
       data: homes,
@@ -179,7 +191,10 @@ export const getHomesForMaps = async (
   next: NextFunction
 ) => {
   try {
-    const homes = await selectHomesForMaps();
+    let homes = await selectHomesForMaps();
+
+    // Add staff names to home records
+    homes = await addStaffNamesToRecords(homes);
 
     const homesWithUrls = await Promise.all(
       homes.map(async (home) => {
@@ -218,7 +233,10 @@ export const getAbkHomesForMaps = async (
   next: NextFunction
 ) => {
   try {
-    const homes = await selectAbkHomesForMaps();
+    let homes = await selectAbkHomesForMaps();
+
+    // Add staff names to home records
+    homes = await addStaffNamesToRecords(homes);
 
     const homesWithUrls = await Promise.all(
       homes.map(async (home) => {
@@ -257,7 +275,10 @@ export const getOrphanHomesForMaps = async (
   next: NextFunction
 ) => {
   try {
-    const homes = await selectOrphanHomesForMaps();
+    let homes = await selectOrphanHomesForMaps();
+
+    // Add staff names to home records
+    homes = await addStaffNamesToRecords(homes);
 
     const homesWithUrls = await Promise.all(
       homes.map(async (home) => {
@@ -323,9 +344,13 @@ export const getHomeDetail = async (
       partnerPict: partnerPictUrl,
     };
 
+    // Add staff names to the result
+    const resultWithStaffNames = await addStaffNamesToRecords([result]);
+    const finalResult = resultWithStaffNames[0];
+
     res.json({
       message: "Successfully retrieved home detail",
-      data: result,
+      data: finalResult,
     });
   } catch (err) {
     next(err);
@@ -703,7 +728,10 @@ export const getHomesForExport = async (
   next: NextFunction
 ) => {
   try {
-    const homes = await selectHomesForExport();
+    let homes = await selectHomesForExport();
+
+    // Add staff names to home records
+    homes = await addStaffNamesToRecords(homes);
 
     const homesWithUrls = await Promise.all(
       homes.map(async (home) => {
@@ -758,8 +786,11 @@ export const getHomesOptimized = async (
 
     const result = await selectHomesOptimized(page, pageSize, search);
 
+    // Add staff names to home records
+    const dataWithStaffNames = await addStaffNamesToRecords(result.data);
+
     const homesWithUrls = await Promise.all(
-      result.data.map(async (home) => {
+      dataWithStaffNames.map(async (home) => {
         const homeCopy = { ...home };
 
         if (

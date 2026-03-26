@@ -233,9 +233,9 @@ export type UsersWhereInput = {
   role?: Prisma.StringFilter<"Users"> | string
   tokenVersion?: Prisma.IntFilter<"Users"> | number
   staffs?: Prisma.XOR<Prisma.StaffsNullableScalarRelationFilter, Prisma.StaffsWhereInput> | null
-  letterSigner1?: Prisma.LetterListRelationFilter
-  letterSigner2?: Prisma.LetterListRelationFilter
-  letterSigner3?: Prisma.LetterListRelationFilter
+  lettersSigner1?: Prisma.LetterListRelationFilter
+  lettersSigner2?: Prisma.LetterListRelationFilter
+  lettersSigner3?: Prisma.LetterListRelationFilter
 }
 
 export type UsersOrderByWithRelationInput = {
@@ -246,9 +246,9 @@ export type UsersOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   tokenVersion?: Prisma.SortOrder
   staffs?: Prisma.StaffsOrderByWithRelationInput
-  letterSigner1?: Prisma.LetterOrderByRelationAggregateInput
-  letterSigner2?: Prisma.LetterOrderByRelationAggregateInput
-  letterSigner3?: Prisma.LetterOrderByRelationAggregateInput
+  lettersSigner1?: Prisma.LetterOrderByRelationAggregateInput
+  lettersSigner2?: Prisma.LetterOrderByRelationAggregateInput
+  lettersSigner3?: Prisma.LetterOrderByRelationAggregateInput
 }
 
 export type UsersWhereUniqueInput = Prisma.AtLeast<{
@@ -262,9 +262,9 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.StringFilter<"Users"> | string
   tokenVersion?: Prisma.IntFilter<"Users"> | number
   staffs?: Prisma.XOR<Prisma.StaffsNullableScalarRelationFilter, Prisma.StaffsWhereInput> | null
-  letterSigner1?: Prisma.LetterListRelationFilter
-  letterSigner2?: Prisma.LetterListRelationFilter
-  letterSigner3?: Prisma.LetterListRelationFilter
+  lettersSigner1?: Prisma.LetterListRelationFilter
+  lettersSigner2?: Prisma.LetterListRelationFilter
+  lettersSigner3?: Prisma.LetterListRelationFilter
 }, "userId" | "username">
 
 export type UsersOrderByWithAggregationInput = {
@@ -300,9 +300,9 @@ export type UsersCreateInput = {
   role?: string
   tokenVersion?: number
   staffs?: Prisma.StaffsCreateNestedOneWithoutUsersInput
-  letterSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
-  letterSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
-  letterSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
+  lettersSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
+  lettersSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
+  lettersSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
 }
 
 export type UsersUncheckedCreateInput = {
@@ -312,9 +312,9 @@ export type UsersUncheckedCreateInput = {
   staffId?: number | null
   role?: string
   tokenVersion?: number
-  letterSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
-  letterSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
-  letterSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
+  lettersSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
+  lettersSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
+  lettersSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
 }
 
 export type UsersUpdateInput = {
@@ -323,9 +323,9 @@ export type UsersUpdateInput = {
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   staffs?: Prisma.StaffsUpdateOneWithoutUsersNestedInput
-  letterSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
-  letterSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
-  letterSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
+  lettersSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
+  lettersSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
+  lettersSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
 }
 
 export type UsersUncheckedUpdateInput = {
@@ -335,9 +335,9 @@ export type UsersUncheckedUpdateInput = {
   staffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  letterSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
-  letterSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
-  letterSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
+  lettersSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
+  lettersSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
+  lettersSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
 }
 
 export type UsersCreateManyInput = {
@@ -466,50 +466,50 @@ export type UsersUncheckedUpdateManyWithoutStaffsNestedInput = {
   deleteMany?: Prisma.UsersScalarWhereInput | Prisma.UsersScalarWhereInput[]
 }
 
-export type UsersCreateNestedOneWithoutLetterSigner1Input = {
-  create?: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner1Input, Prisma.UsersUncheckedCreateWithoutLetterSigner1Input>
-  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLetterSigner1Input
+export type UsersCreateNestedOneWithoutLettersSigner1Input = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner1Input, Prisma.UsersUncheckedCreateWithoutLettersSigner1Input>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner1Input
   connect?: Prisma.UsersWhereUniqueInput
 }
 
-export type UsersCreateNestedOneWithoutLetterSigner2Input = {
-  create?: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner2Input, Prisma.UsersUncheckedCreateWithoutLetterSigner2Input>
-  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLetterSigner2Input
+export type UsersCreateNestedOneWithoutLettersSigner2Input = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner2Input, Prisma.UsersUncheckedCreateWithoutLettersSigner2Input>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner2Input
   connect?: Prisma.UsersWhereUniqueInput
 }
 
-export type UsersCreateNestedOneWithoutLetterSigner3Input = {
-  create?: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner3Input, Prisma.UsersUncheckedCreateWithoutLetterSigner3Input>
-  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLetterSigner3Input
+export type UsersCreateNestedOneWithoutLettersSigner3Input = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner3Input, Prisma.UsersUncheckedCreateWithoutLettersSigner3Input>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner3Input
   connect?: Prisma.UsersWhereUniqueInput
 }
 
-export type UsersUpdateOneRequiredWithoutLetterSigner1NestedInput = {
-  create?: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner1Input, Prisma.UsersUncheckedCreateWithoutLetterSigner1Input>
-  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLetterSigner1Input
-  upsert?: Prisma.UsersUpsertWithoutLetterSigner1Input
+export type UsersUpdateOneRequiredWithoutLettersSigner1NestedInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner1Input, Prisma.UsersUncheckedCreateWithoutLettersSigner1Input>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner1Input
+  upsert?: Prisma.UsersUpsertWithoutLettersSigner1Input
   connect?: Prisma.UsersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLetterSigner1Input, Prisma.UsersUpdateWithoutLetterSigner1Input>, Prisma.UsersUncheckedUpdateWithoutLetterSigner1Input>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLettersSigner1Input, Prisma.UsersUpdateWithoutLettersSigner1Input>, Prisma.UsersUncheckedUpdateWithoutLettersSigner1Input>
 }
 
-export type UsersUpdateOneWithoutLetterSigner2NestedInput = {
-  create?: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner2Input, Prisma.UsersUncheckedCreateWithoutLetterSigner2Input>
-  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLetterSigner2Input
-  upsert?: Prisma.UsersUpsertWithoutLetterSigner2Input
+export type UsersUpdateOneWithoutLettersSigner2NestedInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner2Input, Prisma.UsersUncheckedCreateWithoutLettersSigner2Input>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner2Input
+  upsert?: Prisma.UsersUpsertWithoutLettersSigner2Input
   disconnect?: Prisma.UsersWhereInput | boolean
   delete?: Prisma.UsersWhereInput | boolean
   connect?: Prisma.UsersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLetterSigner2Input, Prisma.UsersUpdateWithoutLetterSigner2Input>, Prisma.UsersUncheckedUpdateWithoutLetterSigner2Input>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLettersSigner2Input, Prisma.UsersUpdateWithoutLettersSigner2Input>, Prisma.UsersUncheckedUpdateWithoutLettersSigner2Input>
 }
 
-export type UsersUpdateOneWithoutLetterSigner3NestedInput = {
-  create?: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner3Input, Prisma.UsersUncheckedCreateWithoutLetterSigner3Input>
-  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLetterSigner3Input
-  upsert?: Prisma.UsersUpsertWithoutLetterSigner3Input
+export type UsersUpdateOneWithoutLettersSigner3NestedInput = {
+  create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner3Input, Prisma.UsersUncheckedCreateWithoutLettersSigner3Input>
+  connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner3Input
+  upsert?: Prisma.UsersUpsertWithoutLettersSigner3Input
   disconnect?: Prisma.UsersWhereInput | boolean
   delete?: Prisma.UsersWhereInput | boolean
   connect?: Prisma.UsersWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLetterSigner3Input, Prisma.UsersUpdateWithoutLetterSigner3Input>, Prisma.UsersUncheckedUpdateWithoutLetterSigner3Input>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLettersSigner3Input, Prisma.UsersUpdateWithoutLettersSigner3Input>, Prisma.UsersUncheckedUpdateWithoutLettersSigner3Input>
 }
 
 export type UsersCreateWithoutStaffsInput = {
@@ -518,9 +518,9 @@ export type UsersCreateWithoutStaffsInput = {
   password: string
   role?: string
   tokenVersion?: number
-  letterSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
-  letterSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
-  letterSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
+  lettersSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
+  lettersSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
+  lettersSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
 }
 
 export type UsersUncheckedCreateWithoutStaffsInput = {
@@ -529,9 +529,9 @@ export type UsersUncheckedCreateWithoutStaffsInput = {
   password: string
   role?: string
   tokenVersion?: number
-  letterSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
-  letterSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
-  letterSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
+  lettersSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
+  lettersSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
+  lettersSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
 }
 
 export type UsersCreateOrConnectWithoutStaffsInput = {
@@ -572,181 +572,181 @@ export type UsersScalarWhereInput = {
   tokenVersion?: Prisma.IntFilter<"Users"> | number
 }
 
-export type UsersCreateWithoutLetterSigner1Input = {
+export type UsersCreateWithoutLettersSigner1Input = {
   userId?: number
   username: string
   password: string
   role?: string
   tokenVersion?: number
   staffs?: Prisma.StaffsCreateNestedOneWithoutUsersInput
-  letterSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
-  letterSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
+  lettersSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
+  lettersSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
 }
 
-export type UsersUncheckedCreateWithoutLetterSigner1Input = {
+export type UsersUncheckedCreateWithoutLettersSigner1Input = {
   userId?: number
   username: string
   password: string
   staffId?: number | null
   role?: string
   tokenVersion?: number
-  letterSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
-  letterSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
+  lettersSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
+  lettersSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
 }
 
-export type UsersCreateOrConnectWithoutLetterSigner1Input = {
+export type UsersCreateOrConnectWithoutLettersSigner1Input = {
   where: Prisma.UsersWhereUniqueInput
-  create: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner1Input, Prisma.UsersUncheckedCreateWithoutLetterSigner1Input>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner1Input, Prisma.UsersUncheckedCreateWithoutLettersSigner1Input>
 }
 
-export type UsersCreateWithoutLetterSigner2Input = {
+export type UsersCreateWithoutLettersSigner2Input = {
   userId?: number
   username: string
   password: string
   role?: string
   tokenVersion?: number
   staffs?: Prisma.StaffsCreateNestedOneWithoutUsersInput
-  letterSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
-  letterSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
+  lettersSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
+  lettersSigner3?: Prisma.LetterCreateNestedManyWithoutSigner3Input
 }
 
-export type UsersUncheckedCreateWithoutLetterSigner2Input = {
+export type UsersUncheckedCreateWithoutLettersSigner2Input = {
   userId?: number
   username: string
   password: string
   staffId?: number | null
   role?: string
   tokenVersion?: number
-  letterSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
-  letterSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
+  lettersSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
+  lettersSigner3?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner3Input
 }
 
-export type UsersCreateOrConnectWithoutLetterSigner2Input = {
+export type UsersCreateOrConnectWithoutLettersSigner2Input = {
   where: Prisma.UsersWhereUniqueInput
-  create: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner2Input, Prisma.UsersUncheckedCreateWithoutLetterSigner2Input>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner2Input, Prisma.UsersUncheckedCreateWithoutLettersSigner2Input>
 }
 
-export type UsersCreateWithoutLetterSigner3Input = {
+export type UsersCreateWithoutLettersSigner3Input = {
   userId?: number
   username: string
   password: string
   role?: string
   tokenVersion?: number
   staffs?: Prisma.StaffsCreateNestedOneWithoutUsersInput
-  letterSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
-  letterSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
+  lettersSigner1?: Prisma.LetterCreateNestedManyWithoutSigner1Input
+  lettersSigner2?: Prisma.LetterCreateNestedManyWithoutSigner2Input
 }
 
-export type UsersUncheckedCreateWithoutLetterSigner3Input = {
+export type UsersUncheckedCreateWithoutLettersSigner3Input = {
   userId?: number
   username: string
   password: string
   staffId?: number | null
   role?: string
   tokenVersion?: number
-  letterSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
-  letterSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
+  lettersSigner1?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner1Input
+  lettersSigner2?: Prisma.LetterUncheckedCreateNestedManyWithoutSigner2Input
 }
 
-export type UsersCreateOrConnectWithoutLetterSigner3Input = {
+export type UsersCreateOrConnectWithoutLettersSigner3Input = {
   where: Prisma.UsersWhereUniqueInput
-  create: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner3Input, Prisma.UsersUncheckedCreateWithoutLetterSigner3Input>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner3Input, Prisma.UsersUncheckedCreateWithoutLettersSigner3Input>
 }
 
-export type UsersUpsertWithoutLetterSigner1Input = {
-  update: Prisma.XOR<Prisma.UsersUpdateWithoutLetterSigner1Input, Prisma.UsersUncheckedUpdateWithoutLetterSigner1Input>
-  create: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner1Input, Prisma.UsersUncheckedCreateWithoutLetterSigner1Input>
+export type UsersUpsertWithoutLettersSigner1Input = {
+  update: Prisma.XOR<Prisma.UsersUpdateWithoutLettersSigner1Input, Prisma.UsersUncheckedUpdateWithoutLettersSigner1Input>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner1Input, Prisma.UsersUncheckedCreateWithoutLettersSigner1Input>
   where?: Prisma.UsersWhereInput
 }
 
-export type UsersUpdateToOneWithWhereWithoutLetterSigner1Input = {
+export type UsersUpdateToOneWithWhereWithoutLettersSigner1Input = {
   where?: Prisma.UsersWhereInput
-  data: Prisma.XOR<Prisma.UsersUpdateWithoutLetterSigner1Input, Prisma.UsersUncheckedUpdateWithoutLetterSigner1Input>
+  data: Prisma.XOR<Prisma.UsersUpdateWithoutLettersSigner1Input, Prisma.UsersUncheckedUpdateWithoutLettersSigner1Input>
 }
 
-export type UsersUpdateWithoutLetterSigner1Input = {
+export type UsersUpdateWithoutLettersSigner1Input = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   staffs?: Prisma.StaffsUpdateOneWithoutUsersNestedInput
-  letterSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
-  letterSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
+  lettersSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
+  lettersSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
 }
 
-export type UsersUncheckedUpdateWithoutLetterSigner1Input = {
+export type UsersUncheckedUpdateWithoutLettersSigner1Input = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  letterSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
-  letterSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
+  lettersSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
+  lettersSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
 }
 
-export type UsersUpsertWithoutLetterSigner2Input = {
-  update: Prisma.XOR<Prisma.UsersUpdateWithoutLetterSigner2Input, Prisma.UsersUncheckedUpdateWithoutLetterSigner2Input>
-  create: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner2Input, Prisma.UsersUncheckedCreateWithoutLetterSigner2Input>
+export type UsersUpsertWithoutLettersSigner2Input = {
+  update: Prisma.XOR<Prisma.UsersUpdateWithoutLettersSigner2Input, Prisma.UsersUncheckedUpdateWithoutLettersSigner2Input>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner2Input, Prisma.UsersUncheckedCreateWithoutLettersSigner2Input>
   where?: Prisma.UsersWhereInput
 }
 
-export type UsersUpdateToOneWithWhereWithoutLetterSigner2Input = {
+export type UsersUpdateToOneWithWhereWithoutLettersSigner2Input = {
   where?: Prisma.UsersWhereInput
-  data: Prisma.XOR<Prisma.UsersUpdateWithoutLetterSigner2Input, Prisma.UsersUncheckedUpdateWithoutLetterSigner2Input>
+  data: Prisma.XOR<Prisma.UsersUpdateWithoutLettersSigner2Input, Prisma.UsersUncheckedUpdateWithoutLettersSigner2Input>
 }
 
-export type UsersUpdateWithoutLetterSigner2Input = {
+export type UsersUpdateWithoutLettersSigner2Input = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   staffs?: Prisma.StaffsUpdateOneWithoutUsersNestedInput
-  letterSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
-  letterSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
+  lettersSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
+  lettersSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
 }
 
-export type UsersUncheckedUpdateWithoutLetterSigner2Input = {
+export type UsersUncheckedUpdateWithoutLettersSigner2Input = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  letterSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
-  letterSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
+  lettersSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
+  lettersSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
 }
 
-export type UsersUpsertWithoutLetterSigner3Input = {
-  update: Prisma.XOR<Prisma.UsersUpdateWithoutLetterSigner3Input, Prisma.UsersUncheckedUpdateWithoutLetterSigner3Input>
-  create: Prisma.XOR<Prisma.UsersCreateWithoutLetterSigner3Input, Prisma.UsersUncheckedCreateWithoutLetterSigner3Input>
+export type UsersUpsertWithoutLettersSigner3Input = {
+  update: Prisma.XOR<Prisma.UsersUpdateWithoutLettersSigner3Input, Prisma.UsersUncheckedUpdateWithoutLettersSigner3Input>
+  create: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner3Input, Prisma.UsersUncheckedCreateWithoutLettersSigner3Input>
   where?: Prisma.UsersWhereInput
 }
 
-export type UsersUpdateToOneWithWhereWithoutLetterSigner3Input = {
+export type UsersUpdateToOneWithWhereWithoutLettersSigner3Input = {
   where?: Prisma.UsersWhereInput
-  data: Prisma.XOR<Prisma.UsersUpdateWithoutLetterSigner3Input, Prisma.UsersUncheckedUpdateWithoutLetterSigner3Input>
+  data: Prisma.XOR<Prisma.UsersUpdateWithoutLettersSigner3Input, Prisma.UsersUncheckedUpdateWithoutLettersSigner3Input>
 }
 
-export type UsersUpdateWithoutLetterSigner3Input = {
+export type UsersUpdateWithoutLettersSigner3Input = {
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
   staffs?: Prisma.StaffsUpdateOneWithoutUsersNestedInput
-  letterSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
-  letterSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
+  lettersSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
+  lettersSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
 }
 
-export type UsersUncheckedUpdateWithoutLetterSigner3Input = {
+export type UsersUncheckedUpdateWithoutLettersSigner3Input = {
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   username?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   staffId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  letterSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
-  letterSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
+  lettersSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
+  lettersSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
 }
 
 export type UsersCreateManyStaffsInput = {
@@ -762,9 +762,9 @@ export type UsersUpdateWithoutStaffsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  letterSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
-  letterSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
-  letterSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
+  lettersSigner1?: Prisma.LetterUpdateManyWithoutSigner1NestedInput
+  lettersSigner2?: Prisma.LetterUpdateManyWithoutSigner2NestedInput
+  lettersSigner3?: Prisma.LetterUpdateManyWithoutSigner3NestedInput
 }
 
 export type UsersUncheckedUpdateWithoutStaffsInput = {
@@ -773,9 +773,9 @@ export type UsersUncheckedUpdateWithoutStaffsInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.StringFieldUpdateOperationsInput | string
   tokenVersion?: Prisma.IntFieldUpdateOperationsInput | number
-  letterSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
-  letterSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
-  letterSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
+  lettersSigner1?: Prisma.LetterUncheckedUpdateManyWithoutSigner1NestedInput
+  lettersSigner2?: Prisma.LetterUncheckedUpdateManyWithoutSigner2NestedInput
+  lettersSigner3?: Prisma.LetterUncheckedUpdateManyWithoutSigner3NestedInput
 }
 
 export type UsersUncheckedUpdateManyWithoutStaffsInput = {
@@ -792,15 +792,15 @@ export type UsersUncheckedUpdateManyWithoutStaffsInput = {
  */
 
 export type UsersCountOutputType = {
-  letterSigner1: number
-  letterSigner2: number
-  letterSigner3: number
+  lettersSigner1: number
+  lettersSigner2: number
+  lettersSigner3: number
 }
 
 export type UsersCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  letterSigner1?: boolean | UsersCountOutputTypeCountLetterSigner1Args
-  letterSigner2?: boolean | UsersCountOutputTypeCountLetterSigner2Args
-  letterSigner3?: boolean | UsersCountOutputTypeCountLetterSigner3Args
+  lettersSigner1?: boolean | UsersCountOutputTypeCountLettersSigner1Args
+  lettersSigner2?: boolean | UsersCountOutputTypeCountLettersSigner2Args
+  lettersSigner3?: boolean | UsersCountOutputTypeCountLettersSigner3Args
 }
 
 /**
@@ -816,21 +816,21 @@ export type UsersCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountLetterSigner1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UsersCountOutputTypeCountLettersSigner1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LetterWhereInput
 }
 
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountLetterSigner2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UsersCountOutputTypeCountLettersSigner2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LetterWhereInput
 }
 
 /**
  * UsersCountOutputType without action
  */
-export type UsersCountOutputTypeCountLetterSigner3Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type UsersCountOutputTypeCountLettersSigner3Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.LetterWhereInput
 }
 
@@ -843,9 +843,9 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   role?: boolean
   tokenVersion?: boolean
   staffs?: boolean | Prisma.Users$staffsArgs<ExtArgs>
-  letterSigner1?: boolean | Prisma.Users$letterSigner1Args<ExtArgs>
-  letterSigner2?: boolean | Prisma.Users$letterSigner2Args<ExtArgs>
-  letterSigner3?: boolean | Prisma.Users$letterSigner3Args<ExtArgs>
+  lettersSigner1?: boolean | Prisma.Users$lettersSigner1Args<ExtArgs>
+  lettersSigner2?: boolean | Prisma.Users$lettersSigner2Args<ExtArgs>
+  lettersSigner3?: boolean | Prisma.Users$lettersSigner3Args<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["users"]>
 
@@ -881,9 +881,9 @@ export type UsersSelectScalar = {
 export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "username" | "password" | "staffId" | "role" | "tokenVersion", ExtArgs["result"]["users"]>
 export type UsersInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   staffs?: boolean | Prisma.Users$staffsArgs<ExtArgs>
-  letterSigner1?: boolean | Prisma.Users$letterSigner1Args<ExtArgs>
-  letterSigner2?: boolean | Prisma.Users$letterSigner2Args<ExtArgs>
-  letterSigner3?: boolean | Prisma.Users$letterSigner3Args<ExtArgs>
+  lettersSigner1?: boolean | Prisma.Users$lettersSigner1Args<ExtArgs>
+  lettersSigner2?: boolean | Prisma.Users$lettersSigner2Args<ExtArgs>
+  lettersSigner3?: boolean | Prisma.Users$lettersSigner3Args<ExtArgs>
   _count?: boolean | Prisma.UsersCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsersIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -897,9 +897,9 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Users"
   objects: {
     staffs: Prisma.$StaffsPayload<ExtArgs> | null
-    letterSigner1: Prisma.$LetterPayload<ExtArgs>[]
-    letterSigner2: Prisma.$LetterPayload<ExtArgs>[]
-    letterSigner3: Prisma.$LetterPayload<ExtArgs>[]
+    lettersSigner1: Prisma.$LetterPayload<ExtArgs>[]
+    lettersSigner2: Prisma.$LetterPayload<ExtArgs>[]
+    lettersSigner3: Prisma.$LetterPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     userId: number
@@ -1303,9 +1303,9 @@ readonly fields: UsersFieldRefs;
 export interface Prisma__UsersClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   staffs<T extends Prisma.Users$staffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$staffsArgs<ExtArgs>>): Prisma.Prisma__StaffsClient<runtime.Types.Result.GetResult<Prisma.$StaffsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  letterSigner1<T extends Prisma.Users$letterSigner1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$letterSigner1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  letterSigner2<T extends Prisma.Users$letterSigner2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$letterSigner2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  letterSigner3<T extends Prisma.Users$letterSigner3Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$letterSigner3Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lettersSigner1<T extends Prisma.Users$lettersSigner1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$lettersSigner1Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lettersSigner2<T extends Prisma.Users$lettersSigner2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$lettersSigner2Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  lettersSigner3<T extends Prisma.Users$lettersSigner3Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Users$lettersSigner3Args<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1756,9 +1756,9 @@ export type Users$staffsArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 }
 
 /**
- * Users.letterSigner1
+ * Users.lettersSigner1
  */
-export type Users$letterSigner1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Users$lettersSigner1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Letter
    */
@@ -1780,9 +1780,9 @@ export type Users$letterSigner1Args<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * Users.letterSigner2
+ * Users.lettersSigner2
  */
-export type Users$letterSigner2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Users$lettersSigner2Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Letter
    */
@@ -1804,9 +1804,9 @@ export type Users$letterSigner2Args<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
- * Users.letterSigner3
+ * Users.lettersSigner3
  */
-export type Users$letterSigner3Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Users$lettersSigner3Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Letter
    */

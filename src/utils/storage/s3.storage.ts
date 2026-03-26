@@ -90,6 +90,26 @@ export const uploadToS3 = async (
 };
 
 // =============================
+// Upload Buffer ke S3
+// =============================
+export const uploadBufferToS3 = async (
+  buffer: Buffer,
+  s3Key: string,
+  contentType: string = "application/pdf"
+): Promise<string> => {
+  await s3().send(
+    new PutObjectCommand({
+      Bucket: getBucketName(),
+      Key: s3Key,
+      Body: buffer,
+      ContentType: contentType,
+    })
+  );
+
+  return s3Key;
+};
+
+// =============================
 // Delete dari S3
 // =============================
 export const deleteFromS3 = async (key: string): Promise<void> => {

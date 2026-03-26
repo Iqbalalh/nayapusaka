@@ -475,11 +475,14 @@ export const LetterScalarFieldEnum = {
   destination: 'destination',
   carbonCopy: 'carbonCopy',
   documentPath: 'documentPath',
+  originalDocumentPath: 'originalDocumentPath',
+  signedDocumentPath: 'signedDocumentPath',
   status: 'status',
   signer1Id: 'signer1Id',
   signer2Id: 'signer2Id',
   signer3Id: 'signer3Id',
   revisionNote: 'revisionNote',
+  verificationToken: 'verificationToken',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -496,7 +499,10 @@ export const LetterApprovalScalarFieldEnum = {
   signerLevel: 'signerLevel',
   action: 'action',
   actionNote: 'actionNote',
-  actionAt: 'actionAt'
+  actionAt: 'actionAt',
+  signaturePage: 'signaturePage',
+  signatureX: 'signatureX',
+  signatureY: 'signatureY'
 } as const
 
 export type LetterApprovalScalarFieldEnum = (typeof LetterApprovalScalarFieldEnum)[keyof typeof LetterApprovalScalarFieldEnum]

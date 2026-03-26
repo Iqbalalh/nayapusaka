@@ -4,39 +4,51 @@ import { verifyToken } from "../middlewares/auth";
 import {
   getLetters,
   getLettersByStatus,
-  getDraftLetters,
-  getPendingApprovals,
+  getDrafts,
+  getPendingLetters,
   getLetter,
   postLetter,
   patchLetter,
-  deleteLetterController,
-  submitLetterController,
-  approveLetterController,
-  rejectLetterController,
-  cancelLetterController,
-  publishLetterController,
+  deleteLetter,
+  submitLetter,
+  approveLetter,
+  rejectLetter,
+  cancelLetter,
+  publishLetter,
+  verifyLetter,
 } from "../controllers/letter.controller";
 
 const letterRouter = Router();
 
-// All routes require authentication
+// ===========================
+// PUBLIC ENDPOINTS (no auth)
+// ===========================
+
+letterRouter.get("/verify/:token", verifyLetter);
+
+// ===========================
+// ALL ENDPOINTS BELOW REQUIRE AUTH
+// ===========================
+
 letterRouter.use(verifyToken);
 
-// Letter CRUD
+// GET endpoints
 letterRouter.get("/", getLetters);
 letterRouter.get("/status", getLettersByStatus);
-letterRouter.get("/drafts", getDraftLetters);
-letterRouter.get("/pending", getPendingApprovals);
+letterRouter.get("/drafts", getDrafts);
+letterRouter.get("/pending", getPendingLetters);
 letterRouter.get("/:id", getLetter);
+
+// CRUD endpoints
 letterRouter.post("/", upload.single("document"), postLetter);
 letterRouter.patch("/:id", upload.single("document"), patchLetter);
-letterRouter.delete("/:id", deleteLetterController);
+letterRouter.delete("/:id", deleteLetter);
 
-// Approval workflow
-letterRouter.post("/:id/submit", submitLetterController);
-letterRouter.post("/:id/approve", approveLetterController);
-letterRouter.post("/:id/reject", rejectLetterController);
-letterRouter.post("/:id/cancel", cancelLetterController);
-letterRouter.post("/:id/publish", publishLetterController);
+// Workflow endpoints
+letterRouter.post("/:id/submit", submitLetter);
+letterRouter.post("/:id/approve", approveLetter);
+letterRouter.post("/:id/reject", rejectLetter);
+letterRouter.post("/:id/cancel", cancelLetter);
+letterRouter.post("/:id/publish", publishLetter);
 
 export default letterRouter;
