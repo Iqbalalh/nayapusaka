@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   getChildrens,
   getChildrenList,
@@ -29,12 +29,12 @@ childrenRouter.get("/export", getChildrenForExport);
 childrenRouter.get("/:id", getChildren);
 
 // CREATE (POST + FOTO)
-childrenRouter.post("/", upload.single("photo"), postChildren);
+childrenRouter.post("/", verifyAdminOrAbove, upload.single("photo"), postChildren);
 
 // PARTIAL UPDATE (+ optional foto)
-childrenRouter.patch("/:id", upload.single("photo"), patchChildren);
+childrenRouter.patch("/:id", verifyAdminOrAbove, upload.single("photo"), patchChildren);
 
 // DELETE (foto + record)
-childrenRouter.delete("/:id", deleteChildren);
+childrenRouter.delete("/:id", verifyAdminOrAbove, deleteChildren);
 
 export default childrenRouter;

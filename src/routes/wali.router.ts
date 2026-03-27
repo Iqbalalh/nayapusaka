@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   getWalis,
   getWali,
@@ -23,12 +23,12 @@ waliRouter.get("/list", getWaliList);
 waliRouter.get("/:id", getWali);
 
 // CREATE (POST + FOTO)
-waliRouter.post("/", upload.single("photo"), postWali);
+waliRouter.post("/", verifyAdminOrAbove, upload.single("photo"), postWali);
 
 // UPDATE (+ optional foto)
-waliRouter.patch("/:id", upload.single("photo"), patchWali);
+waliRouter.patch("/:id", verifyAdminOrAbove, upload.single("photo"), patchWali);
 
 // DELETE (foto + record)
-waliRouter.delete("/:id", deleteWali);
+waliRouter.delete("/:id", verifyAdminOrAbove, deleteWali);
 
 export default waliRouter;

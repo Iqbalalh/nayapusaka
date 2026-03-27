@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   getPartnerList,
   getPartners,
@@ -25,12 +25,12 @@ partnerRouter.get("/list", getPartnerList);
 partnerRouter.get("/:id", getPartner);
 
 // CREATE (POST + FOTO)
-partnerRouter.post("/", upload.single("photo"), postPartner);
+partnerRouter.post("/", verifyAdminOrAbove, upload.single("photo"), postPartner);
 
 // PARTIAL UPDATE (+ optional foto)
-partnerRouter.patch("/:id", upload.single("photo"), patchPartner);
+partnerRouter.patch("/:id", verifyAdminOrAbove, upload.single("photo"), patchPartner);
 
 // DELETE (foto + record)
-partnerRouter.delete("/:id", deletePartner);
+partnerRouter.delete("/:id", verifyAdminOrAbove, deletePartner);
 
 export default partnerRouter;

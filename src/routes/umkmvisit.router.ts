@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   deleteUmkmVisit,
   deleteUmkmVisitDocument,
@@ -22,15 +22,15 @@ umkmVisitRouter.get("/", getUmkmVisits);
 umkmVisitRouter.get("/:id", getUmkmVisit);
 
 // CREATE (POST + multiple documents)
-umkmVisitRouter.post("/", upload.array("documents", 10), postUmkmVisit);
+umkmVisitRouter.post("/", verifyAdminOrAbove, upload.array("documents", 10), postUmkmVisit);
 
 // PARTIAL UPDATE (+ optional documents)
-umkmVisitRouter.patch("/:id", upload.array("documents", 10), patchUmkmVisit);
+umkmVisitRouter.patch("/:id", verifyAdminOrAbove, upload.array("documents", 10), patchUmkmVisit);
 
 // DELETE (documents + record)
-umkmVisitRouter.delete("/:id", deleteUmkmVisit);
+umkmVisitRouter.delete("/:id", verifyAdminOrAbove, deleteUmkmVisit);
 
 // DELETE specific document
-umkmVisitRouter.delete("/:visitId/documents/:docId", deleteUmkmVisitDocument);
+umkmVisitRouter.delete("/:visitId/documents/:docId", verifyAdminOrAbove, deleteUmkmVisitDocument);
 
 export default umkmVisitRouter;

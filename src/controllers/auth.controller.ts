@@ -70,9 +70,30 @@ export const loginUser = async (
         email: user.email,
         role: user.role,
         staffPict: staffPictUrl,
+        staffPictKey: user.staffPict || null,
       },
       token,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// GET AVATAR PRESIGNED URL (public)
+// ============================================================================
+export const getAvatar = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const key = req.query.key as string;
+    if (!key || !isValidS3Key(key)) {
+      return res.status(400).json({ message: "Invalid key", url: null });
+    }
+    const url = await getPresignedUrl(key);
+    return res.json({ url });
   } catch (err) {
     next(err);
   }

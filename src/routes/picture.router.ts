@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { patchPictureByKeyObject } from "../controllers/picture.controller";
 import { getImageByKeyObject } from "../controllers/image.controller";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 
 const pictureRouter = Router();
 
@@ -12,6 +12,6 @@ pictureRouter.use(verifyToken);
 pictureRouter.get("/", getImageByKeyObject);
 
 // PATCH: hapus foto + patch db berdasarkan keyObject
-pictureRouter.patch("/delete", patchPictureByKeyObject);
+pictureRouter.patch("/delete", verifyAdminOrAbove, patchPictureByKeyObject);
 
 export default pictureRouter;

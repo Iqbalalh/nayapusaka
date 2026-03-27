@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   getEmployees,
   getEmployeesList,
@@ -23,12 +23,12 @@ employeeRouter.get("/list", getEmployeesList);
 employeeRouter.get("/:id", getEmployee);
 
 // CREATE (POST + FOTO)
-employeeRouter.post("/", upload.single("photo"), postEmployee);
+employeeRouter.post("/", verifyAdminOrAbove, upload.single("photo"), postEmployee);
 
 // PARTIAL UPDATE (+ optional foto)
-employeeRouter.patch("/:id", upload.single("photo"), patchEmployee);
+employeeRouter.patch("/:id", verifyAdminOrAbove, upload.single("photo"), patchEmployee);
 
 // DELETE (foto + record)
-employeeRouter.delete("/:id", deleteEmployee);
+employeeRouter.delete("/:id", verifyAdminOrAbove, deleteEmployee);
 
 export default employeeRouter;

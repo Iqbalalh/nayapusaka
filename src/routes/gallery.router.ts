@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   getGalleries,
   getGalleriesPaginated,
@@ -39,17 +39,17 @@ galleryRouter.get("/categories/:id", getCategory);
 // Middleware Auth for protected routes
 galleryRouter.use(verifyToken);
 
-// Category CRUD (POST, PATCH, DELETE require auth)
-galleryRouter.post("/categories", upload.none(), postCategory);
-galleryRouter.patch("/categories/:id", upload.none(), patchCategory);
-galleryRouter.delete("/categories/:id", deleteCategory);
+// Category CRUD (POST, PATCH, DELETE require auth + admin)
+galleryRouter.post("/categories", verifyAdminOrAbove, upload.none(), postCategory);
+galleryRouter.patch("/categories/:id", verifyAdminOrAbove, upload.none(), patchCategory);
+galleryRouter.delete("/categories/:id", verifyAdminOrAbove, deleteCategory);
 
 // Gallery CRUD
 galleryRouter.get("/list", getGalleryList);
 galleryRouter.get("/:id", getGallery);
 // Support both multiple files (images) and single file (image) for backward compatibility
-galleryRouter.post("/", upload.array("images", 20), postGallery);
-galleryRouter.patch("/:id", upload.single("image"), patchGallery);
-galleryRouter.delete("/:id", deleteGallery);
+galleryRouter.post("/", verifyAdminOrAbove, upload.array("images", 20), postGallery);
+galleryRouter.patch("/:id", verifyAdminOrAbove, upload.single("image"), patchGallery);
+galleryRouter.delete("/:id", verifyAdminOrAbove, deleteGallery);
 
 export default galleryRouter;

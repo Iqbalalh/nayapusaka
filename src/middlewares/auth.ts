@@ -66,6 +66,25 @@ export const verifyToken = async (
 };
 
 /**
+ * Middleware to verify if the user is admin or superadmin
+ */
+export const verifyAdminOrAbove = (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+): void | Response => {
+  const user = req.user as UserPayload;
+
+  if (!user || !["admin", "superadmin"].includes(user.role)) {
+    return res.status(403).json({
+      message: "Akses ditolak. Hanya admin yang diizinkan.",
+    });
+  }
+
+  next();
+};
+
+/**
  * Middleware to verify if the user is a superadmin
  */
 export const verifySuperadmin = (

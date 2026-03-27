@@ -323,13 +323,18 @@ export const deleteLetter = async (req: AuthRequest, res: Response, next: NextFu
       return res.status(404).json({ message: "Surat tidak ditemukan" });
     }
 
-    if (existing.status !== "draft") {
-      return res.status(400).json({ message: "Hanya surat draft yang dapat dihapus" });
-    }
-
+    // Clean up all S3 documents
+    const pathsToDelete = new Set<string>();
     if (existing.documentPath && isValidS3Key(existing.documentPath)) {
-      await deleteFromS3(existing.documentPath);
+      pathsToDelete.add(existing.documentPath);
     }
+    if (existing.originalDocumentPath && isValidS3Key(existing.originalDocumentPath) && existing.originalDocumentPath !== existing.documentPath) {
+      pathsToDelete.add(existing.originalDocumentPath);
+    }
+    if (existing.signedDocumentPath && isValidS3Key(existing.signedDocumentPath) && !pathsToDelete.has(existing.signedDocumentPath)) {
+      pathsToDelete.add(existing.signedDocumentPath);
+    }
+    await Promise.all([...pathsToDelete].map(deleteFromS3));
 
     await deleteLetterById(id);
 

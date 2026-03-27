@@ -7,7 +7,7 @@ import {
   patchUmkm,
   deleteUmkm,
 } from "../controllers/umkm.controller";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import upload from "../middlewares/multer";
 
 const umkmRouter = Router();
@@ -20,12 +20,12 @@ umkmRouter.get("/maps", getUmkmMaps);
 umkmRouter.get("/:id", getUmkm);
 
 // CREATE (POST + FOTOS)
-umkmRouter.post("/", upload.array("photos", 5), postUmkm);
+umkmRouter.post("/", verifyAdminOrAbove, upload.array("photos", 5), postUmkm);
 
 // PARTIAL UPDATE (+ optional fotos)
-umkmRouter.patch("/:id", upload.array("photos", 5), patchUmkm);
+umkmRouter.patch("/:id", verifyAdminOrAbove, upload.array("photos", 5), patchUmkm);
 
 // DELETE (foto + record)
-umkmRouter.delete("/:id", deleteUmkm);
+umkmRouter.delete("/:id", verifyAdminOrAbove, deleteUmkm);
 
 export default umkmRouter;

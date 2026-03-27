@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   getStaff,
   getStaffs,
@@ -27,12 +27,12 @@ const staffFields = upload.fields([
 ]);
 
 // CREATE (POST + picture/signature)
-staffRouter.post("/", staffFields, postStaff as any);
+staffRouter.post("/", verifyAdminOrAbove, staffFields, postStaff as any);
 
 // UPDATE (+ optional picture/signature)
-staffRouter.patch("/:id", staffFields, patchStaff as any);
+staffRouter.patch("/:id", verifyAdminOrAbove, staffFields, patchStaff as any);
 
 // DELETE (picture + record)
-staffRouter.delete("/:id", deleteStaff);
+staffRouter.delete("/:id", verifyAdminOrAbove, deleteStaff);
 
 export default staffRouter;

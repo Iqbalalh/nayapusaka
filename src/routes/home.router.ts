@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import upload from "../middlewares/multer";
 import {
   getHomes,
@@ -24,7 +24,7 @@ homeRouter.use(verifyToken);
 // ============================
 // CREATE HOME + RELATIONS
 // ============================
-homeRouter.post("/", upload.any(), postHome);
+homeRouter.post("/", verifyAdminOrAbove, upload.any(), postHome);
 
 // ============================
 // GET ROUTES
@@ -38,7 +38,7 @@ homeRouter.get("/export", getHomesForExport);
 homeRouter.get("/optimized", getHomesOptimized);
 homeRouter.get("/detail/:id", getHomeAllDetail);
 homeRouter.get("/:id", getHomeDetail);
-homeRouter.patch("/:id", upload.any(), patchHome);
-homeRouter.delete("/:id", deleteHome);
+homeRouter.patch("/:id", verifyAdminOrAbove, upload.any(), patchHome);
+homeRouter.delete("/:id", verifyAdminOrAbove, deleteHome);
 
 export default homeRouter;

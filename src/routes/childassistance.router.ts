@@ -1,6 +1,6 @@
 import { Router } from "express";
 import upload from "../middlewares/multer";
-import { verifyToken } from "../middlewares/auth";
+import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import {
   deleteChildAssistance,
   deleteChildAssistanceDocument,
@@ -26,15 +26,15 @@ childAssistanceRouter.get("/years", getChildAssistanceYears);
 childAssistanceRouter.get("/:id", getChildAssistanceById);
 
 // CREATE (POST + multiple documents)
-childAssistanceRouter.post("/", upload.array("documents", 10), postChildAssistance);
+childAssistanceRouter.post("/", verifyAdminOrAbove, upload.array("documents", 10), postChildAssistance);
 
 // PARTIAL UPDATE (+ optional documents)
-childAssistanceRouter.patch("/:id", upload.array("documents", 10), patchChildAssistance);
+childAssistanceRouter.patch("/:id", verifyAdminOrAbove, upload.array("documents", 10), patchChildAssistance);
 
 // DELETE (documents + record)
-childAssistanceRouter.delete("/:id", deleteChildAssistance);
+childAssistanceRouter.delete("/:id", verifyAdminOrAbove, deleteChildAssistance);
 
 // DELETE specific document
-childAssistanceRouter.delete("/:assistanceId/documents/:docId", deleteChildAssistanceDocument);
+childAssistanceRouter.delete("/:assistanceId/documents/:docId", verifyAdminOrAbove, deleteChildAssistanceDocument);
 
 export default childAssistanceRouter;
