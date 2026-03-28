@@ -8,19 +8,21 @@ import { downloadFromS3, uploadBufferToS3 } from "../storage/s3.storage";
 
 const QR_SIZE = 80; // PDF points (approx 1.1 inch)
 const QR_PX = 400; // QR image resolution in pixels
-const LOGO_RATIO = 0.25; // Logo takes 25% of QR size
+const LOGO_RATIO = 0.20; // Logo takes 20% of QR size
 
-// Resolve logo path relative to this file (works with ts-node and compiled)
+// Resolve logo path relative to this file (works with ts-node and compiled dist/)
 const getLogoPath = (): string => {
   const candidates = [
-    path.resolve(__dirname, "../assets/logo-ypkai.png"),
-    path.resolve(__dirname, "../../assets/logo-ypkai.png"),
-    path.resolve(process.cwd(), "src/assets/logo-ypkai.png"),
+    path.resolve(__dirname, "../../assets/logo-ypkai.png"),     // ts-node: src/utils/document -> src/assets
+    path.resolve(process.cwd(), "src/assets/logo-ypkai.png"),   // ts-node from cwd
+    path.resolve(process.cwd(), "dist/assets/logo-ypkai.png"),  // compiled: dist/assets (copied by build script)
   ];
   for (const p of candidates) {
     if (fs.existsSync(p)) return p;
   }
-  return candidates[2]; // fallback
+  // eslint-disable-next-line no-console
+  console.warn("[embedQrCode] Logo not found in any path:", candidates);
+  return candidates[2]; // fallback to dist/assets
 };
 
 /**

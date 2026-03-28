@@ -249,6 +249,71 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
 };
 
 // ============================================================================
+// CREATE ARCHIVE LETTER (skip approval workflow)
+// ============================================================================
+
+export const postArchiveLetter = async (req: RequestWithFile, res: Response, next: NextFunction) => {
+  try {
+    const userId = (req.user as any)?.id;
+    const {
+      letterType, letterNumber, attachment, subject,
+      letterDate, destination, carbonCopy, notes,
+    } = req.body;
+
+    if (!letterType || !subject || !letterDate || !destination) {
+      return res.status(400).json({ message: "Field wajib belum diisi" });
+    }
+
+    const body: Prisma.LetterUncheckedCreateInput = {
+      letterType,
+      letterNumber: letterNumber || null,
+      attachment: attachment || null,
+      subject,
+      letterDate: new Date(letterDate),
+      destination,
+      carbonCopy: carbonCopy || null,
+      notes: notes || null,
+      status: "published",
+      createdBy: userId,
+    };
+
+    const newLetter = await insertLetter(body);
+
+    // Upload document if provided
+    if (req.file) {
+      const uuid = crypto.randomUUID();
+      let fileBuffer = req.file.buffer;
+      let fileName = req.file.originalname;
+      let contentType = req.file.mimetype;
+
+      // Convert to PDF if needed
+      if (shouldConvertToPdf(fileName)) {
+        const pdfBuffer = await convertBufferToPdf(fileBuffer, fileName);
+        if (pdfBuffer) {
+          fileBuffer = pdfBuffer;
+          fileName = fileName.replace(/\.[^.]+$/, ".pdf");
+          contentType = "application/pdf";
+        }
+      }
+
+      const s3Key = `database/letters/archive-${uuid}-${fileName}`;
+      await uploadBufferToS3(fileBuffer, s3Key, contentType);
+      await updateLetterById(newLetter.id, {
+        documentPath: s3Key,
+        signedDocumentPath: s3Key,
+      });
+    }
+
+    const result = await selectLetterById(newLetter.id);
+    const data = await transformLetter(result);
+
+    return res.status(201).json({ message: "Arsip surat berhasil diunggah", data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
 // UPDATE LETTER
 // ============================================================================
 

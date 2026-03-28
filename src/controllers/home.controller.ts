@@ -23,7 +23,7 @@ import {
   isValidS3Key,
 } from "../utils/storage/s3.storage";
 import { Gender, Prisma } from "../generated/prisma/client";
-import { addStaffNamesToRecords } from "../utils/staff/staff.util";
+import { addStaffNamesToRecords, getStaffNamesByUserIds } from "../utils/staff/staff.util";
 
 interface RequestWithFiles extends AuthRequest {
   files?: Express.Multer.File[] | { [fieldname: string]: Express.Multer.File[] };
@@ -144,9 +144,43 @@ export const getHomeAllDetail = async (
       )) as any;
     }
 
-    // Add staff names to the result
-    const resultWithStaffNames = await addStaffNamesToRecords([home]);
-    const finalResult = resultWithStaffNames[0];
+    // Collect all user IDs from home + nested objects for batch lookup
+    const allUserIds: (number | null | undefined)[] = [
+      home.createdBy, home.editedBy,
+    ];
+    if (home.employee) {
+      allUserIds.push(home.employee.createdBy, home.employee.editedBy);
+    }
+    if (home.partner) {
+      allUserIds.push(home.partner.createdBy, home.partner.editedBy);
+    }
+    if (home.wali) {
+      allUserIds.push(home.wali.createdBy, home.wali.editedBy);
+    }
+    if (home.childrens) {
+      home.childrens.forEach((c: any) => {
+        allUserIds.push(c.createdBy, c.editedBy);
+      });
+    }
+
+    const staffNameMap = await getStaffNamesByUserIds(allUserIds);
+
+    const attachNames = (obj: any) => {
+      if (!obj) return obj;
+      return {
+        ...obj,
+        createdByStaffName: staffNameMap.get(obj.createdBy ?? 0) || null,
+        editedByStaffName: staffNameMap.get(obj.editedBy ?? 0) || null,
+      };
+    };
+
+    const finalResult: any = attachNames(home);
+    if (finalResult.employee) finalResult.employee = attachNames(finalResult.employee);
+    if (finalResult.partner) finalResult.partner = attachNames(finalResult.partner);
+    if (finalResult.wali) finalResult.wali = attachNames(finalResult.wali);
+    if (finalResult.childrens && Array.isArray(finalResult.childrens)) {
+      finalResult.childrens = finalResult.childrens.map(attachNames);
+    }
 
     return res.json({
       message: "Successfully retrieved home detail",

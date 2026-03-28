@@ -328,6 +328,7 @@ export type SocialAssistanceWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"SocialAssistance"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"SocialAssistance"> | number | null
   editedBy?: Prisma.IntNullableFilter<"SocialAssistance"> | number | null
+  documents?: Prisma.SocialAssistanceDocsListRelationFilter
 }
 
 export type SocialAssistanceOrderByWithRelationInput = {
@@ -347,6 +348,7 @@ export type SocialAssistanceOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  documents?: Prisma.SocialAssistanceDocsOrderByRelationAggregateInput
 }
 
 export type SocialAssistanceWhereUniqueInput = Prisma.AtLeast<{
@@ -369,6 +371,7 @@ export type SocialAssistanceWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"SocialAssistance"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"SocialAssistance"> | number | null
   editedBy?: Prisma.IntNullableFilter<"SocialAssistance"> | number | null
+  documents?: Prisma.SocialAssistanceDocsListRelationFilter
 }, "id">
 
 export type SocialAssistanceOrderByWithAggregationInput = {
@@ -433,6 +436,7 @@ export type SocialAssistanceCreateInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
+  documents?: Prisma.SocialAssistanceDocsCreateNestedManyWithoutSocialAssistanceInput
 }
 
 export type SocialAssistanceUncheckedCreateInput = {
@@ -452,6 +456,7 @@ export type SocialAssistanceUncheckedCreateInput = {
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
+  documents?: Prisma.SocialAssistanceDocsUncheckedCreateNestedManyWithoutSocialAssistanceInput
 }
 
 export type SocialAssistanceUpdateInput = {
@@ -470,6 +475,7 @@ export type SocialAssistanceUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  documents?: Prisma.SocialAssistanceDocsUpdateManyWithoutSocialAssistanceNestedInput
 }
 
 export type SocialAssistanceUncheckedUpdateInput = {
@@ -489,6 +495,7 @@ export type SocialAssistanceUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  documents?: Prisma.SocialAssistanceDocsUncheckedUpdateManyWithoutSocialAssistanceNestedInput
 }
 
 export type SocialAssistanceCreateManyInput = {
@@ -624,6 +631,144 @@ export type SocialAssistanceSumOrderByAggregateInput = {
   editedBy?: Prisma.SortOrder
 }
 
+export type SocialAssistanceScalarRelationFilter = {
+  is?: Prisma.SocialAssistanceWhereInput
+  isNot?: Prisma.SocialAssistanceWhereInput
+}
+
+export type SocialAssistanceCreateNestedOneWithoutDocumentsInput = {
+  create?: Prisma.XOR<Prisma.SocialAssistanceCreateWithoutDocumentsInput, Prisma.SocialAssistanceUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.SocialAssistanceCreateOrConnectWithoutDocumentsInput
+  connect?: Prisma.SocialAssistanceWhereUniqueInput
+}
+
+export type SocialAssistanceUpdateOneRequiredWithoutDocumentsNestedInput = {
+  create?: Prisma.XOR<Prisma.SocialAssistanceCreateWithoutDocumentsInput, Prisma.SocialAssistanceUncheckedCreateWithoutDocumentsInput>
+  connectOrCreate?: Prisma.SocialAssistanceCreateOrConnectWithoutDocumentsInput
+  upsert?: Prisma.SocialAssistanceUpsertWithoutDocumentsInput
+  connect?: Prisma.SocialAssistanceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SocialAssistanceUpdateToOneWithWhereWithoutDocumentsInput, Prisma.SocialAssistanceUpdateWithoutDocumentsInput>, Prisma.SocialAssistanceUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type SocialAssistanceCreateWithoutDocumentsInput = {
+  nipNipp?: string | null
+  recipientName?: string | null
+  ktpAddress?: string | null
+  region?: string | null
+  condition?: string | null
+  medicalEquipment?: string | null
+  equipmentQuantity?: number | null
+  equipmentNominal?: number | null
+  cashAmount?: number | null
+  totalAmount?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
+}
+
+export type SocialAssistanceUncheckedCreateWithoutDocumentsInput = {
+  id?: number
+  nipNipp?: string | null
+  recipientName?: string | null
+  ktpAddress?: string | null
+  region?: string | null
+  condition?: string | null
+  medicalEquipment?: string | null
+  equipmentQuantity?: number | null
+  equipmentNominal?: number | null
+  cashAmount?: number | null
+  totalAmount?: number | null
+  notes?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: number | null
+  editedBy?: number | null
+}
+
+export type SocialAssistanceCreateOrConnectWithoutDocumentsInput = {
+  where: Prisma.SocialAssistanceWhereUniqueInput
+  create: Prisma.XOR<Prisma.SocialAssistanceCreateWithoutDocumentsInput, Prisma.SocialAssistanceUncheckedCreateWithoutDocumentsInput>
+}
+
+export type SocialAssistanceUpsertWithoutDocumentsInput = {
+  update: Prisma.XOR<Prisma.SocialAssistanceUpdateWithoutDocumentsInput, Prisma.SocialAssistanceUncheckedUpdateWithoutDocumentsInput>
+  create: Prisma.XOR<Prisma.SocialAssistanceCreateWithoutDocumentsInput, Prisma.SocialAssistanceUncheckedCreateWithoutDocumentsInput>
+  where?: Prisma.SocialAssistanceWhereInput
+}
+
+export type SocialAssistanceUpdateToOneWithWhereWithoutDocumentsInput = {
+  where?: Prisma.SocialAssistanceWhereInput
+  data: Prisma.XOR<Prisma.SocialAssistanceUpdateWithoutDocumentsInput, Prisma.SocialAssistanceUncheckedUpdateWithoutDocumentsInput>
+}
+
+export type SocialAssistanceUpdateWithoutDocumentsInput = {
+  nipNipp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  equipmentQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+export type SocialAssistanceUncheckedUpdateWithoutDocumentsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  nipNipp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  recipientName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ktpAddress?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  condition?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  medicalEquipment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  equipmentQuantity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+}
+
+
+/**
+ * Count Type SocialAssistanceCountOutputType
+ */
+
+export type SocialAssistanceCountOutputType = {
+  documents: number
+}
+
+export type SocialAssistanceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  documents?: boolean | SocialAssistanceCountOutputTypeCountDocumentsArgs
+}
+
+/**
+ * SocialAssistanceCountOutputType without action
+ */
+export type SocialAssistanceCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SocialAssistanceCountOutputType
+   */
+  select?: Prisma.SocialAssistanceCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * SocialAssistanceCountOutputType without action
+ */
+export type SocialAssistanceCountOutputTypeCountDocumentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SocialAssistanceDocsWhereInput
+}
 
 
 export type SocialAssistanceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -643,6 +788,8 @@ export type SocialAssistanceSelect<ExtArgs extends runtime.Types.Extensions.Inte
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
+  documents?: boolean | Prisma.SocialAssistance$documentsArgs<ExtArgs>
+  _count?: boolean | Prisma.SocialAssistanceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["socialAssistance"]>
 
 export type SocialAssistanceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -703,10 +850,18 @@ export type SocialAssistanceSelectScalar = {
 }
 
 export type SocialAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nipNipp" | "recipientName" | "ktpAddress" | "region" | "condition" | "medicalEquipment" | "equipmentQuantity" | "equipmentNominal" | "cashAmount" | "totalAmount" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["socialAssistance"]>
+export type SocialAssistanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  documents?: boolean | Prisma.SocialAssistance$documentsArgs<ExtArgs>
+  _count?: boolean | Prisma.SocialAssistanceCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type SocialAssistanceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type SocialAssistanceIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $SocialAssistancePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "SocialAssistance"
-  objects: {}
+  objects: {
+    documents: Prisma.$SocialAssistanceDocsPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     nipNipp: string | null
@@ -1118,6 +1273,7 @@ readonly fields: SocialAssistanceFieldRefs;
  */
 export interface Prisma__SocialAssistanceClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  documents<T extends Prisma.SocialAssistance$documentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SocialAssistance$documentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialAssistanceDocsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1180,6 +1336,10 @@ export type SocialAssistanceFindUniqueArgs<ExtArgs extends runtime.Types.Extensi
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
+  /**
    * Filter, which SocialAssistance to fetch.
    */
   where: Prisma.SocialAssistanceWhereUniqueInput
@@ -1198,6 +1358,10 @@ export type SocialAssistanceFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
+  /**
    * Filter, which SocialAssistance to fetch.
    */
   where: Prisma.SocialAssistanceWhereUniqueInput
@@ -1215,6 +1379,10 @@ export type SocialAssistanceFindFirstArgs<ExtArgs extends runtime.Types.Extensio
    * Omit specific fields from the SocialAssistance
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
   /**
    * Filter, which SocialAssistance to fetch.
    */
@@ -1264,6 +1432,10 @@ export type SocialAssistanceFindFirstOrThrowArgs<ExtArgs extends runtime.Types.E
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
+  /**
    * Filter, which SocialAssistance to fetch.
    */
   where?: Prisma.SocialAssistanceWhereInput
@@ -1312,6 +1484,10 @@ export type SocialAssistanceFindManyArgs<ExtArgs extends runtime.Types.Extension
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
+  /**
    * Filter, which SocialAssistances to fetch.
    */
   where?: Prisma.SocialAssistanceWhereInput
@@ -1354,6 +1530,10 @@ export type SocialAssistanceCreateArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the SocialAssistance
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
   /**
    * The data needed to create a SocialAssistance.
    */
@@ -1402,6 +1582,10 @@ export type SocialAssistanceUpdateArgs<ExtArgs extends runtime.Types.Extensions.
    * Omit specific fields from the SocialAssistance
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
   /**
    * The data needed to update a SocialAssistance.
    */
@@ -1469,6 +1653,10 @@ export type SocialAssistanceUpsertArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
+  /**
    * The filter to search for the SocialAssistance to update in case it exists.
    */
   where: Prisma.SocialAssistanceWhereUniqueInput
@@ -1495,6 +1683,10 @@ export type SocialAssistanceDeleteArgs<ExtArgs extends runtime.Types.Extensions.
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
+  /**
    * Filter which SocialAssistance to delete.
    */
   where: Prisma.SocialAssistanceWhereUniqueInput
@@ -1515,6 +1707,30 @@ export type SocialAssistanceDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
 }
 
 /**
+ * SocialAssistance.documents
+ */
+export type SocialAssistance$documentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SocialAssistanceDocs
+   */
+  select?: Prisma.SocialAssistanceDocsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SocialAssistanceDocs
+   */
+  omit?: Prisma.SocialAssistanceDocsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceDocsInclude<ExtArgs> | null
+  where?: Prisma.SocialAssistanceDocsWhereInput
+  orderBy?: Prisma.SocialAssistanceDocsOrderByWithRelationInput | Prisma.SocialAssistanceDocsOrderByWithRelationInput[]
+  cursor?: Prisma.SocialAssistanceDocsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SocialAssistanceDocsScalarFieldEnum | Prisma.SocialAssistanceDocsScalarFieldEnum[]
+}
+
+/**
  * SocialAssistance without action
  */
 export type SocialAssistanceDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1526,4 +1742,8 @@ export type SocialAssistanceDefaultArgs<ExtArgs extends runtime.Types.Extensions
    * Omit specific fields from the SocialAssistance
    */
   omit?: Prisma.SocialAssistanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialAssistanceInclude<ExtArgs> | null
 }

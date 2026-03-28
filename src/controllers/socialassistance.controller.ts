@@ -11,9 +11,23 @@ import {
   deleteSocialAssistanceById,
   selectSocialAssistanceCount,
   selectAllSocialAssistanceOptimized,
+  insertSocialAssistanceDoc,
+  deleteSocialAssistanceDocById,
 } from "../services/socialassistance.services";
 import { Prisma } from "../generated/prisma/client";
 import { AuthRequest } from "../middlewares/auth";
+import {
+  uploadToS3,
+  deleteFromS3,
+  getPresignedUrl,
+  isValidS3Key,
+} from "../utils/storage/s3.storage";
+
+interface RequestWithFiles extends AuthRequest {
+  files?:
+    | Express.Multer.File[]
+    | { [fieldname: string]: Express.Multer.File[] };
+}
 
 // ============================================================================
 // GET ALL SOCIAL ASSISTANCE
@@ -100,9 +114,28 @@ export const getSocialAssistanceById = async (
       });
     }
 
+    // Process documents to add presigned URLs
+    const processedDocs = await Promise.all(
+      (assistance.documents || []).map(async (doc) => {
+        let docUrl = null;
+        if (isValidS3Key(doc.urlDoc)) {
+          docUrl = await getPresignedUrl(doc.urlDoc);
+        }
+        return {
+          ...doc,
+          urlDoc: docUrl,
+        };
+      })
+    );
+
+    const result = {
+      ...assistance,
+      documents: processedDocs,
+    };
+
     return res.json({
       message: "Successfully retrieved social assistance detail",
-      data: assistance,
+      data: result,
     });
   } catch (err) {
     next(err);
@@ -113,7 +146,7 @@ export const getSocialAssistanceById = async (
 // CREATE SOCIAL ASSISTANCE
 // ============================================================================
 export const postSocialAssistance = async (
-  req: AuthRequest,
+  req: RequestWithFiles,
   res: Response,
   next: NextFunction
 ) => {
@@ -152,9 +185,51 @@ export const postSocialAssistance = async (
 
     const newAssistance = await insertSocialAssistance(body);
 
+    // Upload documents if provided
+    const uploadedDocs = [];
+    const files = Array.isArray(req.files) ? req.files : [];
+    if (files.length > 0) {
+      for (const file of files) {
+        const docKey = await uploadToS3(
+          file,
+          newAssistance.id,
+          `social-assistance-${newAssistance.id}`,
+          "social-assistance"
+        );
+
+        if (docKey) {
+          const doc = await insertSocialAssistanceDoc({
+            socialAssistanceId: newAssistance.id,
+            name: file.originalname,
+            urlDoc: docKey,
+          });
+          uploadedDocs.push(doc);
+        }
+      }
+    }
+
+    // Get presigned URLs for documents
+    const processedDocs = await Promise.all(
+      uploadedDocs.map(async (doc) => {
+        let docUrl = null;
+        if (isValidS3Key(doc.urlDoc)) {
+          docUrl = await getPresignedUrl(doc.urlDoc);
+        }
+        return {
+          ...doc,
+          urlDoc: docUrl,
+        };
+      })
+    );
+
+    const result = {
+      ...newAssistance,
+      documents: processedDocs,
+    };
+
     return res.status(201).json({
       message: "Social assistance created successfully",
-      data: newAssistance,
+      data: result,
     });
   } catch (err: unknown) {
     next(err);
@@ -165,7 +240,7 @@ export const postSocialAssistance = async (
 // UPDATE SOCIAL ASSISTANCE
 // ============================================================================
 export const patchSocialAssistance = async (
-  req: AuthRequest,
+  req: RequestWithFiles,
   res: Response,
   next: NextFunction
 ) => {
@@ -211,11 +286,58 @@ export const patchSocialAssistance = async (
     if (notes !== undefined) updateData.notes = notes || null;
     updateData.editedBy = userId;
 
+    // Upload new documents if provided
+    const files = Array.isArray(req.files) ? req.files : [];
+    if (files.length > 0) {
+      for (const file of files) {
+        const docKey = await uploadToS3(
+          file,
+          id,
+          `social-assistance-${id}`,
+          "social-assistance"
+        );
+
+        if (docKey) {
+          await insertSocialAssistanceDoc({
+            socialAssistanceId: id,
+            name: file.originalname,
+            urlDoc: docKey,
+          });
+        }
+      }
+    }
+
     const updated = await updateSocialAssistanceById(id, updateData);
+
+    // Get all documents including existing ones
+    const allData = await selectSocialAssistanceById(id);
+    if (!allData) {
+      return res.status(404).json({
+        message: "Social assistance not found",
+        data: null,
+      });
+    }
+    const processedDocs = await Promise.all(
+      (allData.documents || []).map(async (doc: any) => {
+        let docUrl = null;
+        if (isValidS3Key(doc.urlDoc)) {
+          docUrl = await getPresignedUrl(doc.urlDoc);
+        }
+        return {
+          ...doc,
+          urlDoc: docUrl,
+        };
+      })
+    );
+
+    const result = {
+      ...updated,
+      documents: processedDocs,
+    };
 
     return res.json({
       message: "Social assistance updated successfully",
-      data: updated,
+      data: result,
     });
   } catch (err) {
     next(err);
@@ -240,10 +362,62 @@ export const deleteSocialAssistance = async (
       });
     }
 
+    // Delete all documents from S3
+    if (existing.documents && existing.documents.length > 0) {
+      for (const doc of existing.documents) {
+        if (isValidS3Key(doc.urlDoc)) {
+          await deleteFromS3(doc.urlDoc);
+        }
+      }
+    }
+
+    // Delete the record (cascade will delete documents from DB)
     await deleteSocialAssistanceById(id);
 
     return res.json({
       message: "Social assistance deleted successfully",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// DELETE SOCIAL ASSISTANCE DOCUMENT
+// ============================================================================
+export const deleteSocialAssistanceDocument = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+    const docId = Number(req.params.docId);
+
+    const assistance = await selectSocialAssistanceById(id);
+    if (!assistance) {
+      return res.status(404).json({
+        message: "Social assistance not found",
+      });
+    }
+
+    const doc = assistance.documents.find((d) => d.id === docId);
+    if (!doc) {
+      return res.status(404).json({
+        message: "Document not found",
+      });
+    }
+
+    // Delete from S3
+    if (isValidS3Key(doc.urlDoc)) {
+      await deleteFromS3(doc.urlDoc);
+    }
+
+    // Delete from database
+    await deleteSocialAssistanceDocById(docId);
+
+    return res.json({
+      message: "Document deleted successfully",
     });
   } catch (err) {
     next(err);

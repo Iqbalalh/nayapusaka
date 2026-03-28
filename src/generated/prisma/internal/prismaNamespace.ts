@@ -405,6 +405,7 @@ export const ModelName = {
   Gallery: 'Gallery',
   GalleryCategory: 'GalleryCategory',
   SocialAssistance: 'SocialAssistance',
+  SocialAssistanceDocs: 'SocialAssistanceDocs',
   Letter: 'Letter',
   LetterApproval: 'LetterApproval'
 } as const
@@ -422,7 +423,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "letter" | "letterApproval"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "socialAssistanceDocs" | "letter" | "letterApproval"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1980,6 +1981,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    SocialAssistanceDocs: {
+      payload: Prisma.$SocialAssistanceDocsPayload<ExtArgs>
+      fields: Prisma.SocialAssistanceDocsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SocialAssistanceDocsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SocialAssistanceDocsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>
+        }
+        findFirst: {
+          args: Prisma.SocialAssistanceDocsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SocialAssistanceDocsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>
+        }
+        findMany: {
+          args: Prisma.SocialAssistanceDocsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>[]
+        }
+        create: {
+          args: Prisma.SocialAssistanceDocsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>
+        }
+        createMany: {
+          args: Prisma.SocialAssistanceDocsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SocialAssistanceDocsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>[]
+        }
+        delete: {
+          args: Prisma.SocialAssistanceDocsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>
+        }
+        update: {
+          args: Prisma.SocialAssistanceDocsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>
+        }
+        deleteMany: {
+          args: Prisma.SocialAssistanceDocsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SocialAssistanceDocsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SocialAssistanceDocsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>[]
+        }
+        upsert: {
+          args: Prisma.SocialAssistanceDocsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialAssistanceDocsPayload>
+        }
+        aggregate: {
+          args: Prisma.SocialAssistanceDocsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSocialAssistanceDocs>
+        }
+        groupBy: {
+          args: Prisma.SocialAssistanceDocsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialAssistanceDocsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SocialAssistanceDocsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialAssistanceDocsCountAggregateOutputType> | number
+        }
+      }
+    }
     Letter: {
       payload: Prisma.$LetterPayload<ExtArgs>
       fields: Prisma.LetterFieldRefs
@@ -2540,6 +2615,17 @@ export const SocialAssistanceScalarFieldEnum = {
 export type SocialAssistanceScalarFieldEnum = (typeof SocialAssistanceScalarFieldEnum)[keyof typeof SocialAssistanceScalarFieldEnum]
 
 
+export const SocialAssistanceDocsScalarFieldEnum = {
+  id: 'id',
+  socialAssistanceId: 'socialAssistanceId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type SocialAssistanceDocsScalarFieldEnum = (typeof SocialAssistanceDocsScalarFieldEnum)[keyof typeof SocialAssistanceDocsScalarFieldEnum]
+
+
 export const LetterScalarFieldEnum = {
   id: 'id',
   letterType: 'letterType',
@@ -2553,6 +2639,7 @@ export const LetterScalarFieldEnum = {
   originalDocumentPath: 'originalDocumentPath',
   signedDocumentPath: 'signedDocumentPath',
   status: 'status',
+  notes: 'notes',
   signer1Id: 'signer1Id',
   signer2Id: 'signer2Id',
   signer3Id: 'signer3Id',
@@ -2819,6 +2906,7 @@ export type GlobalOmitConfig = {
   gallery?: Prisma.GalleryOmit
   galleryCategory?: Prisma.GalleryCategoryOmit
   socialAssistance?: Prisma.SocialAssistanceOmit
+  socialAssistanceDocs?: Prisma.SocialAssistanceDocsOmit
   letter?: Prisma.LetterOmit
   letterApproval?: Prisma.LetterApprovalOmit
 }

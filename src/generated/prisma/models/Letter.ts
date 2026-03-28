@@ -57,6 +57,7 @@ export type LetterMinAggregateOutputType = {
   originalDocumentPath: string | null
   signedDocumentPath: string | null
   status: $Enums.LetterStatus | null
+  notes: string | null
   signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
@@ -81,6 +82,7 @@ export type LetterMaxAggregateOutputType = {
   originalDocumentPath: string | null
   signedDocumentPath: string | null
   status: $Enums.LetterStatus | null
+  notes: string | null
   signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
@@ -105,6 +107,7 @@ export type LetterCountAggregateOutputType = {
   originalDocumentPath: number
   signedDocumentPath: number
   status: number
+  notes: number
   signer1Id: number
   signer2Id: number
   signer3Id: number
@@ -149,6 +152,7 @@ export type LetterMinAggregateInputType = {
   originalDocumentPath?: true
   signedDocumentPath?: true
   status?: true
+  notes?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
@@ -173,6 +177,7 @@ export type LetterMaxAggregateInputType = {
   originalDocumentPath?: true
   signedDocumentPath?: true
   status?: true
+  notes?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
@@ -197,6 +202,7 @@ export type LetterCountAggregateInputType = {
   originalDocumentPath?: true
   signedDocumentPath?: true
   status?: true
+  notes?: true
   signer1Id?: true
   signer2Id?: true
   signer3Id?: true
@@ -308,7 +314,8 @@ export type LetterGroupByOutputType = {
   originalDocumentPath: string | null
   signedDocumentPath: string | null
   status: $Enums.LetterStatus
-  signer1Id: number
+  notes: string | null
+  signer1Id: number | null
   signer2Id: number | null
   signer3Id: number | null
   revisionNote: string | null
@@ -355,7 +362,8 @@ export type LetterWhereInput = {
   originalDocumentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   signedDocumentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusFilter<"Letter"> | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFilter<"Letter"> | number
+  notes?: Prisma.StringNullableFilter<"Letter"> | string | null
+  signer1Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer2Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   revisionNote?: Prisma.StringNullableFilter<"Letter"> | string | null
@@ -364,7 +372,7 @@ export type LetterWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Letter"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Letter"> | number | null
-  signer1?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
+  signer1?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   signer2?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   signer3?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   letterApprovals?: Prisma.LetterApprovalListRelationFilter
@@ -383,7 +391,8 @@ export type LetterOrderByWithRelationInput = {
   originalDocumentPath?: Prisma.SortOrderInput | Prisma.SortOrder
   signedDocumentPath?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  signer1Id?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  signer1Id?: Prisma.SortOrderInput | Prisma.SortOrder
   signer2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   signer3Id?: Prisma.SortOrderInput | Prisma.SortOrder
   revisionNote?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -415,7 +424,8 @@ export type LetterWhereUniqueInput = Prisma.AtLeast<{
   originalDocumentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   signedDocumentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusFilter<"Letter"> | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFilter<"Letter"> | number
+  notes?: Prisma.StringNullableFilter<"Letter"> | string | null
+  signer1Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer2Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   revisionNote?: Prisma.StringNullableFilter<"Letter"> | string | null
@@ -423,7 +433,7 @@ export type LetterWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Letter"> | Date | string
   createdBy?: Prisma.IntNullableFilter<"Letter"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Letter"> | number | null
-  signer1?: Prisma.XOR<Prisma.UsersScalarRelationFilter, Prisma.UsersWhereInput>
+  signer1?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   signer2?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   signer3?: Prisma.XOR<Prisma.UsersNullableScalarRelationFilter, Prisma.UsersWhereInput> | null
   letterApprovals?: Prisma.LetterApprovalListRelationFilter
@@ -442,7 +452,8 @@ export type LetterOrderByWithAggregationInput = {
   originalDocumentPath?: Prisma.SortOrderInput | Prisma.SortOrder
   signedDocumentPath?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  signer1Id?: Prisma.SortOrder
+  notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  signer1Id?: Prisma.SortOrderInput | Prisma.SortOrder
   signer2Id?: Prisma.SortOrderInput | Prisma.SortOrder
   signer3Id?: Prisma.SortOrderInput | Prisma.SortOrder
   revisionNote?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -474,7 +485,8 @@ export type LetterScalarWhereWithAggregatesInput = {
   originalDocumentPath?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
   signedDocumentPath?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusWithAggregatesFilter<"Letter"> | $Enums.LetterStatus
-  signer1Id?: Prisma.IntWithAggregatesFilter<"Letter"> | number
+  notes?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
+  signer1Id?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
   signer2Id?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableWithAggregatesFilter<"Letter"> | number | null
   revisionNote?: Prisma.StringNullableWithAggregatesFilter<"Letter"> | string | null
@@ -497,13 +509,14 @@ export type LetterCreateInput = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   revisionNote?: string | null
   verificationToken?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  signer1: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
+  signer1?: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
   signer2?: Prisma.UsersCreateNestedOneWithoutLettersSigner2Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLettersSigner3Input
   letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
@@ -522,7 +535,8 @@ export type LetterUncheckedCreateInput = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer2Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
@@ -546,13 +560,14 @@ export type LetterUpdateInput = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1?: Prisma.UsersUpdateOneRequiredWithoutLettersSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneWithoutLettersSigner1NestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLettersSigner2NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLettersSigner3NestedInput
   letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
@@ -571,7 +586,8 @@ export type LetterUncheckedUpdateInput = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -596,7 +612,8 @@ export type LetterCreateManyInput = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer2Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
@@ -619,6 +636,7 @@ export type LetterUpdateManyMutationInput = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -640,7 +658,8 @@ export type LetterUncheckedUpdateManyInput = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -674,6 +693,7 @@ export type LetterCountOrderByAggregateInput = {
   originalDocumentPath?: Prisma.SortOrder
   signedDocumentPath?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
@@ -707,6 +727,7 @@ export type LetterMaxOrderByAggregateInput = {
   originalDocumentPath?: Prisma.SortOrder
   signedDocumentPath?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
@@ -731,6 +752,7 @@ export type LetterMinOrderByAggregateInput = {
   originalDocumentPath?: Prisma.SortOrder
   signedDocumentPath?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
   signer1Id?: Prisma.SortOrder
   signer2Id?: Prisma.SortOrder
   signer3Id?: Prisma.SortOrder
@@ -912,6 +934,7 @@ export type LetterCreateWithoutSigner1Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   revisionNote?: string | null
   verificationToken?: string | null
   createdAt?: Date | string
@@ -936,6 +959,7 @@ export type LetterUncheckedCreateWithoutSigner1Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   signer2Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
@@ -969,13 +993,14 @@ export type LetterCreateWithoutSigner2Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   revisionNote?: string | null
   verificationToken?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  signer1: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
+  signer1?: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLettersSigner3Input
   letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
 }
@@ -993,7 +1018,8 @@ export type LetterUncheckedCreateWithoutSigner2Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
   verificationToken?: string | null
@@ -1026,13 +1052,14 @@ export type LetterCreateWithoutSigner3Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   revisionNote?: string | null
   verificationToken?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  signer1: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
+  signer1?: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
   signer2?: Prisma.UsersCreateNestedOneWithoutLettersSigner2Input
   letterApprovals?: Prisma.LetterApprovalCreateNestedManyWithoutLetterInput
 }
@@ -1050,7 +1077,8 @@ export type LetterUncheckedCreateWithoutSigner3Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer2Id?: number | null
   revisionNote?: string | null
   verificationToken?: string | null
@@ -1103,7 +1131,8 @@ export type LetterScalarWhereInput = {
   originalDocumentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   signedDocumentPath?: Prisma.StringNullableFilter<"Letter"> | string | null
   status?: Prisma.EnumLetterStatusFilter<"Letter"> | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFilter<"Letter"> | number
+  notes?: Prisma.StringNullableFilter<"Letter"> | string | null
+  signer1Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer2Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   signer3Id?: Prisma.IntNullableFilter<"Letter"> | number | null
   revisionNote?: Prisma.StringNullableFilter<"Letter"> | string | null
@@ -1158,13 +1187,14 @@ export type LetterCreateWithoutLetterApprovalsInput = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   revisionNote?: string | null
   verificationToken?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: number | null
   editedBy?: number | null
-  signer1: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
+  signer1?: Prisma.UsersCreateNestedOneWithoutLettersSigner1Input
   signer2?: Prisma.UsersCreateNestedOneWithoutLettersSigner2Input
   signer3?: Prisma.UsersCreateNestedOneWithoutLettersSigner3Input
 }
@@ -1182,7 +1212,8 @@ export type LetterUncheckedCreateWithoutLetterApprovalsInput = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer2Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
@@ -1221,13 +1252,14 @@ export type LetterUpdateWithoutLetterApprovalsInput = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1?: Prisma.UsersUpdateOneRequiredWithoutLettersSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneWithoutLettersSigner1NestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLettersSigner2NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLettersSigner3NestedInput
 }
@@ -1245,7 +1277,8 @@ export type LetterUncheckedUpdateWithoutLetterApprovalsInput = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1269,6 +1302,7 @@ export type LetterCreateManySigner1Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
+  notes?: string | null
   signer2Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
@@ -1292,7 +1326,8 @@ export type LetterCreateManySigner2Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer3Id?: number | null
   revisionNote?: string | null
   verificationToken?: string | null
@@ -1315,7 +1350,8 @@ export type LetterCreateManySigner3Input = {
   originalDocumentPath?: string | null
   signedDocumentPath?: string | null
   status?: $Enums.LetterStatus
-  signer1Id: number
+  notes?: string | null
+  signer1Id?: number | null
   signer2Id?: number | null
   revisionNote?: string | null
   verificationToken?: string | null
@@ -1337,6 +1373,7 @@ export type LetterUpdateWithoutSigner1Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1361,6 +1398,7 @@ export type LetterUncheckedUpdateWithoutSigner1Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1385,6 +1423,7 @@ export type LetterUncheckedUpdateManyWithoutSigner1Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1407,13 +1446,14 @@ export type LetterUpdateWithoutSigner2Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1?: Prisma.UsersUpdateOneRequiredWithoutLettersSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneWithoutLettersSigner1NestedInput
   signer3?: Prisma.UsersUpdateOneWithoutLettersSigner3NestedInput
   letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
 }
@@ -1431,7 +1471,8 @@ export type LetterUncheckedUpdateWithoutSigner2Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1455,7 +1496,8 @@ export type LetterUncheckedUpdateManyWithoutSigner2Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer3Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1477,13 +1519,14 @@ export type LetterUpdateWithoutSigner3Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  signer1?: Prisma.UsersUpdateOneRequiredWithoutLettersSigner1NestedInput
+  signer1?: Prisma.UsersUpdateOneWithoutLettersSigner1NestedInput
   signer2?: Prisma.UsersUpdateOneWithoutLettersSigner2NestedInput
   letterApprovals?: Prisma.LetterApprovalUpdateManyWithoutLetterNestedInput
 }
@@ -1501,7 +1544,8 @@ export type LetterUncheckedUpdateWithoutSigner3Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1525,7 +1569,8 @@ export type LetterUncheckedUpdateManyWithoutSigner3Input = {
   originalDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signedDocumentPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLetterStatusFieldUpdateOperationsInput | $Enums.LetterStatus
-  signer1Id?: Prisma.IntFieldUpdateOperationsInput | number
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  signer1Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   signer2Id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   revisionNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   verificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1579,6 +1624,7 @@ export type LetterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   originalDocumentPath?: boolean
   signedDocumentPath?: boolean
   status?: boolean
+  notes?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
@@ -1588,7 +1634,7 @@ export type LetterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
+  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
   letterApprovals?: boolean | Prisma.Letter$letterApprovalsArgs<ExtArgs>
@@ -1608,6 +1654,7 @@ export type LetterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   originalDocumentPath?: boolean
   signedDocumentPath?: boolean
   status?: boolean
+  notes?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
@@ -1617,7 +1664,7 @@ export type LetterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
+  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
 }, ExtArgs["result"]["letter"]>
@@ -1635,6 +1682,7 @@ export type LetterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   originalDocumentPath?: boolean
   signedDocumentPath?: boolean
   status?: boolean
+  notes?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
@@ -1644,7 +1692,7 @@ export type LetterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
-  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
+  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
 }, ExtArgs["result"]["letter"]>
@@ -1662,6 +1710,7 @@ export type LetterSelectScalar = {
   originalDocumentPath?: boolean
   signedDocumentPath?: boolean
   status?: boolean
+  notes?: boolean
   signer1Id?: boolean
   signer2Id?: boolean
   signer3Id?: boolean
@@ -1673,21 +1722,21 @@ export type LetterSelectScalar = {
   editedBy?: boolean
 }
 
-export type LetterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "letterType" | "letterNumber" | "attachment" | "subject" | "letterDate" | "destination" | "carbonCopy" | "documentPath" | "originalDocumentPath" | "signedDocumentPath" | "status" | "signer1Id" | "signer2Id" | "signer3Id" | "revisionNote" | "verificationToken" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["letter"]>
+export type LetterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "letterType" | "letterNumber" | "attachment" | "subject" | "letterDate" | "destination" | "carbonCopy" | "documentPath" | "originalDocumentPath" | "signedDocumentPath" | "status" | "notes" | "signer1Id" | "signer2Id" | "signer3Id" | "revisionNote" | "verificationToken" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["letter"]>
 export type LetterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
+  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
   letterApprovals?: boolean | Prisma.Letter$letterApprovalsArgs<ExtArgs>
   _count?: boolean | Prisma.LetterCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type LetterIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
+  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
 }
 export type LetterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  signer1?: boolean | Prisma.UsersDefaultArgs<ExtArgs>
+  signer1?: boolean | Prisma.Letter$signer1Args<ExtArgs>
   signer2?: boolean | Prisma.Letter$signer2Args<ExtArgs>
   signer3?: boolean | Prisma.Letter$signer3Args<ExtArgs>
 }
@@ -1695,7 +1744,7 @@ export type LetterIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
 export type $LetterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Letter"
   objects: {
-    signer1: Prisma.$UsersPayload<ExtArgs>
+    signer1: Prisma.$UsersPayload<ExtArgs> | null
     signer2: Prisma.$UsersPayload<ExtArgs> | null
     signer3: Prisma.$UsersPayload<ExtArgs> | null
     letterApprovals: Prisma.$LetterApprovalPayload<ExtArgs>[]
@@ -1713,7 +1762,8 @@ export type $LetterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     originalDocumentPath: string | null
     signedDocumentPath: string | null
     status: $Enums.LetterStatus
-    signer1Id: number
+    notes: string | null
+    signer1Id: number | null
     signer2Id: number | null
     signer3Id: number | null
     revisionNote: string | null
@@ -2116,7 +2166,7 @@ readonly fields: LetterFieldRefs;
  */
 export interface Prisma__LetterClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  signer1<T extends Prisma.UsersDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsersDefaultArgs<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  signer1<T extends Prisma.Letter$signer1Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$signer1Args<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   signer2<T extends Prisma.Letter$signer2Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$signer2Args<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   signer3<T extends Prisma.Letter$signer3Args<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$signer3Args<ExtArgs>>): Prisma.Prisma__UsersClient<runtime.Types.Result.GetResult<Prisma.$UsersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   letterApprovals<T extends Prisma.Letter$letterApprovalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Letter$letterApprovalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LetterApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2161,6 +2211,7 @@ export interface LetterFieldRefs {
   readonly originalDocumentPath: Prisma.FieldRef<"Letter", 'String'>
   readonly signedDocumentPath: Prisma.FieldRef<"Letter", 'String'>
   readonly status: Prisma.FieldRef<"Letter", 'LetterStatus'>
+  readonly notes: Prisma.FieldRef<"Letter", 'String'>
   readonly signer1Id: Prisma.FieldRef<"Letter", 'Int'>
   readonly signer2Id: Prisma.FieldRef<"Letter", 'Int'>
   readonly signer3Id: Prisma.FieldRef<"Letter", 'Int'>
@@ -2563,6 +2614,25 @@ export type LetterDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Letters to delete.
    */
   limit?: number
+}
+
+/**
+ * Letter.signer1
+ */
+export type Letter$signer1Args<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Users
+   */
+  select?: Prisma.UsersSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Users
+   */
+  omit?: Prisma.UsersOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsersInclude<ExtArgs> | null
+  where?: Prisma.UsersWhereInput
 }
 
 /**

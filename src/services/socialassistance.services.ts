@@ -28,6 +28,9 @@ export const selectSocialAssistanceById = async (id: number) => {
   try {
     return await prisma.socialAssistance.findUnique({
       where: { id },
+      include: {
+        documents: true,
+      },
     });
   } catch (error) {
     throw error instanceof Error ? error : new Error(String(error));
@@ -106,6 +109,34 @@ export const selectSocialAssistanceCount = async (search?: string): Promise<numb
     } : {};
     
     return await prisma.socialAssistance.count({ where });
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
+// ============================================================================
+// SOCIAL ASSISTANCE DOCS QUERIES
+// ============================================================================
+
+/**
+ * Insert social assistance document
+ */
+export const insertSocialAssistanceDoc = async (
+  data: Prisma.SocialAssistanceDocsUncheckedCreateInput
+) => {
+  try {
+    return await prisma.socialAssistanceDocs.create({ data });
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
+/**
+ * Delete social assistance document by ID
+ */
+export const deleteSocialAssistanceDocById = async (id: number) => {
+  try {
+    return await prisma.socialAssistanceDocs.delete({ where: { id } });
   } catch (error) {
     throw error instanceof Error ? error : new Error(String(error));
   }

@@ -72,6 +72,7 @@ export const ModelName = {
   Gallery: 'Gallery',
   GalleryCategory: 'GalleryCategory',
   SocialAssistance: 'SocialAssistance',
+  SocialAssistanceDocs: 'SocialAssistanceDocs',
   Letter: 'Letter',
   LetterApproval: 'LetterApproval'
 } as const
@@ -465,6 +466,17 @@ export const SocialAssistanceScalarFieldEnum = {
 export type SocialAssistanceScalarFieldEnum = (typeof SocialAssistanceScalarFieldEnum)[keyof typeof SocialAssistanceScalarFieldEnum]
 
 
+export const SocialAssistanceDocsScalarFieldEnum = {
+  id: 'id',
+  socialAssistanceId: 'socialAssistanceId',
+  name: 'name',
+  urlDoc: 'urlDoc',
+  createdAt: 'createdAt'
+} as const
+
+export type SocialAssistanceDocsScalarFieldEnum = (typeof SocialAssistanceDocsScalarFieldEnum)[keyof typeof SocialAssistanceDocsScalarFieldEnum]
+
+
 export const LetterScalarFieldEnum = {
   id: 'id',
   letterType: 'letterType',
@@ -478,6 +490,7 @@ export const LetterScalarFieldEnum = {
   originalDocumentPath: 'originalDocumentPath',
   signedDocumentPath: 'signedDocumentPath',
   status: 'status',
+  notes: 'notes',
   signer1Id: 'signer1Id',
   signer2Id: 'signer2Id',
   signer3Id: 'signer3Id',

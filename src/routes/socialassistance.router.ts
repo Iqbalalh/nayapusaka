@@ -3,6 +3,7 @@ import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import upload from "../middlewares/multer";
 import {
   deleteSocialAssistance,
+  deleteSocialAssistanceDocument,
   getSocialAssistance,
   getSocialAssistanceById,
   getSocialAssistanceOptimized,
@@ -27,8 +28,8 @@ socialAssistanceRouter.get("/optimized", getSocialAssistanceOptimized);
 socialAssistanceRouter.get("/template", downloadSocialAssistanceTemplate);
 socialAssistanceRouter.get("/:id", getSocialAssistanceById);
 
-// CREATE
-socialAssistanceRouter.post("/", verifyAdminOrAbove, postSocialAssistance);
+// CREATE (POST + multiple documents)
+socialAssistanceRouter.post("/", verifyAdminOrAbove, upload.array("documents", 10), postSocialAssistance);
 
 // IMPORT FROM EXCEL
 socialAssistanceRouter.post(
@@ -38,10 +39,13 @@ socialAssistanceRouter.post(
   importSocialAssistanceFromExcel
 );
 
-// PARTIAL UPDATE
-socialAssistanceRouter.patch("/:id", verifyAdminOrAbove, patchSocialAssistance);
+// PARTIAL UPDATE (+ optional documents)
+socialAssistanceRouter.patch("/:id", verifyAdminOrAbove, upload.array("documents", 10), patchSocialAssistance);
 
-// DELETE
+// DELETE (documents + record)
 socialAssistanceRouter.delete("/:id", verifyAdminOrAbove, deleteSocialAssistance);
+
+// DELETE specific document
+socialAssistanceRouter.delete("/:id/documents/:docId", verifyAdminOrAbove, deleteSocialAssistanceDocument);
 
 export default socialAssistanceRouter;

@@ -414,11 +414,6 @@ export type UsersSumOrderByAggregateInput = {
   tokenVersion?: Prisma.SortOrder
 }
 
-export type UsersScalarRelationFilter = {
-  is?: Prisma.UsersWhereInput
-  isNot?: Prisma.UsersWhereInput
-}
-
 export type UsersNullableScalarRelationFilter = {
   is?: Prisma.UsersWhereInput | null
   isNot?: Prisma.UsersWhereInput | null
@@ -484,10 +479,12 @@ export type UsersCreateNestedOneWithoutLettersSigner3Input = {
   connect?: Prisma.UsersWhereUniqueInput
 }
 
-export type UsersUpdateOneRequiredWithoutLettersSigner1NestedInput = {
+export type UsersUpdateOneWithoutLettersSigner1NestedInput = {
   create?: Prisma.XOR<Prisma.UsersCreateWithoutLettersSigner1Input, Prisma.UsersUncheckedCreateWithoutLettersSigner1Input>
   connectOrCreate?: Prisma.UsersCreateOrConnectWithoutLettersSigner1Input
   upsert?: Prisma.UsersUpsertWithoutLettersSigner1Input
+  disconnect?: Prisma.UsersWhereInput | boolean
+  delete?: Prisma.UsersWhereInput | boolean
   connect?: Prisma.UsersWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsersUpdateToOneWithWhereWithoutLettersSigner1Input, Prisma.UsersUpdateWithoutLettersSigner1Input>, Prisma.UsersUncheckedUpdateWithoutLettersSigner1Input>
 }

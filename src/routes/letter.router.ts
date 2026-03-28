@@ -8,6 +8,7 @@ import {
   getPendingLetters,
   getLetter,
   postLetter,
+  postArchiveLetter,
   patchLetter,
   deleteLetter,
   submitLetter,
@@ -43,6 +44,9 @@ letterRouter.get("/:id", getLetter);
 letterRouter.post("/", verifyAdminOrAbove, upload.single("document"), postLetter);
 letterRouter.patch("/:id", verifyAdminOrAbove, upload.single("document"), patchLetter);
 letterRouter.delete("/:id", verifyAdminOrAbove, deleteLetter);
+
+// Archive upload (admin/superadmin only)
+letterRouter.post("/archive", verifyAdminOrAbove, upload.single("document"), postArchiveLetter);
 
 // Workflow endpoints (admin/superadmin only)
 letterRouter.post("/:id/submit", verifyAdminOrAbove, submitLetter);
