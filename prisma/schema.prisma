@@ -156,6 +156,7 @@ model Staffs {
   position      String?   @db.VarChar(100)
   staffPict     String?   @map("staff_pict") @db.VarChar(255)
   signaturePath String?   @map("signature_path") @db.VarChar(255)
+  parafPath     String?   @map("paraf_path") @db.VarChar(255)
   createdAt     DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt     DateTime? @default(now()) @map("updated_at") @db.Timestamptz(6)
   createdBy     Int?      @map("created_by") @default(2)

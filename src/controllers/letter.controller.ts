@@ -71,6 +71,9 @@ const transformLetter = async (letter: any) => {
       signatureUrl: letter.signer1.staffs?.signaturePath
         ? await getPresignedUrl(letter.signer1.staffs.signaturePath)
         : null,
+      parafUrl: (letter.signer1.staffs as any)?.parafPath
+        ? await getPresignedUrl((letter.signer1.staffs as any).parafPath)
+        : null,
     } : null,
     signer2: letter.signer2 ? {
       userId: letter.signer2.userId,
@@ -80,6 +83,9 @@ const transformLetter = async (letter: any) => {
       signatureUrl: letter.signer2.staffs?.signaturePath
         ? await getPresignedUrl(letter.signer2.staffs.signaturePath)
         : null,
+      parafUrl: (letter.signer2.staffs as any)?.parafPath
+        ? await getPresignedUrl((letter.signer2.staffs as any).parafPath)
+        : null,
     } : null,
     signer3: letter.signer3 ? {
       userId: letter.signer3.userId,
@@ -88,6 +94,9 @@ const transformLetter = async (letter: any) => {
       position: letter.signer3.staffs?.position || null,
       signatureUrl: letter.signer3.staffs?.signaturePath
         ? await getPresignedUrl(letter.signer3.staffs.signaturePath)
+        : null,
+      parafUrl: (letter.signer3.staffs as any)?.parafPath
+        ? await getPresignedUrl((letter.signer3.staffs as any).parafPath)
         : null,
     } : null,
     revisionNote: letter.revisionNote,
@@ -490,6 +499,9 @@ export const approveLetter = async (req: AuthRequest, res: Response, next: NextF
     const sigPage = req.body.signature_page ?? req.body.signaturePage;
     const sigX = req.body.signature_x ?? req.body.signatureX;
     const sigY = req.body.signature_y ?? req.body.signatureY;
+    const sigType: 'ttd' | 'paraf' = req.body.signatureType ?? req.body.signature_type ?? 'ttd';
+    const sigWidth = req.body.signatureWidth ?? req.body.signature_width;
+    const sigHeight = req.body.signatureHeight ?? req.body.signature_height;
     const hasPlacement = sigPage !== undefined && sigX !== undefined && sigY !== undefined;
 
     // Embed signature into PDF if coordinates provided
@@ -497,7 +509,10 @@ export const approveLetter = async (req: AuthRequest, res: Response, next: NextF
       try {
         const newDocPath = await embedSignatureOnDocument(
           id, userId,
-          Number(sigPage), Number(sigX), Number(sigY)
+          Number(sigPage), Number(sigX), Number(sigY),
+          sigType,
+          sigWidth !== undefined ? Number(sigWidth) : undefined,
+          sigHeight !== undefined ? Number(sigHeight) : undefined,
         );
 
         // Update document path with new signed PDF
@@ -664,6 +679,7 @@ export const publishLetter = async (req: AuthRequest, res: Response, next: NextF
     const qrPage = req.body.qr_page ?? req.body.qrPage;
     const qrX = req.body.qr_x ?? req.body.qrX;
     const qrY = req.body.qr_y ?? req.body.qrY;
+    const qrSize = req.body.qr_size ?? req.body.qrSize;
     const hasPlacement = qrPage !== undefined && qrX !== undefined && qrY !== undefined;
 
     let signedDocPath = letter.documentPath;
@@ -673,7 +689,8 @@ export const publishLetter = async (req: AuthRequest, res: Response, next: NextF
       try {
         const newDocPath = await embedQrCodeOnDocument(
           id, verificationToken,
-          Number(qrPage), Number(qrX), Number(qrY)
+          Number(qrPage), Number(qrX), Number(qrY),
+          qrSize !== undefined ? Number(qrSize) : undefined
         );
         signedDocPath = newDocPath;
 

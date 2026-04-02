@@ -16,6 +16,9 @@ const SIG_MAX_HEIGHT = 60;
  * @param signaturePage - 0-indexed page number
  * @param signatureX - X position in PDF points (bottom-left origin)
  * @param signatureY - Y position in PDF points (bottom-left origin)
+ * @param signatureType - 'ttd' (full signature) or 'paraf' (initials)
+ * @param customWidth - Optional custom width in PDF points
+ * @param customHeight - Optional custom height in PDF points
  * @returns The S3 key of the updated PDF
  */
 export const embedSignatureOnDocument = async (
@@ -23,7 +26,10 @@ export const embedSignatureOnDocument = async (
   signerUserId: number,
   signaturePage: number,
   signatureX: number,
-  signatureY: number
+  signatureY: number,
+  signatureType: 'ttd' | 'paraf' = 'ttd',
+  customWidth?: number,
+  customHeight?: number,
 ): Promise<string> => {
   // 1. Fetch letter
   const letter = await selectLetterById(letterId);
@@ -33,24 +39,29 @@ export const embedSignatureOnDocument = async (
   // 2. Fetch signer's staff data
   const user = await prisma.users.findUnique({
     where: { userId: signerUserId },
-    include: { staffs: { select: { signaturePath: true, staffName: true } } },
+    include: { staffs: { select: { signaturePath: true, parafPath: true, staffName: true } as any } },
   });
 
-  if (!user?.staffs?.signaturePath) {
+  const sigPath = signatureType === 'paraf'
+    ? ((user?.staffs as any)?.parafPath || user?.staffs?.signaturePath)
+    : user?.staffs?.signaturePath;
+
+  if (!sigPath) {
+    const label = signatureType === 'paraf' ? 'paraf' : 'tanda tangan digital';
     throw new Error(
-      `Penandatangan "${user?.staffs?.staffName || user?.username || "Unknown"}" belum memiliki tanda tangan digital. ` +
-      `Silakan upload tanda tangan di profil staf terlebih dahulu.`
+      `Penandatangan "${user?.staffs?.staffName || user?.username || "Unknown"}" belum memiliki ${label}. ` +
+      `Silakan upload ${label} di profil staf terlebih dahulu.`
     );
   }
 
   // 3. Download PDF and signature image from S3
   const [pdfBuffer, sigBuffer] = await Promise.all([
     downloadFromS3(letter.documentPath),
-    downloadFromS3(user.staffs.signaturePath),
+    downloadFromS3(sigPath),
   ]);
 
   if (!pdfBuffer) throw new Error("Gagal mengambil dokumen PDF dari server.");
-  if (!sigBuffer) throw new Error("Gagal mengambil file tanda tangan dari server.");
+  if (!sigBuffer) throw new Error("Gagal mengambil file tanda tangan/paraf dari server.");
 
   // 4. Verify PDF magic bytes
   const header = pdfBuffer.subarray(0, 5).toString("ascii");
@@ -76,13 +87,15 @@ export const embedSignatureOnDocument = async (
     sigImage = await pdfDoc.embedJpg(sigBuffer);
   }
 
-  // Scale image to fit within max bounds while maintaining aspect ratio
+  // Scale image to fit within bounds while maintaining aspect ratio
   const aspectRatio = sigImage.width / sigImage.height;
-  let drawWidth = SIG_MAX_WIDTH;
-  let drawHeight = SIG_MAX_WIDTH / aspectRatio;
-  if (drawHeight > SIG_MAX_HEIGHT) {
-    drawHeight = SIG_MAX_HEIGHT;
-    drawWidth = SIG_MAX_HEIGHT * aspectRatio;
+  const maxW = customWidth ?? SIG_MAX_WIDTH;
+  const maxH = customHeight ?? SIG_MAX_HEIGHT;
+  let drawWidth = maxW;
+  let drawHeight = maxW / aspectRatio;
+  if (drawHeight > maxH) {
+    drawHeight = maxH;
+    drawWidth = maxH * aspectRatio;
   }
 
   // Draw signature at specified position

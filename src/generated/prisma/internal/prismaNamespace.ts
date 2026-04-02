@@ -2355,6 +2355,7 @@ export const StaffsScalarFieldEnum = {
   position: 'position',
   staffPict: 'staffPict',
   signaturePath: 'signaturePath',
+  parafPath: 'parafPath',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',

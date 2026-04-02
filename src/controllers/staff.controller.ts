@@ -28,6 +28,7 @@ export const getStaffs = async (
       staffs.map(async (staff) => {
         let pictUrl = null;
         let signatureUrl = null;
+        let parafUrl = null;
 
         if (isValidS3Key(staff.staffPict)) {
           pictUrl = await getPresignedUrl(staff.staffPict);
@@ -35,11 +36,15 @@ export const getStaffs = async (
         if (isValidS3Key(staff.signaturePath)) {
           signatureUrl = await getPresignedUrl(staff.signaturePath);
         }
+        if (isValidS3Key((staff as any).parafPath)) {
+          parafUrl = await getPresignedUrl((staff as any).parafPath);
+        }
 
         return {
           ...staff,
           staffPict: pictUrl,
           signaturePath: signatureUrl,
+          parafPath: parafUrl,
         };
       })
     );
@@ -77,17 +82,22 @@ export const getStaff = async (
 
     let pictUrl = null;
     let sigUrl = null;
+    let parafUrl = null;
     if (isValidS3Key(staff.staffPict)) {
       pictUrl = await getPresignedUrl(staff.staffPict);
     }
     if (isValidS3Key(staff.signaturePath)) {
       sigUrl = await getPresignedUrl(staff.signaturePath);
     }
+    if (isValidS3Key((staff as any).parafPath)) {
+      parafUrl = await getPresignedUrl((staff as any).parafPath);
+    }
 
     const result = {
       ...staff,
       staffPict: pictUrl,
       signaturePath: sigUrl,
+      parafPath: parafUrl,
     };
 
     // Add staff names to the result
@@ -114,7 +124,7 @@ export const postStaff = async (
   try {
     // Get user ID from JWT token
     const userId = (req.user as any)?.id || 2;
-    const files = req.files as { picture?: Express.Multer.File[]; signature?: Express.Multer.File[] } | undefined;
+    const files = req.files as { picture?: Express.Multer.File[]; signature?: Express.Multer.File[]; paraf?: Express.Multer.File[] } | undefined;
 
     const {
       staffName,
@@ -163,6 +173,13 @@ export const postStaff = async (
       if (sigKey) body.signaturePath = sigKey;
     }
 
+    // Upload paraf if provided
+    const parafFile = files?.paraf?.[0];
+    if (parafFile) {
+      const parafKey = await uploadToS3(parafFile, nik, `paraf-${nik}`, "staff-signatures");
+      if (parafKey) (body as any).parafPath = parafKey;
+    }
+
     const newStaff = await insertStaff(body);
 
     // Get presigned URLs
@@ -174,11 +191,16 @@ export const postStaff = async (
     if (isValidS3Key(newStaff.signaturePath)) {
       sigUrl = await getPresignedUrl(newStaff.signaturePath);
     }
+    let parafUrl = null;
+    if (isValidS3Key((newStaff as any).parafPath)) {
+      parafUrl = await getPresignedUrl((newStaff as any).parafPath);
+    }
 
     const result = {
       ...newStaff,
       staffPict: pictUrl,
       signaturePath: sigUrl,
+      parafPath: parafUrl,
     };
 
     return res.status(201).json({
@@ -216,7 +238,7 @@ export const patchStaff = async (
   try {
     // Get user ID from JWT token
     const userId = (req.user as any)?.id || 2;
-    const files = req.files as { picture?: Express.Multer.File[]; signature?: Express.Multer.File[] } | undefined;
+    const files = req.files as { picture?: Express.Multer.File[]; signature?: Express.Multer.File[]; paraf?: Express.Multer.File[] } | undefined;
 
     const id = Number(req.params.id);
     const existing = await selectStaffByIdWithRole(id);
@@ -274,6 +296,16 @@ export const patchStaff = async (
       if (sigKey) updateData.signaturePath = sigKey;
     }
 
+    // Upload new paraf if provided
+    const parafFile = files?.paraf?.[0];
+    if (parafFile) {
+      if (isValidS3Key((existing as any).parafPath)) {
+        await deleteFromS3((existing as any).parafPath);
+      }
+      const parafKey = await uploadToS3(parafFile, currentNik, `paraf-${currentNik}`, "staff-signatures");
+      if (parafKey) (updateData as any).parafPath = parafKey;
+    }
+
     const updated = await updateStaffById(id, updateData);
 
     // Get presigned URLs
@@ -285,11 +317,16 @@ export const patchStaff = async (
     if (isValidS3Key(updated.signaturePath)) {
       sigUrl = await getPresignedUrl(updated.signaturePath);
     }
+    let parafUrl = null;
+    if (isValidS3Key((updated as any).parafPath)) {
+      parafUrl = await getPresignedUrl((updated as any).parafPath);
+    }
 
     const result = {
       ...updated,
       staffPict: pictUrl,
       signaturePath: sigUrl,
+      parafPath: parafUrl,
     };
 
     return res.json({

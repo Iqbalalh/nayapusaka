@@ -86,7 +86,8 @@ export const embedQrCodeOnDocument = async (
   verificationToken: string,
   qrPage: number, // 0-indexed
   qrX: number, // PDF points, bottom-left origin
-  qrY: number // PDF points, bottom-left origin
+  qrY: number, // PDF points, bottom-left origin
+  customQrSize?: number // optional custom size in PDF points
 ): Promise<string> => {
   const letter = await selectLetterById(letterId);
   if (!letter) throw new Error("Surat tidak ditemukan");
@@ -123,11 +124,12 @@ export const embedQrCodeOnDocument = async (
   const page = pages[qrPage];
   const qrImage = await pdfDoc.embedPng(qrBuffer);
 
+  const drawSize = customQrSize ?? QR_SIZE;
   page.drawImage(qrImage, {
     x: qrX,
     y: qrY,
-    width: QR_SIZE,
-    height: QR_SIZE,
+    width: drawSize,
+    height: drawSize,
   });
 
   const pdfBytes = await pdfDoc.save();
