@@ -136,6 +136,7 @@ export const postStaff = async (
       email,
       nik,
       position,
+      isActive,
     } = req.body;
 
     // Validate required fields
@@ -156,6 +157,7 @@ export const postStaff = async (
       phoneNumber: phoneNumber || null,
       email: email || null,
       position: position || null,
+      isActive: isActive !== undefined ? (isActive === "true" || isActive === true) : true,
       createdBy: userId,
     };
 
@@ -260,6 +262,7 @@ export const patchStaff = async (
       email,
       nik,
       position,
+      isActive,
     } = req.body;
 
     const updateData: Prisma.StaffsUncheckedUpdateInput = {};
@@ -272,6 +275,7 @@ export const patchStaff = async (
     if (email !== undefined) updateData.email = email;
     if (nik !== undefined) updateData.nik = nik;
     if (position !== undefined) updateData.position = position;
+    if (isActive !== undefined) updateData.isActive = isActive === "true" || isActive === true;
     updateData.editedBy = userId;
 
     const currentNik = nik || existing.nik;

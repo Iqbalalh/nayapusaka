@@ -49,6 +49,7 @@ export type StaffsMinAggregateOutputType = {
   email: string | null
   nik: string | null
   position: string | null
+  isActive: boolean | null
   staffPict: string | null
   signaturePath: string | null
   parafPath: string | null
@@ -69,6 +70,7 @@ export type StaffsMaxAggregateOutputType = {
   email: string | null
   nik: string | null
   position: string | null
+  isActive: boolean | null
   staffPict: string | null
   signaturePath: string | null
   parafPath: string | null
@@ -89,6 +91,7 @@ export type StaffsCountAggregateOutputType = {
   email: number
   nik: number
   position: number
+  isActive: number
   staffPict: number
   signaturePath: number
   parafPath: number
@@ -123,6 +126,7 @@ export type StaffsMinAggregateInputType = {
   email?: true
   nik?: true
   position?: true
+  isActive?: true
   staffPict?: true
   signaturePath?: true
   parafPath?: true
@@ -143,6 +147,7 @@ export type StaffsMaxAggregateInputType = {
   email?: true
   nik?: true
   position?: true
+  isActive?: true
   staffPict?: true
   signaturePath?: true
   parafPath?: true
@@ -163,6 +168,7 @@ export type StaffsCountAggregateInputType = {
   email?: true
   nik?: true
   position?: true
+  isActive?: true
   staffPict?: true
   signaturePath?: true
   parafPath?: true
@@ -270,6 +276,7 @@ export type StaffsGroupByOutputType = {
   email: string | null
   nik: string
   position: string | null
+  isActive: boolean
   staffPict: string | null
   signaturePath: string | null
   parafPath: string | null
@@ -313,6 +320,7 @@ export type StaffsWhereInput = {
   email?: Prisma.StringNullableFilter<"Staffs"> | string | null
   nik?: Prisma.StringFilter<"Staffs"> | string
   position?: Prisma.StringNullableFilter<"Staffs"> | string | null
+  isActive?: Prisma.BoolFilter<"Staffs"> | boolean
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
   signaturePath?: Prisma.StringNullableFilter<"Staffs"> | string | null
   parafPath?: Prisma.StringNullableFilter<"Staffs"> | string | null
@@ -334,6 +342,7 @@ export type StaffsOrderByWithRelationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   staffPict?: Prisma.SortOrderInput | Prisma.SortOrder
   signaturePath?: Prisma.SortOrderInput | Prisma.SortOrder
   parafPath?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -358,6 +367,7 @@ export type StaffsWhereUniqueInput = Prisma.AtLeast<{
   address?: Prisma.StringNullableFilter<"Staffs"> | string | null
   phoneNumber?: Prisma.StringNullableFilter<"Staffs"> | string | null
   position?: Prisma.StringNullableFilter<"Staffs"> | string | null
+  isActive?: Prisma.BoolFilter<"Staffs"> | boolean
   staffPict?: Prisma.StringNullableFilter<"Staffs"> | string | null
   signaturePath?: Prisma.StringNullableFilter<"Staffs"> | string | null
   parafPath?: Prisma.StringNullableFilter<"Staffs"> | string | null
@@ -379,6 +389,7 @@ export type StaffsOrderByWithAggregationInput = {
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrderInput | Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   staffPict?: Prisma.SortOrderInput | Prisma.SortOrder
   signaturePath?: Prisma.SortOrderInput | Prisma.SortOrder
   parafPath?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -407,6 +418,7 @@ export type StaffsScalarWhereWithAggregatesInput = {
   email?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   nik?: Prisma.StringWithAggregatesFilter<"Staffs"> | string
   position?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
+  isActive?: Prisma.BoolWithAggregatesFilter<"Staffs"> | boolean
   staffPict?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   signaturePath?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
   parafPath?: Prisma.StringNullableWithAggregatesFilter<"Staffs"> | string | null
@@ -426,6 +438,7 @@ export type StaffsCreateInput = {
   email?: string | null
   nik: string
   position?: string | null
+  isActive?: boolean
   staffPict?: string | null
   signaturePath?: string | null
   parafPath?: string | null
@@ -447,6 +460,7 @@ export type StaffsUncheckedCreateInput = {
   email?: string | null
   nik: string
   position?: string | null
+  isActive?: boolean
   staffPict?: string | null
   signaturePath?: string | null
   parafPath?: string | null
@@ -467,6 +481,7 @@ export type StaffsUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parafPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -488,6 +503,7 @@ export type StaffsUncheckedUpdateInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parafPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -509,6 +525,7 @@ export type StaffsCreateManyInput = {
   email?: string | null
   nik: string
   position?: string | null
+  isActive?: boolean
   staffPict?: string | null
   signaturePath?: string | null
   parafPath?: string | null
@@ -528,6 +545,7 @@ export type StaffsUpdateManyMutationInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parafPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -548,6 +566,7 @@ export type StaffsUncheckedUpdateManyInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parafPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -568,6 +587,7 @@ export type StaffsCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
   signaturePath?: Prisma.SortOrder
   parafPath?: Prisma.SortOrder
@@ -594,6 +614,7 @@ export type StaffsMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
   signaturePath?: Prisma.SortOrder
   parafPath?: Prisma.SortOrder
@@ -614,6 +635,7 @@ export type StaffsMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   nik?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   staffPict?: Prisma.SortOrder
   signaturePath?: Prisma.SortOrder
   parafPath?: Prisma.SortOrder
@@ -636,6 +658,10 @@ export type StaffsNullableScalarRelationFilter = {
 
 export type EnumGenderFieldUpdateOperationsInput = {
   set?: $Enums.Gender
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type StaffsCreateNestedOneWithoutUsersInput = {
@@ -664,6 +690,7 @@ export type StaffsCreateWithoutUsersInput = {
   email?: string | null
   nik: string
   position?: string | null
+  isActive?: boolean
   staffPict?: string | null
   signaturePath?: string | null
   parafPath?: string | null
@@ -684,6 +711,7 @@ export type StaffsUncheckedCreateWithoutUsersInput = {
   email?: string | null
   nik: string
   position?: string | null
+  isActive?: boolean
   staffPict?: string | null
   signaturePath?: string | null
   parafPath?: string | null
@@ -719,6 +747,7 @@ export type StaffsUpdateWithoutUsersInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parafPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,6 +768,7 @@ export type StaffsUncheckedUpdateWithoutUsersInput = {
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   nik?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   staffPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   signaturePath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parafPath?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -790,6 +820,7 @@ export type StaffsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   email?: boolean
   nik?: boolean
   position?: boolean
+  isActive?: boolean
   staffPict?: boolean
   signaturePath?: boolean
   parafPath?: boolean
@@ -812,6 +843,7 @@ export type StaffsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   email?: boolean
   nik?: boolean
   position?: boolean
+  isActive?: boolean
   staffPict?: boolean
   signaturePath?: boolean
   parafPath?: boolean
@@ -832,6 +864,7 @@ export type StaffsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   email?: boolean
   nik?: boolean
   position?: boolean
+  isActive?: boolean
   staffPict?: boolean
   signaturePath?: boolean
   parafPath?: boolean
@@ -852,6 +885,7 @@ export type StaffsSelectScalar = {
   email?: boolean
   nik?: boolean
   position?: boolean
+  isActive?: boolean
   staffPict?: boolean
   signaturePath?: boolean
   parafPath?: boolean
@@ -861,7 +895,7 @@ export type StaffsSelectScalar = {
   editedBy?: boolean
 }
 
-export type StaffsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffName" | "gender" | "birthplace" | "birthdate" | "address" | "phoneNumber" | "email" | "nik" | "position" | "staffPict" | "signaturePath" | "parafPath" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["staffs"]>
+export type StaffsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "staffName" | "gender" | "birthplace" | "birthdate" | "address" | "phoneNumber" | "email" | "nik" | "position" | "isActive" | "staffPict" | "signaturePath" | "parafPath" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["staffs"]>
 export type StaffsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Staffs$usersArgs<ExtArgs>
   _count?: boolean | Prisma.StaffsCountOutputTypeDefaultArgs<ExtArgs>
@@ -885,6 +919,7 @@ export type $StaffsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     email: string | null
     nik: string
     position: string | null
+    isActive: boolean
     staffPict: string | null
     signaturePath: string | null
     parafPath: string | null
@@ -1326,6 +1361,7 @@ export interface StaffsFieldRefs {
   readonly email: Prisma.FieldRef<"Staffs", 'String'>
   readonly nik: Prisma.FieldRef<"Staffs", 'String'>
   readonly position: Prisma.FieldRef<"Staffs", 'String'>
+  readonly isActive: Prisma.FieldRef<"Staffs", 'Boolean'>
   readonly staffPict: Prisma.FieldRef<"Staffs", 'String'>
   readonly signaturePath: Prisma.FieldRef<"Staffs", 'String'>
   readonly parafPath: Prisma.FieldRef<"Staffs", 'String'>

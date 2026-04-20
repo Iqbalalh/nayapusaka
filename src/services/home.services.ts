@@ -718,7 +718,7 @@ export const selectHomesOptimized = async (
         employees: true,
         wali: true,
         regions: true,
-        _count: { select: { children: true } },
+        _count: { select: { children: true, familyVisits: true } },
       },
       orderBy: { createdAt: "asc" },
       skip,

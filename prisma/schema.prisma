@@ -154,6 +154,7 @@ model Staffs {
   email         String?   @unique @db.VarChar(100)
   nik           String    @unique @db.VarChar(20)
   position      String?   @db.VarChar(100)
+  isActive      Boolean   @default(true) @map("is_active")
   staffPict     String?   @map("staff_pict") @db.VarChar(255)
   signaturePath String?   @map("signature_path") @db.VarChar(255)
   parafPath     String?   @map("paraf_path") @db.VarChar(255)

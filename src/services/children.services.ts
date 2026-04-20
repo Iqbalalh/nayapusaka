@@ -154,12 +154,14 @@ export const selectInactiveChildrenCount = async () => {
 };
 
 /**
- * Select count of yatim children (father not alive)
+ * Select count of yatim children (father not alive, mother alive)
  */
 export const selectYatimChildrenCount = async () => {
   try {
     return {
-      count: await prisma.children.count({ where: { isFatherAlive: false } }),
+      count: await prisma.children.count({
+        where: { isFatherAlive: false, isMotherAlive: { not: false } },
+      }),
     };
   } catch (error) {
     throw error;
@@ -167,12 +169,14 @@ export const selectYatimChildrenCount = async () => {
 };
 
 /**
- * Select count of piatu children (mother not alive)
+ * Select count of piatu children (mother not alive, father alive)
  */
 export const selectPiatuChildrenCount = async () => {
   try {
     return {
-      count: await prisma.children.count({ where: { isMotherAlive: false } }),
+      count: await prisma.children.count({
+        where: { isMotherAlive: false, isFatherAlive: true },
+      }),
     };
   } catch (error) {
     throw error;
@@ -328,6 +332,7 @@ export const selectChildrenOptimized = async (
         updatedAt: true,
         createdBy: true,
         editedBy: true,
+        _count: { select: { childAssistance: true } },
       },
       orderBy,
       skip,

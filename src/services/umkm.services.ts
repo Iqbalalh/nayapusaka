@@ -10,7 +10,12 @@ import { prisma } from "../utils/prisma/prisma";
  */
 export const selectAllUmkm = async () => {
   try {
-    return await prisma.umkm.findMany({ orderBy: { id: "asc" } });
+    return await prisma.umkm.findMany({
+      orderBy: { id: "asc" },
+      include: {
+        _count: { select: { umkmVisits: true } },
+      },
+    });
   } catch (error) {
     throw error;
   }

@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import {
   selectAllRegions,
   selectRegionList,
+  selectRegionStats,
 } from "../services/region.services";
 
 // ============================================================================
@@ -17,6 +18,25 @@ export const getRegions = async (
     return res.json({
       message: "Successfully retrieved all regions",
       data: regions,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// GET REGION STATS
+// ============================================================================
+export const getRegionStats = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const stats = await selectRegionStats();
+    return res.json({
+      message: "Berhasil mendapatkan statistik wilayah",
+      data: stats,
     });
   } catch (err) {
     next(err);

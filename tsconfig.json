@@ -3,6 +3,7 @@
     "target": "ES2023",
     "module": "commonjs",
     "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
 
     "outDir": "dist",
     "rootDir": "src",
@@ -11,7 +12,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
 
-    "types": ["node", "@types/multer", "jest"]
+    "types": ["node", "multer", "jest"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

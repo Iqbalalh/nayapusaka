@@ -2353,6 +2353,7 @@ export const StaffsScalarFieldEnum = {
   email: 'email',
   nik: 'nik',
   position: 'position',
+  isActive: 'isActive',
   staffPict: 'staffPict',
   signaturePath: 'signaturePath',
   parafPath: 'parafPath',
