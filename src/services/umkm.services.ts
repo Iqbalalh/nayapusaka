@@ -28,11 +28,6 @@ export const selectUmkmForMaps = async () => {
   try {
     const umkms = await prisma.umkm.findMany({
       where: {
-        OR: [
-          { partnerId: { not: null } },
-          { waliId: { not: null } },
-          { childrenId: { not: null } },
-        ],
         regionId: { not: null },
         umkmCoordinate: { not: null },
       },

@@ -126,17 +126,23 @@ export const selectRegionStats = async () => {
             _count: true,
             _sum: { totalAmount: true },
           }),
-          // Tingkat pendidikan
-          prisma.children.groupBy({
-            by: ["educationLevel"],
+          // Tingkat pendidikan dari bantuan terakhir per anak
+          prisma.children.findMany({
             where: { homes: { employees: { regionId } } },
-            _count: { educationLevel: true },
+            select: {
+              childAssistance: {
+                orderBy: { assistanceDate: "desc" },
+                take: 1,
+                select: { educationLevel: true },
+              },
+            },
           }),
         ]);
 
         const eduMap: Record<string, number> = {};
-        educationGroups.forEach((g: any) => {
-          if (g.educationLevel) eduMap[g.educationLevel] = g._count.educationLevel;
+        educationGroups.forEach((child: any) => {
+          const level = child.childAssistance[0]?.educationLevel;
+          if (level) eduMap[level] = (eduMap[level] ?? 0) + 1;
         });
 
         return {
