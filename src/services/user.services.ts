@@ -251,6 +251,27 @@ export const updateUser = async (userId: number, data: UpdateUserData) => {
 };
 
 // ============================================================================
+// SESSION INVALIDATION
+// ============================================================================
+
+/**
+ * Invalidate all sessions for the user linked to a given staffId
+ * by incrementing tokenVersion. Used when staff is deactivated.
+ */
+export const invalidateUserSessionByStaffId = async (staffId: number) => {
+  try {
+    await prisma.$executeRaw`
+      UPDATE users
+      SET token_version = COALESCE(token_version, 0) + 1
+      WHERE staff_id = ${staffId}
+    `;
+    return true;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// ============================================================================
 // DELETE QUERIES
 // ============================================================================
 

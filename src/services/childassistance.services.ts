@@ -305,6 +305,42 @@ export const selectChildAssistanceStats = async () => {
   };
 
 /**
+ * Global education level stats — last assistance per child across all children
+ */
+export const selectGlobalEducationLevelStats = async () => {
+  try {
+    const children = await prisma.children.findMany({
+      select: {
+        childAssistance: {
+          orderBy: { assistanceDate: "desc" },
+          take: 1,
+          select: { educationLevel: true },
+        },
+      },
+    });
+
+    const eduMap: Record<string, number> = {};
+    children.forEach((child) => {
+      const level = child.childAssistance[0]?.educationLevel;
+      if (level) eduMap[level] = (eduMap[level] ?? 0) + 1;
+    });
+
+    return {
+      TK: eduMap["TK"] ?? 0,
+      SD: eduMap["SD/Sederajat"] ?? 0,
+      SMP: eduMap["SMP/Sederajat"] ?? 0,
+      SMA: eduMap["SMA/Sederajat"] ?? 0,
+      Diploma: eduMap["Diploma"] ?? 0,
+      Sarjana: eduMap["Sarjana"] ?? 0,
+      Magister: eduMap["Magister"] ?? 0,
+      Doktor: eduMap["Doktor"] ?? 0,
+    };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
+/**
  * Select distinct years from child assistance records
  * Returns years in descending order (newest first)
  */

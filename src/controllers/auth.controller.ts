@@ -43,6 +43,14 @@ export const loginUser = async (
       });
     }
 
+    // Block login if the linked staff is deactivated
+    if ((user as any).staffs && (user as any).staffs.isActive === false) {
+      return res.status(401).json({
+        message: "Akun Anda telah dinonaktifkan. Hubungi administrator.",
+        data: null,
+      });
+    }
+
     // Generate presigned URL for staff picture
     let staffPictUrl = null;
     if (user.staffPict && isValidS3Key(user.staffPict)) {

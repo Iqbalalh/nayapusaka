@@ -6,6 +6,7 @@ import {
   updateStaffById,
   deleteStaffById,
 } from "../services/staff.services";
+import { invalidateUserSessionByStaffId } from "../services/user.services";
 import { Prisma } from "../generated/prisma/client";
 import { getPresignedUrl, isValidS3Key, uploadToS3, deleteFromS3 } from "../utils/storage/s3.storage";
 import { AuthRequest } from "../middlewares/auth";
@@ -311,6 +312,12 @@ export const patchStaff = async (
     }
 
     const updated = await updateStaffById(id, updateData);
+
+    // If staff just got deactivated, invalidate their active user sessions
+    const wasActive = existing.isActive !== false;
+    if (wasActive && updateData.isActive === false) {
+      await invalidateUserSessionByStaffId(id).catch(() => null);
+    }
 
     // Get presigned URLs
     let pictUrl = null;
