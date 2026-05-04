@@ -148,6 +148,11 @@ export type SocialAssistance = Prisma.SocialAssistanceModel
  */
 export type SocialAssistanceDocs = Prisma.SocialAssistanceDocsModel
 /**
+ * Model LetterType
+ * 
+ */
+export type LetterType = Prisma.LetterTypeModel
+/**
  * Model Letter
  * 
  */

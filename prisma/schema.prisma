@@ -490,9 +490,30 @@ enum LetterStatus {
   published
 }
 
+model LetterType {
+  id             Int      @id @default(autoincrement())
+  jenisSurat     String   @map("jenis_surat") @db.VarChar(150)
+  perihal        String?  @db.Text
+  kodeSurat1     String   @map("kode_surat_1") @db.VarChar(50)
+  kodeSurat2     String?  @map("kode_surat_2") @db.VarChar(50)
+  currentCounter Int      @default(0) @map("current_counter")
+  templateFields Json     @default("[]") @map("template_fields")
+  templatePath   String?  @map("template_path") @db.VarChar(500)
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+  createdBy      Int?     @map("created_by")
+  editedBy       Int?     @map("edited_by")
+
+  letters        Letter[]
+
+  @@map("letter_types")
+}
+
 model Letter {
   id             Int          @id @default(autoincrement())
   letterType     String       @map("letter_type") @db.VarChar(100)
+  letterTypeId   Int?         @map("letter_type_id")
   letterNumber   String?      @map("letter_number") @db.VarChar(100)
   attachment     String?      @db.VarChar(255)
   subject        String       @db.Text
@@ -504,6 +525,7 @@ model Letter {
   signedDocumentPath   String?      @map("signed_document_path") @db.VarChar(500)
   status             LetterStatus @default(draft)
   notes          String?      @db.Text
+  templateFieldData Json?      @default("{}") @map("template_field_data")
   signer1Id      Int?         @map("signer1_id")
   signer2Id      Int?         @map("signer2_id")
   signer3Id      Int?         @map("signer3_id")
@@ -515,6 +537,7 @@ model Letter {
   editedBy       Int?         @map("edited_by")
 
   // Relations
+  letterTypeRef   LetterType?      @relation(fields: [letterTypeId], references: [id], onDelete: SetNull, onUpdate: NoAction)
   signer1         Users?           @relation("LetterSigner1", fields: [signer1Id], references: [userId], onUpdate: NoAction)
   signer2         Users?           @relation("LetterSigner2", fields: [signer2Id], references: [userId], onUpdate: NoAction)
   signer3         Users?           @relation("LetterSigner3", fields: [signer3Id], references: [userId], onUpdate: NoAction)

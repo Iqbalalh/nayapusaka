@@ -73,6 +73,7 @@ export const ModelName = {
   GalleryCategory: 'GalleryCategory',
   SocialAssistance: 'SocialAssistance',
   SocialAssistanceDocs: 'SocialAssistanceDocs',
+  LetterType: 'LetterType',
   Letter: 'Letter',
   LetterApproval: 'LetterApproval'
 } as const
@@ -479,9 +480,29 @@ export const SocialAssistanceDocsScalarFieldEnum = {
 export type SocialAssistanceDocsScalarFieldEnum = (typeof SocialAssistanceDocsScalarFieldEnum)[keyof typeof SocialAssistanceDocsScalarFieldEnum]
 
 
+export const LetterTypeScalarFieldEnum = {
+  id: 'id',
+  jenisSurat: 'jenisSurat',
+  perihal: 'perihal',
+  kodeSurat1: 'kodeSurat1',
+  kodeSurat2: 'kodeSurat2',
+  currentCounter: 'currentCounter',
+  templateFields: 'templateFields',
+  templatePath: 'templatePath',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
+} as const
+
+export type LetterTypeScalarFieldEnum = (typeof LetterTypeScalarFieldEnum)[keyof typeof LetterTypeScalarFieldEnum]
+
+
 export const LetterScalarFieldEnum = {
   id: 'id',
   letterType: 'letterType',
+  letterTypeId: 'letterTypeId',
   letterNumber: 'letterNumber',
   attachment: 'attachment',
   subject: 'subject',
@@ -493,6 +514,7 @@ export const LetterScalarFieldEnum = {
   signedDocumentPath: 'signedDocumentPath',
   status: 'status',
   notes: 'notes',
+  templateFieldData: 'templateFieldData',
   signer1Id: 'signer1Id',
   signer2Id: 'signer2Id',
   signer3Id: 'signer3Id',
@@ -531,6 +553,21 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -545,4 +582,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

@@ -19,6 +19,10 @@ import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 import { embedSignatureOnDocument } from "../utils/document/signDocument";
 import { embedQrCodeOnDocument } from "../utils/document/embedQrCode";
 import { shouldConvertToPdf, convertBufferToPdf } from "../utils/document/convertToPdf";
+import { renderDocxTemplate } from "../utils/document/renderTemplate";
+import { incrementAndGetCounter, selectLetterTypeById } from "../services/letterType.services";
+import { toRomanNumeral } from "../utils/romanNumeral";
+import { prisma } from "../utils/prisma/prisma";
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -217,8 +221,100 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
       letterType, letterNumber, attachment, subject,
       letterDate, destination, carbonCopy,
       signer1Id, signer2Id, signer3Id,
+      letterTypeId, templateFieldData,
     } = req.body;
 
+    const isTemplateMode = !!letterTypeId;
+
+    if (isTemplateMode) {
+      // ── TEMPLATE PATH ─────────────────────────────────────────────────────
+      if (!letterDate || !signer1Id) {
+        return res.status(400).json({ message: "Field wajib belum diisi (letterDate, signer1Id)" });
+      }
+
+      const typeId = Number(letterTypeId);
+      let parsedFields: Record<string, string> = {};
+      if (templateFieldData) {
+        try {
+          parsedFields = typeof templateFieldData === "string"
+            ? JSON.parse(templateFieldData)
+            : templateFieldData;
+        } catch {
+          return res.status(400).json({ message: "Format templateFieldData tidak valid" });
+        }
+      }
+
+      const letterTypeRecord = await selectLetterTypeById(typeId);
+      if (!letterTypeRecord) {
+        return res.status(404).json({ message: "Template Surat tidak ditemukan" });
+      }
+
+      let generatedLetterNumber = "";
+      const { newLetter } = await prisma.$transaction(async (tx) => {
+        const updatedType = await incrementAndGetCounter(typeId, tx);
+        const counter = updatedType.currentCounter;
+        const date = new Date(letterDate);
+        const bulan = toRomanNumeral(date.getMonth() + 1);
+        const tahun = date.getFullYear();
+        const parts = [
+          String(counter).padStart(3, "0"),
+          updatedType.kodeSurat1,
+          updatedType.kodeSurat2,
+          bulan,
+          String(tahun),
+        ].filter(Boolean);
+        generatedLetterNumber = parts.join("/");
+
+        const newLetter = await tx.letter.create({
+          data: {
+            letterType: updatedType.jenisSurat,
+            letterTypeId: typeId,
+            letterNumber: generatedLetterNumber,
+            attachment: attachment || null,
+            subject: subject || updatedType.perihal || "",
+            letterDate: new Date(letterDate),
+            destination: destination || "",
+            carbonCopy: carbonCopy || null,
+            templateFieldData: parsedFields,
+            status: "draft",
+            signer1Id: Number(signer1Id),
+            signer2Id: signer2Id ? Number(signer2Id) : null,
+            signer3Id: signer3Id ? Number(signer3Id) : null,
+            createdBy: userId,
+          },
+        });
+
+        return { newLetter };
+      });
+
+      // Render .docx from template and upload
+      if (isValidS3Key(letterTypeRecord.templatePath)) {
+        const templateBuffer = await downloadFromS3(letterTypeRecord.templatePath);
+        if (templateBuffer) {
+          const letterDateObj = new Date(letterDate);
+          const templateData = {
+            ...parsedFields,
+            nomorSurat: generatedLetterNumber,
+            tanggalSurat: letterDateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" }),
+          };
+          const rendered = await renderDocxTemplate(templateBuffer, templateData);
+          const rand = Math.random().toString(36).substring(2, 10);
+          const s3Key = `database/letters/letter-${newLetter.id}-template-${rand}.docx`;
+          await uploadBufferToS3(
+            rendered,
+            s3Key,
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          );
+          await updateLetterById(newLetter.id, { documentPath: s3Key });
+        }
+      }
+
+      const result = await selectLetterById(newLetter.id);
+      const data = await transformLetter(result);
+      return res.status(201).json({ message: "Surat berhasil dibuat dari template", data });
+    }
+
+    // ── UPLOAD PATH (unchanged) ────────────────────────────────────────────
     if (!letterType || !subject || !letterDate || !destination || !signer1Id) {
       return res.status(400).json({ message: "Field wajib belum diisi" });
     }
@@ -240,7 +336,6 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
 
     const newLetter = await insertLetter(body);
 
-    // Upload document if provided
     if (req.file) {
       const docPath = await uploadToS3(req.file, newLetter.id, "letter-doc", "letters");
       if (docPath) {
@@ -250,7 +345,6 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
 
     const result = await selectLetterById(newLetter.id);
     const data = await transformLetter(result);
-
     return res.status(201).json({ message: "Surat berhasil dibuat", data });
   } catch (err) {
     next(err);

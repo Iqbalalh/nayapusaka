@@ -406,6 +406,7 @@ export const ModelName = {
   GalleryCategory: 'GalleryCategory',
   SocialAssistance: 'SocialAssistance',
   SocialAssistanceDocs: 'SocialAssistanceDocs',
+  LetterType: 'LetterType',
   Letter: 'Letter',
   LetterApproval: 'LetterApproval'
 } as const
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "socialAssistanceDocs" | "letter" | "letterApproval"
+    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "socialAssistanceDocs" | "letterType" | "letter" | "letterApproval"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2055,6 +2056,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LetterType: {
+      payload: Prisma.$LetterTypePayload<ExtArgs>
+      fields: Prisma.LetterTypeFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LetterTypeFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LetterTypeFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>
+        }
+        findFirst: {
+          args: Prisma.LetterTypeFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LetterTypeFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>
+        }
+        findMany: {
+          args: Prisma.LetterTypeFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>[]
+        }
+        create: {
+          args: Prisma.LetterTypeCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>
+        }
+        createMany: {
+          args: Prisma.LetterTypeCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LetterTypeCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>[]
+        }
+        delete: {
+          args: Prisma.LetterTypeDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>
+        }
+        update: {
+          args: Prisma.LetterTypeUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>
+        }
+        deleteMany: {
+          args: Prisma.LetterTypeDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LetterTypeUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LetterTypeUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>[]
+        }
+        upsert: {
+          args: Prisma.LetterTypeUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LetterTypePayload>
+        }
+        aggregate: {
+          args: Prisma.LetterTypeAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLetterType>
+        }
+        groupBy: {
+          args: Prisma.LetterTypeGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterTypeGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LetterTypeCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LetterTypeCountAggregateOutputType> | number
+        }
+      }
+    }
     Letter: {
       payload: Prisma.$LetterPayload<ExtArgs>
       fields: Prisma.LetterFieldRefs
@@ -2628,9 +2703,29 @@ export const SocialAssistanceDocsScalarFieldEnum = {
 export type SocialAssistanceDocsScalarFieldEnum = (typeof SocialAssistanceDocsScalarFieldEnum)[keyof typeof SocialAssistanceDocsScalarFieldEnum]
 
 
+export const LetterTypeScalarFieldEnum = {
+  id: 'id',
+  jenisSurat: 'jenisSurat',
+  perihal: 'perihal',
+  kodeSurat1: 'kodeSurat1',
+  kodeSurat2: 'kodeSurat2',
+  currentCounter: 'currentCounter',
+  templateFields: 'templateFields',
+  templatePath: 'templatePath',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
+} as const
+
+export type LetterTypeScalarFieldEnum = (typeof LetterTypeScalarFieldEnum)[keyof typeof LetterTypeScalarFieldEnum]
+
+
 export const LetterScalarFieldEnum = {
   id: 'id',
   letterType: 'letterType',
+  letterTypeId: 'letterTypeId',
   letterNumber: 'letterNumber',
   attachment: 'attachment',
   subject: 'subject',
@@ -2642,6 +2737,7 @@ export const LetterScalarFieldEnum = {
   signedDocumentPath: 'signedDocumentPath',
   status: 'status',
   notes: 'notes',
+  templateFieldData: 'templateFieldData',
   signer1Id: 'signer1Id',
   signer2Id: 'signer2Id',
   signer3Id: 'signer3Id',
@@ -2680,6 +2776,21 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -2694,6 +2805,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -2776,6 +2896,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -2909,6 +3043,7 @@ export type GlobalOmitConfig = {
   galleryCategory?: Prisma.GalleryCategoryOmit
   socialAssistance?: Prisma.SocialAssistanceOmit
   socialAssistanceDocs?: Prisma.SocialAssistanceDocsOmit
+  letterType?: Prisma.LetterTypeOmit
   letter?: Prisma.LetterOmit
   letterApproval?: Prisma.LetterApprovalOmit
 }
