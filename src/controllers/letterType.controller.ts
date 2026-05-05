@@ -11,6 +11,7 @@ import {
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key, downloadFromS3, uploadBufferToS3 } from "../utils/storage/s3.storage";
 import { renderDocxTemplate } from "../utils/document/renderTemplate";
 import { htmlToDocxBuffer } from "../utils/document/htmlToDocx";
+import { toRomanNumeral } from "../utils/romanNumeral";
 import { AuthRequest } from "../middlewares/auth";
 
 interface RequestWithFile extends AuthRequest {
@@ -270,12 +271,18 @@ export const generateFromTemplate = async (req: AuthRequest, res: Response, next
       return res.status(500).json({ message: "Gagal mengunduh template dari server" });
     }
 
-    const previewNumber = `PREVIEW/${letterType.kodeSurat1}${letterType.kodeSurat2 ? "/" + letterType.kodeSurat2 : ""}`;
-    const today = new Date();
+    const refDate = req.body.letterDate ? new Date(req.body.letterDate) : new Date();
+    const bulan = toRomanNumeral(refDate.getMonth() + 1);
+    const tahun = refDate.getFullYear();
+    const nextCounter = String(letterType.currentCounter + 1).padStart(3, "0");
+    const kodeParts = [letterType.kodeSurat1, letterType.kodeSurat2].filter(Boolean);
+    const previewNumber = `${nextCounter}/${kodeParts.join("/")}/${bulan}/${tahun}`;
+    const formattedDate = refDate.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
     const templateData = {
       ...fields,
       nomorSurat: previewNumber,
-      tanggalSurat: today.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" }),
+      tanggal: formattedDate,
+      tanggalSurat: formattedDate,
     };
     const rendered = await renderDocxTemplate(templateBuffer, templateData);
     const slug = letterType.jenisSurat.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");

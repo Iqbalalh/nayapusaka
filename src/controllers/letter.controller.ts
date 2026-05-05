@@ -20,6 +20,7 @@ import { embedSignatureOnDocument } from "../utils/document/signDocument";
 import { embedQrCodeOnDocument } from "../utils/document/embedQrCode";
 import { shouldConvertToPdf, convertBufferToPdf } from "../utils/document/convertToPdf";
 import { renderDocxTemplate } from "../utils/document/renderTemplate";
+import { htmlToDocxBuffer } from "../utils/document/htmlToDocx";
 import { incrementAndGetCounter, selectLetterTypeById } from "../services/letterType.services";
 import { toRomanNumeral } from "../utils/romanNumeral";
 import { prisma } from "../utils/prisma/prisma";
@@ -221,7 +222,7 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
       letterType, letterNumber, attachment, subject,
       letterDate, destination, carbonCopy,
       signer1Id, signer2Id, signer3Id,
-      letterTypeId, templateFieldData,
+      letterTypeId, templateFieldData, editedHtml,
     } = req.body;
 
     const isTemplateMode = !!letterTypeId;
@@ -288,23 +289,31 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
       });
 
       // Render .docx from template and upload
-      if (isValidS3Key(letterTypeRecord.templatePath)) {
+      const rand = Math.random().toString(36).substring(2, 10);
+      const s3Key = `database/letters/letter-${newLetter.id}-template-${rand}.docx`;
+      const letterDateObj = new Date(letterDate);
+      const formattedDate = letterDateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
+      if (editedHtml) {
+        // User edited the preview — convert their HTML to DOCX
+        const docxBuffer = await htmlToDocxBuffer(editedHtml, {
+          nomorSurat: generatedLetterNumber,
+          tanggal: formattedDate,
+          tanggalSurat: formattedDate,
+          ...parsedFields,
+        });
+        await uploadBufferToS3(docxBuffer, s3Key, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+        await updateLetterById(newLetter.id, { documentPath: s3Key });
+      } else if (isValidS3Key(letterTypeRecord.templatePath)) {
         const templateBuffer = await downloadFromS3(letterTypeRecord.templatePath);
         if (templateBuffer) {
-          const letterDateObj = new Date(letterDate);
           const templateData = {
             ...parsedFields,
             nomorSurat: generatedLetterNumber,
-            tanggalSurat: letterDateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" }),
+            tanggal: formattedDate,
+            tanggalSurat: formattedDate,
           };
           const rendered = await renderDocxTemplate(templateBuffer, templateData);
-          const rand = Math.random().toString(36).substring(2, 10);
-          const s3Key = `database/letters/letter-${newLetter.id}-template-${rand}.docx`;
-          await uploadBufferToS3(
-            rendered,
-            s3Key,
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          );
+          await uploadBufferToS3(rendered, s3Key, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
           await updateLetterById(newLetter.id, { documentPath: s3Key });
         }
       }
@@ -438,6 +447,7 @@ export const patchLetter = async (req: RequestWithFile, res: Response, next: Nex
       letterType, letterNumber, attachment, subject,
       letterDate, destination, carbonCopy,
       signer1Id, signer2Id, signer3Id,
+      templateFieldData, editedHtml,
     } = req.body;
 
     const updateData: Prisma.LetterUncheckedUpdateInput = {
@@ -456,8 +466,40 @@ export const patchLetter = async (req: RequestWithFile, res: Response, next: Nex
       updatedAt: new Date(),
     };
 
-    // Handle document file replacement
-    if (req.file) {
+    // Update stored template field data if provided
+    if (templateFieldData) {
+      try {
+        updateData.templateFieldData = typeof templateFieldData === "string"
+          ? JSON.parse(templateFieldData)
+          : templateFieldData;
+      } catch { /* ignore parse errors */ }
+    }
+
+    // Convert edited HTML to DOCX and replace document
+    if (editedHtml) {
+      const dateStr = letterDate || existing.letterDate?.toISOString();
+      const dateObj = dateStr ? new Date(dateStr) : new Date();
+      const formattedDate = dateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
+      const parsedFields = updateData.templateFieldData as Record<string, string>
+        ?? (existing.templateFieldData as Record<string, string> ?? {});
+
+      const docxBuffer = await htmlToDocxBuffer(editedHtml, {
+        nomorSurat: existing.letterNumber || "",
+        tanggal: formattedDate,
+        tanggalSurat: formattedDate,
+        ...parsedFields,
+      });
+      const rand = Math.random().toString(36).substring(2, 10);
+      const s3Key = `database/letters/letter-${id}-edited-${rand}.docx`;
+      await uploadBufferToS3(docxBuffer, s3Key, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+      if (existing.documentPath && isValidS3Key(existing.documentPath)) {
+        await deleteFromS3(existing.documentPath);
+      }
+      updateData.documentPath = s3Key;
+    }
+
+    // Handle document file replacement (upload mode)
+    if (!editedHtml && req.file) {
       const newPath = await uploadToS3(req.file, id, "letter-doc", "letters");
       if (newPath) {
         if (existing.documentPath && isValidS3Key(existing.documentPath)) {

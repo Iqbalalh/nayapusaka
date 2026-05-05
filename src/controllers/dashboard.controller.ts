@@ -108,3 +108,19 @@ export const getDashboardStat = async (
     next(err);
   }
 };
+
+// ============================================================================
+// GET EDUCATION LEVEL STATS (separate lightweight endpoint)
+// ============================================================================
+export const getEducationLevelStats = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const data = await selectGlobalEducationLevelStats();
+    return res.json({ message: "Berhasil mendapatkan statistik jenjang pendidikan", data });
+  } catch (err) {
+    next(err);
+  }
+};

@@ -305,10 +305,19 @@ export const selectChildAssistanceStats = async () => {
   };
 
 /**
- * Global education level stats — last assistance per child across all children
+ * Global education level stats — last assistance per child, dynamic categories via distinct.
+ * Returns a map of educationLevel → count.
  */
-export const selectGlobalEducationLevelStats = async () => {
+export const selectGlobalEducationLevelStats = async (): Promise<Record<string, number>> => {
   try {
+    // Get all distinct education levels present in child assistance records
+    const distinctLevels = await prisma.childAssistance.findMany({
+      distinct: ["educationLevel"],
+      select: { educationLevel: true },
+      where: { educationLevel: { not: null } },
+    });
+
+    // Count per category using the most recent assistance per child
     const children = await prisma.children.findMany({
       select: {
         childAssistance: {
@@ -319,22 +328,21 @@ export const selectGlobalEducationLevelStats = async () => {
       },
     });
 
+    // Initialize all known categories to 0
     const eduMap: Record<string, number> = {};
-    children.forEach((child) => {
-      const level = child.childAssistance[0]?.educationLevel;
-      if (level) eduMap[level] = (eduMap[level] ?? 0) + 1;
+    distinctLevels.forEach((row) => {
+      if (row.educationLevel) eduMap[row.educationLevel] = 0;
     });
 
-    return {
-      TK: eduMap["TK"] ?? 0,
-      SD: eduMap["SD/Sederajat"] ?? 0,
-      SMP: eduMap["SMP/Sederajat"] ?? 0,
-      SMA: eduMap["SMA/Sederajat"] ?? 0,
-      Diploma: eduMap["Diploma"] ?? 0,
-      Sarjana: eduMap["Sarjana"] ?? 0,
-      Magister: eduMap["Magister"] ?? 0,
-      Doktor: eduMap["Doktor"] ?? 0,
-    };
+    // Tally from most recent assistances
+    children.forEach((child) => {
+      const level = child.childAssistance[0]?.educationLevel;
+      if (level && level in eduMap) {
+        eduMap[level] += 1;
+      }
+    });
+
+    return eduMap;
   } catch (error) {
     throw error instanceof Error ? error : new Error(String(error));
   }
