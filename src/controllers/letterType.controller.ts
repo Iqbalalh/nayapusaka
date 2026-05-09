@@ -64,6 +64,9 @@ export const getActiveLetterTypes = async (req: AuthRequest, res: Response, next
 export const getLetterType = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const id = Number(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "ID tidak valid" });
+    }
     const letterType = await selectLetterTypeById(id);
     if (!letterType) {
       return res.status(404).json({ message: "Template Surat tidak ditemukan" });
@@ -82,7 +85,7 @@ export const getLetterType = async (req: AuthRequest, res: Response, next: NextF
 export const postLetterType = async (req: RequestWithFile, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
-    const { jenisSurat, perihal, kodeSurat1, kodeSurat2, templateFields, isActive } = req.body;
+    const { jenisSurat, perihal, kodeSurat1, kodeSurat2, templateFields, isActive, currentCounter } = req.body;
 
     if (!jenisSurat || !kodeSurat1) {
       return res.status(400).json({ message: "Field wajib belum diisi (jenisSurat, kodeSurat1)" });
@@ -97,6 +100,8 @@ export const postLetterType = async (req: RequestWithFile, res: Response, next: 
       }
     }
 
+    const counterValue = currentCounter !== undefined ? Number(currentCounter) : 0;
+
     const newType = await insertLetterType({
       jenisSurat,
       perihal: perihal || null,
@@ -104,6 +109,7 @@ export const postLetterType = async (req: RequestWithFile, res: Response, next: 
       kodeSurat2: kodeSurat2 || null,
       templateFields: parsedFields,
       isActive: isActive !== undefined ? isActive === "true" || isActive === true : true,
+      currentCounter: counterValue,
       createdBy: userId,
     });
 
@@ -271,12 +277,14 @@ export const generateFromTemplate = async (req: AuthRequest, res: Response, next
       return res.status(500).json({ message: "Gagal mengunduh template dari server" });
     }
 
-    const refDate = req.body.letterDate ? new Date(req.body.letterDate) : new Date();
+    const refDate = req.body.letter_date || req.body.letterDate
+      ? new Date(req.body.letter_date ?? req.body.letterDate)
+      : new Date();
     const bulan = toRomanNumeral(refDate.getMonth() + 1);
     const tahun = refDate.getFullYear();
     const nextCounter = String(letterType.currentCounter + 1).padStart(3, "0");
-    const kodeParts = [letterType.kodeSurat1, letterType.kodeSurat2].filter(Boolean);
-    const previewNumber = `${nextCounter}/${kodeParts.join("/")}/${bulan}/${tahun}`;
+    const kode = [letterType.kodeSurat1, letterType.kodeSurat2].filter(Boolean).join("-");
+    const previewNumber = `${nextCounter}/${kode}/${bulan}/${tahun}`;
     const formattedDate = refDate.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
     const templateData = {
       ...fields,

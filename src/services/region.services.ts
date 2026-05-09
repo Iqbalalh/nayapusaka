@@ -62,24 +62,24 @@ export const selectRegionStats = async () => {
         ] = await Promise.all([
           // Keluarga
           prisma.homes.count({
-            where: { employees: { regionId } },
+            where: { regionId },
           }),
           // Anak total
           prisma.children.count({
-            where: { homes: { employees: { regionId } } },
+            where: { homes: { regionId } },
           }),
           // Anak aktif
           prisma.children.count({
-            where: { homes: { employees: { regionId } }, isActive: true },
+            where: { homes: { regionId }, isActive: true },
           }),
           // Anak tidak aktif
           prisma.children.count({
-            where: { homes: { employees: { regionId } }, isActive: false },
+            where: { homes: { regionId }, isActive: false },
           }),
           // Anak yatim (ayah meninggal, ibu tidak meninggal/null)
           prisma.children.count({
             where: {
-              homes: { employees: { regionId } },
+              homes: { regionId },
               isFatherAlive: false,
               isMotherAlive: { not: false },
             },
@@ -87,7 +87,7 @@ export const selectRegionStats = async () => {
           // Anak piatu (ibu meninggal, ayah hidup)
           prisma.children.count({
             where: {
-              homes: { employees: { regionId } },
+              homes: { regionId },
               isMotherAlive: false,
               isFatherAlive: true,
             },
@@ -95,14 +95,14 @@ export const selectRegionStats = async () => {
           // Anak yatim piatu (keduanya meninggal)
           prisma.children.count({
             where: {
-              homes: { employees: { regionId } },
+              homes: { regionId },
               isFatherAlive: false,
               isMotherAlive: false,
             },
           }),
           // ABK
           prisma.children.count({
-            where: { homes: { employees: { regionId } }, isCondition: false },
+            where: { homes: { regionId }, isCondition: false },
           }),
           // UMKM total
           prisma.umkm.count({ where: { regionId } }),
@@ -110,7 +110,7 @@ export const selectRegionStats = async () => {
           prisma.umkm.count({ where: { regionId, isActive: true } }),
           // Bantuan anak
           prisma.childAssistance.aggregate({
-            where: { children: { homes: { employees: { regionId } } } },
+            where: { children: { homes: { regionId } } },
             _count: true,
             _sum: { assistanceAmount: true },
           }),
@@ -126,9 +126,9 @@ export const selectRegionStats = async () => {
             _count: true,
             _sum: { totalAmount: true },
           }),
-          // Tingkat pendidikan dari bantuan terakhir per anak
+          // Tingkat pendidikan dari bantuan terakhir per anak AKTIF saja
           prisma.children.findMany({
-            where: { homes: { employees: { regionId } } },
+            where: { homes: { regionId }, isActive: true },
             select: {
               childAssistance: {
                 orderBy: { assistanceDate: "desc" },
@@ -175,16 +175,7 @@ export const selectRegionStats = async () => {
             total: socialAssistance._count,
             totalAmount: socialAssistance._sum.totalAmount ?? 0,
           },
-          educationLevels: {
-            TK: eduMap["TK"] ?? 0,
-            SD: eduMap["SD/Sederajat"] ?? 0,
-            SMP: eduMap["SMP/Sederajat"] ?? 0,
-            SMA: eduMap["SMA/Sederajat"] ?? 0,
-            Diploma: eduMap["Diploma"] ?? 0,
-            Sarjana: eduMap["Sarjana"] ?? 0,
-            Magister: eduMap["Magister"] ?? 0,
-            Doktor: eduMap["Doktor"] ?? 0,
-          },
+          educationLevels: eduMap,
         };
       })
     );

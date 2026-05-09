@@ -16,7 +16,10 @@ import {
   rejectLetter,
   cancelLetter,
   publishLetter,
+  convertLetterPdf,
   verifyLetter,
+  getOnlyOfficeConfig,
+  onlyOfficeCallback,
 } from "../controllers/letter.controller";
 
 const letterRouter = Router();
@@ -54,5 +57,10 @@ letterRouter.post("/:id/approve", verifyAdminOrAbove, approveLetter);
 letterRouter.post("/:id/reject", verifyAdminOrAbove, rejectLetter);
 letterRouter.post("/:id/cancel", verifyAdminOrAbove, cancelLetter);
 letterRouter.post("/:id/publish", verifyAdminOrAbove, publishLetter);
+letterRouter.post("/:id/convert-pdf", verifyAdminOrAbove, convertLetterPdf);
+
+// OnlyOffice editor endpoints
+letterRouter.get("/:id/onlyoffice-config", getOnlyOfficeConfig);
+letterRouter.post("/:id/onlyoffice-callback", onlyOfficeCallback as any);
 
 export default letterRouter;

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response, NextFunction, RequestHandler } from "express";
 import crypto from "crypto";
 import {
   selectAllLetters,
@@ -16,8 +16,7 @@ import { Prisma, LetterStatus } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key, downloadFromS3, uploadBufferToS3 } from "../utils/storage/s3.storage";
 import { AuthRequest } from "../middlewares/auth";
 import { addStaffNamesToRecords } from "../utils/staff/staff.util";
-import { embedSignatureOnDocument } from "../utils/document/signDocument";
-import { embedQrCodeOnDocument } from "../utils/document/embedQrCode";
+import { embedQrCodeOnDocument, embedQrCodeOnBuffer } from "../utils/document/embedQrCode";
 import { shouldConvertToPdf, convertBufferToPdf } from "../utils/document/convertToPdf";
 import { renderDocxTemplate } from "../utils/document/renderTemplate";
 import { htmlToDocxBuffer } from "../utils/document/htmlToDocx";
@@ -257,14 +256,8 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
         const date = new Date(letterDate);
         const bulan = toRomanNumeral(date.getMonth() + 1);
         const tahun = date.getFullYear();
-        const parts = [
-          String(counter).padStart(3, "0"),
-          updatedType.kodeSurat1,
-          updatedType.kodeSurat2,
-          bulan,
-          String(tahun),
-        ].filter(Boolean);
-        generatedLetterNumber = parts.join("/");
+        const kode = [updatedType.kodeSurat1, updatedType.kodeSurat2].filter(Boolean).join("-");
+        generatedLetterNumber = [String(counter).padStart(3, "0"), kode, bulan, String(tahun)].filter(Boolean).join("/");
 
         const newLetter = await tx.letter.create({
           data: {
@@ -293,8 +286,12 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
       const s3Key = `database/letters/letter-${newLetter.id}-template-${rand}.docx`;
       const letterDateObj = new Date(letterDate);
       const formattedDate = letterDateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
-      if (editedHtml) {
-        // User edited the preview — convert their HTML to DOCX
+      if (req.file) {
+        // User re-uploaded a custom document
+        const uploadPath = await uploadToS3(req.file, newLetter.id, "letter-doc", "letters");
+        if (uploadPath) await updateLetterById(newLetter.id, { documentPath: uploadPath });
+      } else if (editedHtml) {
+        // HTML editor path (legacy)
         const docxBuffer = await htmlToDocxBuffer(editedHtml, {
           nomorSurat: generatedLetterNumber,
           tanggal: formattedDate,
@@ -475,13 +472,40 @@ export const patchLetter = async (req: RequestWithFile, res: Response, next: Nex
       } catch { /* ignore parse errors */ }
     }
 
+    // Re-render from template when fields updated (no file/html override)
+    if (!editedHtml && !req.file && existing.letterTypeId && updateData.templateFieldData) {
+      try {
+        const letterType = await selectLetterTypeById(existing.letterTypeId);
+        if (letterType && isValidS3Key(letterType.templatePath)) {
+          const templateBuffer = await downloadFromS3(letterType.templatePath!);
+          if (templateBuffer) {
+            const dateStr = letterDate || existing.letterDate?.toISOString();
+            const dateObj = dateStr ? new Date(dateStr) : new Date();
+            const formattedDate = dateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
+            const rendered = await renderDocxTemplate(templateBuffer, {
+              ...(updateData.templateFieldData as Record<string, string>),
+              nomorSurat: existing.letterNumber || "",
+              tanggal: formattedDate,
+              tanggalSurat: formattedDate,
+            });
+            const rand = Math.random().toString(36).substring(2, 10);
+            const newS3Key = `database/letters/letter-${id}-template-${rand}.docx`;
+            await uploadBufferToS3(rendered, newS3Key, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+            if (existing.documentPath && isValidS3Key(existing.documentPath)) {
+              await deleteFromS3(existing.documentPath);
+            }
+            updateData.documentPath = newS3Key;
+          }
+        }
+      } catch { /* ignore template re-render errors — keep existing document */ }
+    }
+
     // Convert edited HTML to DOCX and replace document
     if (editedHtml) {
       const dateStr = letterDate || existing.letterDate?.toISOString();
       const dateObj = dateStr ? new Date(dateStr) : new Date();
       const formattedDate = dateObj.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
-      const parsedFields = updateData.templateFieldData as Record<string, string>
-        ?? (existing.templateFieldData as Record<string, string> ?? {});
+      const parsedFields = ((updateData.templateFieldData ?? existing.templateFieldData) as Record<string, string>) ?? {};
 
       const docxBuffer = await htmlToDocxBuffer(editedHtml, {
         nomorSurat: existing.letterNumber || "",
@@ -571,31 +595,8 @@ export const submitLetter = async (req: AuthRequest, res: Response, next: NextFu
       return res.status(400).json({ message: "Hanya surat draft yang dapat diajukan" });
     }
 
-    // Convert document to PDF if needed (DOCX, DOC, etc.)
-    let finalDocPath = existing.documentPath;
-    if (existing.documentPath && shouldConvertToPdf(existing.documentPath)) {
-      const docBuffer = await downloadFromS3(existing.documentPath);
-      if (docBuffer) {
-        const pdfBuffer = await convertBufferToPdf(docBuffer, existing.documentPath);
-        if (pdfBuffer) {
-          const rand = Math.random().toString(36).substring(2, 10);
-          const pdfKey = `database/letters/letter-${id}-converted-${rand}.pdf`;
-          await uploadBufferToS3(pdfBuffer, pdfKey, "application/pdf");
-          finalDocPath = pdfKey;
-          // Delete the original non-PDF file from S3
-          if (isValidS3Key(existing.documentPath)) {
-            await deleteFromS3(existing.documentPath);
-          }
-        }
-      }
-    }
-
-    await updateLetterById(id, {
-      status: "pending1",
-      documentPath: finalDocPath,
-      originalDocumentPath: finalDocPath,
-      updatedAt: new Date(),
-    });
+    // Document stays in its original format — no PDF conversion
+    await updateLetterById(id, { status: "pending1", updatedAt: new Date() });
 
     const result = await selectLetterById(id);
     const data = await transformLetter(result);
@@ -607,7 +608,7 @@ export const submitLetter = async (req: AuthRequest, res: Response, next: NextFu
 };
 
 // ============================================================================
-// APPROVE LETTER
+// APPROVE LETTER (no signature embedding — flow only)
 // ============================================================================
 
 export const approveLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -625,58 +626,21 @@ export const approveLetter = async (req: AuthRequest, res: Response, next: NextF
       return res.status(403).json({ message: "Anda bukan penandatangan surat ini" });
     }
 
-    // Validate current status matches signer level
     const expectedStatus = `pending${signerLevel}` as LetterStatus;
     if (letter.status !== expectedStatus) {
       return res.status(400).json({ message: "Surat belum pada tahap persetujuan Anda" });
     }
 
-    // Read signature placement coordinates (handle both camelCase and snake_case)
-    const sigPage = req.body.signature_page ?? req.body.signaturePage;
-    const sigX = req.body.signature_x ?? req.body.signatureX;
-    const sigY = req.body.signature_y ?? req.body.signatureY;
-    const sigType: 'ttd' | 'paraf' = req.body.signatureType ?? req.body.signature_type ?? 'ttd';
-    const sigWidth = req.body.signatureWidth ?? req.body.signature_width;
-    const sigHeight = req.body.signatureHeight ?? req.body.signature_height;
-    const hasPlacement = sigPage !== undefined && sigX !== undefined && sigY !== undefined;
-
-    // Embed signature into PDF if coordinates provided
-    if (hasPlacement && letter.documentPath) {
-      try {
-        const newDocPath = await embedSignatureOnDocument(
-          id, userId,
-          Number(sigPage), Number(sigX), Number(sigY),
-          sigType,
-          sigWidth !== undefined ? Number(sigWidth) : undefined,
-          sigHeight !== undefined ? Number(sigHeight) : undefined,
-        );
-
-        // Update document path with new signed PDF
-        const oldDocPath = letter.documentPath;
-        await updateLetterById(id, { documentPath: newDocPath });
-        if (oldDocPath && oldDocPath !== newDocPath && isValidS3Key(oldDocPath)) {
-          await deleteFromS3(oldDocPath);
-        }
-      } catch (embedErr: any) {
-        return res.status(400).json({
-          message: "Gagal membubuhkan tanda tangan",
-          error: embedErr.message,
-        });
-      }
-    }
-
-    // Create approval record with coordinates
     await insertLetterApproval({
       letterId: id,
       signerId: userId,
       signerLevel,
       action: "approve",
-      signaturePage: hasPlacement ? Number(sigPage) : null,
-      signatureX: hasPlacement ? Number(sigX) : null,
-      signatureY: hasPlacement ? Number(sigY) : null,
+      signaturePage: null,
+      signatureX: null,
+      signatureY: null,
     });
 
-    // Determine next status
     let nextStatus: LetterStatus;
     if (signerLevel === 1) {
       nextStatus = letter.signer2Id ? "pending2" : "approved";
@@ -698,12 +662,14 @@ export const approveLetter = async (req: AuthRequest, res: Response, next: NextF
 };
 
 // ============================================================================
-// REJECT LETTER (back to draft)
+// REJECT LETTER (back to draft — admin or current signer)
 // ============================================================================
 
 export const rejectLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
+    const userRole = (req.user as any)?.role;
+    const isAdmin = userRole === "admin" || userRole === "superadmin";
     const id = Number(req.params.id);
     const letter = await selectLetterById(id);
 
@@ -712,42 +678,30 @@ export const rejectLetter = async (req: AuthRequest, res: Response, next: NextFu
     }
 
     const signerLevel = getSignerLevel(userId, letter);
-    if (!signerLevel) {
+    if (!signerLevel && !isAdmin) {
       return res.status(403).json({ message: "Anda bukan penandatangan surat ini" });
     }
 
-    const expectedStatus = `pending${signerLevel}` as LetterStatus;
-    if (letter.status !== expectedStatus) {
-      return res.status(400).json({ message: "Surat belum pada tahap persetujuan Anda" });
+    if (!letter.status.startsWith("pending")) {
+      return res.status(400).json({ message: "Hanya surat yang sedang diajukan yang dapat direvisi" });
     }
 
     const actionNote = req.body.action_note || req.body.actionNote || null;
+    const effectiveSignerLevel = signerLevel ?? 1;
 
-    // Create rejection record
     await insertLetterApproval({
       letterId: id,
       signerId: userId,
-      signerLevel,
+      signerLevel: effectiveSignerLevel,
       action: "reject",
       actionNote,
     });
 
-    // Restore original document if TTD was embedded
-    const updateData: any = {
+    await updateLetterById(id, {
       status: "draft",
       revisionNote: actionNote,
       updatedAt: new Date(),
-    };
-
-    if (letter.originalDocumentPath && letter.documentPath !== letter.originalDocumentPath) {
-      // Delete the signed version
-      if (letter.documentPath && isValidS3Key(letter.documentPath)) {
-        await deleteFromS3(letter.documentPath);
-      }
-      updateData.documentPath = letter.originalDocumentPath;
-    }
-
-    await updateLetterById(id, updateData);
+    });
 
     const result = await selectLetterById(id);
     const data = await transformLetter(result);
@@ -759,12 +713,14 @@ export const rejectLetter = async (req: AuthRequest, res: Response, next: NextFu
 };
 
 // ============================================================================
-// CANCEL LETTER (delete record)
+// CANCEL LETTER (delete record — admin or current signer)
 // ============================================================================
 
 export const cancelLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
+    const userRole = (req.user as any)?.role;
+    const isAdmin = userRole === "admin" || userRole === "superadmin";
     const id = Number(req.params.id);
     const letter = await selectLetterById(id);
 
@@ -773,16 +729,14 @@ export const cancelLetter = async (req: AuthRequest, res: Response, next: NextFu
     }
 
     const signerLevel = getSignerLevel(userId, letter);
-    if (!signerLevel) {
+    if (!signerLevel && !isAdmin) {
       return res.status(403).json({ message: "Anda bukan penandatangan surat ini" });
     }
 
-    // Delete S3 document if exists
     if (letter.documentPath && isValidS3Key(letter.documentPath)) {
       await deleteFromS3(letter.documentPath);
     }
 
-    // Delete the letter (cascades to approvals)
     await deleteLetterById(id);
 
     return res.json({ message: "Surat berhasil dibatalkan dan dihapus" });
@@ -792,7 +746,7 @@ export const cancelLetter = async (req: AuthRequest, res: Response, next: NextFu
 };
 
 // ============================================================================
-// PUBLISH LETTER (approved → published)
+// PUBLISH LETTER (approved → published, always converts to PDF + embeds QR)
 // ============================================================================
 
 export const publishLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -808,37 +762,62 @@ export const publishLetter = async (req: AuthRequest, res: Response, next: NextF
       return res.status(400).json({ message: "Hanya surat yang sudah disetujui yang dapat diterbitkan" });
     }
 
-    // Generate unique verification token
     const verificationToken = crypto.randomUUID().replace(/-/g, "");
+    const frontendUrl = process.env.FRONT_END_SIPUSAKA || "http://localhost:3000";
+    const verifyUrl = `${frontendUrl}/verify/${verificationToken}`;
 
-    // Read QR placement coordinates (handle both camelCase and snake_case)
-    const qrPage = req.body.qr_page ?? req.body.qrPage;
-    const qrX = req.body.qr_x ?? req.body.qrX;
-    const qrY = req.body.qr_y ?? req.body.qrY;
+    // QR coordinates — use provided values or sensible defaults (bottom-left of last page)
+    const qrPage = Number(req.body.qr_page ?? req.body.qrPage ?? 0);
+    const qrX   = Number(req.body.qr_x   ?? req.body.qrX   ?? 20);
+    const qrY   = Number(req.body.qr_y   ?? req.body.qrY   ?? 20);
     const qrSize = req.body.qr_size ?? req.body.qrSize;
-    const hasPlacement = qrPage !== undefined && qrX !== undefined && qrY !== undefined;
 
     let signedDocPath = letter.documentPath;
 
-    // Embed QR code into PDF if coordinates provided
-    if (hasPlacement && letter.documentPath) {
-      try {
-        const newDocPath = await embedQrCodeOnDocument(
-          id, verificationToken,
-          Number(qrPage), Number(qrX), Number(qrY),
-          qrSize !== undefined ? Number(qrSize) : undefined
-        );
-        signedDocPath = newDocPath;
+    if (letter.documentPath) {
+      let docBuffer = await downloadFromS3(letter.documentPath);
 
-        // Delete the old document (without QR) if different
-        if (letter.documentPath && letter.documentPath !== newDocPath && isValidS3Key(letter.documentPath)) {
+      if (docBuffer) {
+        // Step 1: Convert DOCX → PDF if needed
+        if (shouldConvertToPdf(letter.documentPath)) {
+          const pdfBuf = await convertBufferToPdf(docBuffer, letter.documentPath);
+          if (pdfBuf) {
+            docBuffer = pdfBuf;
+          } else {
+            console.error("[publishLetter] PDF conversion failed — document will be kept in original format without QR code");
+          }
+        }
+
+        // Step 2: Embed QR only if we actually have PDF content
+        const isPdf = docBuffer.subarray(0, 5).toString("ascii").startsWith("%PDF");
+        if (isPdf) {
+          try {
+            docBuffer = await embedQrCodeOnBuffer(
+              docBuffer,
+              verifyUrl,
+              qrPage,
+              qrX,
+              qrY,
+              qrSize !== undefined ? Number(qrSize) : undefined,
+            );
+          } catch (qrErr) {
+            console.error("[publishLetter] QR embed failed:", (qrErr as Error).message);
+          }
+        }
+
+        // Step 3: Upload with correct extension based on actual content (not assumed .pdf)
+        const rand = Math.random().toString(36).substring(2, 10);
+        const finalExt = isPdf ? "pdf" : (letter.documentPath?.split(".").pop()?.split("?")[0] ?? "docx");
+        const finalMime = isPdf ? "application/pdf" : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        const finalKey = `database/letters/letter-${id}-published-${rand}.${finalExt}`;
+        await uploadBufferToS3(docBuffer, finalKey, finalMime);
+
+        // Remove old document
+        if (letter.documentPath && isValidS3Key(letter.documentPath)) {
           await deleteFromS3(letter.documentPath);
         }
-      } catch (embedErr: any) {
-        return res.status(400).json({
-          message: "Gagal membubuhkan QR code",
-          error: embedErr.message,
-        });
+
+        signedDocPath = finalKey;
       }
     }
 
@@ -854,6 +833,55 @@ export const publishLetter = async (req: AuthRequest, res: Response, next: NextF
     const data = await transformLetter(result);
 
     return res.json({ message: "Surat berhasil diterbitkan", data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// CONVERT LETTER TO PDF (approved → converts DOCX to PDF, updates documentPath)
+// ============================================================================
+
+export const convertLetterPdf = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const id = Number(req.params.id);
+    const letter = await selectLetterById(id);
+
+    if (!letter) return res.status(404).json({ message: "Surat tidak ditemukan" });
+    if (letter.status !== "approved") {
+      return res.status(400).json({ message: "Hanya surat yang sudah disetujui yang dapat diproses" });
+    }
+    if (!letter.documentPath) {
+      return res.status(400).json({ message: "Surat tidak memiliki dokumen" });
+    }
+
+    // Already PDF — just return the presigned URL
+    if (!shouldConvertToPdf(letter.documentPath)) {
+      const url = await getPresignedUrl(letter.documentPath);
+      return res.json({ message: "Dokumen sudah dalam format PDF", data: { url } });
+    }
+
+    const docBuffer = await downloadFromS3(letter.documentPath);
+    if (!docBuffer) return res.status(404).json({ message: "Dokumen tidak ditemukan di storage" });
+
+    const pdfBuffer = await convertBufferToPdf(docBuffer, letter.documentPath);
+    if (!pdfBuffer) {
+      return res.status(500).json({
+        message: "Gagal mengkonversi dokumen ke PDF. Upload file PDF langsung agar proses terbitkan bisa dilanjutkan.",
+      });
+    }
+
+    const rand = Math.random().toString(36).substring(2, 10);
+    const pdfKey = `database/letters/letter-${id}-converted-${rand}.pdf`;
+    await uploadBufferToS3(pdfBuffer, pdfKey, "application/pdf");
+
+    if (isValidS3Key(letter.documentPath)) {
+      await deleteFromS3(letter.documentPath);
+    }
+    await updateLetterById(id, { documentPath: pdfKey });
+
+    const url = await getPresignedUrl(pdfKey);
+    return res.json({ message: "Dokumen berhasil dikonversi ke PDF", data: { url } });
   } catch (err) {
     next(err);
   }
@@ -887,6 +915,104 @@ export const verifyLetter = async (req: Request, res: Response, next: NextFuncti
       verified: true,
       data,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// ONLYOFFICE — editor config (frontend fetches this to initialise the editor)
+// ============================================================================
+
+export const getOnlyOfficeConfig = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  try {
+    const id = Number(req.params.id);
+    const letter = await selectLetterById(id);
+
+    if (!letter) return res.status(404).json({ message: "Surat tidak ditemukan" });
+    if (!letter.documentPath) return res.status(404).json({ message: "Surat tidak memiliki dokumen" });
+
+    const user = req.user as any;
+    const docUrl = await getPresignedUrl(letter.documentPath);
+    const ext = letter.documentPath.split(".").pop()?.toLowerCase() ?? "docx";
+
+    // Cache key: encode path + updatedAt so OnlyOffice reloads after each save
+    const key = Buffer.from(`${letter.documentPath}|${letter.updatedAt?.toISOString() ?? ""}`).toString("base64url").slice(0, 20);
+
+    const backendUrl = process.env.BACK_END_SERVICE || `http://localhost:${process.env.PORT ?? 9000}`;
+    const callbackUrl = `${backendUrl}/api/letters/${id}/onlyoffice-callback`;
+
+    const config = {
+      document: {
+        fileType: ext,
+        key,
+        title: `surat-${id}.${ext}`,
+        url: docUrl,
+        permissions: {
+          edit: letter.status === "draft",
+          download: true,
+          print: true,
+        },
+      },
+      documentType: "word",
+      editorConfig: {
+        callbackUrl,
+        lang: "id",
+        mode: letter.status === "draft" ? "edit" : "view",
+        user: {
+          id: String(user?.id ?? "0"),
+          name: user?.staffName || user?.username || "Pengguna",
+        },
+        customization: {
+          autosave: true,
+          forcesave: false,
+          compactToolbar: false,
+        },
+      },
+    };
+
+    return res.json({ data: config });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ============================================================================
+// ONLYOFFICE — callback (OnlyOffice server POSTs the saved document here)
+// ============================================================================
+
+export const onlyOfficeCallback = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Status 2 = ready for saving; status 6 = force-save
+    const { status, url } = req.body;
+
+    if (status !== 2 && status !== 6) {
+      return res.json({ error: 0 }); // acknowledge without saving
+    }
+
+    const id = Number(req.params.id);
+    const letter = await selectLetterById(id);
+
+    if (!letter || !url) return res.json({ error: 0 });
+
+    // Download the edited document from OnlyOffice temporary storage
+    const editedRes = await fetch(url as string);
+    if (!editedRes.ok) return res.json({ error: 1 });
+
+    const editedBuffer = Buffer.from(await editedRes.arrayBuffer());
+    const ext = (letter.documentPath ?? "").split(".").pop() ?? "docx";
+    const rand = Math.random().toString(36).substring(2, 10);
+    const s3Key = `database/letters/letter-${id}-oo-${rand}.${ext}`;
+
+    await uploadBufferToS3(editedBuffer, s3Key, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+
+    // Remove old document and update record
+    if (letter.documentPath && isValidS3Key(letter.documentPath)) {
+      await deleteFromS3(letter.documentPath);
+    }
+    await updateLetterById(id, { documentPath: s3Key, updatedAt: new Date() });
+
+    return res.json({ error: 0 });
   } catch (err) {
     next(err);
   }

@@ -305,41 +305,46 @@ export const selectChildAssistanceStats = async () => {
   };
 
 /**
- * Global education level stats — last assistance per child, dynamic categories via distinct.
+ * Education level stats — last assistance per active child, dynamic categories via distinct.
+ * When regionId is provided, scoped to that region only.
  * Returns a map of educationLevel → count.
  */
-export const selectGlobalEducationLevelStats = async (): Promise<Record<string, number>> => {
+export const selectGlobalEducationLevelStats = async (regionId?: number): Promise<Record<string, number>> => {
   try {
-    // Get all distinct education levels present in child assistance records
-    const distinctLevels = await prisma.childAssistance.findMany({
-      distinct: ["educationLevel"],
-      select: { educationLevel: true },
-      where: { educationLevel: { not: null } },
-    });
+    const childrenWhere = regionId
+      ? { isActive: true, homes: { regionId } }
+      : { isActive: true };
 
-    // Count per category using the most recent assistance per child
-    const children = await prisma.children.findMany({
-      select: {
-        childAssistance: {
-          orderBy: { assistanceDate: "desc" },
-          take: 1,
-          select: { educationLevel: true },
+    const assistanceWhere = regionId
+      ? { educationLevel: { not: null as null }, children: { homes: { regionId } } }
+      : { educationLevel: { not: null as null } };
+
+    const [distinctLevels, children] = await Promise.all([
+      prisma.childAssistance.findMany({
+        distinct: ["educationLevel"],
+        select: { educationLevel: true },
+        where: assistanceWhere,
+      }),
+      prisma.children.findMany({
+        where: childrenWhere,
+        select: {
+          childAssistance: {
+            orderBy: { assistanceDate: "desc" },
+            take: 1,
+            select: { educationLevel: true },
+          },
         },
-      },
-    });
+      }),
+    ]);
 
-    // Initialize all known categories to 0
     const eduMap: Record<string, number> = {};
     distinctLevels.forEach((row) => {
       if (row.educationLevel) eduMap[row.educationLevel] = 0;
     });
 
-    // Tally from most recent assistances
     children.forEach((child) => {
       const level = child.childAssistance[0]?.educationLevel;
-      if (level && level in eduMap) {
-        eduMap[level] += 1;
-      }
+      if (level && level in eduMap) eduMap[level] += 1;
     });
 
     return eduMap;

@@ -21,6 +21,7 @@ import socialAssistanceRouter from "./routes/socialassistance.router";
 import userRouter from "./routes/user.router";
 import letterRouter from "./routes/letter.router";
 import letterTypeRouter from "./routes/letterType.router";
+import wopiRouter from "./routes/wopi.router";
 
 const app: Application = express();
 
@@ -105,6 +106,7 @@ app.use("/api/social-assistance", socialAssistanceRouter);
 app.use("/api/users", userRouter);
 app.use("/api/letters", letterRouter);
 app.use("/api/letter-types", letterTypeRouter);
+app.use("/wopi", wopiRouter);
 
 // ======================
 // Export App

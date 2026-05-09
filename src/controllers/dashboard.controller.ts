@@ -113,12 +113,13 @@ export const getDashboardStat = async (
 // GET EDUCATION LEVEL STATS (separate lightweight endpoint)
 // ============================================================================
 export const getEducationLevelStats = async (
-  _req: Request,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const data = await selectGlobalEducationLevelStats();
+    const regionId = req.query.regionId ? Number(req.query.regionId) : undefined;
+    const data = await selectGlobalEducationLevelStats(regionId);
     return res.json({ message: "Berhasil mendapatkan statistik jenjang pendidikan", data });
   } catch (err) {
     next(err);

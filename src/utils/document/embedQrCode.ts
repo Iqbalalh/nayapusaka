@@ -78,6 +78,29 @@ const generateQrWithLogo = async (url: string): Promise<Buffer> => {
 };
 
 /**
+ * Embed a QR code directly onto a PDF buffer (no S3 fetch needed).
+ * Returns the modified PDF buffer.
+ */
+export const embedQrCodeOnBuffer = async (
+  pdfBuffer: Buffer,
+  verifyUrl: string,
+  qrPage: number,
+  qrX: number,
+  qrY: number,
+  customQrSize?: number
+): Promise<Buffer> => {
+  const qrBuffer = await generateQrWithLogo(verifyUrl);
+  const pdfDoc = await PDFDocument.load(pdfBuffer);
+  const pages = pdfDoc.getPages();
+  const pageIdx = Math.min(Math.max(qrPage, 0), pages.length - 1);
+  const page = pages[pageIdx];
+  const qrImage = await pdfDoc.embedPng(qrBuffer);
+  const drawSize = customQrSize ?? QR_SIZE;
+  page.drawImage(qrImage, { x: qrX, y: qrY, width: drawSize, height: drawSize });
+  return Buffer.from(await pdfDoc.save());
+};
+
+/**
  * Embed a QR code image (with logo) onto a specific page of the letter's PDF document.
  * Returns the S3 key of the new PDF.
  */

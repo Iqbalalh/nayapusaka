@@ -397,9 +397,7 @@ export const selectChildrenForExport = async (filters?: {
 
     if (filters?.regionId) {
       where.homes = {
-        employees: {
-          regionId: filters.regionId,
-        },
+        regionId: filters.regionId,
       };
     }
 

@@ -1,81 +1,95 @@
-import mammoth from "mammoth";
-import puppeteer from "puppeteer";
+import { exec } from "child_process";
+import { promisify } from "util";
+import fs from "fs";
 import path from "path";
+import os from "os";
+import crypto from "crypto";
 
-// Extensions that are already PDF — skip
+const execAsync = promisify(exec);
+
 const SKIP_EXTENSIONS = new Set([".pdf"]);
+const CONVERTIBLE_EXTENSIONS = new Set([".doc", ".docx", ".odt"]);
 
-// Extensions we can convert via mammoth → HTML → puppeteer → PDF
-const CONVERTIBLE_EXTENSIONS = new Set([".doc", ".docx"]);
+// LibreOffice binary — try common paths across platforms
+const SOFFICE_CANDIDATES = [
+  "libreoffice",
+  "soffice",
+  "/usr/bin/libreoffice",
+  "/usr/bin/soffice",
+  "/usr/lib/libreoffice/program/soffice",
+  "/Applications/LibreOffice.app/Contents/MacOS/soffice",
+  "C:\\Program Files\\LibreOffice\\program\\soffice.exe",
+  "C:\\Program Files (x86)\\LibreOffice\\program\\soffice.exe",
+];
 
-/**
- * Check if a file should be converted to PDF based on its extension.
- */
+let _resolvedSoffice: string | null | undefined = undefined;
+
+async function findSoffice(): Promise<string | null> {
+  if (_resolvedSoffice !== undefined) return _resolvedSoffice;
+
+  for (const candidate of SOFFICE_CANDIDATES) {
+    try {
+      await execAsync(`"${candidate}" --version`);
+      _resolvedSoffice = candidate;
+      return candidate;
+    } catch {
+      // not found at this path, try next
+    }
+  }
+
+  _resolvedSoffice = null;
+  console.error("[convertToPdf] LibreOffice not found. Install LibreOffice to enable DOCX→PDF conversion.");
+  return null;
+}
+
 export const shouldConvertToPdf = (filePath: string): boolean => {
-  const ext = path.extname(filePath).toLowerCase();
+  const ext = path.extname(filePath.split("?")[0]).toLowerCase();
   if (SKIP_EXTENSIONS.has(ext)) return false;
   return CONVERTIBLE_EXTENSIONS.has(ext);
 };
 
 /**
- * Convert a DOCX buffer to PDF using mammoth (DOCX → HTML) + puppeteer (HTML → PDF).
- * Returns the PDF buffer, or null if conversion is not needed or fails.
+ * Convert a DOCX/DOC/ODT buffer to PDF using LibreOffice headless.
+ * Preserves formatting faithfully — same engine as Collabora Online.
+ * Returns null if the file is already PDF, the extension is unsupported,
+ * or LibreOffice is not installed.
  */
 export const convertBufferToPdf = async (
   buffer: Buffer,
   originalFileName: string
 ): Promise<Buffer | null> => {
-  const ext = path.extname(originalFileName).toLowerCase();
+  const ext = path.extname(originalFileName.split("?")[0]).toLowerCase();
   if (SKIP_EXTENSIONS.has(ext)) return null;
   if (!CONVERTIBLE_EXTENSIONS.has(ext)) return null;
 
-  let browser;
+  const soffice = await findSoffice();
+  if (!soffice) return null;
+
+  const tmpDir = os.tmpdir();
+  const tmpId = crypto.randomUUID();
+  const inputPath = path.join(tmpDir, `lo-${tmpId}${ext}`);
+  // LibreOffice names the output file by replacing the extension with .pdf
+  const outputPath = path.join(tmpDir, `lo-${tmpId}.pdf`);
+
   try {
-    // Step 1: DOCX → HTML
-    const { value: html } = await mammoth.convertToHtml({ buffer });
+    fs.writeFileSync(inputPath, buffer);
 
-    // Step 2: HTML → PDF via headless Chromium
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
-
-    const page = await browser.newPage();
-    await page.setContent(
-      `<!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <style>
-          body {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 12pt;
-            line-height: 1.6;
-            color: #000;
-            margin: 0;
-            padding: 0;
-          }
-          table { border-collapse: collapse; width: 100%; }
-          td, th { border: 1px solid #ccc; padding: 4px 8px; }
-          img { max-width: 100%; }
-        </style>
-      </head>
-      <body>${html}</body>
-      </html>`,
-      { waitUntil: "domcontentloaded" }
+    await execAsync(
+      `"${soffice}" --headless --convert-to pdf --outdir "${tmpDir}" "${inputPath}"`,
+      { timeout: 60_000 }
     );
 
-    const pdfBuffer = await page.pdf({
-      format: "A4",
-      margin: { top: "25mm", right: "25mm", bottom: "25mm", left: "25mm" },
-      printBackground: false,
-    });
+    if (!fs.existsSync(outputPath)) {
+      console.error("[convertToPdf] LibreOffice ran but output PDF was not created.");
+      return null;
+    }
 
-    return Buffer.from(pdfBuffer);
-  } catch (error) {
-    console.warn("PDF conversion skipped:", (error as Error).message);
+    return fs.readFileSync(outputPath);
+  } catch (err) {
+    console.error("[convertToPdf] LibreOffice conversion failed:", (err as Error).message);
     return null;
   } finally {
-    if (browser) await browser.close();
+    if (fs.existsSync(inputPath)) fs.unlinkSync(inputPath);
+    if (fs.existsSync(outputPath)) fs.unlinkSync(outputPath);
   }
 };
