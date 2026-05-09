@@ -75,7 +75,7 @@ export const convertBufferToPdf = async (
     fs.writeFileSync(inputPath, buffer);
 
     await execAsync(
-      `"${soffice}" --headless --convert-to pdf --outdir "${tmpDir}" "${inputPath}"`,
+      `"${soffice}" --headless --nofirststartwizard --norestore --convert-to pdf --outdir "${tmpDir}" "${inputPath}"`,
       { timeout: 60_000 }
     );
 

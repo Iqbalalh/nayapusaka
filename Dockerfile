@@ -25,12 +25,14 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Install dumb-init for proper signal handling
-RUN apk add --no-cache dumb-init
+# Install dumb-init + LibreOffice (for DOCX→PDF conversion) + fonts
+RUN apk add --no-cache dumb-init libreoffice ttf-dejavu ttf-liberation
 
-# Create non-root user
+# Create non-root user with a real home directory (LibreOffice needs it)
 RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
+    adduser -S nodejs -u 1001 -h /home/nodejs && \
+    mkdir -p /home/nodejs && \
+    chown nodejs:nodejs /home/nodejs
 
 # Copy package files
 COPY package*.json ./
