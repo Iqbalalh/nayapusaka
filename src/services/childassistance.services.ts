@@ -339,12 +339,18 @@ export const selectGlobalEducationLevelStats = async (regionId?: number): Promis
 
     const eduMap: Record<string, number> = {};
     distinctLevels.forEach((row) => {
-      if (row.educationLevel) eduMap[row.educationLevel] = 0;
+      if (row.educationLevel) {
+        const key = row.educationLevel.trim();
+        if (key) eduMap[key] = 0;
+      }
     });
 
     children.forEach((child) => {
-      const level = child.childAssistance[0]?.educationLevel;
-      if (level && level in eduMap) eduMap[level] += 1;
+      const raw = child.childAssistance[0]?.educationLevel;
+      if (raw) {
+        const level = raw.trim();
+        if (level in eduMap) eduMap[level] += 1;
+      }
     });
 
     return eduMap;

@@ -176,6 +176,31 @@ export const selectUmkmVisitCount = async () => {
 };
 
 /**
+ * Select UMKM visit stats grouped by assistanceSource (sumber bantuan)
+ */
+export const selectUmkmVisitStatsBySource = async () => {
+  try {
+    const records = await prisma.umkmVisit.findMany({
+      select: { assistanceSource: true, value: true },
+    });
+
+    const map: Record<string, { count: number; total: number }> = {};
+    for (const r of records) {
+      const src = r.assistanceSource?.trim() || "Lainnya";
+      if (!map[src]) map[src] = { count: 0, total: 0 };
+      map[src].count++;
+      map[src].total += r.value;
+    }
+
+    return Object.entries(map)
+      .map(([source, d]) => ({ source, count: d.count, totalAmount: d.total }))
+      .sort((a, b) => b.totalAmount - a.totalAmount);
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
+/**
  * Select UMKM visit financial statistics
  */
 export const selectUmkmVisitStats = async () => {
@@ -223,6 +248,40 @@ export const selectUmkmVisitStats = async () => {
       minAmount,
       maxAmount,
     };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
+export const selectUmkmVisitYearlyBreakdown = async () => {
+  try {
+    const records = await prisma.umkmVisit.findMany({
+      select: { assistanceDate: true, value: true },
+    });
+
+    const yearlyData: Record<number, number[]> = {};
+    records.forEach((r) => {
+      if (r.assistanceDate && r.value != null) {
+        const year = new Date(r.assistanceDate).getFullYear();
+        if (!yearlyData[year]) yearlyData[year] = [];
+        yearlyData[year].push(r.value);
+      }
+    });
+
+    return Object.keys(yearlyData)
+      .map((year) => {
+        const values = yearlyData[parseInt(year)];
+        const totalAmount = values.reduce((s, v) => s + v, 0);
+        return {
+          year: parseInt(year),
+          count: values.length,
+          totalAmount,
+          averageAmount: totalAmount / values.length,
+          minAmount: Math.min(...values),
+          maxAmount: Math.max(...values),
+        };
+      })
+      .sort((a, b) => a.year - b.year);
   } catch (error) {
     throw error instanceof Error ? error : new Error(String(error));
   }

@@ -154,13 +154,13 @@ export const selectInactiveChildrenCount = async () => {
 };
 
 /**
- * Select count of yatim children (father not alive, mother alive)
+ * Select count of yatim children (father not alive, mother alive) — active only
  */
 export const selectYatimChildrenCount = async () => {
   try {
     return {
       count: await prisma.children.count({
-        where: { isFatherAlive: false, isMotherAlive: { not: false } },
+        where: { isActive: true, isFatherAlive: false, isMotherAlive: { not: false } },
       }),
     };
   } catch (error) {
@@ -169,13 +169,13 @@ export const selectYatimChildrenCount = async () => {
 };
 
 /**
- * Select count of piatu children (mother not alive, father alive)
+ * Select count of piatu children (mother not alive, father alive) — active only
  */
 export const selectPiatuChildrenCount = async () => {
   try {
     return {
       count: await prisma.children.count({
-        where: { isMotherAlive: false, isFatherAlive: true },
+        where: { isActive: true, isMotherAlive: false, isFatherAlive: true },
       }),
     };
   } catch (error) {
@@ -184,13 +184,13 @@ export const selectPiatuChildrenCount = async () => {
 };
 
 /**
- * Select count of yatim piatu children (both parents not alive)
+ * Select count of yatim piatu children (both parents not alive) — active only
  */
 export const selectYatimPiatuChildrenCount = async () => {
   try {
     return {
       count: await prisma.children.count({
-        where: { isFatherAlive: false, isMotherAlive: false },
+        where: { isActive: true, isFatherAlive: false, isMotherAlive: false },
       }),
     };
   } catch (error) {
@@ -333,6 +333,11 @@ export const selectChildrenOptimized = async (
         createdBy: true,
         editedBy: true,
         _count: { select: { childAssistance: true } },
+        childAssistance: {
+          select: { educationLevel: true },
+          orderBy: { assistanceDate: "desc" },
+          take: 1,
+        },
       },
       orderBy,
       skip,
@@ -428,6 +433,17 @@ export const selectChildrenForExport = async (filters?: {
             partners: true,
             wali: true,
             regions: true,
+          },
+        },
+        _count: { select: { childAssistance: true } },
+        childAssistance: {
+          orderBy: { assistanceDate: "desc" },
+          take: 1,
+          select: {
+            assistanceDate: true,
+            assistanceAmount: true,
+            assistanceType: true,
+            educationLevel: true,
           },
         },
       },
