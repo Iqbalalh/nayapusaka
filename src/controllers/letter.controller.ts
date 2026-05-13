@@ -256,8 +256,7 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
         const date = new Date(letterDate);
         const bulan = toRomanNumeral(date.getMonth() + 1);
         const tahun = date.getFullYear();
-        const kode = [updatedType.kodeSurat1, updatedType.kodeSurat2].filter(Boolean).join("-");
-        generatedLetterNumber = [String(counter).padStart(3, "0"), kode, bulan, String(tahun)].filter(Boolean).join("/");
+        generatedLetterNumber = [String(counter).padStart(3, "0"), updatedType.kodeSurat1, "yp", updatedType.kodeSurat2, bulan, String(tahun)].filter(Boolean).join("/");
 
         const newLetter = await tx.letter.create({
           data: {
@@ -429,6 +428,7 @@ export const postArchiveLetter = async (req: RequestWithFile, res: Response, nex
 export const patchLetter = async (req: RequestWithFile, res: Response, next: NextFunction) => {
   try {
     const userId = (req.user as any)?.id;
+    const userRole = (req.user as any)?.role;
     const id = Number(req.params.id);
     const existing = await selectLetterById(id);
 
@@ -438,6 +438,11 @@ export const patchLetter = async (req: RequestWithFile, res: Response, next: Nex
 
     if (existing.status !== "draft") {
       return res.status(400).json({ message: "Hanya surat draft yang dapat diubah" });
+    }
+
+    // Staff can only edit their own drafts
+    if (!["admin", "superadmin"].includes(userRole) && existing.createdBy !== userId) {
+      return res.status(403).json({ message: "Anda hanya dapat mengedit draft surat milik Anda sendiri" });
     }
 
     const {
@@ -550,11 +555,23 @@ export const patchLetter = async (req: RequestWithFile, res: Response, next: Nex
 
 export const deleteLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
+    const userId = (req.user as any)?.id;
+    const userRole = (req.user as any)?.role;
     const id = Number(req.params.id);
     const existing = await selectLetterById(id);
 
     if (!existing) {
       return res.status(404).json({ message: "Surat tidak ditemukan" });
+    }
+
+    // Staff can only delete their own drafts
+    if (!["admin", "superadmin"].includes(userRole)) {
+      if (existing.createdBy !== userId) {
+        return res.status(403).json({ message: "Anda hanya dapat menghapus draft surat milik Anda sendiri" });
+      }
+      if (existing.status !== "draft") {
+        return res.status(403).json({ message: "Staff hanya dapat menghapus surat yang masih berstatus draft" });
+      }
     }
 
     // Clean up all S3 documents
@@ -584,6 +601,8 @@ export const deleteLetter = async (req: AuthRequest, res: Response, next: NextFu
 
 export const submitLetter = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
+    const userId = (req.user as any)?.id;
+    const userRole = (req.user as any)?.role;
     const id = Number(req.params.id);
     const existing = await selectLetterById(id);
 
@@ -593,6 +612,11 @@ export const submitLetter = async (req: AuthRequest, res: Response, next: NextFu
 
     if (existing.status !== "draft") {
       return res.status(400).json({ message: "Hanya surat draft yang dapat diajukan" });
+    }
+
+    // Staff can only submit their own drafts
+    if (!["admin", "superadmin"].includes(userRole) && existing.createdBy !== userId) {
+      return res.status(403).json({ message: "Anda hanya dapat mengajukan draft surat milik Anda sendiri" });
     }
 
     // Document stays in its original format — no PDF conversion

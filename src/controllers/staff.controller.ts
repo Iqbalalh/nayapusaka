@@ -158,7 +158,7 @@ export const postStaff = async (
       phoneNumber: phoneNumber || null,
       email: email || null,
       position: position || null,
-      isActive: isActive !== undefined ? (isActive === "true" || isActive === true) : true,
+      isActive: isActive !== undefined ? (isActive === "true" || isActive === "1" || isActive === true) : true,
       createdBy: userId,
     };
 
@@ -219,10 +219,9 @@ export const postStaff = async (
       (err.code === "P2002" || err.code === "P2003")
     ) {
       return res.status(400).json({
-        message: "Error: Duplicate entry or invalid reference.",
-        error: err.code === "P2002"
-          ? "NIK or Email already exists."
-          : "Invalid reference.",
+        message: err.code === "P2002"
+          ? "NIK atau Email sudah ada sebelumnya!"
+          : "Referensi tidak valid.",
       });
     }
 
@@ -276,7 +275,7 @@ export const patchStaff = async (
     if (email !== undefined) updateData.email = email;
     if (nik !== undefined) updateData.nik = nik;
     if (position !== undefined) updateData.position = position;
-    if (isActive !== undefined) updateData.isActive = isActive === "true" || isActive === true;
+    if (isActive !== undefined) updateData.isActive = isActive === "true" || isActive === "1" || isActive === true;
     updateData.editedBy = userId;
 
     const currentNik = nik || existing.nik;

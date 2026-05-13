@@ -43,20 +43,20 @@ letterRouter.get("/drafts", getDrafts);
 letterRouter.get("/pending", getPendingLetters);
 letterRouter.get("/:id", getLetter);
 
-// CRUD endpoints (admin/superadmin only)
-letterRouter.post("/", verifyAdminOrAbove, upload.single("document"), postLetter);
-letterRouter.patch("/:id", verifyAdminOrAbove, upload.single("document"), patchLetter);
-letterRouter.delete("/:id", verifyAdminOrAbove, deleteLetter);
+// CRUD endpoints (all authenticated users — staff limited to own drafts, enforced in controller)
+letterRouter.post("/", upload.single("document"), postLetter);
+letterRouter.patch("/:id", upload.single("document"), patchLetter);
+letterRouter.delete("/:id", deleteLetter);
 
 // Archive upload (admin/superadmin only)
 letterRouter.post("/archive", verifyAdminOrAbove, upload.single("document"), postArchiveLetter);
 
-// Workflow endpoints (admin/superadmin only)
-letterRouter.post("/:id/submit", verifyAdminOrAbove, submitLetter);
+// Workflow endpoints (all authenticated — staff limited to own drafts)
+letterRouter.post("/:id/submit", submitLetter);
 letterRouter.post("/:id/approve", verifyAdminOrAbove, approveLetter);
 letterRouter.post("/:id/reject", verifyAdminOrAbove, rejectLetter);
 letterRouter.post("/:id/cancel", verifyAdminOrAbove, cancelLetter);
-letterRouter.post("/:id/publish", verifyAdminOrAbove, publishLetter);
+letterRouter.post("/:id/publish", publishLetter);
 letterRouter.post("/:id/convert-pdf", verifyAdminOrAbove, convertLetterPdf);
 
 // OnlyOffice editor endpoints

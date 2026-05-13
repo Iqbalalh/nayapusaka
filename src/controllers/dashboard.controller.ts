@@ -21,7 +21,7 @@ import {
 } from "../services/umkm.services";
 import { selectChildAssistanceCount, selectChildAssistanceStats, selectChildAssistanceYearlyBreakdown, selectGlobalEducationLevelStats } from "../services/childassistance.services";
 import { selectUmkmMonitoringCount, selectUmkmMonitoringStats } from "../services/umkmmonitoring.services";
-import { selectUmkmVisitCount, selectUmkmVisitStats, selectUmkmVisitStatsBySource, selectUmkmVisitYearlyBreakdown } from "../services/umkmvisit.services";
+import { selectUmkmVisitCount, selectUmkmVisitStats, selectUmkmVisitStatsBySource, selectUmkmVisitStatsBySourceForLatestYear, selectUmkmVisitYearlyBreakdown } from "../services/umkmvisit.services";
 
 // ============================================================================
 // GET DASHBOARD STATISTICS
@@ -52,6 +52,7 @@ export const getDashboardStat = async (
       umkmMonitoringStats,
       umkmVisitStats,
       umkmVisitBySourceData,
+      umkmVisitBySourceLatestYearData,
       umkmVisitYearlyBreakdownData,
       globalEducationLevels,
     ] = await Promise.all([
@@ -74,6 +75,7 @@ export const getDashboardStat = async (
       selectUmkmMonitoringStats(),
       selectUmkmVisitStats(),
       selectUmkmVisitStatsBySource(),
+      selectUmkmVisitStatsBySourceForLatestYear(),
       selectUmkmVisitYearlyBreakdown(),
       selectGlobalEducationLevelStats(),
     ]);
@@ -106,6 +108,7 @@ export const getDashboardStat = async (
         umkmMonitoring: umkmMonitoringStats,
         umkmVisit: umkmVisitStats,
         umkmVisitBySource: umkmVisitBySourceData,
+        umkmVisitBySourceLatestYear: umkmVisitBySourceLatestYearData,
         umkmVisitYearlyBreakdown: umkmVisitYearlyBreakdownData,
         educationLevels: globalEducationLevels,
       },

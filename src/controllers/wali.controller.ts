@@ -36,14 +36,16 @@ export const getWalis = async (
           pictUrl = await getPresignedUrl(wali.waliPict);
         }
 
-        // Extract region from first home
+        // Extract region and isActive from first home
         const home = (wali as any).homes && (wali as any).homes.length > 0 ? (wali as any).homes[0] : null;
         const regionName = home?.regions?.regionName || null;
+        const isActive = home?.partners?.isActive ?? null;
 
         return {
           ...wali,
           waliPict: pictUrl,
           regionName,
+          isActive,
         };
       })
     );

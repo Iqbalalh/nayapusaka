@@ -108,7 +108,7 @@ export const postLetterType = async (req: RequestWithFile, res: Response, next: 
       kodeSurat1,
       kodeSurat2: kodeSurat2 || null,
       templateFields: parsedFields,
-      isActive: isActive !== undefined ? isActive === "true" || isActive === true : true,
+      isActive: isActive !== undefined ? (isActive === "true" || isActive === "1" || isActive === true) : true,
       currentCounter: counterValue,
       createdBy: userId,
     });
@@ -159,7 +159,7 @@ export const patchLetterType = async (req: RequestWithFile, res: Response, next:
     if (perihal !== undefined) updateData.perihal = perihal || null;
     if (kodeSurat1 !== undefined) updateData.kodeSurat1 = kodeSurat1;
     if (kodeSurat2 !== undefined) updateData.kodeSurat2 = kodeSurat2 || null;
-    if (isActive !== undefined) updateData.isActive = isActive === "true" || isActive === true;
+    if (isActive !== undefined) updateData.isActive = isActive === "true" || isActive === "1" || isActive === true;
     if (templateFields !== undefined) {
       try {
         updateData.templateFields = JSON.parse(templateFields);
@@ -283,8 +283,7 @@ export const generateFromTemplate = async (req: AuthRequest, res: Response, next
     const bulan = toRomanNumeral(refDate.getMonth() + 1);
     const tahun = refDate.getFullYear();
     const nextCounter = String(letterType.currentCounter + 1).padStart(3, "0");
-    const kode = [letterType.kodeSurat1, letterType.kodeSurat2].filter(Boolean).join("-");
-    const previewNumber = `${nextCounter}/${kode}/${bulan}/${tahun}`;
+    const previewNumber = [nextCounter, letterType.kodeSurat1, "yp", letterType.kodeSurat2, bulan, String(tahun)].filter(Boolean).join("/");
     const formattedDate = refDate.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
     const templateData = {
       ...fields,

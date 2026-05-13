@@ -16,6 +16,7 @@ export const selectAllWali = async () => {
         homes: {
           include: {
             regions: true,
+            partners: { select: { isActive: true } },
           },
         },
       },

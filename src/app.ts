@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, Request, Response, NextFunction } from "express";
 import cors from "cors";
 import morgan from "morgan";
 import employeeRouter from "./routes/employee.router";
@@ -107,6 +107,44 @@ app.use("/api/users", userRouter);
 app.use("/api/letters", letterRouter);
 app.use("/api/letter-types", letterTypeRouter);
 app.use("/wopi", wopiRouter);
+
+// ======================
+// Global Error Handler
+// ======================
+const FIELD_LABELS: Record<string, string> = {
+  username: "Username",
+  nik: "NIK",
+  email: "Email",
+  nipNipp: "NIP/NIPP",
+  nip_nipp: "NIP/NIPP",
+  staffCode: "Kode Staff",
+  phone: "Telepon",
+  phoneNumber: "Nomor Telepon",
+};
+
+app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+  // Prisma unique constraint violation
+  if (err?.code === "P2002") {
+    const targets: string[] = err?.meta?.target ?? [];
+    const fieldLabel = targets
+      .map((t) => FIELD_LABELS[t] ?? t)
+      .join(", ");
+    return res.status(400).json({
+      message: `${fieldLabel} sudah ada sebelumnya!`,
+    });
+  }
+  // Prisma foreign key / not found
+  if (err?.code === "P2003") {
+    return res.status(400).json({ message: "Referensi data tidak ditemukan" });
+  }
+  if (err?.code === "P2025") {
+    return res.status(404).json({ message: "Data tidak ditemukan" });
+  }
+
+  const status = err?.status || err?.statusCode || 500;
+  const message = err?.message || "Internal server error";
+  return res.status(status).json({ message });
+});
 
 // ======================
 // Export App

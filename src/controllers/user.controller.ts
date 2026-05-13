@@ -74,54 +74,39 @@ export const createUser = async (
   next: NextFunction
 ) => {
   try {
-    console.log("=== CREATE USER DEBUG ===");
-    console.log("req.body:", req.body);
-    console.log("req.body type:", typeof req.body);
-    console.log("req.headers['content-type']:", req.headers['content-type']);
-    
     // Support both snake_case and camelCase
     const staffId = req.body.staff_id || req.body.staffId;
     const { username, password, role } = req.body;
-    
-    console.log("Destructured values:", { username, password, staffId, role });
 
-    // Validate required fields
     if (!username || !password || !staffId) {
-      console.log("Validation failed - missing fields");
       return res.status(400).json({
-        message: "Username, password, and staff_id are required",
+        message: "Username, password, dan staf wajib diisi",
         data: null,
       });
     }
 
-    // Check if username already exists
     const existingUser = await selectUserByUsername(username);
     if (existingUser) {
       return res.status(400).json({
-        message: "Username already exists",
+        message: "Username sudah ada sebelumnya!",
         data: null,
       });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
     const newUser = await insertUser({
       username,
       password: hashedPassword,
       staffId: staffId,
       role: role || "staff",
     });
-    
-    console.log("User created:", newUser);
 
     return res.status(201).json({
       message: "User created successfully",
       data: newUser,
     });
   } catch (err) {
-    console.error("Create user error:", err);
     next(err);
   }
 };
@@ -162,7 +147,7 @@ export const updateUserCtrl = async (
       const userWithUsername = await selectUserByUsername(username);
       if (userWithUsername) {
         return res.status(400).json({
-          message: "Username already exists",
+          message: "Username sudah ada sebelumnya!",
           data: null,
         });
       }

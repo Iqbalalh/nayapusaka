@@ -438,7 +438,6 @@ export const selectChildrenForExport = async (filters?: {
         _count: { select: { childAssistance: true } },
         childAssistance: {
           orderBy: { assistanceDate: "desc" },
-          take: 1,
           select: {
             assistanceDate: true,
             assistanceAmount: true,
@@ -450,10 +449,13 @@ export const selectChildrenForExport = async (filters?: {
       orderBy,
     });
 
-    // Add calculated age to each child
+    // Add calculated age and total assistance amount to each child
     return children.map(child => ({
       ...child,
       age: calculateAge(child.childrenBirthdate),
+      totalAssistanceAmount: child.childAssistance.reduce(
+        (sum, a) => sum + (a.assistanceAmount ?? 0), 0
+      ),
     }));
   } catch (error) {
     throw error;

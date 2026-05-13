@@ -157,7 +157,7 @@ export const changeCredentials = async (
       const existingUser = await selectUserByUsername(newUsername);
       if (existingUser) {
         return res.status(400).json({
-          message: "Username already exists",
+          message: "Username sudah ada sebelumnya!",
           data: null,
         });
       }

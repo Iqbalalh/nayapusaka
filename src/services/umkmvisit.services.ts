@@ -253,6 +253,42 @@ export const selectUmkmVisitStats = async () => {
   }
 };
 
+export const selectUmkmVisitStatsBySourceForLatestYear = async () => {
+  try {
+    const records = await prisma.umkmVisit.findMany({
+      select: { assistanceDate: true, assistanceSource: true, value: true },
+    });
+
+    if (records.length === 0) return { year: null as number | null, sources: [] };
+
+    const years = records
+      .filter((r) => r.assistanceDate != null)
+      .map((r) => new Date(r.assistanceDate!).getFullYear());
+
+    if (years.length === 0) return { year: null as number | null, sources: [] };
+
+    const latestYear = Math.max(...years);
+
+    const map: Record<string, { count: number; total: number }> = {};
+    for (const r of records) {
+      if (!r.assistanceDate) continue;
+      if (new Date(r.assistanceDate).getFullYear() !== latestYear) continue;
+      const src = r.assistanceSource?.trim() || "Lainnya";
+      if (!map[src]) map[src] = { count: 0, total: 0 };
+      map[src].count++;
+      map[src].total += r.value;
+    }
+
+    const sources = Object.entries(map)
+      .map(([source, d]) => ({ source, count: d.count, totalAmount: d.total }))
+      .sort((a, b) => b.totalAmount - a.totalAmount);
+
+    return { year: latestYear, sources };
+  } catch (error) {
+    throw error instanceof Error ? error : new Error(String(error));
+  }
+};
+
 export const selectUmkmVisitYearlyBreakdown = async () => {
   try {
     const records = await prisma.umkmVisit.findMany({

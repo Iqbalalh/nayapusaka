@@ -14,8 +14,9 @@ import {
   deleteChildAssistanceDocById,
   selectChildAssistanceCount,
   selectChildAssistanceYears,
+  selectAllChildAssistanceOptimized,
 } from "../services/childassistance.services";
-import { selectAllChildAssistanceOptimized } from "../services/childassistance.services";
+import { updateChildrenById } from "../services/children.services";
 import { Prisma } from "../generated/prisma/client";
 import {
   uploadToS3,
@@ -259,6 +260,15 @@ export const postChildAssistance = async (
 
     const newAssistance = await insertChildAssistance(body);
 
+    // Auto-sync child's education fields from latest assistance
+    if (educationLevel || educationGrade || schoolName) {
+      await updateChildrenById(Number(childrenId), {
+        ...(educationLevel ? { educationLevel } : {}),
+        ...(educationGrade ? { educationGrade } : {}),
+        ...(schoolName ? { schoolName } : {}),
+      });
+    }
+
     // Upload documents if provided
     const uploadedDocs = [];
     const files = Array.isArray(req.files) ? req.files : [];
@@ -401,6 +411,16 @@ export const patchChildAssistance = async (
     }
 
     const updated = await updateChildAssistanceById(id, updateData);
+
+    // Auto-sync child's education fields from updated assistance
+    const targetChildrenId = childrenId ? Number(childrenId) : existing.childrenId;
+    const eduUpdate: any = {};
+    if (educationLevel !== undefined) eduUpdate.educationLevel = educationLevel || null;
+    if (educationGrade !== undefined) eduUpdate.educationGrade = educationGrade || null;
+    if (schoolName !== undefined) eduUpdate.schoolName = schoolName || null;
+    if (Object.keys(eduUpdate).length > 0) {
+      await updateChildrenById(targetChildrenId, eduUpdate);
+    }
 
     // Get all documents including existing ones
     const allDocs = await selectChildAssistanceById(id);

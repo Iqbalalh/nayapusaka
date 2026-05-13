@@ -26,19 +26,27 @@ export const getEmployees = async (
   next: NextFunction
 ) => {
   try {
-    let employees = await selectAllEmployees();
-    
+    let employees = await selectAllEmployees({
+      include: { homes: { include: { partners: { select: { isActive: true } } } } },
+    });
+
     employees = await Promise.all(
-      employees.map(async (emp) => {
+      (employees as any[]).map(async (emp) => {
         let pictUrl = null;
 
         if (isValidS3Key(emp.employeePict)) {
           pictUrl = await getPresignedUrl(emp.employeePict);
         }
 
+        const homes = emp.homes;
+        const isActive = Array.isArray(homes)
+          ? homes.some((h: any) => h.partners?.isActive === true)
+          : (homes?.partners?.isActive ?? null);
+
         return {
           ...emp,
           employeePict: pictUrl,
+          isActive,
         };
       })
     );

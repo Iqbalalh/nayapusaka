@@ -725,6 +725,24 @@ export const selectHomesOptimized = async (
       take: pageSize,
     });
 
+    // Compute total assistance amount per home (via children → childAssistance)
+    const homeIds = homes.map((h) => h.id);
+    const childrenWithAssistance = homeIds.length > 0
+      ? await prisma.children.findMany({
+          where: { homeId: { in: homeIds } },
+          select: {
+            homeId: true,
+            childAssistance: { select: { assistanceAmount: true } },
+          },
+        })
+      : [];
+    const homeAssistanceMap = new Map<number, number>();
+    childrenWithAssistance.forEach((child) => {
+      if (!child.homeId) return;
+      const total = child.childAssistance.reduce((s, a) => s + (a.assistanceAmount ?? 0), 0);
+      homeAssistanceMap.set(child.homeId, (homeAssistanceMap.get(child.homeId) ?? 0) + total);
+    });
+
     // Add UMKM status for each home
     const homesWithUmkm = await Promise.all(
       homes.map(async (home) => ({
@@ -732,6 +750,7 @@ export const selectHomesOptimized = async (
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
+        totalAssistanceAmount: homeAssistanceMap.get(home.id) ?? 0,
       }))
     );
 
