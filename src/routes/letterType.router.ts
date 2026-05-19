@@ -20,7 +20,7 @@ letterTypeRouter.get("/", getLetterTypes);
 letterTypeRouter.get("/active", getActiveLetterTypes);
 letterTypeRouter.get("/:id", getLetterType);
 
-letterTypeRouter.post("/", verifyAdminOrAbove, upload.single("template"), postLetterType);
+letterTypeRouter.post("/", upload.single("template"), postLetterType);
 letterTypeRouter.patch("/:id", verifyAdminOrAbove, upload.single("template"), patchLetterType);
 letterTypeRouter.patch("/:id/counter", verifyAdminOrAbove, patchLetterTypeCounter);
 letterTypeRouter.delete("/:id", verifyAdminOrAbove, deleteLetterType);

@@ -283,7 +283,7 @@ export const generateFromTemplate = async (req: AuthRequest, res: Response, next
     const bulan = toRomanNumeral(refDate.getMonth() + 1);
     const tahun = refDate.getFullYear();
     const nextCounter = String(letterType.currentCounter + 1).padStart(3, "0");
-    const previewNumber = [nextCounter, letterType.kodeSurat1, "yp", letterType.kodeSurat2, bulan, String(tahun)].filter(Boolean).join("/");
+    const previewNumber = [nextCounter, letterType.kodeSurat1, "YP", letterType.kodeSurat2, bulan, String(tahun)].filter(Boolean).join("/");
     const formattedDate = refDate.toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" });
     const templateData = {
       ...fields,

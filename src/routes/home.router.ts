@@ -14,6 +14,7 @@ import {
   deleteHome,
   getHomesForExport,
   getHomesOptimized,
+  getHomeSummary,
 } from "../controllers/home.controller";
 
 const homeRouter = Router();
@@ -36,6 +37,7 @@ homeRouter.get("/maps/orphan", getOrphanHomesForMaps);
 homeRouter.get("/list", getHomesList);
 homeRouter.get("/export", getHomesForExport);
 homeRouter.get("/optimized", getHomesOptimized);
+homeRouter.get("/summary", getHomeSummary);
 homeRouter.get("/detail/:id", getHomeAllDetail);
 homeRouter.get("/:id", getHomeDetail);
 homeRouter.patch("/:id", verifyAdminOrAbove, upload.any(), patchHome);

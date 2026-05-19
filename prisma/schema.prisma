@@ -81,8 +81,9 @@ model Homes {
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamptz(6)
   regionId   Int?      @map("region_id")
   postalCode String?   @map("postal_code") @db.VarChar(5)
-  createdBy  Int?      @map("created_by") @default(2)
-  editedBy   Int?      @map("edited_by")
+  createdBy    Int?      @map("created_by") @default(2)
+  editedBy     Int?      @map("edited_by")
+  isValidated  Boolean?  @default(false) @map("is_validated")
 
   // Relations
   children      Children[]

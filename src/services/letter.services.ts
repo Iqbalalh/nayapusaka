@@ -7,9 +7,9 @@ import { LetterStatus } from "../generated/prisma/client";
 // ============================================================================
 
 const letterIncludes = {
-  signer1: { include: { staffs: { select: { staffName: true, signaturePath: true, position: true } } } },
-  signer2: { include: { staffs: { select: { staffName: true, signaturePath: true, position: true } } } },
-  signer3: { include: { staffs: { select: { staffName: true, signaturePath: true, position: true } } } },
+  signer1: { include: { staffs: { select: { staffName: true, signaturePath: true, parafPath: true, position: true } } } },
+  signer2: { include: { staffs: { select: { staffName: true, signaturePath: true, parafPath: true, position: true } } } },
+  signer3: { include: { staffs: { select: { staffName: true, signaturePath: true, parafPath: true, position: true } } } },
   letterApprovals: { orderBy: { actionAt: "desc" as const } },
 };
 

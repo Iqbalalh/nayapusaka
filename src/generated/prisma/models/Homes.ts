@@ -56,6 +56,7 @@ export type HomesMinAggregateOutputType = {
   postalCode: string | null
   createdBy: number | null
   editedBy: number | null
+  isValidated: boolean | null
 }
 
 export type HomesMaxAggregateOutputType = {
@@ -68,6 +69,7 @@ export type HomesMaxAggregateOutputType = {
   postalCode: string | null
   createdBy: number | null
   editedBy: number | null
+  isValidated: boolean | null
 }
 
 export type HomesCountAggregateOutputType = {
@@ -80,6 +82,7 @@ export type HomesCountAggregateOutputType = {
   postalCode: number
   createdBy: number
   editedBy: number
+  isValidated: number
   _all: number
 }
 
@@ -114,6 +117,7 @@ export type HomesMinAggregateInputType = {
   postalCode?: true
   createdBy?: true
   editedBy?: true
+  isValidated?: true
 }
 
 export type HomesMaxAggregateInputType = {
@@ -126,6 +130,7 @@ export type HomesMaxAggregateInputType = {
   postalCode?: true
   createdBy?: true
   editedBy?: true
+  isValidated?: true
 }
 
 export type HomesCountAggregateInputType = {
@@ -138,6 +143,7 @@ export type HomesCountAggregateInputType = {
   postalCode?: true
   createdBy?: true
   editedBy?: true
+  isValidated?: true
   _all?: true
 }
 
@@ -237,6 +243,7 @@ export type HomesGroupByOutputType = {
   postalCode: string | null
   createdBy: number | null
   editedBy: number | null
+  isValidated: boolean | null
   _count: HomesCountAggregateOutputType | null
   _avg: HomesAvgAggregateOutputType | null
   _sum: HomesSumAggregateOutputType | null
@@ -272,6 +279,7 @@ export type HomesWhereInput = {
   postalCode?: Prisma.StringNullableFilter<"Homes"> | string | null
   createdBy?: Prisma.IntNullableFilter<"Homes"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Homes"> | number | null
+  isValidated?: Prisma.BoolNullableFilter<"Homes"> | boolean | null
   children?: Prisma.ChildrenListRelationFilter
   regions?: Prisma.XOR<Prisma.RegionsNullableScalarRelationFilter, Prisma.RegionsWhereInput> | null
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
@@ -290,6 +298,7 @@ export type HomesOrderByWithRelationInput = {
   postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  isValidated?: Prisma.SortOrderInput | Prisma.SortOrder
   children?: Prisma.ChildrenOrderByRelationAggregateInput
   regions?: Prisma.RegionsOrderByWithRelationInput
   employees?: Prisma.EmployeesOrderByWithRelationInput
@@ -311,6 +320,7 @@ export type HomesWhereUniqueInput = Prisma.AtLeast<{
   postalCode?: Prisma.StringNullableFilter<"Homes"> | string | null
   createdBy?: Prisma.IntNullableFilter<"Homes"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Homes"> | number | null
+  isValidated?: Prisma.BoolNullableFilter<"Homes"> | boolean | null
   children?: Prisma.ChildrenListRelationFilter
   regions?: Prisma.XOR<Prisma.RegionsNullableScalarRelationFilter, Prisma.RegionsWhereInput> | null
   employees?: Prisma.XOR<Prisma.EmployeesNullableScalarRelationFilter, Prisma.EmployeesWhereInput> | null
@@ -329,6 +339,7 @@ export type HomesOrderByWithAggregationInput = {
   postalCode?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   editedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  isValidated?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.HomesCountOrderByAggregateInput
   _avg?: Prisma.HomesAvgOrderByAggregateInput
   _max?: Prisma.HomesMaxOrderByAggregateInput
@@ -349,6 +360,7 @@ export type HomesScalarWhereWithAggregatesInput = {
   postalCode?: Prisma.StringNullableWithAggregatesFilter<"Homes"> | string | null
   createdBy?: Prisma.IntNullableWithAggregatesFilter<"Homes"> | number | null
   editedBy?: Prisma.IntNullableWithAggregatesFilter<"Homes"> | number | null
+  isValidated?: Prisma.BoolNullableWithAggregatesFilter<"Homes"> | boolean | null
 }
 
 export type HomesCreateInput = {
@@ -356,6 +368,7 @@ export type HomesCreateInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenCreateNestedManyWithoutHomesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutHomesInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutHomesInput
@@ -374,6 +387,7 @@ export type HomesUncheckedCreateInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutHomesInput
   familyVisits?: Prisma.FamilyVisitUncheckedCreateNestedManyWithoutHomesInput
 }
@@ -383,6 +397,7 @@ export type HomesUpdateInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateManyWithoutHomesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutHomesNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutHomesNestedInput
@@ -401,6 +416,7 @@ export type HomesUncheckedUpdateInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUncheckedUpdateManyWithoutHomesNestedInput
   familyVisits?: Prisma.FamilyVisitUncheckedUpdateManyWithoutHomesNestedInput
 }
@@ -415,6 +431,7 @@ export type HomesCreateManyInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
 }
 
 export type HomesUpdateManyMutationInput = {
@@ -422,6 +439,7 @@ export type HomesUpdateManyMutationInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type HomesUncheckedUpdateManyInput = {
@@ -434,6 +452,7 @@ export type HomesUncheckedUpdateManyInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type HomesNullableScalarRelationFilter = {
@@ -461,6 +480,7 @@ export type HomesCountOrderByAggregateInput = {
   postalCode?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
 }
 
 export type HomesAvgOrderByAggregateInput = {
@@ -483,6 +503,7 @@ export type HomesMaxOrderByAggregateInput = {
   postalCode?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
 }
 
 export type HomesMinOrderByAggregateInput = {
@@ -495,6 +516,7 @@ export type HomesMinOrderByAggregateInput = {
   postalCode?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
+  isValidated?: Prisma.SortOrder
 }
 
 export type HomesSumOrderByAggregateInput = {
@@ -715,6 +737,7 @@ export type HomesCreateWithoutChildrenInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   regions?: Prisma.RegionsCreateNestedOneWithoutHomesInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutHomesInput
   partners?: Prisma.PartnersCreateNestedOneWithoutHomesInput
@@ -732,6 +755,7 @@ export type HomesUncheckedCreateWithoutChildrenInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   familyVisits?: Prisma.FamilyVisitUncheckedCreateNestedManyWithoutHomesInput
 }
 
@@ -756,6 +780,7 @@ export type HomesUpdateWithoutChildrenInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   regions?: Prisma.RegionsUpdateOneWithoutHomesNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutHomesNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutHomesNestedInput
@@ -773,6 +798,7 @@ export type HomesUncheckedUpdateWithoutChildrenInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   familyVisits?: Prisma.FamilyVisitUncheckedUpdateManyWithoutHomesNestedInput
 }
 
@@ -781,6 +807,7 @@ export type HomesCreateWithoutEmployeesInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenCreateNestedManyWithoutHomesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutHomesInput
   partners?: Prisma.PartnersCreateNestedOneWithoutHomesInput
@@ -797,6 +824,7 @@ export type HomesUncheckedCreateWithoutEmployeesInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutHomesInput
   familyVisits?: Prisma.FamilyVisitUncheckedCreateNestedManyWithoutHomesInput
 }
@@ -840,6 +868,7 @@ export type HomesScalarWhereInput = {
   postalCode?: Prisma.StringNullableFilter<"Homes"> | string | null
   createdBy?: Prisma.IntNullableFilter<"Homes"> | number | null
   editedBy?: Prisma.IntNullableFilter<"Homes"> | number | null
+  isValidated?: Prisma.BoolNullableFilter<"Homes"> | boolean | null
 }
 
 export type HomesCreateWithoutPartnersInput = {
@@ -847,6 +876,7 @@ export type HomesCreateWithoutPartnersInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenCreateNestedManyWithoutHomesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutHomesInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutHomesInput
@@ -863,6 +893,7 @@ export type HomesUncheckedCreateWithoutPartnersInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutHomesInput
   familyVisits?: Prisma.FamilyVisitUncheckedCreateNestedManyWithoutHomesInput
 }
@@ -898,6 +929,7 @@ export type HomesCreateWithoutRegionsInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenCreateNestedManyWithoutHomesInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutHomesInput
   partners?: Prisma.PartnersCreateNestedOneWithoutHomesInput
@@ -914,6 +946,7 @@ export type HomesUncheckedCreateWithoutRegionsInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutHomesInput
   familyVisits?: Prisma.FamilyVisitUncheckedCreateNestedManyWithoutHomesInput
 }
@@ -949,6 +982,7 @@ export type HomesCreateWithoutWaliInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenCreateNestedManyWithoutHomesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutHomesInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutHomesInput
@@ -965,6 +999,7 @@ export type HomesUncheckedCreateWithoutWaliInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutHomesInput
   familyVisits?: Prisma.FamilyVisitUncheckedCreateNestedManyWithoutHomesInput
 }
@@ -1000,6 +1035,7 @@ export type HomesCreateWithoutFamilyVisitsInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenCreateNestedManyWithoutHomesInput
   regions?: Prisma.RegionsCreateNestedOneWithoutHomesInput
   employees?: Prisma.EmployeesCreateNestedOneWithoutHomesInput
@@ -1017,6 +1053,7 @@ export type HomesUncheckedCreateWithoutFamilyVisitsInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
   children?: Prisma.ChildrenUncheckedCreateNestedManyWithoutHomesInput
 }
 
@@ -1041,6 +1078,7 @@ export type HomesUpdateWithoutFamilyVisitsInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateManyWithoutHomesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutHomesNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutHomesNestedInput
@@ -1058,6 +1096,7 @@ export type HomesUncheckedUpdateWithoutFamilyVisitsInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUncheckedUpdateManyWithoutHomesNestedInput
 }
 
@@ -1070,6 +1109,7 @@ export type HomesCreateManyEmployeesInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
 }
 
 export type HomesUpdateWithoutEmployeesInput = {
@@ -1077,6 +1117,7 @@ export type HomesUpdateWithoutEmployeesInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateManyWithoutHomesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutHomesNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutHomesNestedInput
@@ -1093,6 +1134,7 @@ export type HomesUncheckedUpdateWithoutEmployeesInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUncheckedUpdateManyWithoutHomesNestedInput
   familyVisits?: Prisma.FamilyVisitUncheckedUpdateManyWithoutHomesNestedInput
 }
@@ -1106,6 +1148,7 @@ export type HomesUncheckedUpdateManyWithoutEmployeesInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type HomesCreateManyPartnersInput = {
@@ -1117,6 +1160,7 @@ export type HomesCreateManyPartnersInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
 }
 
 export type HomesUpdateWithoutPartnersInput = {
@@ -1124,6 +1168,7 @@ export type HomesUpdateWithoutPartnersInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateManyWithoutHomesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutHomesNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutHomesNestedInput
@@ -1140,6 +1185,7 @@ export type HomesUncheckedUpdateWithoutPartnersInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUncheckedUpdateManyWithoutHomesNestedInput
   familyVisits?: Prisma.FamilyVisitUncheckedUpdateManyWithoutHomesNestedInput
 }
@@ -1153,6 +1199,7 @@ export type HomesUncheckedUpdateManyWithoutPartnersInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type HomesCreateManyRegionsInput = {
@@ -1164,6 +1211,7 @@ export type HomesCreateManyRegionsInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
 }
 
 export type HomesUpdateWithoutRegionsInput = {
@@ -1171,6 +1219,7 @@ export type HomesUpdateWithoutRegionsInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateManyWithoutHomesNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutHomesNestedInput
   partners?: Prisma.PartnersUpdateOneWithoutHomesNestedInput
@@ -1187,6 +1236,7 @@ export type HomesUncheckedUpdateWithoutRegionsInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUncheckedUpdateManyWithoutHomesNestedInput
   familyVisits?: Prisma.FamilyVisitUncheckedUpdateManyWithoutHomesNestedInput
 }
@@ -1200,6 +1250,7 @@ export type HomesUncheckedUpdateManyWithoutRegionsInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 export type HomesCreateManyWaliInput = {
@@ -1211,6 +1262,7 @@ export type HomesCreateManyWaliInput = {
   postalCode?: string | null
   createdBy?: number | null
   editedBy?: number | null
+  isValidated?: boolean | null
 }
 
 export type HomesUpdateWithoutWaliInput = {
@@ -1218,6 +1270,7 @@ export type HomesUpdateWithoutWaliInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUpdateManyWithoutHomesNestedInput
   regions?: Prisma.RegionsUpdateOneWithoutHomesNestedInput
   employees?: Prisma.EmployeesUpdateOneWithoutHomesNestedInput
@@ -1234,6 +1287,7 @@ export type HomesUncheckedUpdateWithoutWaliInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   children?: Prisma.ChildrenUncheckedUpdateManyWithoutHomesNestedInput
   familyVisits?: Prisma.FamilyVisitUncheckedUpdateManyWithoutHomesNestedInput
 }
@@ -1247,6 +1301,7 @@ export type HomesUncheckedUpdateManyWithoutWaliInput = {
   postalCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   editedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  isValidated?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
 }
 
 
@@ -1299,6 +1354,7 @@ export type HomesSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   postalCode?: boolean
   createdBy?: boolean
   editedBy?: boolean
+  isValidated?: boolean
   children?: boolean | Prisma.Homes$childrenArgs<ExtArgs>
   regions?: boolean | Prisma.Homes$regionsArgs<ExtArgs>
   employees?: boolean | Prisma.Homes$employeesArgs<ExtArgs>
@@ -1318,6 +1374,7 @@ export type HomesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   postalCode?: boolean
   createdBy?: boolean
   editedBy?: boolean
+  isValidated?: boolean
   regions?: boolean | Prisma.Homes$regionsArgs<ExtArgs>
   employees?: boolean | Prisma.Homes$employeesArgs<ExtArgs>
   partners?: boolean | Prisma.Homes$partnersArgs<ExtArgs>
@@ -1334,6 +1391,7 @@ export type HomesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   postalCode?: boolean
   createdBy?: boolean
   editedBy?: boolean
+  isValidated?: boolean
   regions?: boolean | Prisma.Homes$regionsArgs<ExtArgs>
   employees?: boolean | Prisma.Homes$employeesArgs<ExtArgs>
   partners?: boolean | Prisma.Homes$partnersArgs<ExtArgs>
@@ -1350,9 +1408,10 @@ export type HomesSelectScalar = {
   postalCode?: boolean
   createdBy?: boolean
   editedBy?: boolean
+  isValidated?: boolean
 }
 
-export type HomesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partnerId" | "employeeId" | "waliId" | "createdAt" | "regionId" | "postalCode" | "createdBy" | "editedBy", ExtArgs["result"]["homes"]>
+export type HomesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "partnerId" | "employeeId" | "waliId" | "createdAt" | "regionId" | "postalCode" | "createdBy" | "editedBy" | "isValidated", ExtArgs["result"]["homes"]>
 export type HomesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   children?: boolean | Prisma.Homes$childrenArgs<ExtArgs>
   regions?: boolean | Prisma.Homes$regionsArgs<ExtArgs>
@@ -1395,6 +1454,7 @@ export type $HomesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     postalCode: string | null
     createdBy: number | null
     editedBy: number | null
+    isValidated: boolean | null
   }, ExtArgs["result"]["homes"]>
   composites: {}
 }
@@ -1833,6 +1893,7 @@ export interface HomesFieldRefs {
   readonly postalCode: Prisma.FieldRef<"Homes", 'String'>
   readonly createdBy: Prisma.FieldRef<"Homes", 'Int'>
   readonly editedBy: Prisma.FieldRef<"Homes", 'Int'>
+  readonly isValidated: Prisma.FieldRef<"Homes", 'Boolean'>
 }
     
 

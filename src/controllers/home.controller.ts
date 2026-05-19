@@ -14,6 +14,7 @@ import {
   selectHomeDetailById,
   selectHomesForExport,
   selectHomesOptimized,
+  selectHomeSummary,
 } from "../services/home.services";
 import { AuthRequest } from "../middlewares/auth";
 
@@ -762,7 +763,13 @@ export const getHomesForExport = async (
   next: NextFunction
 ) => {
   try {
-    let homes = await selectHomesForExport();
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try {
+      const raw = req.query.filters as string;
+      if (raw) filters = JSON.parse(raw);
+    } catch {}
+    let homes = await selectHomesForExport(search, filters);
 
     // Add staff names to home records
     homes = await addStaffNamesToRecords(homes);
@@ -817,8 +824,13 @@ export const getHomesOptimized = async (
     const page = Number(req.query.page) || 1;
     const pageSize = Number(req.query.pageSize) || 50;
     const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try {
+      const raw = req.query.filters as string;
+      if (raw) filters = JSON.parse(raw);
+    } catch {}
 
-    const result = await selectHomesOptimized(page, pageSize, search);
+    const result = await selectHomesOptimized(page, pageSize, search, filters);
 
     // Add staff names to home records
     const dataWithStaffNames = await addStaffNamesToRecords(result.data);
@@ -859,6 +871,28 @@ export const getHomesOptimized = async (
   } catch (err) {
     next(err);
     return;
+  }
+};
+
+// ============================================================================
+// GET HOME SUMMARY (global stats for insight panel)
+// ============================================================================
+export const getHomeSummary = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try {
+      const raw = req.query.filters as string;
+      if (raw) filters = JSON.parse(raw);
+    } catch {}
+    const summary = await selectHomeSummary(search, filters);
+    return res.json({ message: "Successfully retrieved home summary", data: summary });
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -956,6 +990,9 @@ export const patchHome = async (
         partners: partnerId ? { connect: { id: partnerId } } : undefined,
         wali: waliId ? { connect: { id: waliId } } : waliId === null ? { disconnect: true } : undefined,
         editedBy: userId,
+        ...(body.isValidated !== undefined && {
+          isValidated: body.isValidated === "true" || body.isValidated === true || body.isValidated === "1",
+        }),
       };
 
       const updatedHome = await tx.homes.update({

@@ -104,6 +104,8 @@ const transformLetter = async (letter: any) => {
         : null,
     } : null,
     revisionNote: letter.revisionNote,
+    letterTypeId: letter.letterTypeId ?? null,
+    templateFieldData: letter.templateFieldData ?? null,
     letterApprovals: await Promise.all(
       (letter.letterApprovals || []).map(async (approval: any) => {
         let signatureUrl = null;
@@ -256,7 +258,7 @@ export const postLetter = async (req: RequestWithFile, res: Response, next: Next
         const date = new Date(letterDate);
         const bulan = toRomanNumeral(date.getMonth() + 1);
         const tahun = date.getFullYear();
-        generatedLetterNumber = [String(counter).padStart(3, "0"), updatedType.kodeSurat1, "yp", updatedType.kodeSurat2, bulan, String(tahun)].filter(Boolean).join("/");
+        generatedLetterNumber = [String(counter).padStart(3, "0"), updatedType.kodeSurat1, "YP", updatedType.kodeSurat2, bulan, String(tahun)].filter(Boolean).join("/");
 
         const newLetter = await tx.letter.create({
           data: {

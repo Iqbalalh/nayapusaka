@@ -2375,7 +2375,8 @@ export const HomesScalarFieldEnum = {
   regionId: 'regionId',
   postalCode: 'postalCode',
   createdBy: 'createdBy',
-  editedBy: 'editedBy'
+  editedBy: 'editedBy',
+  isValidated: 'isValidated'
 } as const
 
 export type HomesScalarFieldEnum = (typeof HomesScalarFieldEnum)[keyof typeof HomesScalarFieldEnum]

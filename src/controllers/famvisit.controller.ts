@@ -17,6 +17,7 @@ import {
   isValidS3Key,
 } from "../utils/storage/s3.storage";
 import { AuthRequest } from "../middlewares/auth";
+import { prisma } from "../utils/prisma/prisma";
 
 interface RequestWithFiles extends AuthRequest {
   files?:
@@ -157,6 +158,12 @@ export const postFamilyVisit = async (
     };
 
     const newVisit = await insertFamilyVisit(body);
+
+    // Auto-validate home when first visit is created
+    await prisma.homes.update({
+      where: { id: Number(homeId) },
+      data: { isValidated: true },
+    });
 
     // Upload documents if provided
     const uploadedDocs = [];
@@ -343,6 +350,17 @@ export const deleteFamilyVisit = async (
 
     // Delete the visit (cascade will delete documents from DB)
     await deleteFamilyVisitById(id);
+
+    // If no more visits for this home, revert isValidated to false
+    const remainingVisits = await prisma.familyVisit.count({
+      where: { homeId: existing.homeId },
+    });
+    if (remainingVisits === 0) {
+      await prisma.homes.update({
+        where: { id: existing.homeId },
+        data: { isValidated: false },
+      });
+    }
 
     return res.json({
       message: "Family visit deleted successfully",
