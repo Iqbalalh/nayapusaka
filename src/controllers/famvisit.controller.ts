@@ -351,17 +351,6 @@ export const deleteFamilyVisit = async (
     // Delete the visit (cascade will delete documents from DB)
     await deleteFamilyVisitById(id);
 
-    // If no more visits for this home, revert isValidated to false
-    const remainingVisits = await prisma.familyVisit.count({
-      where: { homeId: existing.homeId },
-    });
-    if (remainingVisits === 0) {
-      await prisma.homes.update({
-        where: { id: existing.homeId },
-        data: { isValidated: false },
-      });
-    }
-
     return res.json({
       message: "Family visit deleted successfully",
     });

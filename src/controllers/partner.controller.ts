@@ -6,6 +6,8 @@ import {
   insertPartner,
   updatePartnerById,
   deletePartnerById,
+  selectPartnersOptimized,
+  selectPartnerSummary,
 } from "../services/partner.services";
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
@@ -270,4 +272,37 @@ export const deletePartner = async (
   } catch (err) {
     next(err);
   }
+};
+// ============================================================================
+// GET PARTNERS OPTIMIZED
+// ============================================================================
+export const getPartnersOptimized = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+    let filters;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+    const result = await selectPartnersOptimized(page, pageSize, search, filters);
+    const dataWithUrls = await Promise.all(
+      result.data.map(async (p) => ({
+        ...p,
+        partnerPict: p.partnerPict && isValidS3Key(p.partnerPict)
+          ? await getPresignedUrl(p.partnerPict)
+          : p.partnerPict,
+      }))
+    );
+    const dataWithStaffNames = await addStaffNamesToRecords(dataWithUrls);
+    return res.json({ message: "Berhasil mendapatkan data pasangan", data: dataWithStaffNames, pagination: result.pagination });
+  } catch (err) { next(err); }
+};
+
+export const getPartnerSummary = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const search = (req.query.search as string) || "";
+    let filters;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+    const summary = await selectPartnerSummary(search, filters);
+    return res.json({ message: "Berhasil mendapatkan ringkasan pasangan", data: summary });
+  } catch (err) { next(err); }
 };

@@ -102,3 +102,73 @@ export const deletePartnerById = async (id: number) => {
     throw error;
   }
 };
+
+// ============================================================================
+// OPTIMIZED PAGINATED QUERIES
+// ============================================================================
+
+const buildPartnerWhereClause = (search?: string, filters?: Record<string, any>) => {
+  const where: any = {};
+  const andClauses: any[] = [];
+
+  if (search?.trim()) {
+    const s = search.trim();
+    andClauses.push({
+      OR: [
+        { partnerName: { contains: s, mode: "insensitive" } },
+        { partnerNik: { contains: s, mode: "insensitive" } },
+      ],
+    });
+  }
+
+  if (filters && typeof filters === "object") {
+    if (Array.isArray(filters.regionId) && filters.regionId.length > 0) {
+      where.regionId = { in: filters.regionId.map(Number) };
+    }
+    if (Array.isArray(filters.isActive) && filters.isActive.length === 1) {
+      where.isActive = filters.isActive[0] === true || filters.isActive[0] === "true";
+    }
+    if (Array.isArray(filters.isAlive) && filters.isAlive.length === 1) {
+      where.isAlive = filters.isAlive[0] === true || filters.isAlive[0] === "true";
+    }
+  }
+
+  if (andClauses.length > 0) where.AND = andClauses;
+  return where;
+};
+
+export const selectPartnersOptimized = async (
+  page: number = 1,
+  pageSize: number = 50,
+  search: string = "",
+  filters?: Record<string, any>
+) => {
+  const skip = (page - 1) * pageSize;
+  const where = buildPartnerWhereClause(search, filters);
+
+  const [total, data] = await Promise.all([
+    prisma.partners.count({ where }),
+    prisma.partners.findMany({
+      where,
+      include: { regions: true },
+      skip,
+      take: pageSize,
+      orderBy: { id: "asc" },
+    }),
+  ]);
+
+  return {
+    data,
+    pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
+  };
+};
+
+export const selectPartnerSummary = async (search?: string, filters?: Record<string, any>) => {
+  const where = buildPartnerWhereClause(search, filters);
+  const activeWhere = { ...where, isActive: true };
+  const [total, active] = await Promise.all([
+    prisma.partners.count({ where }),
+    prisma.partners.count({ where: activeWhere }),
+  ]);
+  return { total, active, inactive: total - active };
+};

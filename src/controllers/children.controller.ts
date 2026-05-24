@@ -5,6 +5,7 @@ import {
   selectChildrenById,
   selectChildrenOptimized,
   selectChildrenForExport,
+  selectChildrenStats,
   insertChildren,
   updateChildrenById,
   deleteChildrenById,
@@ -319,6 +320,29 @@ export const getChildrenOptimized = async (
   } catch (err) {
     next(err);
     return;
+  }
+};
+
+// ============================================================================
+// GET CHILDREN STATS (AGGREGATE COUNTS FOR INSIGHT PANEL)
+// ============================================================================
+export const getChildrenStatsHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const search = (req.query.search as string) || "";
+    const filters: any = {};
+    if (req.query.educationLevel) filters.educationLevel = req.query.educationLevel as string;
+    if (req.query.yatimStatus) filters.yatimStatus = req.query.yatimStatus as string;
+    if (req.query.regionId) filters.regionId = Number(req.query.regionId);
+    if (req.query.isActive !== undefined) filters.isActive = req.query.isActive === "true";
+    if (req.query.isCondition !== undefined) filters.isCondition = req.query.isCondition === "true";
+    const stats = await selectChildrenStats(search, filters);
+    return res.json({ message: "Berhasil mendapatkan statistik anak asuh", data: stats });
+  } catch (err) {
+    next(err);
   }
 };
 

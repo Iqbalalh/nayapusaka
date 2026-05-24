@@ -6,6 +6,8 @@ import {
   postUmkm,
   patchUmkm,
   deleteUmkm,
+  getUmkmOptimized,
+  getUmkmSummary,
 } from "../controllers/umkm.controller";
 import { verifyToken, verifyAdminOrAbove } from "../middlewares/auth";
 import upload from "../middlewares/multer";
@@ -17,6 +19,8 @@ umkmRouter.use(verifyToken);
 // GET PARTNER
 umkmRouter.get("/", getUmkms);
 umkmRouter.get("/maps", getUmkmMaps);
+umkmRouter.get("/optimized", getUmkmOptimized);
+umkmRouter.get("/summary", getUmkmSummary);
 umkmRouter.get("/:id", getUmkm);
 
 // CREATE (POST + FOTOS)

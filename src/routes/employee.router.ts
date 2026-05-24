@@ -8,6 +8,8 @@ import {
   postEmployee,
   patchEmployee,
   deleteEmployee,
+  getEmployeesOptimized,
+  getEmployeeSummary,
 } from "../controllers/employee.controller";
 
 const employeeRouter = Router();
@@ -20,6 +22,8 @@ employeeRouter.use(verifyToken);
 // ===========================
 employeeRouter.get("/", getEmployees);
 employeeRouter.get("/list", getEmployeesList);
+employeeRouter.get("/optimized", getEmployeesOptimized);
+employeeRouter.get("/summary", getEmployeeSummary);
 employeeRouter.get("/:id", getEmployee);
 
 // CREATE (POST + FOTO)

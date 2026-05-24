@@ -86,3 +86,56 @@ export const deleteStaffById = async (id: number) => {
     throw error instanceof Error ? error : new Error(String(error));
   }
 };
+
+// ============================================================================
+// OPTIMIZED PAGINATED QUERIES
+// ============================================================================
+
+const buildStaffWhereClause = (search?: string, filters?: Record<string, any>) => {
+  const where: any = {};
+  const andClauses: any[] = [];
+
+  if (search?.trim()) {
+    const s = search.trim();
+    andClauses.push({
+      OR: [
+        { staffName: { contains: s, mode: "insensitive" } },
+        { email: { contains: s, mode: "insensitive" } },
+        { nik: { contains: s, mode: "insensitive" } },
+        { position: { contains: s, mode: "insensitive" } },
+      ],
+    });
+  }
+
+  if (filters && typeof filters === "object") {
+    if (Array.isArray(filters.gender) && filters.gender.length > 0) {
+      where.gender = { in: filters.gender };
+    }
+    if (Array.isArray(filters.isActive) && filters.isActive.length === 1) {
+      where.isActive = filters.isActive[0] === true || filters.isActive[0] === "true";
+    }
+  }
+
+  if (andClauses.length > 0) where.AND = andClauses;
+  return where;
+};
+
+export const selectStaffOptimized = async (
+  page: number = 1,
+  pageSize: number = 50,
+  search: string = "",
+  filters?: Record<string, any>
+) => {
+  const skip = (page - 1) * pageSize;
+  const where = buildStaffWhereClause(search, filters);
+
+  const [total, data] = await Promise.all([
+    prisma.staffs.count({ where }),
+    prisma.staffs.findMany({ where, skip, take: pageSize, orderBy: { id: "asc" } }),
+  ]);
+
+  return {
+    data,
+    pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
+  };
+};

@@ -111,3 +111,58 @@ export const deleteWaliById = async (id: number) => {
     throw error;
   }
 };
+
+// ============================================================================
+// OPTIMIZED PAGINATED QUERIES
+// ============================================================================
+
+const buildWaliWhereClause = (search?: string) => {
+  const where: any = {};
+  if (search?.trim()) {
+    const s = search.trim();
+    where.OR = [
+      { waliName: { contains: s, mode: "insensitive" } },
+      { relation: { contains: s, mode: "insensitive" } },
+      { nik: { contains: s, mode: "insensitive" } },
+    ];
+  }
+  return where;
+};
+
+export const selectWaliOptimized = async (
+  page: number = 1,
+  pageSize: number = 50,
+  search: string = "",
+  _filters?: Record<string, any>
+) => {
+  const skip = (page - 1) * pageSize;
+  const where = buildWaliWhereClause(search);
+
+  const [total, data] = await Promise.all([
+    prisma.wali.count({ where }),
+    prisma.wali.findMany({
+      where,
+      include: {
+        homes: {
+          include: {
+            regions: true,
+            partners: { select: { isActive: true } },
+          },
+        },
+      },
+      skip,
+      take: pageSize,
+      orderBy: { id: "asc" },
+    }),
+  ]);
+
+  return {
+    data,
+    pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
+  };
+};
+
+export const selectWaliSummary = async (search?: string) => {
+  const total = await prisma.wali.count({ where: buildWaliWhereClause(search) });
+  return { total };
+};

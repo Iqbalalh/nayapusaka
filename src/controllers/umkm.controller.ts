@@ -10,6 +10,8 @@ import {
   insertUmkm,
   updateUmkmById,
   deleteUmkmById,
+  selectUmkmOptimized,
+  selectUmkmSummary,
 } from "../services/umkm.services";
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
@@ -324,4 +326,30 @@ const getUmkmWithPresignedUrls = async (id: number) => {
   }
 
   return result;
+};
+
+// ============================================================================
+// GET UMKM OPTIMIZED
+// ============================================================================
+export const getUmkmOptimized = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+    const result = await selectUmkmOptimized(page, pageSize, search, filters);
+    const dataWithStaffNames = await addStaffNamesToRecords(result.data as any[]);
+    return res.json({ message: "Berhasil mendapatkan data UMKM", data: dataWithStaffNames, pagination: result.pagination });
+  } catch (err) { next(err); }
+};
+
+export const getUmkmSummary = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+    const summary = await selectUmkmSummary(search, filters);
+    return res.json({ message: "Berhasil mendapatkan ringkasan UMKM", data: summary });
+  } catch (err) { next(err); }
 };

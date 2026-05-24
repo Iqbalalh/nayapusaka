@@ -7,6 +7,7 @@ import {
   getChildren,
   getChildrenOptimized,
   getChildrenForExport,
+  getChildrenStatsHandler,
   postChildren,
   patchChildren,
   deleteChildren,
@@ -26,6 +27,7 @@ childrenRouter.get("/", getChildrens);
 childrenRouter.get("/list", getChildrenList);
 childrenRouter.get("/optimized", getChildrenOptimized);
 childrenRouter.get("/export", getChildrenForExport);
+childrenRouter.get("/stats", getChildrenStatsHandler);
 childrenRouter.get("/:id", getChildren);
 
 // CREATE (POST + FOTO)

@@ -198,6 +198,72 @@ export const selectYatimPiatuChildrenCount = async () => {
   }
 };
 
+type ChildrenFilters = {
+  educationLevel?: string;
+  yatimStatus?: string;
+  regionId?: number;
+  isActive?: boolean;
+  isCondition?: boolean;
+};
+
+const buildChildrenWhereClause = (search: string = "", filters?: ChildrenFilters) => {
+  const where: any = {};
+  if (search && search.trim()) {
+    const s = search.trim();
+    where.OR = [
+      { childrenName: { contains: s, mode: "insensitive" } },
+      { nik: { contains: s, mode: "insensitive" } },
+      { homes: { employees: { employeeName: { contains: s, mode: "insensitive" } } } },
+      { homes: { partners: { partnerName: { contains: s, mode: "insensitive" } } } },
+      { homes: { wali: { waliName: { contains: s, mode: "insensitive" } } } },
+    ];
+  }
+  if (filters?.educationLevel) where.educationLevel = filters.educationLevel;
+  if (filters?.yatimStatus) {
+    if (filters.yatimStatus === "yatim") { where.isFatherAlive = false; where.isMotherAlive = true; }
+    else if (filters.yatimStatus === "piatu") { where.isFatherAlive = true; where.isMotherAlive = false; }
+    else if (filters.yatimStatus === "yatim-piatu") { where.isFatherAlive = false; where.isMotherAlive = false; }
+  }
+  if (filters?.regionId) {
+    where.homes = { ...where.homes, employees: { regionId: filters.regionId } };
+  }
+  if (filters?.isActive !== undefined) where.isActive = filters.isActive;
+  if (filters?.isCondition !== undefined) where.isCondition = filters.isCondition;
+  return where;
+};
+
+export const selectChildrenStats = async (search: string = "", filters?: ChildrenFilters) => {
+  try {
+    const where = buildChildrenWhereClause(search, filters);
+    const [total, active, abk, yatim, piatu, yatimPiatu, assistanceAgg] = await Promise.all([
+      prisma.children.count({ where }),
+      prisma.children.count({ where: { ...where, isActive: true } }),
+      prisma.children.count({ where: { ...where, isCondition: false } }),
+      prisma.children.count({ where: { ...where, isFatherAlive: false, isMotherAlive: true } }),
+      prisma.children.count({ where: { ...where, isFatherAlive: true, isMotherAlive: false } }),
+      prisma.children.count({ where: { ...where, isFatherAlive: false, isMotherAlive: false } }),
+      prisma.childAssistance.aggregate({
+        where: { children: where },
+        _sum: { assistanceAmount: true },
+        _count: true,
+      }),
+    ]);
+    return {
+      total,
+      active,
+      inactive: total - active,
+      abk,
+      yatim,
+      piatu,
+      yatimPiatu,
+      totalDana: Number(assistanceAgg._sum.assistanceAmount ?? 0),
+      totalBantuan: assistanceAgg._count,
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 /**
  * Select children with pagination and filters (optimized for table display)
  * Returns paginated data with pagination metadata
@@ -334,9 +400,8 @@ export const selectChildrenOptimized = async (
         editedBy: true,
         _count: { select: { childAssistance: true } },
         childAssistance: {
-          select: { educationLevel: true },
+          select: { educationLevel: true, assistanceAmount: true },
           orderBy: { assistanceDate: "desc" },
-          take: 1,
         },
       },
       orderBy,
@@ -344,10 +409,11 @@ export const selectChildrenOptimized = async (
       take: pageSize,
     });
 
-    // Add calculated age to each child
+    // Add calculated age and total assistance amount to each child
     const childrenWithAge = children.map(child => ({
       ...child,
       age: calculateAge(child.childrenBirthdate),
+      totalAssistanceAmount: child.childAssistance.reduce((sum, a) => sum + (a.assistanceAmount ?? 0), 0),
     }));
 
     const totalPages = Math.ceil(total / pageSize);

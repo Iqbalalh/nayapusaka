@@ -669,6 +669,28 @@ export const selectInactiveFamilyCount = async () => {
 };
 
 /**
+ * Select count of families that have at least one visit
+ */
+export const selectVisitedFamilyCount = async () => {
+  try {
+    return { count: await prisma.homes.count({ where: { familyVisits: { some: {} } } }) };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
+ * Select count of families that have never been visited
+ */
+export const selectUnvisitedFamilyCount = async () => {
+  try {
+    return { count: await prisma.homes.count({ where: { familyVisits: { none: {} } } }) };
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
  * Select count of families shown on map (homes with valid coordinates)
  */
 export const selectFamilyOnMapCount = async () => {

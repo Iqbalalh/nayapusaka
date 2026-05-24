@@ -7,6 +7,7 @@ import {
   postStaff,
   patchStaff,
   deleteStaff,
+  getStaffOptimized,
 } from "../controllers/staff.controller";
 
 const staffRouter = Router();
@@ -18,6 +19,7 @@ staffRouter.use(verifyToken);
 // CRUD STAFF
 // ===========================
 staffRouter.get("/", getStaffs);
+staffRouter.get("/optimized", getStaffOptimized);
 staffRouter.get("/:id", getStaff);
 
 // Upload fields: picture + signature

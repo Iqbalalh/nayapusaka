@@ -5,6 +5,7 @@ import {
   insertStaff,
   updateStaffById,
   deleteStaffById,
+  selectStaffOptimized,
 } from "../services/staff.services";
 import { invalidateUserSessionByStaffId } from "../services/user.services";
 import { Prisma } from "../generated/prisma/client";
@@ -396,4 +397,28 @@ export const deleteStaff = async (
 
     next(err);
   }
+};
+
+// ============================================================================
+// GET STAFF OPTIMIZED
+// ============================================================================
+export const getStaffOptimized = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+    const result = await selectStaffOptimized(page, pageSize, search, filters);
+    const dataWithUrls = await Promise.all(
+      result.data.map(async (s: any) => ({
+        ...s,
+        staffPict: s.staffPict && isValidS3Key(s.staffPict)
+          ? await getPresignedUrl(s.staffPict)
+          : s.staffPict,
+      }))
+    );
+    const dataWithStaffNames = await addStaffNamesToRecords(dataWithUrls);
+    return res.json({ message: "Berhasil mendapatkan data staff", data: dataWithStaffNames, pagination: result.pagination });
+  } catch (err) { next(err); }
 };

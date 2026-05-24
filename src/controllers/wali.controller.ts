@@ -6,6 +6,8 @@ import {
   insertWali,
   updateWaliById,
   deleteWaliById,
+  selectWaliOptimized,
+  selectWaliSummary,
 } from "../services/wali.services";
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
@@ -300,4 +302,34 @@ export const deleteWali = async (
   } catch (err) {
     next(err);
   }
+};
+
+// ============================================================================
+// GET WALI OPTIMIZED
+// ============================================================================
+export const getWaliOptimized = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+    const result = await selectWaliOptimized(page, pageSize, search);
+    const dataWithUrls = await Promise.all(
+      result.data.map(async (w: any) => ({
+        ...w,
+        waliPict: w.waliPict && isValidS3Key(w.waliPict)
+          ? await getPresignedUrl(w.waliPict)
+          : w.waliPict,
+      }))
+    );
+    const dataWithStaffNames = await addStaffNamesToRecords(dataWithUrls);
+    return res.json({ message: "Berhasil mendapatkan data wali", data: dataWithStaffNames, pagination: result.pagination });
+  } catch (err) { next(err); }
+};
+
+export const getWaliSummary = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const search = (req.query.search as string) || "";
+    const summary = await selectWaliSummary(search);
+    return res.json({ message: "Berhasil mendapatkan ringkasan wali", data: summary });
+  } catch (err) { next(err); }
 };

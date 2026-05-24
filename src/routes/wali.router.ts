@@ -8,6 +8,8 @@ import {
   patchWali,
   deleteWali,
   getWaliList,
+  getWaliOptimized,
+  getWaliSummary,
 } from "../controllers/wali.controller";
 
 const waliRouter = Router();
@@ -20,6 +22,8 @@ waliRouter.use(verifyToken);
 // ===========================
 waliRouter.get("/", getWalis);
 waliRouter.get("/list", getWaliList);
+waliRouter.get("/optimized", getWaliOptimized);
+waliRouter.get("/summary", getWaliSummary);
 waliRouter.get("/:id", getWali);
 
 // CREATE (POST + FOTO)

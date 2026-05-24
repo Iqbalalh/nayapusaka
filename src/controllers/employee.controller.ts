@@ -6,6 +6,8 @@ import {
   insertEmployee,
   updateEmployeeById,
   deleteEmployeeById,
+  selectEmployeesOptimized,
+  selectEmployeeSummary,
 } from "../services/employee.services";
 import { Prisma } from "../generated/prisma/client";
 import { uploadToS3, deleteFromS3, getPresignedUrl, isValidS3Key } from "../utils/storage/s3.storage";
@@ -294,4 +296,49 @@ export const deleteEmployee = async (
   } catch (err) {
     next(err);
   }
+};
+
+// ============================================================================
+// GET EMPLOYEES OPTIMIZED (PAGINATED WITH SEARCH + FILTERS)
+// ============================================================================
+export const getEmployeesOptimized = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const pageSize = Number(req.query.pageSize) || 50;
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+
+    const result = await selectEmployeesOptimized(page, pageSize, search, filters);
+
+    const dataWithUrls = await Promise.all(
+      result.data.map(async (emp: any) => ({
+        ...emp,
+        employeePict: emp.employeePict && isValidS3Key(emp.employeePict)
+          ? await getPresignedUrl(emp.employeePict)
+          : emp.employeePict,
+      }))
+    );
+
+    const dataWithStaffNames = await addStaffNamesToRecords(dataWithUrls);
+
+    return res.json({
+      message: "Berhasil mendapatkan data pegawai",
+      data: dataWithStaffNames,
+      pagination: result.pagination,
+    });
+  } catch (err) { next(err); }
+};
+
+// ============================================================================
+// GET EMPLOYEE SUMMARY
+// ============================================================================
+export const getEmployeeSummary = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const search = (req.query.search as string) || "";
+    let filters: Record<string, any> | undefined;
+    try { if (req.query.filters) filters = JSON.parse(req.query.filters as string); } catch {}
+    const summary = await selectEmployeeSummary(search, filters);
+    return res.json({ message: "Berhasil mendapatkan ringkasan pegawai", data: summary });
+  } catch (err) { next(err); }
 };

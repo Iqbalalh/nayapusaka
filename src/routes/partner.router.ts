@@ -8,6 +8,8 @@ import {
   postPartner,
   patchPartner,
   deletePartner,
+  getPartnersOptimized,
+  getPartnerSummary,
 } from "../controllers/partner.controller";
 
 const partnerRouter = Router();
@@ -22,6 +24,8 @@ partnerRouter.use(verifyToken);
 // GET
 partnerRouter.get("/", getPartners);
 partnerRouter.get("/list", getPartnerList);
+partnerRouter.get("/optimized", getPartnersOptimized);
+partnerRouter.get("/summary", getPartnerSummary);
 partnerRouter.get("/:id", getPartner);
 
 // CREATE (POST + FOTO)
