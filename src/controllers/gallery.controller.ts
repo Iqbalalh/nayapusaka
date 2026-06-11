@@ -251,7 +251,8 @@ export const postGallery = async (
     const parsedRegionId = regionId && regionId !== 'null' && regionId !== '' ? Number(regionId) : null;
     
     // Parse gallery date once
-    const parsedGalleryDate = galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null;
+    const _gd = galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null;
+    const parsedGalleryDate = _gd && !isNaN(_gd.getTime()) ? _gd : null;
     
     const createdGalleries: any[] = [];
     
@@ -439,7 +440,7 @@ export const patchGallery = async (
         regionId: regionId !== undefined && regionId !== 'null' && regionId !== ''
           ? (regionId ? Number(regionId) : null)
           : undefined,
-        galleryDate: galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null,
+        galleryDate: (() => { const d = galleryDate && galleryDate !== '' && galleryDate !== 'null' ? new Date(galleryDate) : null; return d && !isNaN(d.getTime()) ? d : null; })(),
         editedBy: userId,
       } as Prisma.GalleryUncheckedUpdateInput,
       categoryIds ? (Array.isArray(categoryIds) ? categoryIds.map(Number) : [Number(categoryIds)]) : undefined
