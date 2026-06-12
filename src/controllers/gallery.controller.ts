@@ -223,8 +223,10 @@ export const postGallery = async (
     // Get user ID from JWT token
     const userId = (req.user as any)?.id || 2;
 
-    const { caption, categoryIds, regionId, galleryDate } = req.body;
-    
+    const { caption: _cap, categoryIds, regionId: _rid, galleryDate } = req.body;
+    const caption = Array.isArray(_cap) ? _cap[_cap.length - 1] : _cap;
+    const regionId = Array.isArray(_rid) ? _rid[_rid.length - 1] : _rid;
+
     // Check if multiple files were uploaded (via req.files)
     const files = req.files as Express.Multer.File[] | undefined;
     
@@ -430,7 +432,9 @@ export const patchGallery = async (
       }
     }
 
-    const { caption, categoryIds, regionId, galleryDate } = req.body;
+    const { caption: _caption, categoryIds, regionId: _regionId, galleryDate } = req.body;
+    const caption = Array.isArray(_caption) ? _caption[_caption.length - 1] : _caption;
+    const regionId = Array.isArray(_regionId) ? _regionId[_regionId.length - 1] : _regionId;
 
     const updated = await updateGalleryById(
       id,
