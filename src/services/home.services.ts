@@ -158,7 +158,7 @@ export const selectHomesForMaps = async () => {
             addressCoordinate: true,
           },
         },
-        _count: { select: { children: true } },
+        _count: { select: { children: true, familyVisits: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
     });
@@ -210,6 +210,7 @@ export const selectHomesForMaps = async () => {
         _count: {
           children: home._count.children,
         },
+        isVisited: home._count.familyVisits > 0,
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -265,7 +266,7 @@ export const selectAbkHomesForMaps = async () => {
             addressCoordinate: true,
           },
         },
-        _count: { select: { children: true } },
+        _count: { select: { children: true, familyVisits: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
     });
@@ -315,6 +316,7 @@ export const selectAbkHomesForMaps = async () => {
         _count: {
           children: home._count.children,
         },
+        isVisited: home._count.familyVisits > 0,
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -370,7 +372,7 @@ export const selectOrphanHomesForMaps = async () => {
             addressCoordinate: true,
           },
         },
-        _count: { select: { children: true } },
+        _count: { select: { children: true, familyVisits: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
     });
@@ -420,6 +422,7 @@ export const selectOrphanHomesForMaps = async () => {
         _count: {
           children: home._count.children,
         },
+        isVisited: home._count.familyVisits > 0,
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -450,6 +453,7 @@ export const selectHomeDetailById = async (id: number) => {
             childrenGender: true,
           },
         },
+        _count: { select: { familyVisits: true } },
       },
     });
 
@@ -492,6 +496,7 @@ export const selectHomeDetailById = async (id: number) => {
       },
       children: home.children,
       isUmkm: !!umkm,
+      isVisited: home._count.familyVisits > 0,
     };
   } catch (error) {
     throw error;

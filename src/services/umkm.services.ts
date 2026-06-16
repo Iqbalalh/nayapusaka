@@ -36,6 +36,7 @@ export const selectUmkmForMaps = async () => {
           select: { id: true, employeeName: true, nipNipp: true },
         },
         partners: { select: { isActive: true } },
+        _count: { select: { umkmVisits: true } },
       },
       orderBy: { ownerName: "asc" },
     });
@@ -68,6 +69,7 @@ export const selectUmkmForMaps = async () => {
         ? "children"
         : null,
       isActive: umkm.isActive ?? null,
+      isVisited: umkm._count.umkmVisits > 0,
     }));
   } catch (error) {
     throw error;
@@ -87,6 +89,7 @@ export const selectUmkmById = async (id: number) => {
         },
         regions: { select: { regionName: true } },
         partners: { select: { isActive: true } },
+        _count: { select: { umkmVisits: true } },
       },
     });
 
@@ -102,6 +105,7 @@ export const selectUmkmById = async (id: number) => {
         ? "children"
         : null,
       isActive: umkm.isActive ?? null,
+      isVisited: umkm._count.umkmVisits > 0,
     };
   } catch (error) {
     throw error;
