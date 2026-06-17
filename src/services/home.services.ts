@@ -451,6 +451,7 @@ export const selectHomeDetailById = async (id: number) => {
             isCondition: true,
             isActive: true,
             childrenGender: true,
+            childrenPict: true,
           },
         },
         _count: { select: { familyVisits: true } },
@@ -633,7 +634,7 @@ export const selectHomeSummary = async (search?: string, filters?: Record<string
  */
 export const selectHomeCount = async () => {
   try {
-    return { count: await prisma.homes.count() };
+    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null } } }) };
   } catch (error) {
     throw error;
   }
@@ -644,13 +645,7 @@ export const selectHomeCount = async () => {
  */
 export const selectActiveFamilyCount = async () => {
   try {
-    const homes = await prisma.homes.findMany({
-      where: {
-        partners: { isActive: true },
-      },
-      select: { id: true },
-    });
-    return { count: homes.length };
+    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: true } } }) };
   } catch (error) {
     throw error;
   }
@@ -661,35 +656,29 @@ export const selectActiveFamilyCount = async () => {
  */
 export const selectInactiveFamilyCount = async () => {
   try {
-    const homes = await prisma.homes.findMany({
-      where: {
-        partners: { isActive: false },
-      },
-      select: { id: true },
-    });
-    return { count: homes.length };
+    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: false } } }) };
   } catch (error) {
     throw error;
   }
 };
 
 /**
- * Select count of families that have at least one visit
+ * Select count of families that have been visited (isValidated = true)
  */
 export const selectVisitedFamilyCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { familyVisits: { some: {} } } }) };
+    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, isValidated: true } }) };
   } catch (error) {
     throw error;
   }
 };
 
 /**
- * Select count of families that have never been visited
+ * Select count of families that have not been visited (isValidated != true)
  */
 export const selectUnvisitedFamilyCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { familyVisits: { none: {} } } }) };
+    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, isValidated: { not: true } } }) };
   } catch (error) {
     throw error;
   }
@@ -824,6 +813,11 @@ export const selectHomesForExport = async (search?: string, filters?: Record<str
           },
           orderBy: { index: "asc" },
         },
+        familyVisits: {
+          select: {
+            familyVisitDocs: { select: { id: true }, take: 1 },
+          },
+        },
       },
       orderBy: { createdAt: "asc" },
     });
@@ -831,6 +825,7 @@ export const selectHomesForExport = async (search?: string, filters?: Record<str
     return homes.map((home) => ({
       ...home,
       isUmkm: (home.partners?.umkm?.length ?? 0) > 0,
+      hasFoto: home.familyVisits.some((v) => v.familyVisitDocs.length > 0),
     }));
   } catch (error) {
     throw error;

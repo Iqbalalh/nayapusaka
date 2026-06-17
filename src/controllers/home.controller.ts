@@ -362,21 +362,30 @@ export const getHomeDetail = async (
       });
     }
 
-    let employeePictUrl = null;
-    let partnerPictUrl = null;
-    
-    if (home.employees.employeePict && isValidS3Key(home.employees.employeePict)) {
-      employeePictUrl = await getPresignedUrl(home.employees.employeePict);
+    // Presign photos in place so nested fields (employees.employeePict,
+    // partners.partnerPict, children[].childrenPict) are directly usable.
+    if (home.employees?.employeePict && isValidS3Key(home.employees.employeePict)) {
+      home.employees.employeePict = await getPresignedUrl(home.employees.employeePict);
     }
-    
-    if (home.partners.partnerPict && isValidS3Key(home.partners.partnerPict)) {
-      partnerPictUrl = await getPresignedUrl(home.partners.partnerPict);
+
+    if (home.partners?.partnerPict && isValidS3Key(home.partners.partnerPict)) {
+      home.partners.partnerPict = await getPresignedUrl(home.partners.partnerPict);
+    }
+
+    if (Array.isArray(home.children)) {
+      await Promise.all(
+        home.children.map(async (child) => {
+          if (child.childrenPict && isValidS3Key(child.childrenPict)) {
+            child.childrenPict = await getPresignedUrl(child.childrenPict);
+          }
+        })
+      );
     }
 
     const result = {
       ...home,
-      employeePict: employeePictUrl,
-      partnerPict: partnerPictUrl,
+      employeePict: home.employees?.employeePict ?? null,
+      partnerPict: home.partners?.partnerPict ?? null,
     };
 
     // Add staff names to the result
