@@ -136,6 +136,7 @@ export const selectHomesForMaps = async () => {
         regionId: true,
         createdBy: true,
         editedBy: true,
+        isValidated: true,
         partners: {
           select: {
             partnerName: true,
@@ -158,7 +159,7 @@ export const selectHomesForMaps = async () => {
             addressCoordinate: true,
           },
         },
-        _count: { select: { children: true, familyVisits: true } },
+        _count: { select: { children: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
     });
@@ -210,7 +211,7 @@ export const selectHomesForMaps = async () => {
         _count: {
           children: home._count.children,
         },
-        isVisited: home._count.familyVisits > 0,
+        isVisited: home.isValidated ?? false,
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -244,6 +245,7 @@ export const selectAbkHomesForMaps = async () => {
         regionId: true,
         createdBy: true,
         editedBy: true,
+        isValidated: true,
         partners: {
           select: {
             partnerName: true,
@@ -266,7 +268,7 @@ export const selectAbkHomesForMaps = async () => {
             addressCoordinate: true,
           },
         },
-        _count: { select: { children: true, familyVisits: true } },
+        _count: { select: { children: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
     });
@@ -316,7 +318,7 @@ export const selectAbkHomesForMaps = async () => {
         _count: {
           children: home._count.children,
         },
-        isVisited: home._count.familyVisits > 0,
+        isVisited: home.isValidated ?? false,
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -350,6 +352,7 @@ export const selectOrphanHomesForMaps = async () => {
         regionId: true,
         createdBy: true,
         editedBy: true,
+        isValidated: true,
         partners: {
           select: {
             partnerName: true,
@@ -372,7 +375,7 @@ export const selectOrphanHomesForMaps = async () => {
             addressCoordinate: true,
           },
         },
-        _count: { select: { children: true, familyVisits: true } },
+        _count: { select: { children: true } },
       },
       orderBy: { partners: { partnerName: "asc" } },
     });
@@ -422,7 +425,7 @@ export const selectOrphanHomesForMaps = async () => {
         _count: {
           children: home._count.children,
         },
-        isVisited: home._count.familyVisits > 0,
+        isVisited: home.isValidated ?? false,
         isUmkm: !!(await prisma.umkm.findFirst({
           where: { partnerId: home.partnerId },
         })),
@@ -454,7 +457,6 @@ export const selectHomeDetailById = async (id: number) => {
             childrenPict: true,
           },
         },
-        _count: { select: { familyVisits: true } },
       },
     });
 
@@ -497,7 +499,7 @@ export const selectHomeDetailById = async (id: number) => {
       },
       children: home.children,
       isUmkm: !!umkm,
-      isVisited: home._count.familyVisits > 0,
+      isVisited: home.isValidated ?? false,
     };
   } catch (error) {
     throw error;
@@ -862,7 +864,7 @@ export const selectHomesOptimized = async (
         employees: true,
         wali: true,
         regions: true,
-        _count: { select: { children: true, familyVisits: true } },
+        _count: { select: { children: true } },
       },
       orderBy: { createdAt: "asc" },
       skip,
