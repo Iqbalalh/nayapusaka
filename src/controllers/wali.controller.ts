@@ -312,7 +312,9 @@ export const getWaliOptimized = async (req: Request, res: Response, next: NextFu
     const page = Number(req.query.page) || 1;
     const pageSize = Number(req.query.pageSize) || 50;
     const search = (req.query.search as string) || "";
-    const result = await selectWaliOptimized(page, pageSize, search);
+    let filters: Record<string, any> | undefined;
+    try { const raw = req.query.filters as string; if (raw) filters = JSON.parse(raw); } catch {}
+    const result = await selectWaliOptimized(page, pageSize, search, filters);
     const dataWithUrls = await Promise.all(
       result.data.map(async (w: any) => ({
         ...w,
@@ -329,7 +331,9 @@ export const getWaliOptimized = async (req: Request, res: Response, next: NextFu
 export const getWaliSummary = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const search = (req.query.search as string) || "";
-    const summary = await selectWaliSummary(search);
+    let filters: Record<string, any> | undefined;
+    try { const raw = req.query.filters as string; if (raw) filters = JSON.parse(raw); } catch {}
+    const summary = await selectWaliSummary(search, filters);
     return res.json({ message: "Berhasil mendapatkan ringkasan wali", data: summary });
   } catch (err) { next(err); }
 };

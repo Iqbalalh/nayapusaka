@@ -285,7 +285,11 @@ export const getChildrenOptimized = async (
     if (req.query.isCondition !== undefined) {
       filters.isCondition = req.query.isCondition === "true";
     }
-    
+
+    if (req.query.gender) {
+      filters.gender = req.query.gender as string;
+    }
+
     if (req.query.ageSort) {
       filters.ageSort = req.query.ageSort as "asc" | "desc";
     }
@@ -339,6 +343,7 @@ export const getChildrenStatsHandler = async (
     if (req.query.regionId) filters.regionId = Number(req.query.regionId);
     if (req.query.isActive !== undefined) filters.isActive = req.query.isActive === "true";
     if (req.query.isCondition !== undefined) filters.isCondition = req.query.isCondition === "true";
+    if (req.query.gender) filters.gender = req.query.gender as string;
     const stats = await selectChildrenStats(search, filters);
     return res.json({ message: "Berhasil mendapatkan statistik anak asuh", data: stats });
   } catch (err) {
@@ -377,7 +382,11 @@ export const getChildrenForExport = async (
     if (req.query.isCondition !== undefined) {
       filters.isCondition = req.query.isCondition === "true";
     }
-    
+
+    if (req.query.gender) {
+      filters.gender = req.query.gender as string;
+    }
+
     if (req.query.ageSort) {
       filters.ageSort = req.query.ageSort as "asc" | "desc";
     }

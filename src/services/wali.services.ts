@@ -116,7 +116,7 @@ export const deleteWaliById = async (id: number) => {
 // OPTIMIZED PAGINATED QUERIES
 // ============================================================================
 
-const buildWaliWhereClause = (search?: string) => {
+const buildWaliWhereClause = (search?: string, filters?: Record<string, any>) => {
   const where: any = {};
   if (search?.trim()) {
     const s = search.trim();
@@ -126,6 +126,9 @@ const buildWaliWhereClause = (search?: string) => {
       { nik: { contains: s, mode: "insensitive" } },
     ];
   }
+  if (Array.isArray(filters?.regionId) && filters!.regionId.length > 0) {
+    where.homes = { some: { regionId: { in: filters!.regionId.map(Number) } } };
+  }
   return where;
 };
 
@@ -133,10 +136,10 @@ export const selectWaliOptimized = async (
   page: number = 1,
   pageSize: number = 50,
   search: string = "",
-  _filters?: Record<string, any>
+  filters?: Record<string, any>
 ) => {
   const skip = (page - 1) * pageSize;
-  const where = buildWaliWhereClause(search);
+  const where = buildWaliWhereClause(search, filters);
 
   const [total, data] = await Promise.all([
     prisma.wali.count({ where }),
@@ -162,7 +165,7 @@ export const selectWaliOptimized = async (
   };
 };
 
-export const selectWaliSummary = async (search?: string) => {
-  const total = await prisma.wali.count({ where: buildWaliWhereClause(search) });
+export const selectWaliSummary = async (search?: string, filters?: Record<string, any>) => {
+  const total = await prisma.wali.count({ where: buildWaliWhereClause(search, filters) });
   return { total };
 };

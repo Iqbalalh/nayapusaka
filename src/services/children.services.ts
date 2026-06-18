@@ -120,7 +120,7 @@ export const selectChildrenCount = async () => {
 export const selectAbkChildrenCount = async () => {
   try {
     return {
-      count: await prisma.children.count({ where: { isCondition: false } }),
+      count: await prisma.children.count({ where: { isActive: true, isCondition: false } }),
     };
   } catch (error) {
     throw error;
@@ -204,6 +204,7 @@ type ChildrenFilters = {
   regionId?: number;
   isActive?: boolean;
   isCondition?: boolean;
+  gender?: string;
 };
 
 const buildChildrenWhereClause = (search: string = "", filters?: ChildrenFilters) => {
@@ -225,37 +226,52 @@ const buildChildrenWhereClause = (search: string = "", filters?: ChildrenFilters
     else if (filters.yatimStatus === "yatim-piatu") { where.isFatherAlive = false; where.isMotherAlive = false; }
   }
   if (filters?.regionId) {
-    where.homes = { ...where.homes, employees: { regionId: filters.regionId } };
+    where.homes = { ...where.homes, regionId: filters.regionId };
   }
   if (filters?.isActive !== undefined) where.isActive = filters.isActive;
   if (filters?.isCondition !== undefined) where.isCondition = filters.isCondition;
+  if (filters?.gender) where.childrenGender = filters.gender;
   return where;
 };
 
 export const selectChildrenStats = async (search: string = "", filters?: ChildrenFilters) => {
   try {
     const where = buildChildrenWhereClause(search, filters);
-    const [total, active, abk, yatim, piatu, yatimPiatu, assistanceAgg] = await Promise.all([
+    const aw = { ...where, isActive: true };
+    const iw = { ...where, isActive: false };
+
+    const [
+      total, active,
+      yatim, piatu, yatimPiatu, abk,
+      yatimActive, piatuActive, yatimPiatuActive, abkActive,
+      yatimInactive, piatuInactive, yatimPiatuInactive, abkInactive,
+      assistanceAgg,
+    ] = await Promise.all([
       prisma.children.count({ where }),
-      prisma.children.count({ where: { ...where, isActive: true } }),
-      prisma.children.count({ where: { ...where, isCondition: false } }),
+      prisma.children.count({ where: aw }),
+      // total cluster
       prisma.children.count({ where: { ...where, isFatherAlive: false, isMotherAlive: true } }),
       prisma.children.count({ where: { ...where, isFatherAlive: true, isMotherAlive: false } }),
       prisma.children.count({ where: { ...where, isFatherAlive: false, isMotherAlive: false } }),
-      prisma.childAssistance.aggregate({
-        where: { children: where },
-        _sum: { assistanceAmount: true },
-        _count: true,
-      }),
+      prisma.children.count({ where: { ...where, isCondition: false } }),
+      // active cluster
+      prisma.children.count({ where: { ...aw, isFatherAlive: false, isMotherAlive: true } }),
+      prisma.children.count({ where: { ...aw, isFatherAlive: true, isMotherAlive: false } }),
+      prisma.children.count({ where: { ...aw, isFatherAlive: false, isMotherAlive: false } }),
+      prisma.children.count({ where: { ...aw, isCondition: false } }),
+      // inactive cluster
+      prisma.children.count({ where: { ...iw, isFatherAlive: false, isMotherAlive: true } }),
+      prisma.children.count({ where: { ...iw, isFatherAlive: true, isMotherAlive: false } }),
+      prisma.children.count({ where: { ...iw, isFatherAlive: false, isMotherAlive: false } }),
+      prisma.children.count({ where: { ...iw, isCondition: false } }),
+      prisma.childAssistance.aggregate({ where: { children: where }, _sum: { assistanceAmount: true }, _count: true }),
     ]);
+
     return {
-      total,
-      active,
-      inactive: total - active,
-      abk,
-      yatim,
-      piatu,
-      yatimPiatu,
+      total, active, inactive: total - active,
+      yatim, piatu, yatimPiatu, abk,
+      yatimActive, piatuActive, yatimPiatuActive, abkActive,
+      yatimInactive, piatuInactive, yatimPiatuInactive, abkInactive,
       totalDana: Number(assistanceAgg._sum.assistanceAmount ?? 0),
       totalBantuan: assistanceAgg._count,
     };
@@ -318,12 +334,7 @@ export const selectChildrenOptimized = async (
     }
 
     if (filters?.regionId) {
-      where.homes = {
-        ...where.homes,
-        employees: {
-          regionId: filters.regionId,
-        },
-      };
+      where.homes = { ...where.homes, regionId: filters.regionId };
     }
 
     if (filters?.isActive !== undefined) {
@@ -332,6 +343,10 @@ export const selectChildrenOptimized = async (
 
     if (filters?.isCondition !== undefined) {
       where.isCondition = filters.isCondition;
+    }
+
+    if (filters?.gender) {
+      where.childrenGender = filters.gender;
     }
 
     // Get total count for pagination
@@ -367,6 +382,13 @@ export const selectChildrenOptimized = async (
         homes: {
           select: {
             id: true,
+            regionId: true,
+            regions: {
+              select: {
+                regionId: true,
+                regionName: true,
+              },
+            },
             employees: {
               select: {
                 id: true,
@@ -478,6 +500,10 @@ export const selectChildrenForExport = async (filters?: {
 
     if (filters?.isCondition !== undefined) {
       where.isCondition = filters.isCondition;
+    }
+
+    if ((filters as any)?.gender) {
+      where.childrenGender = (filters as any).gender;
     }
 
     // Build orderBy based on age sort
