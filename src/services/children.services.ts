@@ -295,6 +295,7 @@ export const selectChildrenOptimized = async (
     isActive?: boolean;
     isCondition?: boolean;
     ageSort?: "asc" | "desc";
+    gender?: string;
   }
 ) => {
   try {
@@ -465,6 +466,7 @@ export const selectChildrenForExport = async (filters?: {
   isActive?: boolean;
   isCondition?: boolean;
   ageSort?: "asc" | "desc";
+  gender?: string;
 }) => {
   try {
     // Build where clause for filters
@@ -502,8 +504,8 @@ export const selectChildrenForExport = async (filters?: {
       where.isCondition = filters.isCondition;
     }
 
-    if ((filters as any)?.gender) {
-      where.childrenGender = (filters as any).gender;
+    if (filters?.gender) {
+      where.childrenGender = filters.gender;
     }
 
     // Build orderBy based on age sort
