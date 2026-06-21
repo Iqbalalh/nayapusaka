@@ -437,69 +437,113 @@ export const selectOrphanHomesForMaps = async () => {
 };
 
 /**
- * Select home detail by ID
+ * Select home detail by ID — loads all sibling homes (same employee+partner) so the
+ * view page can display the full family with every wali and every child.
  */
 export const selectHomeDetailById = async (id: number) => {
   try {
-    const home = await prisma.homes.findUnique({
+    const baseHome = await prisma.homes.findUnique({
       where: { id },
+      select: { employeeId: true, partnerId: true },
+    });
+
+    if (!baseHome) return null;
+
+    const childrenSelect = {
+      id: true,
+      homeId: true,
+      childrenName: true,
+      isCondition: true,
+      isActive: true,
+      isFatherAlive: true,
+      isMotherAlive: true,
+      childrenGender: true,
+      childrenPict: true,
+      childrenBirthdate: true,
+      childrenAddress: true,
+      childrenPhone: true,
+      childrenJob: true,
+      educationLevel: true,
+      educationGrade: true,
+      schoolName: true,
+      nik: true,
+      index: true,
+      notes: true,
+      createdAt: true,
+      updatedAt: true,
+      createdBy: true,
+      editedBy: true,
+    } as const;
+
+    // Load all sibling homes (same employee+partner combination)
+    const siblings = await prisma.homes.findMany({
+      where: {
+        employeeId: baseHome.employeeId!,
+        partnerId: baseHome.partnerId!,
+      },
       include: {
         employees: true,
         partners: true,
         wali: true,
         regions: true,
-        children: {
-          select: {
-            childrenName: true,
-            isCondition: true,
-            isActive: true,
-            childrenGender: true,
-            childrenPict: true,
-          },
-        },
+        children: { select: childrenSelect },
       },
+      orderBy: { id: "asc" },
     });
 
-    if (!home) return null;
+    if (siblings.length === 0) return null;
 
-    const umkm = await prisma.umkm.findFirst({
-      where: { partnerId: home.partnerId },
-    });
+    const canonical = siblings[0]; // min id = canonical home
+    const umkm = await prisma.umkm.findFirst({ where: { partnerId: canonical.partnerId } });
 
     return {
-      createdBy: home.createdBy,
-      editedBy: home.editedBy,
-      employees: {
-        employeeName: home.employees?.employeeName,
-        nipNipp: home.employees?.nipNipp,
-        employeePict: home.employees?.employeePict,
-        employeeGender: home.employees?.employeeGender,
-        lastPosition: home.employees?.lastPosition,
-        deathCause: home.employees?.deathCause,
-        isAccident: home.employees?.isAccident,
-        notes: home.employees?.notes,
+      id: canonical.id,
+      employeeId: canonical.employeeId,
+      partnerId: canonical.partnerId,
+      waliId: canonical.waliId,
+      regionId: canonical.regionId,
+      postalCode: canonical.postalCode,
+      createdBy: canonical.createdBy,
+      editedBy: canonical.editedBy,
+      isValidated: siblings.some((s) => s.isValidated === true),
+      selectedRegionName: canonical.regions?.regionName,
+      employee: {
+        ...canonical.employees,
+        employeeName: canonical.employees?.employeeName,
+        nipNipp: canonical.employees?.nipNipp,
+        employeePict: canonical.employees?.employeePict,
+        employeeGender: canonical.employees?.employeeGender,
+        lastPosition: canonical.employees?.lastPosition,
+        deathCause: canonical.employees?.deathCause,
+        isAccident: canonical.employees?.isAccident,
+        notes: canonical.employees?.notes,
       },
-      partners: {
-        partnerName: home.partners?.partnerName,
-        partnerJob: home.partners?.partnerJob,
-        partnerNik: home.partners?.partnerNik,
-        partnerPict: home.partners?.partnerPict,
-        isAlive: home.partners?.isAlive,
-        address: home.partners?.address,
-        postalCode: home.partners?.postalCode,
-        phoneNumber: home.partners?.phoneNumber,
-        phoneNumberAlt: home.partners?.phoneNumberAlt,
-        isActive: home.partners?.isActive,
+      partner: {
+        ...canonical.partners,
+        partnerName: canonical.partners?.partnerName,
+        partnerJob: canonical.partners?.partnerJob,
+        partnerNik: canonical.partners?.partnerNik,
+        partnerPict: canonical.partners?.partnerPict,
+        isAlive: canonical.partners?.isAlive,
+        address: canonical.partners?.address,
+        postalCode: canonical.partners?.postalCode,
+        phoneNumber: canonical.partners?.phoneNumber,
+        phoneNumberAlt: canonical.partners?.phoneNumberAlt,
+        isActive: canonical.partners?.isActive,
+        isUmkm: !!umkm,
       },
-      wali: {
-        waliName: home.wali?.waliName,
-        relation: home.wali?.relation,
-        waliPhone: home.wali?.waliPhone,
-        waliAddress: home.wali?.waliAddress,
-      },
-      children: home.children,
+      wali: canonical.wali,
+      walis: siblings.map((s) => ({
+        homeId: s.id,
+        waliId: s.waliId,
+        wali: s.wali,
+        regionId: s.regionId,
+        regions: s.regions,
+      })),
+      childrens: siblings.flatMap((s) => s.children).sort((a, b) => (a.index ?? 0) - (b.index ?? 0)),
       isUmkm: !!umkm,
-      isVisited: home.isValidated ?? false,
+      isVisited: siblings.some((s) => s.isValidated === true),
+      regions: canonical.regions,
     };
   } catch (error) {
     throw error;
@@ -748,6 +792,32 @@ export const insertHome = async (data: Prisma.HomesCreateInput) => {
   }
 };
 
+/**
+ * Create a sibling home — same (employeeId, partnerId, regionId, postalCode) as the
+ * source home, but with a different waliId. Used by the "Tambah Wali" action in the
+ * family view page.
+ */
+export const createSiblingHome = async (sourceHomeId: number, waliId: number | null, userId: number) => {
+  const sourceHome = await prisma.homes.findUnique({
+    where: { id: sourceHomeId },
+    select: { employeeId: true, partnerId: true, regionId: true, postalCode: true },
+  });
+
+  if (!sourceHome) throw new Error("Source home not found");
+
+  return prisma.homes.create({
+    data: {
+      employeeId: sourceHome.employeeId,
+      partnerId: sourceHome.partnerId,
+      regionId: sourceHome.regionId,
+      postalCode: sourceHome.postalCode,
+      waliId: waliId ?? null,
+      createdBy: userId,
+      editedBy: userId,
+    },
+  });
+};
+
 // ============================================================================
 // UPDATE QUERY
 // ============================================================================
@@ -782,7 +852,9 @@ export const deleteHomeById = async (id: number) => {
 };
 
 /**
- * Select all homes with children for export — respects search + column filters
+ * Select all homes for export — grouped by (employeeId, partnerId) so each family is
+ * one record. allWaliNames is all wali names joined, allChildren includes children from
+ * all sibling homes.
  */
 export const selectHomesForExport = async (search?: string, filters?: Record<string, any>) => {
   try {
@@ -794,48 +866,84 @@ export const selectHomesForExport = async (search?: string, filters?: Record<str
       if (ids !== null) where.id = { in: ids.length > 0 ? ids : [-1] };
     }
 
-    const homes = await prisma.homes.findMany({
+    // Distinct families matching the filter
+    const distinctPairs = await prisma.homes.findMany({
       where,
+      select: { employeeId: true, partnerId: true },
+      distinct: ["employeeId", "partnerId"],
+      orderBy: [{ employeeId: "asc" }, { partnerId: "asc" }],
+    });
+
+    if (distinctPairs.length === 0) return [];
+
+    // Fetch all home rows for all families (no id restriction — get all siblings)
+    const allHomes = await prisma.homes.findMany({
+      where: {
+        partnerId: { not: null },
+        employeeId: { not: null },
+        OR: distinctPairs.map((p) => ({ employeeId: p.employeeId!, partnerId: p.partnerId! })),
+      },
       include: {
         partners: {
           include: {
-            umkm: {
-              include: {
-                umkmVisits: { select: { assistanceAmount: true } },
-              },
-            },
+            umkm: { include: { umkmVisits: { select: { assistanceAmount: true } } } },
           },
         },
         employees: { include: { regions: true } },
         wali: true,
         regions: true,
         children: {
-          include: {
-            childAssistance: { select: { assistanceAmount: true } },
-          },
+          include: { childAssistance: { select: { assistanceAmount: true } } },
           orderBy: { index: "asc" },
         },
         familyVisits: {
-          select: {
-            familyVisitDocs: { select: { id: true }, take: 1 },
-          },
+          select: { familyVisitDocs: { select: { id: true }, take: 1 } },
         },
       },
-      orderBy: { createdAt: "asc" },
+      orderBy: { id: "asc" },
     });
 
-    return homes.map((home) => ({
-      ...home,
-      isUmkm: (home.partners?.umkm?.length ?? 0) > 0,
-      hasFoto: home.familyVisits.some((v) => v.familyVisitDocs.length > 0),
-    }));
+    // Group by (employeeId, partnerId)
+    const groupMap = new Map<string, typeof allHomes>();
+    for (const home of allHomes) {
+      const key = `${home.employeeId}-${home.partnerId}`;
+      if (!groupMap.has(key)) groupMap.set(key, []);
+      groupMap.get(key)!.push(home);
+    }
+
+    // Build one grouped record per family
+    return distinctPairs.map((pair) => {
+      const key = `${pair.employeeId}-${pair.partnerId}`;
+      const siblings = groupMap.get(key) ?? [];
+      const canonical = siblings.reduce((min, h) => (h.id < min.id ? h : min), siblings[0]);
+
+      return {
+        ...canonical,
+        isUmkm: (canonical.partners?.umkm?.length ?? 0) > 0,
+        hasFoto: siblings.some((s) => s.familyVisits.some((v) => v.familyVisitDocs.length > 0)),
+        isValidated: siblings.some((s) => s.isValidated === true),
+        allWaliNames: siblings
+          .map((s) => s.wali?.waliName)
+          .filter(Boolean)
+          .join(", ") || null,
+        allChildren: siblings.flatMap((s) => s.children).sort((a, b) => (a.index ?? 0) - (b.index ?? 0)),
+        walis: siblings.map((s) => ({
+          homeId: s.id,
+          waliId: s.waliId,
+          wali: s.wali,
+          regionId: s.regionId,
+          regions: s.regions,
+        })),
+      };
+    });
   } catch (error) {
     throw error;
   }
 };
 
 /**
- * Select homes with pagination, search, and column filters (optimized for table display)
+ * Select homes with pagination, search, and column filters — grouped by (employeeId, partnerId)
+ * so one family always appears as a single row even when they have multiple walis.
  */
 export const selectHomesOptimized = async (
   page: number = 1,
@@ -853,12 +961,29 @@ export const selectHomesOptimized = async (
       if (ids !== null) where.id = { in: ids.length > 0 ? ids : [-1] };
     }
 
-    // Get total count for pagination
-    const total = await prisma.homes.count({ where });
-
-    // Get paginated data
-    const homes = await prisma.homes.findMany({
+    // Distinct (employeeId, partnerId) pairs — each pair = one family
+    const distinctPairs = await prisma.homes.findMany({
       where,
+      select: { employeeId: true, partnerId: true },
+      distinct: ["employeeId", "partnerId"],
+      orderBy: [{ employeeId: "asc" }, { partnerId: "asc" }],
+    });
+
+    const total = distinctPairs.length;
+    const totalPages = Math.ceil(total / pageSize);
+    const pagedPairs = distinctPairs.slice(skip, skip + pageSize);
+
+    if (pagedPairs.length === 0) {
+      return { data: [], pagination: { page, pageSize, total, totalPages } };
+    }
+
+    // Fetch ALL home rows for the page's families (includes all sibling homes)
+    const allHomesForPage = await prisma.homes.findMany({
+      where: {
+        partnerId: { not: null },
+        employeeId: { not: null },
+        OR: pagedPairs.map((p) => ({ employeeId: p.employeeId!, partnerId: p.partnerId! })),
+      },
       include: {
         partners: true,
         employees: true,
@@ -866,50 +991,66 @@ export const selectHomesOptimized = async (
         regions: true,
         _count: { select: { children: true } },
       },
-      orderBy: { createdAt: "asc" },
-      skip,
-      take: pageSize,
+      orderBy: { id: "asc" },
     });
 
-    // Compute total assistance amount per home (via children → childAssistance)
-    const homeIds = homes.map((h) => h.id);
-    const childrenWithAssistance = homeIds.length > 0
+    // Group sibling homes by (employeeId, partnerId)
+    const groupMap = new Map<string, typeof allHomesForPage>();
+    for (const home of allHomesForPage) {
+      const key = `${home.employeeId}-${home.partnerId}`;
+      if (!groupMap.has(key)) groupMap.set(key, []);
+      groupMap.get(key)!.push(home);
+    }
+
+    // Assistance totals across all sibling home IDs
+    const allPageHomeIds = allHomesForPage.map((h) => h.id);
+    const childrenWithAssistance = allPageHomeIds.length > 0
       ? await prisma.children.findMany({
-          where: { homeId: { in: homeIds } },
-          select: {
-            homeId: true,
-            childAssistance: { select: { assistanceAmount: true } },
-          },
+          where: { homeId: { in: allPageHomeIds } },
+          select: { homeId: true, childAssistance: { select: { assistanceAmount: true } } },
         })
       : [];
     const homeAssistanceMap = new Map<number, number>();
     childrenWithAssistance.forEach((child) => {
       if (!child.homeId) return;
-      const total = child.childAssistance.reduce((s, a) => s + (a.assistanceAmount ?? 0), 0);
-      homeAssistanceMap.set(child.homeId, (homeAssistanceMap.get(child.homeId) ?? 0) + total);
+      const amt = child.childAssistance.reduce((s, a) => s + (a.assistanceAmount ?? 0), 0);
+      homeAssistanceMap.set(child.homeId, (homeAssistanceMap.get(child.homeId) ?? 0) + amt);
     });
 
-    // Add UMKM status for each home
-    const homesWithUmkm = await Promise.all(
-      homes.map(async (home) => ({
-        ...home,
-        isUmkm: !!(await prisma.umkm.findFirst({
-          where: { partnerId: home.partnerId },
-        })),
-        totalAssistanceAmount: homeAssistanceMap.get(home.id) ?? 0,
-      }))
+    // Merge siblings into one grouped record per family
+    const merged = await Promise.all(
+      pagedPairs.map(async (pair) => {
+        const key = `${pair.employeeId}-${pair.partnerId}`;
+        const siblings = groupMap.get(key) ?? [];
+        const canonical = siblings.reduce((min, h) => (h.id < min.id ? h : min), siblings[0]);
+
+        const totalAssistanceAmount = siblings.reduce(
+          (sum, h) => sum + (homeAssistanceMap.get(h.id) ?? 0),
+          0
+        );
+
+        const isUmkm = !!(await prisma.umkm.findFirst({ where: { partnerId: pair.partnerId } }));
+
+        return {
+          ...canonical,
+          walis: siblings.map((h) => ({
+            homeId: h.id,
+            waliId: h.waliId,
+            wali: h.wali,
+            regionId: h.regionId,
+            regions: h.regions,
+          })),
+          _count: { children: siblings.reduce((s, h) => s + h._count.children, 0) },
+          isValidated: siblings.some((h) => h.isValidated === true),
+          isUmkm,
+          totalAssistanceAmount,
+        };
+      })
     );
 
-    const totalPages = Math.ceil(total / pageSize);
-
     return {
-      data: homesWithUmkm,
-      pagination: {
-        page,
-        pageSize,
-        total,
-        totalPages,
-      },
+      data: merged,
+      pagination: { page, pageSize, total, totalPages },
     };
   } catch (error) {
     throw error;

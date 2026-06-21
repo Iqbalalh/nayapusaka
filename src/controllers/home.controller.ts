@@ -6,7 +6,6 @@ import { Request, Response, NextFunction } from "express";
 import { prisma } from "../utils/prisma/prisma";
 import {
   selectAllHomes,
-  selectHomeDetails,
   selectHomeList,
   selectHomesForMaps,
   selectAbkHomesForMaps,
@@ -15,6 +14,7 @@ import {
   selectHomesForExport,
   selectHomesOptimized,
   selectHomeSummary,
+  createSiblingHome,
 } from "../services/home.services";
 import { AuthRequest } from "../middlewares/auth";
 
@@ -95,7 +95,7 @@ export const getHomeAllDetail = async (
 ) => {
   try {
     const id = Number(req.params.id);
-    const result = await selectHomeDetails(id);
+    const result = await selectHomeDetailById(id);
 
     if (!result) {
       return res.status(404).json({
@@ -104,68 +104,54 @@ export const getHomeAllDetail = async (
       });
     }
 
-    // Attach presigned URLs for all nested picture fields
-    const home = { ...result };
+    const home: any = { ...result };
 
-    if (
-      home.employee &&
-      home.employee.employeePict &&
-      isValidS3Key(home.employee.employeePict)
-    ) {
-      home.employee.employeePict = await getPresignedUrl(
-        home.employee.employeePict
-      );
+    // Presign employee/partner pictures
+    if (home.employee?.employeePict && isValidS3Key(home.employee.employeePict)) {
+      home.employee.employeePict = await getPresignedUrl(home.employee.employeePict);
     }
-    if (
-      home.partner &&
-      home.partner.partnerPict &&
-      isValidS3Key(home.partner.partnerPict)
-    ) {
-      home.partner.partnerPict = await getPresignedUrl(
-        home.partner.partnerPict
-      );
+    if (home.partner?.partnerPict && isValidS3Key(home.partner.partnerPict)) {
+      home.partner.partnerPict = await getPresignedUrl(home.partner.partnerPict);
     }
-    if (home.wali && home.wali.waliPict && isValidS3Key(home.wali.waliPict)) {
-      home.wali.waliPict = await getPresignedUrl(home.wali.waliPict);
-    }
-    if (home.childrens && Array.isArray(home.childrens)) {
-      home.childrens = (await Promise.all(
-        home.childrens.map(async (child) => {
-          const childCopy = { ...child };
-          if (
-            childCopy.childrenPict &&
-            isValidS3Key(childCopy.childrenPict as string)
-          ) {
-            childCopy.childrenPict = await getPresignedUrl(
-              childCopy.childrenPict as string
-            );
+
+    // Presign each wali's picture inside the walis[] array
+    if (Array.isArray(home.walis)) {
+      home.walis = await Promise.all(
+        home.walis.map(async (entry: any) => {
+          if (entry.wali?.waliPict && isValidS3Key(entry.wali.waliPict)) {
+            return { ...entry, wali: { ...entry.wali, waliPict: await getPresignedUrl(entry.wali.waliPict) } };
           }
-          return childCopy;
+          return entry;
         })
-      )) as any;
+      );
     }
 
-    // Collect all user IDs from home + nested objects for batch lookup
-    const allUserIds: (number | null | undefined)[] = [
-      home.createdBy, home.editedBy,
-    ];
-    if (home.employee) {
-      allUserIds.push(home.employee.createdBy, home.employee.editedBy);
+    // Presign children pictures
+    if (Array.isArray(home.childrens)) {
+      home.childrens = await Promise.all(
+        home.childrens.map(async (child: any) => {
+          if (child.childrenPict && isValidS3Key(child.childrenPict)) {
+            return { ...child, childrenPict: await getPresignedUrl(child.childrenPict) };
+          }
+          return child;
+        })
+      );
     }
-    if (home.partner) {
-      allUserIds.push(home.partner.createdBy, home.partner.editedBy);
-    }
-    if (home.wali) {
-      allUserIds.push(home.wali.createdBy, home.wali.editedBy);
-    }
-    if (home.childrens) {
-      home.childrens.forEach((c: any) => {
-        allUserIds.push(c.createdBy, c.editedBy);
+
+    // Batch load staff names
+    const allUserIds: (number | null | undefined)[] = [home.createdBy, home.editedBy];
+    if (home.employee) allUserIds.push(home.employee.createdBy, home.employee.editedBy);
+    if (home.partner) allUserIds.push(home.partner.createdBy, home.partner.editedBy);
+    if (Array.isArray(home.walis)) {
+      home.walis.forEach((e: any) => {
+        if (e.wali) allUserIds.push(e.wali.createdBy, e.wali.editedBy);
       });
+    }
+    if (Array.isArray(home.childrens)) {
+      home.childrens.forEach((c: any) => allUserIds.push(c.createdBy, c.editedBy));
     }
 
     const staffNameMap = await getStaffNamesByUserIds(allUserIds);
-
     const attachNames = (obj: any) => {
       if (!obj) return obj;
       return {
@@ -178,8 +164,13 @@ export const getHomeAllDetail = async (
     const finalResult: any = attachNames(home);
     if (finalResult.employee) finalResult.employee = attachNames(finalResult.employee);
     if (finalResult.partner) finalResult.partner = attachNames(finalResult.partner);
-    if (finalResult.wali) finalResult.wali = attachNames(finalResult.wali);
-    if (finalResult.childrens && Array.isArray(finalResult.childrens)) {
+    if (Array.isArray(finalResult.walis)) {
+      finalResult.walis = finalResult.walis.map((entry: any) => ({
+        ...entry,
+        wali: attachNames(entry.wali),
+      }));
+    }
+    if (Array.isArray(finalResult.childrens)) {
       finalResult.childrens = finalResult.childrens.map(attachNames);
     }
 
@@ -362,19 +353,20 @@ export const getHomeDetail = async (
       });
     }
 
-    // Presign photos in place so nested fields (employees.employeePict,
-    // partners.partnerPict, children[].childrenPict) are directly usable.
-    if (home.employees?.employeePict && isValidS3Key(home.employees.employeePict)) {
-      home.employees.employeePict = await getPresignedUrl(home.employees.employeePict);
+    const h = home as any;
+
+    // Presign employee and partner photos
+    if (h.employee?.employeePict && isValidS3Key(h.employee.employeePict)) {
+      h.employee.employeePict = await getPresignedUrl(h.employee.employeePict);
+    }
+    if (h.partner?.partnerPict && isValidS3Key(h.partner.partnerPict)) {
+      h.partner.partnerPict = await getPresignedUrl(h.partner.partnerPict);
     }
 
-    if (home.partners?.partnerPict && isValidS3Key(home.partners.partnerPict)) {
-      home.partners.partnerPict = await getPresignedUrl(home.partners.partnerPict);
-    }
-
-    if (Array.isArray(home.children)) {
+    // Presign child photos from all sibling homes
+    if (Array.isArray(h.childrens)) {
       await Promise.all(
-        home.children.map(async (child) => {
+        h.childrens.map(async (child: any) => {
           if (child.childrenPict && isValidS3Key(child.childrenPict)) {
             child.childrenPict = await getPresignedUrl(child.childrenPict);
           }
@@ -382,10 +374,21 @@ export const getHomeDetail = async (
       );
     }
 
+    // Presign wali photos from walis[]
+    if (Array.isArray(h.walis)) {
+      await Promise.all(
+        h.walis.map(async (entry: any) => {
+          if (entry.wali?.waliPict && isValidS3Key(entry.wali.waliPict)) {
+            entry.wali.waliPict = await getPresignedUrl(entry.wali.waliPict);
+          }
+        })
+      );
+    }
+
     const result = {
       ...home,
-      employeePict: home.employees?.employeePict ?? null,
-      partnerPict: home.partners?.partnerPict ?? null,
+      employeePict: h.employee?.employeePict ?? null,
+      partnerPict: h.partner?.partnerPict ?? null,
     };
 
     // Add staff names to the result
@@ -988,25 +991,39 @@ export const patchHome = async (
       }
 
       // 4. Update Home
+      const newRegionId = body.region_id ? Number(body.region_id) : existingHome.regionId;
+      const newPostalCode = body.postal_code !== undefined ? body.postal_code : existingHome.postalCode;
+      const newIsValidated = body.isValidated !== undefined
+        ? (body.isValidated === "true" || body.isValidated === true || body.isValidated === "1")
+        : undefined;
+
       const homePayload: Prisma.HomesUpdateInput = {
-        regions: body.region_id
-          ? { connect: { regionId: Number(body.region_id) } }
-          : existingHome.regionId
-          ? { connect: { regionId: existingHome.regionId } }
-          : undefined,
-        postalCode: body.postal_code !== undefined ? body.postal_code : existingHome.postalCode,
+        regions: newRegionId ? { connect: { regionId: newRegionId } } : undefined,
+        postalCode: newPostalCode,
         employees: employeeId ? { connect: { id: employeeId } } : undefined,
         partners: partnerId ? { connect: { id: partnerId } } : undefined,
         wali: waliId ? { connect: { id: waliId } } : waliId === null ? { disconnect: true } : undefined,
         editedBy: userId,
-        ...(body.isValidated !== undefined && {
-          isValidated: body.isValidated === "true" || body.isValidated === true || body.isValidated === "1",
-        }),
+        ...(newIsValidated !== undefined && { isValidated: newIsValidated }),
       };
 
       const updatedHome = await tx.homes.update({
         where: { id },
         data: homePayload,
+      });
+
+      // Cascade shared fields (region, postalCode, isValidated) to all sibling homes
+      const cascadeData: Record<string, any> = { editedBy: userId };
+      if (newRegionId !== undefined) cascadeData.regionId = newRegionId;
+      if (newPostalCode !== undefined) cascadeData.postalCode = newPostalCode;
+      if (newIsValidated !== undefined) cascadeData.isValidated = newIsValidated;
+      await tx.homes.updateMany({
+        where: {
+          employeeId: updatedHome.employeeId ?? undefined,
+          partnerId: updatedHome.partnerId ?? undefined,
+          id: { not: id },
+        },
+        data: cascadeData,
       });
 
       // 5. Handle Children
@@ -1143,3 +1160,27 @@ export const deleteHome = async (
   }
 };
 
+// ============================================================================
+// CREATE SIBLING HOME (Tambah Wali)
+// ============================================================================
+export const postSiblingHome = async (
+  req: AuthRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = Number(req.params.id);
+    const userId = (req.user as any)?.id || 2;
+    const waliId = req.body.waliId ? Number(req.body.waliId) : null;
+
+    const newHome = await createSiblingHome(id, waliId, userId);
+
+    return res.status(201).json({
+      message: "Sibling home created successfully",
+      data: newHome,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+};

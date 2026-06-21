@@ -245,7 +245,7 @@ export const selectChildrenStats = async (search: string = "", filters?: Childre
       yatim, piatu, yatimPiatu, abk,
       yatimActive, piatuActive, yatimPiatuActive, abkActive,
       yatimInactive, piatuInactive, yatimPiatuInactive, abkInactive,
-      assistanceAgg,
+      assistanceAgg, assistanceAggActive, assistanceAggInactive,
     ] = await Promise.all([
       prisma.children.count({ where }),
       prisma.children.count({ where: aw }),
@@ -265,6 +265,8 @@ export const selectChildrenStats = async (search: string = "", filters?: Childre
       prisma.children.count({ where: { ...iw, isFatherAlive: false, isMotherAlive: false } }),
       prisma.children.count({ where: { ...iw, isCondition: false } }),
       prisma.childAssistance.aggregate({ where: { children: where }, _sum: { assistanceAmount: true }, _count: true }),
+      prisma.childAssistance.aggregate({ where: { children: aw }, _sum: { assistanceAmount: true }, _count: true }),
+      prisma.childAssistance.aggregate({ where: { children: iw }, _sum: { assistanceAmount: true }, _count: true }),
     ]);
 
     return {
@@ -274,6 +276,10 @@ export const selectChildrenStats = async (search: string = "", filters?: Childre
       yatimInactive, piatuInactive, yatimPiatuInactive, abkInactive,
       totalDana: Number(assistanceAgg._sum.assistanceAmount ?? 0),
       totalBantuan: assistanceAgg._count,
+      totalDanaActive: Number(assistanceAggActive._sum.assistanceAmount ?? 0),
+      totalBantuanActive: assistanceAggActive._count,
+      totalDanaInactive: Number(assistanceAggInactive._sum.assistanceAmount ?? 0),
+      totalBantuanInactive: assistanceAggInactive._count,
     };
   } catch (error) {
     throw error;

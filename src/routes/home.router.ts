@@ -15,6 +15,7 @@ import {
   getHomesForExport,
   getHomesOptimized,
   getHomeSummary,
+  postSiblingHome,
 } from "../controllers/home.controller";
 
 const homeRouter = Router();
@@ -40,6 +41,7 @@ homeRouter.get("/optimized", getHomesOptimized);
 homeRouter.get("/summary", getHomeSummary);
 homeRouter.get("/detail/:id", getHomeAllDetail);
 homeRouter.get("/:id", getHomeDetail);
+homeRouter.post("/:id/sibling", verifyAdminOrAbove, postSiblingHome);
 homeRouter.patch("/:id", verifyAdminOrAbove, upload.any(), patchHome);
 homeRouter.delete("/:id", verifyAdminOrAbove, deleteHome);
 
