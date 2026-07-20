@@ -186,7 +186,7 @@ export const selectChildAssistanceCount = async (search?: string): Promise<numbe
         { notes: { contains: search, mode: 'insensitive' as const } },
       ],
     } : {};
-    
+
     return await prisma.childAssistance.count({ where });
   } catch (error) {
     throw error instanceof Error ? error : new Error(String(error));
@@ -407,7 +407,7 @@ export const selectAllChildAssistanceOptimized = async (
         { notes: { contains: search, mode: 'insensitive' as const } },
       ],
     } : {};
-    
+
     return await prisma.childAssistance.findMany({
       select: {
         id: true,

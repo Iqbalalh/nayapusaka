@@ -101,7 +101,7 @@ export const getChildAssistanceOptimized = async (
     const page = Number(req.query.page) || 1;
     const pageSize = Number(req.query.pageSize) || 20;
     const skip = (page - 1) * pageSize;
-    
+
     // Get search parameter
     const search = req.query.search as string || "";
 
