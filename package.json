@@ -15,7 +15,8 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:utils": "jest src/utils/__tests__",
-    "seed:homes-region": "ts-node src/seeders/seedHomesRegion.ts"
+    "seed:homes-region": "ts-node src/seeders/seedHomesRegion.ts",
+    "seed:alumni": "ts-node src/seeders/backfillAlumni.ts"
   },
   "keywords": [],
   "author": "",

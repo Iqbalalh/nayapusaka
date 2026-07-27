@@ -46,6 +46,26 @@ model Children {
   @@map("childrens")
 }
 
+model Alumni {
+  id              Int       @id @default(autoincrement())
+  alumniName      String    @map("alumni_name") @db.VarChar(150)
+  alumniGender    Gender?   @map("alumni_gender")
+  alumniBirthdate DateTime? @map("alumni_birthdate") @db.Date
+  alumniAddress   String?   @map("alumni_address")
+  alumniPhone     String?   @map("alumni_phone") @db.VarChar(30)
+  educationLevel  String?   @map("education_level") @db.VarChar(100)
+  alumniJob       String?   @map("alumni_job") @db.VarChar(50)
+  nik             String?   @db.VarChar(30)
+  notes           String?
+  alumniPict      String?   @map("alumni_pict") @db.VarChar(255)
+  createdAt       DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt       DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
+  createdBy       Int?      @default(2) @map("created_by")
+  editedBy        Int?      @map("edited_by")
+
+  @@map("alumni")
+}
+
 
 model Employees {
   id             Int      @id @default(autoincrement())

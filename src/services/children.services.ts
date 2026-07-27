@@ -55,6 +55,27 @@ export const selectAllChildren = async (args?: Prisma.ChildrenFindManyArgs) => {
 };
 
 /**
+ * Return the child's most recent "pendidikan terakhir" — taken from the latest
+ * child assistance record that has an educationLevel (mirrors the anak asuh
+ * table display). Returns null when none is recorded.
+ */
+export const selectLatestChildEducationLevel = async (
+  childrenId: number
+): Promise<string | null> => {
+  try {
+    const latest = await prisma.childAssistance.findFirst({
+      where: { childrenId, educationLevel: { not: null } },
+      orderBy: [{ assistanceDate: "desc" }, { id: "desc" }],
+      select: { educationLevel: true },
+    });
+    const level = latest?.educationLevel?.trim();
+    return level ? level : null;
+  } catch (error) {
+    throw error;
+  }
+};
+
+/**
  * Select children list (id and name only)
  */
 export const selectChildrenList = async () => {

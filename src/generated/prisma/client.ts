@@ -43,6 +43,11 @@ export { Prisma }
  */
 export type Children = Prisma.ChildrenModel
 /**
+ * Model Alumni
+ * 
+ */
+export type Alumni = Prisma.AlumniModel
+/**
  * Model Employees
  * 
  */

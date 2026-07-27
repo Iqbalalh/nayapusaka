@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Children: 'Children',
+  Alumni: 'Alumni',
   Employees: 'Employees',
   Homes: 'Homes',
   Partners: 'Partners',
@@ -121,6 +122,27 @@ export const ChildrenScalarFieldEnum = {
 } as const
 
 export type ChildrenScalarFieldEnum = (typeof ChildrenScalarFieldEnum)[keyof typeof ChildrenScalarFieldEnum]
+
+
+export const AlumniScalarFieldEnum = {
+  id: 'id',
+  alumniName: 'alumniName',
+  alumniGender: 'alumniGender',
+  alumniBirthdate: 'alumniBirthdate',
+  alumniAddress: 'alumniAddress',
+  alumniPhone: 'alumniPhone',
+  educationLevel: 'educationLevel',
+  alumniJob: 'alumniJob',
+  nik: 'nik',
+  notes: 'notes',
+  alumniPict: 'alumniPict',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
+} as const
+
+export type AlumniScalarFieldEnum = (typeof AlumniScalarFieldEnum)[keyof typeof AlumniScalarFieldEnum]
 
 
 export const EmployeesScalarFieldEnum = {

@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   Children: 'Children',
+  Alumni: 'Alumni',
   Employees: 'Employees',
   Homes: 'Homes',
   Partners: 'Partners',
@@ -424,7 +425,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "children" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "socialAssistanceDocs" | "letterType" | "letter" | "letterApproval"
+    modelProps: "children" | "alumni" | "employees" | "homes" | "partners" | "regions" | "staffs" | "umkm" | "users" | "wali" | "familyVisit" | "familyVisitDocs" | "umkmVisit" | "umkmVisitDocs" | "umkmMonitoring" | "umkmMonitoringDocs" | "childAssistance" | "childAssistanceDocs" | "category" | "gallery" | "galleryCategory" | "socialAssistance" | "socialAssistanceDocs" | "letterType" | "letter" | "letterApproval"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -499,6 +500,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ChildrenCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ChildrenCountAggregateOutputType> | number
+        }
+      }
+    }
+    Alumni: {
+      payload: Prisma.$AlumniPayload<ExtArgs>
+      fields: Prisma.AlumniFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AlumniFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AlumniFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>
+        }
+        findFirst: {
+          args: Prisma.AlumniFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AlumniFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>
+        }
+        findMany: {
+          args: Prisma.AlumniFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>[]
+        }
+        create: {
+          args: Prisma.AlumniCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>
+        }
+        createMany: {
+          args: Prisma.AlumniCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AlumniCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>[]
+        }
+        delete: {
+          args: Prisma.AlumniDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>
+        }
+        update: {
+          args: Prisma.AlumniUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>
+        }
+        deleteMany: {
+          args: Prisma.AlumniDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AlumniUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AlumniUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>[]
+        }
+        upsert: {
+          args: Prisma.AlumniUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AlumniPayload>
+        }
+        aggregate: {
+          args: Prisma.AlumniAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAlumni>
+        }
+        groupBy: {
+          args: Prisma.AlumniGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AlumniGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AlumniCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AlumniCountAggregateOutputType> | number
         }
       }
     }
@@ -2346,6 +2421,27 @@ export const ChildrenScalarFieldEnum = {
 export type ChildrenScalarFieldEnum = (typeof ChildrenScalarFieldEnum)[keyof typeof ChildrenScalarFieldEnum]
 
 
+export const AlumniScalarFieldEnum = {
+  id: 'id',
+  alumniName: 'alumniName',
+  alumniGender: 'alumniGender',
+  alumniBirthdate: 'alumniBirthdate',
+  alumniAddress: 'alumniAddress',
+  alumniPhone: 'alumniPhone',
+  educationLevel: 'educationLevel',
+  alumniJob: 'alumniJob',
+  nik: 'nik',
+  notes: 'notes',
+  alumniPict: 'alumniPict',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdBy: 'createdBy',
+  editedBy: 'editedBy'
+} as const
+
+export type AlumniScalarFieldEnum = (typeof AlumniScalarFieldEnum)[keyof typeof AlumniScalarFieldEnum]
+
+
 export const EmployeesScalarFieldEnum = {
   id: 'id',
   nipNipp: 'nipNipp',
@@ -3023,6 +3119,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   children?: Prisma.ChildrenOmit
+  alumni?: Prisma.AlumniOmit
   employees?: Prisma.EmployeesOmit
   homes?: Prisma.HomesOmit
   partners?: Prisma.PartnersOmit
