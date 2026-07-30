@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import path from "path";
 import {
   selectAllAlumni,
   selectAlumniList,
@@ -10,13 +9,11 @@ import {
   insertAlumni,
   updateAlumniById,
   deleteAlumniById,
+  promoteChildrenToAlumni,
 } from "../services/alumni.services";
-import { selectChildrenById, selectLatestChildEducationLevel } from "../services/children.services";
 import { Prisma } from "../generated/prisma/client";
 import {
   uploadToS3,
-  uploadBufferToS3,
-  downloadFromS3,
   deleteFromS3,
   getPresignedUrl,
   isValidS3Key,
@@ -28,15 +25,6 @@ import { addStaffNamesToRecords } from "../utils/staff/staff.util";
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
 }
-
-const contentTypeFromExt = (key: string): string => {
-  const ext = path.extname(key).toLowerCase();
-  if (ext === ".jpg" || ext === ".jpeg") return "image/jpeg";
-  if (ext === ".png") return "image/png";
-  if (ext === ".webp") return "image/webp";
-  if (ext === ".gif") return "image/gif";
-  return "application/octet-stream";
-};
 
 // ============================================================================
 // GET ALL ALUMNI
@@ -223,49 +211,14 @@ export const postAlumniFromChildren = async (req: AuthRequest, res: Response, ne
     const userId = (req.user as any)?.id || 2;
     const childrenId = Number(req.params.childrenId);
 
-    const child = await selectChildrenById(childrenId);
-    if (!child) {
+    const alumni = await promoteChildrenToAlumni(childrenId, userId);
+    if (!alumni) {
       return res.status(404).json({ message: "Children not found", data: null });
     }
 
-    // "Pendidikan terakhir": prefer latest child-assistance education, fall back
-    // to the children.educationLevel column.
-    const latestEdu = await selectLatestChildEducationLevel(childrenId);
-
-    const body: Prisma.AlumniCreateInput = {
-      alumniName: child.childrenName,
-      alumniGender: child.childrenGender ?? null,
-      alumniBirthdate: child.childrenBirthdate ?? null,
-      alumniAddress: child.childrenAddress ?? null,
-      alumniPhone: child.childrenPhone ?? null,
-      educationLevel: latestEdu ?? child.educationLevel ?? null,
-      alumniJob: child.childrenJob ?? null,
-      nik: child.nik ?? null,
-      notes: child.notes ?? null,
-      alumniPict: null,
-      createdBy: userId,
-    };
-
-    const newAlumni = await insertAlumni(body);
-
-    // Copy the child's photo into the alumni S3 folder (own copy, not shared key)
-    let alumniPict: string | null = null;
-    if (isValidS3Key(child.childrenPict)) {
-      const buffer = await downloadFromS3(child.childrenPict);
-      if (buffer) {
-        const ext = path.extname(child.childrenPict!);
-        const slug = (child.childrenName || "alumni").toLowerCase().replace(/\s+/g, "-");
-        const rand = Math.random().toString(36).substring(2, 10);
-        const newKey = `database/alumni/${newAlumni.id}-${slug}-${rand}${ext}`;
-        await uploadBufferToS3(buffer, newKey, contentTypeFromExt(child.childrenPict!));
-        alumniPict = newKey;
-        await updateAlumniById(newAlumni.id, { alumniPict });
-      }
-    }
-
     const result = {
-      ...newAlumni,
-      alumniPict: alumniPict && isValidS3Key(alumniPict) ? await getPresignedUrl(alumniPict) : null,
+      ...alumni,
+      alumniPict: isValidS3Key(alumni.alumniPict) ? await getPresignedUrl(alumni.alumniPict) : null,
     };
 
     const withStaffNames = await addStaffNamesToRecords([result]);

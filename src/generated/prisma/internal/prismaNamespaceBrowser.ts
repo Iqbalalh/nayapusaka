@@ -136,6 +136,7 @@ export const AlumniScalarFieldEnum = {
   nik: 'nik',
   notes: 'notes',
   alumniPict: 'alumniPict',
+  sourceChildrenId: 'sourceChildrenId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',

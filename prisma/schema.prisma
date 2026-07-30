@@ -58,6 +58,7 @@ model Alumni {
   nik             String?   @db.VarChar(30)
   notes           String?
   alumniPict      String?   @map("alumni_pict") @db.VarChar(255)
+  sourceChildrenId Int?     @map("source_children_id")
   createdAt       DateTime? @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt       DateTime? @default(now()) @map("updated_at") @db.Timestamp(6)
   createdBy       Int?      @default(2) @map("created_by")

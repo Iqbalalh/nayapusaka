@@ -16,6 +16,25 @@ import { sanitizeChildrenData } from "../utils/sanitize/children.sanitize";
 import { ChildrenInput } from "../utils/sanitize/children.sanitize";
 import { AuthRequest } from "../middlewares/auth";
 import { addStaffNamesToRecords } from "../utils/staff/staff.util";
+import { promoteChildrenToAlumni } from "../services/alumni.services";
+
+/**
+ * Auto-promote an inactive child into an alumni record (idempotent, best-effort).
+ * Never throws — a promotion failure must not break the children request.
+ */
+const autoPromoteIfInactive = async (
+  isActive: boolean | null | undefined,
+  childrenId: number,
+  userId: number
+): Promise<void> => {
+  if (isActive !== false) return;
+  try {
+    await promoteChildrenToAlumni(childrenId, userId);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`Auto-promote alumni gagal untuk child#${childrenId}:`, err);
+  }
+};
 
 interface RequestWithFile extends AuthRequest {
   file?: Express.Multer.File;
@@ -162,6 +181,9 @@ export const postChildren = async (
       pictUrl = await getPresignedUrl(childrenPict);
     }
 
+    // Auto-promote to alumni if created inactive
+    await autoPromoteIfInactive(newChildren.isActive, newChildren.id, userId);
+
     const result = {
       ...newChildren,
       childrenPict: pictUrl,
@@ -227,6 +249,9 @@ export const patchChildren = async (
       childrenPict,
       editedBy: userId,
     } as Prisma.ChildrenUpdateInput);
+
+    // Auto-promote to alumni when the child is (now) inactive
+    await autoPromoteIfInactive(updated.isActive, id, userId);
 
     let pictUrl = null;
     if (updated.childrenPict && isValidS3Key(updated.childrenPict)) {

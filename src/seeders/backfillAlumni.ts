@@ -39,21 +39,26 @@ async function main() {
   });
   console.log(`Anak asuh tidak aktif ditemukan: ${inactive.length}`);
 
-  // Map existing alumni by dedup key so re-runs can patch instead of duplicate
+  // Existing alumni indexed by source child id AND dedup key (older rows created
+  // before the source link existed are matched by key).
   const existingAlumni = await prisma.alumni.findMany({
-    select: { id: true, alumniName: true, nik: true, alumniBirthdate: true, educationLevel: true },
+    select: { id: true, alumniName: true, nik: true, alumniBirthdate: true, educationLevel: true, sourceChildrenId: true },
   });
-  const existingByKey = new Map<string, { id: number; educationLevel: string | null }>();
-  existingAlumni.forEach((a) =>
-    existingByKey.set(dedupKey(a.alumniName, a.nik, a.alumniBirthdate), {
+  const bySource = new Map<number, { id: number; educationLevel: string | null }>();
+  const byKey = new Map<string, { id: number; educationLevel: string | null; sourceChildrenId: number | null }>();
+  existingAlumni.forEach((a) => {
+    if (a.sourceChildrenId != null) bySource.set(a.sourceChildrenId, { id: a.id, educationLevel: a.educationLevel });
+    byKey.set(dedupKey(a.alumniName, a.nik, a.alumniBirthdate), {
       id: a.id,
       educationLevel: a.educationLevel,
-    })
-  );
+      sourceChildrenId: a.sourceChildrenId,
+    });
+  });
 
   let created = 0;
   let skipped = 0;
   let eduPatched = 0;
+  let linked = 0;
   let photoCopied = 0;
   let photoFailed = 0;
 
@@ -64,15 +69,30 @@ async function main() {
     const latestEdu = await selectLatestChildEducationLevel(child.id);
     const effectiveEdu = latestEdu ?? child.educationLevel ?? null;
 
-    const existing = existingByKey.get(key);
-    if (existing) {
-      // Already present — patch education level if it's missing and we found one
-      if ((!existing.educationLevel || !existing.educationLevel.trim()) && effectiveEdu) {
-        await prisma.alumni.update({ where: { id: existing.id }, data: { educationLevel: effectiveEdu } });
+    // Already linked to this child → only patch education when missing
+    const linkedAlumni = bySource.get(child.id);
+    if (linkedAlumni) {
+      if ((!linkedAlumni.educationLevel || !linkedAlumni.educationLevel.trim()) && effectiveEdu) {
+        await prisma.alumni.update({ where: { id: linkedAlumni.id }, data: { educationLevel: effectiveEdu } });
         eduPatched++;
       } else {
         skipped++;
       }
+      continue;
+    }
+
+    // Present by dedup key but not yet linked → link it + patch education
+    const existing = byKey.get(key);
+    if (existing) {
+      const data: { sourceChildrenId?: number; educationLevel?: string } = {};
+      if (existing.sourceChildrenId == null) { data.sourceChildrenId = child.id; linked++; }
+      if ((!existing.educationLevel || !existing.educationLevel.trim()) && effectiveEdu) {
+        data.educationLevel = effectiveEdu;
+        eduPatched++;
+      }
+      if (Object.keys(data).length > 0) await prisma.alumni.update({ where: { id: existing.id }, data });
+      else skipped++;
+      bySource.set(child.id, { id: existing.id, educationLevel: effectiveEdu });
       continue;
     }
 
@@ -88,10 +108,12 @@ async function main() {
         nik: child.nik ?? null,
         notes: child.notes ?? null,
         alumniPict: null,
+        sourceChildrenId: child.id,
         createdBy: child.createdBy ?? 2,
       },
     });
-    existingByKey.set(key, { id: newAlumni.id, educationLevel: effectiveEdu });
+    bySource.set(child.id, { id: newAlumni.id, educationLevel: effectiveEdu });
+    byKey.set(key, { id: newAlumni.id, educationLevel: effectiveEdu, sourceChildrenId: child.id });
     created++;
 
     // Copy photo into the alumni S3 folder (own copy, not shared key)
@@ -117,10 +139,11 @@ async function main() {
   }
 
   console.log("== Selesai ==");
-  console.log(`Dibuat        : ${created}`);
+  console.log(`Dibuat             : ${created}`);
+  console.log(`Ditautkan ke anak  : ${linked}`);
   console.log(`Pendidikan di-patch: ${eduPatched}`);
-  console.log(`Dilewati      : ${skipped} (sudah ada & lengkap)`);
-  console.log(`Foto          : ${photoCopied} tersalin, ${photoFailed} gagal`);
+  console.log(`Dilewati           : ${skipped} (sudah ada & lengkap)`);
+  console.log(`Foto               : ${photoCopied} tersalin, ${photoFailed} gagal`);
 }
 
 main()

@@ -28,12 +28,14 @@ export type AggregateAlumni = {
 
 export type AlumniAvgAggregateOutputType = {
   id: number | null
+  sourceChildrenId: number | null
   createdBy: number | null
   editedBy: number | null
 }
 
 export type AlumniSumAggregateOutputType = {
   id: number | null
+  sourceChildrenId: number | null
   createdBy: number | null
   editedBy: number | null
 }
@@ -50,6 +52,7 @@ export type AlumniMinAggregateOutputType = {
   nik: string | null
   notes: string | null
   alumniPict: string | null
+  sourceChildrenId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: number | null
@@ -68,6 +71,7 @@ export type AlumniMaxAggregateOutputType = {
   nik: string | null
   notes: string | null
   alumniPict: string | null
+  sourceChildrenId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: number | null
@@ -86,6 +90,7 @@ export type AlumniCountAggregateOutputType = {
   nik: number
   notes: number
   alumniPict: number
+  sourceChildrenId: number
   createdAt: number
   updatedAt: number
   createdBy: number
@@ -96,12 +101,14 @@ export type AlumniCountAggregateOutputType = {
 
 export type AlumniAvgAggregateInputType = {
   id?: true
+  sourceChildrenId?: true
   createdBy?: true
   editedBy?: true
 }
 
 export type AlumniSumAggregateInputType = {
   id?: true
+  sourceChildrenId?: true
   createdBy?: true
   editedBy?: true
 }
@@ -118,6 +125,7 @@ export type AlumniMinAggregateInputType = {
   nik?: true
   notes?: true
   alumniPict?: true
+  sourceChildrenId?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -136,6 +144,7 @@ export type AlumniMaxAggregateInputType = {
   nik?: true
   notes?: true
   alumniPict?: true
+  sourceChildrenId?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -154,6 +163,7 @@ export type AlumniCountAggregateInputType = {
   nik?: true
   notes?: true
   alumniPict?: true
+  sourceChildrenId?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -259,6 +269,7 @@ export type AlumniGroupByOutputType = {
   nik: string | null
   notes: string | null
   alumniPict: string | null
+  sourceChildrenId: number | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: number | null
@@ -300,6 +311,7 @@ export type AlumniWhereInput = {
   nik?: Prisma.StringNullableFilter<"Alumni"> | string | null
   notes?: Prisma.StringNullableFilter<"Alumni"> | string | null
   alumniPict?: Prisma.StringNullableFilter<"Alumni"> | string | null
+  sourceChildrenId?: Prisma.IntNullableFilter<"Alumni"> | number | null
   createdAt?: Prisma.DateTimeNullableFilter<"Alumni"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Alumni"> | Date | string | null
   createdBy?: Prisma.IntNullableFilter<"Alumni"> | number | null
@@ -318,6 +330,7 @@ export type AlumniOrderByWithRelationInput = {
   nik?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   alumniPict?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -339,6 +352,7 @@ export type AlumniWhereUniqueInput = Prisma.AtLeast<{
   nik?: Prisma.StringNullableFilter<"Alumni"> | string | null
   notes?: Prisma.StringNullableFilter<"Alumni"> | string | null
   alumniPict?: Prisma.StringNullableFilter<"Alumni"> | string | null
+  sourceChildrenId?: Prisma.IntNullableFilter<"Alumni"> | number | null
   createdAt?: Prisma.DateTimeNullableFilter<"Alumni"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableFilter<"Alumni"> | Date | string | null
   createdBy?: Prisma.IntNullableFilter<"Alumni"> | number | null
@@ -357,6 +371,7 @@ export type AlumniOrderByWithAggregationInput = {
   nik?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   alumniPict?: Prisma.SortOrderInput | Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -383,6 +398,7 @@ export type AlumniScalarWhereWithAggregatesInput = {
   nik?: Prisma.StringNullableWithAggregatesFilter<"Alumni"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Alumni"> | string | null
   alumniPict?: Prisma.StringNullableWithAggregatesFilter<"Alumni"> | string | null
+  sourceChildrenId?: Prisma.IntNullableWithAggregatesFilter<"Alumni"> | number | null
   createdAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Alumni"> | Date | string | null
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Alumni"> | Date | string | null
   createdBy?: Prisma.IntNullableWithAggregatesFilter<"Alumni"> | number | null
@@ -400,6 +416,7 @@ export type AlumniCreateInput = {
   nik?: string | null
   notes?: string | null
   alumniPict?: string | null
+  sourceChildrenId?: number | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -418,6 +435,7 @@ export type AlumniUncheckedCreateInput = {
   nik?: string | null
   notes?: string | null
   alumniPict?: string | null
+  sourceChildrenId?: number | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -435,6 +453,7 @@ export type AlumniUpdateInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alumniPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceChildrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -453,6 +472,7 @@ export type AlumniUncheckedUpdateInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alumniPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceChildrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -471,6 +491,7 @@ export type AlumniCreateManyInput = {
   nik?: string | null
   notes?: string | null
   alumniPict?: string | null
+  sourceChildrenId?: number | null
   createdAt?: Date | string | null
   updatedAt?: Date | string | null
   createdBy?: number | null
@@ -488,6 +509,7 @@ export type AlumniUpdateManyMutationInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alumniPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceChildrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -506,6 +528,7 @@ export type AlumniUncheckedUpdateManyInput = {
   nik?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   alumniPict?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceChildrenId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -524,6 +547,7 @@ export type AlumniCountOrderByAggregateInput = {
   nik?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   alumniPict?: Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -532,6 +556,7 @@ export type AlumniCountOrderByAggregateInput = {
 
 export type AlumniAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
 }
@@ -548,6 +573,7 @@ export type AlumniMaxOrderByAggregateInput = {
   nik?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   alumniPict?: Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -566,6 +592,7 @@ export type AlumniMinOrderByAggregateInput = {
   nik?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   alumniPict?: Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -574,6 +601,7 @@ export type AlumniMinOrderByAggregateInput = {
 
 export type AlumniSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  sourceChildrenId?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
 }
@@ -592,6 +620,7 @@ export type AlumniSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   nik?: boolean
   notes?: boolean
   alumniPict?: boolean
+  sourceChildrenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -610,6 +639,7 @@ export type AlumniSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   nik?: boolean
   notes?: boolean
   alumniPict?: boolean
+  sourceChildrenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -628,6 +658,7 @@ export type AlumniSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   nik?: boolean
   notes?: boolean
   alumniPict?: boolean
+  sourceChildrenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -646,13 +677,14 @@ export type AlumniSelectScalar = {
   nik?: boolean
   notes?: boolean
   alumniPict?: boolean
+  sourceChildrenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
   editedBy?: boolean
 }
 
-export type AlumniOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "alumniName" | "alumniGender" | "alumniBirthdate" | "alumniAddress" | "alumniPhone" | "educationLevel" | "alumniJob" | "nik" | "notes" | "alumniPict" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["alumni"]>
+export type AlumniOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "alumniName" | "alumniGender" | "alumniBirthdate" | "alumniAddress" | "alumniPhone" | "educationLevel" | "alumniJob" | "nik" | "notes" | "alumniPict" | "sourceChildrenId" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["alumni"]>
 
 export type $AlumniPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Alumni"
@@ -669,6 +701,7 @@ export type $AlumniPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     nik: string | null
     notes: string | null
     alumniPict: string | null
+    sourceChildrenId: number | null
     createdAt: Date | null
     updatedAt: Date | null
     createdBy: number | null
@@ -1107,6 +1140,7 @@ export interface AlumniFieldRefs {
   readonly nik: Prisma.FieldRef<"Alumni", 'String'>
   readonly notes: Prisma.FieldRef<"Alumni", 'String'>
   readonly alumniPict: Prisma.FieldRef<"Alumni", 'String'>
+  readonly sourceChildrenId: Prisma.FieldRef<"Alumni", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Alumni", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Alumni", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Alumni", 'Int'>

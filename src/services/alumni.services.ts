@@ -1,6 +1,8 @@
+import path from "path";
 import { Prisma } from "../generated/prisma/client";
 import { prisma } from "../utils/prisma/prisma";
-import { calculateAge } from "./children.services";
+import { calculateAge, selectLatestChildEducationLevel } from "./children.services";
+import { downloadFromS3, uploadBufferToS3, isValidS3Key } from "../utils/storage/s3.storage";
 
 // ============================================================================
 // TYPES
@@ -181,4 +183,80 @@ export const deleteAlumniById = async (id: number) => {
   } catch (error) {
     throw error;
   }
+};
+
+// ============================================================================
+// PROMOTE CHILDREN -> ALUMNI (shared, idempotent)
+// ============================================================================
+
+const contentTypeFromExt = (key: string): string => {
+  const ext = path.extname(key).toLowerCase();
+  if (ext === ".jpg" || ext === ".jpeg") return "image/jpeg";
+  if (ext === ".png") return "image/png";
+  if (ext === ".webp") return "image/webp";
+  if (ext === ".gif") return "image/gif";
+  return "application/octet-stream";
+};
+
+/**
+ * Create an alumni record from a children record. Idempotent: if an alumni
+ * already links to this child (source_children_id) it is returned unchanged.
+ * Copies the child photo into the alumni S3 folder (own copy).
+ *
+ * Returns the alumni record, or null when the child does not exist.
+ */
+export const promoteChildrenToAlumni = async (childrenId: number, userId: number = 2) => {
+  const child = await prisma.children.findUnique({ where: { id: childrenId } });
+  if (!child) return null;
+
+  // Already promoted? return the existing alumni (no duplicate)
+  const existing = await prisma.alumni.findFirst({ where: { sourceChildrenId: childrenId } });
+  if (existing) return existing;
+
+  const latestEdu = await selectLatestChildEducationLevel(childrenId);
+
+  const newAlumni = await prisma.alumni.create({
+    data: {
+      alumniName: child.childrenName,
+      alumniGender: child.childrenGender ?? null,
+      alumniBirthdate: child.childrenBirthdate ?? null,
+      alumniAddress: child.childrenAddress ?? null,
+      alumniPhone: child.childrenPhone ?? null,
+      educationLevel: latestEdu ?? child.educationLevel ?? null,
+      alumniJob: child.childrenJob ?? null,
+      nik: child.nik ?? null,
+      notes: child.notes ?? null,
+      alumniPict: null,
+      sourceChildrenId: childrenId,
+      createdBy: userId,
+    },
+  });
+
+  // Copy the child's photo into the alumni S3 folder (best-effort)
+  if (isValidS3Key(child.childrenPict)) {
+    try {
+      const buffer = await downloadFromS3(child.childrenPict);
+      if (buffer) {
+        const ext = path.extname(child.childrenPict!);
+        const slug = (child.childrenName || "alumni").toLowerCase().replace(/\s+/g, "-");
+        const rand = Math.random().toString(36).substring(2, 10);
+        const newKey = `database/alumni/${newAlumni.id}-${slug}-${rand}${ext}`;
+        await uploadBufferToS3(buffer, newKey, contentTypeFromExt(child.childrenPict!));
+        return await prisma.alumni.update({ where: { id: newAlumni.id }, data: { alumniPict: newKey } });
+      }
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn(`Gagal salin foto alumni untuk child#${childrenId}:`, (e as Error).message);
+    }
+  }
+
+  return newAlumni;
+};
+
+export const alumniExistsForChild = async (childrenId: number): Promise<boolean> => {
+  const found = await prisma.alumni.findFirst({
+    where: { sourceChildrenId: childrenId },
+    select: { id: true },
+  });
+  return !!found;
 };
