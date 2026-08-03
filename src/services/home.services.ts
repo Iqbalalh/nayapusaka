@@ -632,6 +632,20 @@ const getHomeIdsByVisitCount = async (values: number[]): Promise<number[] | null
 };
 
 /**
+ * Count distinct families (unique employeeId+partnerId pairs) matching a where clause.
+ * Two homes that share the same employee and partner are the same family — counted once,
+ * even though each keeps its own home id and wali.
+ */
+export const countDistinctFamilies = async (where: Prisma.HomesWhereInput): Promise<number> => {
+  const pairs = await prisma.homes.findMany({
+    where,
+    select: { employeeId: true, partnerId: true },
+    distinct: ["employeeId", "partnerId"],
+  });
+  return pairs.length;
+};
+
+/**
  * Select summary stats for insight panel — follows search + column filters
  */
 export const selectHomeSummary = async (search?: string, filters?: Record<string, any>) => {
@@ -651,9 +665,11 @@ export const selectHomeSummary = async (search?: string, filters?: Record<string
     }
   }
 
+  // totalFamilies/activeFamilies are deduped by (employeeId, partnerId); matchingHomes
+  // keeps every home id so children/assistance totals span all sibling homes.
   const [totalFamilies, activeFamilies, matchingHomes] = await Promise.all([
-    prisma.homes.count({ where }),
-    prisma.homes.count({ where: activeWhere }),
+    countDistinctFamilies(where),
+    countDistinctFamilies(activeWhere),
     prisma.homes.findMany({ where, select: { id: true } }),
   ]);
 
@@ -680,7 +696,7 @@ export const selectHomeSummary = async (search?: string, filters?: Record<string
  */
 export const selectHomeCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null } } }) };
+    return { count: await countDistinctFamilies({ partnerId: { not: null }, employeeId: { not: null } }) };
   } catch (error) {
     throw error;
   }
@@ -691,7 +707,7 @@ export const selectHomeCount = async () => {
  */
 export const selectActiveFamilyCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: true } } }) };
+    return { count: await countDistinctFamilies({ partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: true } }) };
   } catch (error) {
     throw error;
   }
@@ -702,29 +718,36 @@ export const selectActiveFamilyCount = async () => {
  */
 export const selectInactiveFamilyCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: false } } }) };
+    return { count: await countDistinctFamilies({ partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: false } }) };
   } catch (error) {
     throw error;
   }
 };
 
 /**
- * Select count of families that have been visited (isValidated = true)
+ * Select count of families that have been visited (at least one sibling home isValidated)
  */
 export const selectVisitedFamilyCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, isValidated: true } }) };
+    return { count: await countDistinctFamilies({ partnerId: { not: null }, employeeId: { not: null }, isValidated: true }) };
   } catch (error) {
     throw error;
   }
 };
 
 /**
- * Select count of families that have not been visited (isValidated != true)
+ * Select count of families that have not been visited.
+ * Computed as (all families − visited families) so a family with mixed sibling homes
+ * (one visited, one not) is not counted in both buckets.
  */
 export const selectUnvisitedFamilyCount = async () => {
   try {
-    return { count: await prisma.homes.count({ where: { partnerId: { not: null }, employeeId: { not: null }, isValidated: { not: true } } }) };
+    const base: Prisma.HomesWhereInput = { partnerId: { not: null }, employeeId: { not: null } };
+    const [total, visited] = await Promise.all([
+      countDistinctFamilies(base),
+      countDistinctFamilies({ ...base, isValidated: true }),
+    ]);
+    return { count: total - visited };
   } catch (error) {
     throw error;
   }
@@ -745,6 +768,8 @@ export const selectFamilyOnMapCount = async () => {
         ],
       },
       select: {
+        employeeId: true,
+        partnerId: true,
         wali: { select: { addressCoordinate: true } },
         partners: { select: { homeCoordinate: true } },
       },
@@ -767,7 +792,9 @@ export const selectFamilyOnMapCount = async () => {
       );
     });
 
-    return { count: validHomes.length };
+    // Dedupe by (employeeId, partnerId): a family is "on map" if any sibling home has coords
+    const distinctFamilies = new Set(validHomes.map((h) => `${h.employeeId}-${h.partnerId}`));
+    return { count: distinctFamilies.size };
   } catch (error) {
     throw error;
   }

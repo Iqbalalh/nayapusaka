@@ -1,4 +1,5 @@
 import { prisma } from "../utils/prisma/prisma";
+import { countDistinctFamilies } from "./home.services";
 
 // ============================================================================
 // SELECT QUERIES
@@ -63,14 +64,10 @@ export const selectRegionStats = async () => {
           socialAssistance,
           educationGroups,
         ] = await Promise.all([
-          // Keluarga total
-          prisma.homes.count({
-            where: { regionId },
-          }),
+          // Keluarga total (deduped by pegawai+pasangan — 1 keluarga meski banyak wali)
+          countDistinctFamilies({ regionId, partnerId: { not: null }, employeeId: { not: null } }),
           // Keluarga aktif (pasangan aktif)
-          prisma.homes.count({
-            where: { regionId, partners: { isActive: true } },
-          }),
+          countDistinctFamilies({ regionId, partnerId: { not: null }, employeeId: { not: null }, partners: { isActive: true } }),
           // Anak total
           prisma.children.count({
             where: { homes: { regionId } },
