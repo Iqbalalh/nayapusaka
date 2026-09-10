@@ -224,3 +224,38 @@ export const selectRegionStats = async () => {
     throw error;
   }
 };
+
+// ============================================================================
+// CREATE / UPDATE / DELETE
+// ============================================================================
+
+export const insertRegion = async (regionName: string, userId: number) => {
+  return prisma.regions.create({ data: { regionName, createdBy: userId } });
+};
+
+export const updateRegionById = async (
+  regionId: number,
+  regionName: string,
+  userId: number
+) => {
+  return prisma.regions.update({
+    where: { regionId },
+    data: { regionName, editedBy: userId },
+  });
+};
+
+/** Count records that reference this region (blocks deletion). */
+export const countRegionReferences = async (regionId: number) => {
+  const [employees, homes, partners, umkm, galleries] = await Promise.all([
+    prisma.employees.count({ where: { regionId } }),
+    prisma.homes.count({ where: { regionId } }),
+    prisma.partners.count({ where: { regionId } }),
+    prisma.umkm.count({ where: { regionId } }),
+    prisma.gallery.count({ where: { regionId } }),
+  ]);
+  return employees + homes + partners + umkm + galleries;
+};
+
+export const deleteRegionById = async (regionId: number) => {
+  return prisma.regions.delete({ where: { regionId } });
+};
