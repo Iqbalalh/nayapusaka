@@ -181,6 +181,7 @@ export const selectAllSocialAssistanceOptimized = async (
         medicalEquipment: true,
         cashAmount: true,
         totalAmount: true,
+        pengajuan: true,
         notes: true,
         createdAt: true,
         updatedAt: true,

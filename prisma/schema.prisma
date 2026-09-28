@@ -479,6 +479,7 @@ model SocialAssistance {
   equipmentNominal  Float?    @map("equipment_nominal")
   cashAmount        Float?    @map("cash_amount")
   totalAmount       Float?    @map("total_amount")
+  pengajuan         Float?    @map("pengajuan")
   notes             String?   @db.Text
   createdAt         DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt         DateTime  @default(now()) @map("updated_at") @db.Timestamptz(6)

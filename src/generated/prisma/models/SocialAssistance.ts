@@ -32,6 +32,7 @@ export type SocialAssistanceAvgAggregateOutputType = {
   equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
+  pengajuan: number | null
   createdBy: number | null
   editedBy: number | null
 }
@@ -42,6 +43,7 @@ export type SocialAssistanceSumAggregateOutputType = {
   equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
+  pengajuan: number | null
   createdBy: number | null
   editedBy: number | null
 }
@@ -58,6 +60,7 @@ export type SocialAssistanceMinAggregateOutputType = {
   equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
+  pengajuan: number | null
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -77,6 +80,7 @@ export type SocialAssistanceMaxAggregateOutputType = {
   equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
+  pengajuan: number | null
   notes: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -96,6 +100,7 @@ export type SocialAssistanceCountAggregateOutputType = {
   equipmentNominal: number
   cashAmount: number
   totalAmount: number
+  pengajuan: number
   notes: number
   createdAt: number
   updatedAt: number
@@ -111,6 +116,7 @@ export type SocialAssistanceAvgAggregateInputType = {
   equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
+  pengajuan?: true
   createdBy?: true
   editedBy?: true
 }
@@ -121,6 +127,7 @@ export type SocialAssistanceSumAggregateInputType = {
   equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
+  pengajuan?: true
   createdBy?: true
   editedBy?: true
 }
@@ -137,6 +144,7 @@ export type SocialAssistanceMinAggregateInputType = {
   equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
+  pengajuan?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
@@ -156,6 +164,7 @@ export type SocialAssistanceMaxAggregateInputType = {
   equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
+  pengajuan?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
@@ -175,6 +184,7 @@ export type SocialAssistanceCountAggregateInputType = {
   equipmentNominal?: true
   cashAmount?: true
   totalAmount?: true
+  pengajuan?: true
   notes?: true
   createdAt?: true
   updatedAt?: true
@@ -281,6 +291,7 @@ export type SocialAssistanceGroupByOutputType = {
   equipmentNominal: number | null
   cashAmount: number | null
   totalAmount: number | null
+  pengajuan: number | null
   notes: string | null
   createdAt: Date
   updatedAt: Date
@@ -323,6 +334,7 @@ export type SocialAssistanceWhereInput = {
   equipmentNominal?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   cashAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   totalAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
+  pengajuan?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SocialAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SocialAssistance"> | Date | string
@@ -343,6 +355,7 @@ export type SocialAssistanceOrderByWithRelationInput = {
   equipmentNominal?: Prisma.SortOrderInput | Prisma.SortOrder
   cashAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   totalAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  pengajuan?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -366,6 +379,7 @@ export type SocialAssistanceWhereUniqueInput = Prisma.AtLeast<{
   equipmentNominal?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   cashAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   totalAmount?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
+  pengajuan?: Prisma.FloatNullableFilter<"SocialAssistance"> | number | null
   notes?: Prisma.StringNullableFilter<"SocialAssistance"> | string | null
   createdAt?: Prisma.DateTimeFilter<"SocialAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SocialAssistance"> | Date | string
@@ -386,6 +400,7 @@ export type SocialAssistanceOrderByWithAggregationInput = {
   equipmentNominal?: Prisma.SortOrderInput | Prisma.SortOrder
   cashAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   totalAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  pengajuan?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -413,6 +428,7 @@ export type SocialAssistanceScalarWhereWithAggregatesInput = {
   equipmentNominal?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
   cashAmount?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
   totalAmount?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
+  pengajuan?: Prisma.FloatNullableWithAggregatesFilter<"SocialAssistance"> | number | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"SocialAssistance"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SocialAssistance"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SocialAssistance"> | Date | string
@@ -431,6 +447,7 @@ export type SocialAssistanceCreateInput = {
   equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
+  pengajuan?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -451,6 +468,7 @@ export type SocialAssistanceUncheckedCreateInput = {
   equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
+  pengajuan?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -470,6 +488,7 @@ export type SocialAssistanceUpdateInput = {
   equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pengajuan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -490,6 +509,7 @@ export type SocialAssistanceUncheckedUpdateInput = {
   equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pengajuan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -510,6 +530,7 @@ export type SocialAssistanceCreateManyInput = {
   equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
+  pengajuan?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -528,6 +549,7 @@ export type SocialAssistanceUpdateManyMutationInput = {
   equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pengajuan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -547,6 +569,7 @@ export type SocialAssistanceUncheckedUpdateManyInput = {
   equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pengajuan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -566,6 +589,7 @@ export type SocialAssistanceCountOrderByAggregateInput = {
   equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  pengajuan?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -579,6 +603,7 @@ export type SocialAssistanceAvgOrderByAggregateInput = {
   equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  pengajuan?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
 }
@@ -595,6 +620,7 @@ export type SocialAssistanceMaxOrderByAggregateInput = {
   equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  pengajuan?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -614,6 +640,7 @@ export type SocialAssistanceMinOrderByAggregateInput = {
   equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  pengajuan?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -627,6 +654,7 @@ export type SocialAssistanceSumOrderByAggregateInput = {
   equipmentNominal?: Prisma.SortOrder
   cashAmount?: Prisma.SortOrder
   totalAmount?: Prisma.SortOrder
+  pengajuan?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
   editedBy?: Prisma.SortOrder
 }
@@ -661,6 +689,7 @@ export type SocialAssistanceCreateWithoutDocumentsInput = {
   equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
+  pengajuan?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -680,6 +709,7 @@ export type SocialAssistanceUncheckedCreateWithoutDocumentsInput = {
   equipmentNominal?: number | null
   cashAmount?: number | null
   totalAmount?: number | null
+  pengajuan?: number | null
   notes?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -714,6 +744,7 @@ export type SocialAssistanceUpdateWithoutDocumentsInput = {
   equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pengajuan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -733,6 +764,7 @@ export type SocialAssistanceUncheckedUpdateWithoutDocumentsInput = {
   equipmentNominal?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   cashAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   totalAmount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  pengajuan?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -783,6 +815,7 @@ export type SocialAssistanceSelect<ExtArgs extends runtime.Types.Extensions.Inte
   equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
+  pengajuan?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -804,6 +837,7 @@ export type SocialAssistanceSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
+  pengajuan?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -823,6 +857,7 @@ export type SocialAssistanceSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
+  pengajuan?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -842,6 +877,7 @@ export type SocialAssistanceSelectScalar = {
   equipmentNominal?: boolean
   cashAmount?: boolean
   totalAmount?: boolean
+  pengajuan?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -849,7 +885,7 @@ export type SocialAssistanceSelectScalar = {
   editedBy?: boolean
 }
 
-export type SocialAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nipNipp" | "recipientName" | "ktpAddress" | "region" | "condition" | "medicalEquipment" | "equipmentQuantity" | "equipmentNominal" | "cashAmount" | "totalAmount" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["socialAssistance"]>
+export type SocialAssistanceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nipNipp" | "recipientName" | "ktpAddress" | "region" | "condition" | "medicalEquipment" | "equipmentQuantity" | "equipmentNominal" | "cashAmount" | "totalAmount" | "pengajuan" | "notes" | "createdAt" | "updatedAt" | "createdBy" | "editedBy", ExtArgs["result"]["socialAssistance"]>
 export type SocialAssistanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   documents?: boolean | Prisma.SocialAssistance$documentsArgs<ExtArgs>
   _count?: boolean | Prisma.SocialAssistanceCountOutputTypeDefaultArgs<ExtArgs>
@@ -874,6 +910,7 @@ export type $SocialAssistancePayload<ExtArgs extends runtime.Types.Extensions.In
     equipmentNominal: number | null
     cashAmount: number | null
     totalAmount: number | null
+    pengajuan: number | null
     notes: string | null
     createdAt: Date
     updatedAt: Date
@@ -1314,6 +1351,7 @@ export interface SocialAssistanceFieldRefs {
   readonly equipmentNominal: Prisma.FieldRef<"SocialAssistance", 'Float'>
   readonly cashAmount: Prisma.FieldRef<"SocialAssistance", 'Float'>
   readonly totalAmount: Prisma.FieldRef<"SocialAssistance", 'Float'>
+  readonly pengajuan: Prisma.FieldRef<"SocialAssistance", 'Float'>
   readonly notes: Prisma.FieldRef<"SocialAssistance", 'String'>
   readonly createdAt: Prisma.FieldRef<"SocialAssistance", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SocialAssistance", 'DateTime'>

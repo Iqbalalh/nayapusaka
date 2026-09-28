@@ -165,6 +165,7 @@ export const postSocialAssistance = async (
       equipmentNominal,
       cashAmount,
       totalAmount,
+      pengajuan,
       notes,
     } = req.body;
 
@@ -179,6 +180,7 @@ export const postSocialAssistance = async (
       equipmentNominal: equipmentNominal ? Number(equipmentNominal) : null,
       cashAmount: cashAmount ? Number(cashAmount) : null,
       totalAmount: totalAmount ? Number(totalAmount) : null,
+      pengajuan: pengajuan ? Number(pengajuan) : null,
       notes: notes || null,
       createdBy: userId,
     };
@@ -269,6 +271,7 @@ export const patchSocialAssistance = async (
       equipmentNominal,
       cashAmount,
       totalAmount,
+      pengajuan,
       notes,
     } = req.body;
 
@@ -283,6 +286,7 @@ export const patchSocialAssistance = async (
     if (equipmentNominal !== undefined) updateData.equipmentNominal = equipmentNominal ? Number(equipmentNominal) : null;
     if (cashAmount !== undefined) updateData.cashAmount = cashAmount ? Number(cashAmount) : null;
     if (totalAmount !== undefined) updateData.totalAmount = totalAmount ? Number(totalAmount) : null;
+    if (pengajuan !== undefined) updateData.pengajuan = pengajuan ? Number(pengajuan) : null;
     if (notes !== undefined) updateData.notes = notes || null;
     updateData.editedBy = userId;
 

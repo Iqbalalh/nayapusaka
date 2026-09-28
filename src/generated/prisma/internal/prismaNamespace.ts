@@ -2780,6 +2780,7 @@ export const SocialAssistanceScalarFieldEnum = {
   equipmentNominal: 'equipmentNominal',
   cashAmount: 'cashAmount',
   totalAmount: 'totalAmount',
+  pengajuan: 'pengajuan',
   notes: 'notes',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
