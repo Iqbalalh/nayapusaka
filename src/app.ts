@@ -23,12 +23,19 @@ import userRouter from "./routes/user.router";
 import letterRouter from "./routes/letter.router";
 import letterTypeRouter from "./routes/letterType.router";
 import wopiRouter from "./routes/wopi.router";
+import publicStatsRouter from "./routes/publicstats.router";
 
 const app: Application = express();
 
 // ======================
 // Middlewares
 // ======================
+// Public stats: read-only, tanpa auth, CORS-nya sendiri (hanya
+// *.yayasanpusakakai.org, lihat middlewares/publiccors.ts). Dipasang SEBELUM
+// CORS global supaya tidak ikut aturan global yang lebih longgar
+// (localhost & FRONT_END_* env).
+app.use("/api/public", publicStatsRouter);
+
 app.use(
   cors({
     origin: function (origin, callback) {

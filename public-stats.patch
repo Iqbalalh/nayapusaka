@@ -1,0 +1,265 @@
+diff --git a/src/app.ts b/src/app.ts
+index 207632d..8fbccc0 100644
+--- a/src/app.ts
++++ b/src/app.ts
+@@ -23,12 +23,19 @@ import userRouter from "./routes/user.router";
+ import letterRouter from "./routes/letter.router";
+ import letterTypeRouter from "./routes/letterType.router";
+ import wopiRouter from "./routes/wopi.router";
++import publicStatsRouter from "./routes/publicstats.router";
+ 
+ const app: Application = express();
+ 
+ // ======================
+ // Middlewares
+ // ======================
++// Public stats: read-only, tanpa auth, CORS-nya sendiri (hanya
++// *.yayasanpusakakai.org, lihat middlewares/publiccors.ts). Dipasang SEBELUM
++// CORS global supaya tidak ikut aturan global yang lebih longgar
++// (localhost & FRONT_END_* env).
++app.use("/api/public", publicStatsRouter);
++
+ app.use(
+   cors({
+     origin: function (origin, callback) {
+diff --git a/src/controllers/publicstats.controller.ts b/src/controllers/publicstats.controller.ts
+new file mode 100644
+index 0000000..6825cc4
+--- /dev/null
++++ b/src/controllers/publicstats.controller.ts
+@@ -0,0 +1,144 @@
++import type { Request, Response, NextFunction } from "express";
++import {
++  selectChildrenCount,
++  selectAbkChildrenCount,
++  selectActiveChildrenCount,
++  selectInactiveChildrenCount,
++  selectYatimChildrenCount,
++  selectPiatuChildrenCount,
++  selectYatimPiatuChildrenCount,
++} from "../services/children.services";
++import {
++  selectHomeCount,
++  selectActiveFamilyCount,
++  selectInactiveFamilyCount,
++} from "../services/home.services";
++import {
++  selectUmkmCount,
++  selectActiveUmkmCount,
++  selectAssistedUmkmCount,
++} from "../services/umkm.services";
++import { selectGlobalEducationLevelStats } from "../services/childassistance.services";
++
++// ============================================================================
++// PUBLIC STATS — hanya agregat global (angka total), tanpa data per-orang,
++// per-wilayah, nominal bantuan, koordinat, atau ID record apa pun.
++// ============================================================================
++
++interface PublicStats {
++  family: { total: number; active: number; inactive: number };
++  children: {
++    total: number;
++    active: number;
++    inactive: number;
++    abk: number;
++    yatim: number;
++    piatu: number;
++    yatimPiatu: number;
++  };
++  umkm: { total: number; active: number; assisted: number };
++  educationLevels: Record<string, number>;
++  updatedAt: string;
++}
++
++// Endpoint ini publik, jadi hasilnya di-cache supaya traffic luar tidak
++// membebani database. Request yang datang bersamaan berbagi satu query.
++const CACHE_TTL_MS = 5 * 60 * 1000;
++const CACHE_TTL_SECONDS = CACHE_TTL_MS / 1000;
++
++let cache: { expiresAt: number; value: PublicStats } | null = null;
++let inflight: Promise<PublicStats> | null = null;
++
++const buildPublicStats = async (): Promise<PublicStats> => {
++  const [
++    familyTotal,
++    familyActive,
++    familyInactive,
++    childrenTotal,
++    childrenActive,
++    childrenInactive,
++    childrenAbk,
++    childrenYatim,
++    childrenPiatu,
++    childrenYatimPiatu,
++    umkmTotal,
++    umkmActive,
++    umkmAssisted,
++    educationLevels,
++  ] = await Promise.all([
++    selectHomeCount(),
++    selectActiveFamilyCount(),
++    selectInactiveFamilyCount(),
++    selectChildrenCount(),
++    selectActiveChildrenCount(),
++    selectInactiveChildrenCount(),
++    selectAbkChildrenCount(),
++    selectYatimChildrenCount(),
++    selectPiatuChildrenCount(),
++    selectYatimPiatuChildrenCount(),
++    selectUmkmCount(),
++    selectActiveUmkmCount(),
++    selectAssistedUmkmCount(),
++    selectGlobalEducationLevelStats(),
++  ]);
++
++  return {
++    family: {
++      total: familyTotal.count,
++      active: familyActive.count,
++      inactive: familyInactive.count,
++    },
++    children: {
++      total: childrenTotal.count,
++      active: childrenActive.count,
++      inactive: childrenInactive.count,
++      abk: childrenAbk.count,
++      yatim: childrenYatim.count,
++      piatu: childrenPiatu.count,
++      yatimPiatu: childrenYatimPiatu.count,
++    },
++    umkm: {
++      total: umkmTotal.count,
++      active: umkmActive.count,
++      assisted: umkmAssisted.count,
++    },
++    educationLevels,
++    updatedAt: new Date().toISOString(),
++  };
++};
++
++const getCachedPublicStats = async (): Promise<PublicStats> => {
++  if (cache && cache.expiresAt > Date.now()) return cache.value;
++
++  if (!inflight) {
++    inflight = buildPublicStats()
++      .then((value) => {
++        cache = { value, expiresAt: Date.now() + CACHE_TTL_MS };
++        return value;
++      })
++      .finally(() => {
++        inflight = null;
++      });
++  }
++  return inflight;
++};
++
++// ============================================================================
++// GET /api/public/stats
++// ============================================================================
++export const getPublicStats = async (
++  _req: Request,
++  res: Response,
++  next: NextFunction
++): Promise<void> => {
++  try {
++    const data = await getCachedPublicStats();
++    res.set("Cache-Control", `public, max-age=${CACHE_TTL_SECONDS}`);
++    res.json({ message: "Data statistik berhasil diambil", data });
++  } catch {
++    // Pesan error asli (mis. dari Prisma) tidak boleh bocor ke publik.
++    next(
++      Object.assign(new Error("Gagal mengambil data statistik"), { status: 500 })
++    );
++  }
++};
+diff --git a/src/middlewares/publiccors.ts b/src/middlewares/publiccors.ts
+new file mode 100644
+index 0000000..ab12817
+--- /dev/null
++++ b/src/middlewares/publiccors.ts
+@@ -0,0 +1,64 @@
++import cors from "cors";
++import type { Request, Response, NextFunction } from "express";
++
++// ============================================================================
++// CORS khusus endpoint publik: hanya https://yayasanpusakakai.org dan
++// subdomain-nya (https://*.yayasanpusakakai.org). Localhost hanya diizinkan
++// di luar production, untuk development.
++//
++// Catatan: CORS adalah pembatasan di BROWSER. Klien non-browser (curl,
++// server lain) tetap bisa memanggil endpoint ini karena header Origin bisa
++// dihilangkan atau dipalsukan. Jangan pernah taruh data sensitif di sini.
++// ============================================================================
++
++const ALLOWED_ROOT_DOMAIN = "yayasanpusakakai.org";
++
++export const isAllowedPublicOrigin = (origin: string): boolean => {
++  let url: URL;
++  try {
++    url = new URL(origin);
++  } catch {
++    return false;
++  }
++
++  // Origin yang valid tidak punya path, query, atau kredensial
++  if (url.origin !== origin.toLowerCase()) return false;
++
++  const host = url.hostname.toLowerCase();
++
++  if (process.env.NODE_ENV !== "production") {
++    if (host === "localhost" || host === "127.0.0.1") return true;
++  }
++
++  if (url.protocol !== "https:") return false;
++
++  return host === ALLOWED_ROOT_DOMAIN || host.endsWith(`.${ALLOWED_ROOT_DOMAIN}`);
++};
++
++// Tolak dengan 403 yang jelas, bukan 500 dari error CORS.
++// Request tanpa header Origin (server-side rendering, curl) dibiarkan lewat:
++// browser lintas-origin selalu mengirim Origin, dan klien non-browser toh
++// bisa memalsukannya, jadi memblokirnya hanya merusak SSR tanpa menambah aman.
++const rejectForeignOrigin = (
++  req: Request,
++  res: Response,
++  next: NextFunction
++): void => {
++  const origin = req.headers.origin;
++  if (origin && !isAllowedPublicOrigin(origin)) {
++    res.status(403).json({ message: "Origin tidak diizinkan", data: null });
++    return;
++  }
++  next();
++};
++
++export const publicCors = [
++  rejectForeignOrigin,
++  cors({
++    origin: (origin, callback) => {
++      callback(null, !origin || isAllowedPublicOrigin(origin));
++    },
++    methods: ["GET", "OPTIONS"],
++    credentials: false,
++  }),
++];
+diff --git a/src/routes/publicstats.router.ts b/src/routes/publicstats.router.ts
+new file mode 100644
+index 0000000..82a3a97
+--- /dev/null
++++ b/src/routes/publicstats.router.ts
+@@ -0,0 +1,15 @@
++import { Router } from "express";
++import { publicCors } from "../middlewares/publiccors";
++import { getPublicStats } from "../controllers/publicstats.controller";
++
++const publicStatsRouter = Router();
++
++// ===========================
++// PUBLIC ENDPOINTS (NO AUTH) — read-only, agregat global saja.
++// Akses browser dibatasi ke https://*.yayasanpusakakai.org
++// ===========================
++publicStatsRouter.use(publicCors);
++
++publicStatsRouter.get("/stats", getPublicStats);
++
++export default publicStatsRouter;
